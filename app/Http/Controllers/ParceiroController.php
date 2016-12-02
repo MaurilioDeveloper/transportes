@@ -134,7 +134,8 @@ class ParceiroController extends Controller
 //        dd(Datatables::of(Parceiro::query())->make(true));
 //        dd($this->parceiro->get());
 //        return "xxxx";
-        return Parceiro::query()->select("parceiros.id",
+        /*
+        return '{ "data:"'. Parceiro::query()->select("parceiros.id",
             "parceiros.nome",
             "parceiros.documento",
             "parceiros.email",
@@ -144,8 +145,8 @@ class ParceiroController extends Controller
             "parceiros.endereco",
             "parceiros.numero",
             "parceiros.cidade",
-            "parceiros.estado")->get();
-
+            "parceiros.estado")->get().'}';
+*/
         return Datatables::of(Parceiro::query()
             ->select("parceiros.id",
                 "parceiros.nome",
