@@ -19,7 +19,7 @@ $(document).ready(function () {
                     form.fadeOut('fast', function () {
                         jQuery(".alert-success").show();
                         $('#load').fadeIn('slow');
-                        window.location.href = 'painel/usuarios';
+                        window.location.href = 'painel/parceiros';
                     });
                 } else {
                     jQuery(".alert-warning").show().delay(2000).fadeOut();

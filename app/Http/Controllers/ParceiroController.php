@@ -2,38 +2,379 @@
 
 namespace App\Http\Controllers;
 
+use App\Caminhao;
+use App\Motorista;
+use App\Ocorrencia;
 use Illuminate\Http\Request;
 use App\Parceiro;
+use App\Contato;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Request\ParceiroRequest;
+use Datatables;
+use Illuminate\Validation\Factory as Validate;
+use League\Flysystem\Exception;
 
 class ParceiroController extends Controller
 {
     private $parceiro;
     private $request;
+    private $caminhao;
+    private $contato;
+    private $motorista;
+    private $validate;
 
-    public function __construct(Parceiro $parceiro, Request $request)
+    public function __construct(Parceiro $parceiro, Request $request, Caminhao $caminhao, Contato $contato, Motorista $motorista, Validate $validate)
     {
         $this->middleware('auth');
 
         $this->parceiro = $parceiro;
         $this->request = $request;
+        $this->caminhao = $caminhao;
+        $this->contato = $contato;
+        $this->motorista = $motorista;
+        $this->validate = $validate;
     }
 
     public function index()
     {
-        return view('painel.parceiros.index');
+        $parceiros = $this->parceiro->get();
+        return view('painel.parceiros.index', compact('parceiros'));
     }
 
+    public function store(ParceiroRequest $request)
+    {
+
+        //Pega os dados do formulário
+//        $dataForm = $request->all();
+
+//        $validator = validator($request->all(),[
+//              'nome' => 'required|min:3|max:60',
+//              'email' => 'required|min:6|max:150'
+//         ]);
+//
+//        if($validator->fails()){
+//              return redirect()->withErrors($validator)->withInput();
+//         }
+
+        $data['pessoa'] = Parceiro::getPessoa($request->get('pessoa'));
+        $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
+        $dataCont = $request->only(['extras']);
+        $dataCam = $request->only(['extraCaminhoes']);
+        $dataMot = $request->only(['extraMotoristas']);
+
+        $parceiro = Parceiro::create($dataParc);
+
+
+//
+        foreach ($dataCont['extras'] as $extra) {
+            $contatos = Contato::create([
+                'nome' => $extra['nome'],
+                'setor' => $extra['setor'],
+                'email' => $extra['email'],
+                'telefone' => $extra['telefone'],
+                'id_parceiro' => $parceiro->id
+            ]);
+        }
+
+        foreach ($dataCam['extraCaminhoes'] as $extraCaminhoes) {
+//        dd($extraCaminhoes['placa']);
+            $caminhoes = Caminhao::create([
+                'placa' => $extraCaminhoes['placa'],
+                'modelo' => $extraCaminhoes['modelo'],
+                'cor' => $extraCaminhoes['cor'],
+                'id_parceiro' => $parceiro->id
+            ]);
+        }
+
+        foreach ($dataMot['extraMotoristas'] as $extraMotoristas) {
+
+            $motoristas = Motorista::create([
+                'nome' => $extraMotoristas['nome'],
+                'rg' => $extraMotoristas['rg'],
+                'telefone' => $extraMotoristas['telefone'],
+                'id_parceiro' => $parceiro->id
+            ]);
+
+        }
+
+
+        if ($parceiro && $caminhoes && $motoristas) {
+            echo 'Sucesso';
+            \DB::commit();
+        } else {
+            echo 'Falha';
+            \DB::rollBack();
+        }
+
+        return redirect()->route('parceiros.index');
+    }
+
+
     public function create()
+    {
+        $paramPessoa = $this->request->get('pessoa');
+        $pessoa = Parceiro::getPessoa($paramPessoa);
+        $titulo = "Adicionar Parceiro";
+        return view('painel.parceiros.create', compact('titulo', 'pessoa'));
+    }
+
+    public function cadastrar()
     {
         $titulo = "Adicionar Parceiro";
         return view('painel.parceiros.gerenciar', compact('titulo'));
     }
 
+    public function show()
+    {
+
+    }
+
+    public function listaParceiros()
+    {
+//        dd(Datatables::of(Parceiro::query())->make(true));
+//        dd($this->parceiro->get());
+//        return "xxxx";
+        return Parceiro::query()->select("parceiros.id",
+            "parceiros.nome",
+            "parceiros.documento",
+            "parceiros.email",
+            "parceiros.telefone",
+            "parceiros.data_nasc",
+            "parceiros.sexo",
+            "parceiros.endereco",
+            "parceiros.numero",
+            "parceiros.cidade",
+            "parceiros.estado")->get();
+
+        return Datatables::of(Parceiro::query()
+            ->select("parceiros.id",
+                "parceiros.nome",
+                "parceiros.documento",
+                "parceiros.email",
+                "parceiros.telefone",
+                "parceiros.data_nasc",
+                "parceiros.sexo",
+                "parceiros.endereco",
+                "parceiros.numero",
+                "parceiros.cidade",
+                "parceiros.estado"))
+            ->make(true);
+        //return Datatables::of(Visitante::query()
+        //      ->select("visitantes.nome", "visitantes.estado", "visitantes.cidade", "visitantes.telefone", "visitantes.cargo", "visitantes.cidade", "visitantes.email"))->make(true);
+
+    }
+
+    public function deleteParceiro($id)
+    {
+        Parceiro::findOrFail($id)->delete();
+        return 1;
+    }
+
+    public function deleteMotorista($id)
+    {
+        Motorista::findOrFail($id)->delete();
+        return 1;
+    }
+
+
     public function edit($id)
     {
-        $titulo = "Editar Parceiro";
-        $parceiro = $this->parceiro->find($id);
+        $titulo = 'Editar Parceiro';
+//        $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
+//        $dataCont = $request->only(['extras']);
+//        $dataCam = $request->only(['extraCaminhoes']);
+//        $dataMot = $request->only(['extraMotoristas']);
+        $caminhoes = $this->caminhao->all()->where('id_parceiro', $id);
+        $contatos = $this->contato->all()->where('id_parceiro', $id);
+        $motoristas = $this->motorista->all()->where('id_parceiro', $id);
+//        dd($motoristas);
 
-        return view('painel.parceiros.gerenciar', compact( 'parceiro', 'titulo' ));
+//        dd($motoristas);
+        if (!($parceiro = Parceiro::find($id))) {
+            throw new ModelNotFoundException("Parceiro não foi encontrado");
+        }
+        $pessoa = $parceiro->pessoa;
+        return view('painel.parceiros.edit', compact('parceiro', 'pessoa', 'titulo', 'caminhoes', 'contatos', 'motoristas'));
     }
+
+    public function update(ParceiroRequest $request, $id)
+    {
+        if (!($parceiro = Parceiro::find($id))) {
+            throw new ModelNotFoundException("Parceiro não foi encontrado");
+        }
+
+        $contatosDB = Contato::where('id_parceiro', $id)->get()->keyBy('id');
+        $caminhoesDB = Caminhao::where('id_parceiro', $id)->get()->keyBy('id');
+        $motoristasDB = Motorista::where('id_parceiro', $id)->get()->keyBy('id');
+
+        $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
+        $dataCont = $request->only(['extras']);
+        $dataCam = $request->only(['extraCaminhoes']);
+        $dataMot = $request->only(['extraMotoristas']);
+
+        $validate = $this->validate->make($dataParc, Parceiro::$rules);
+        if($validate->fails()){
+            $messages = $validate->messages();
+            $displayErrors = '';
+
+            foreach($messages->all("<p>:message</p>") as $error){
+                $displayErrors .= $error;
+            }
+
+            return $displayErrors;
+        }
+
+
+
+        if(is_array($dataCont['extras'])) {
+            foreach ($dataCont['extras'] as $extra) {
+
+                if (key_exists('id', $extra)) {
+                    $idContato = intval($extra['id']);
+                } else {
+                    $idContato = 0;
+                }
+                if ($idContato > 0) {
+                    if (!($contato = Contato::find($idContato))) {
+                        throw new ModelNotFoundException("Contato não foi encontrado");
+                    } else {
+//                    dd($extra);
+                        $contato->fill($extra);
+                        $contato->save();
+                        $contatosDB[$idContato]['presente'] = true;
+                    }
+                } else {
+
+                    $contatos = Contato::create([
+                        'nome' => $extra['nome'],
+                        'setor' => $extra['setor'],
+                        'email' => $extra['email'],
+                        'telefone' => $extra['telefone'],
+                        'id_parceiro' => $parceiro->id
+                    ]);
+                }
+            }
+        }
+
+        foreach ($contatosDB as $contato) {
+            if(!$contato['presente']){
+                Contato::find($contato['id'])->delete();
+            }
+        }
+
+
+        if(is_array($dataCam['extraCaminhoes'])) {
+            foreach ($dataCam['extraCaminhoes'] as $extraCaminhoes) {
+
+//            dd($extraCaminhoes);
+                if (key_exists('id', $extraCaminhoes)) {
+                    $idCaminhao = intval($extraCaminhoes['id']);
+                } else {
+                    $idCaminhao = 0;
+                }
+                if ($idCaminhao > 0) {
+                    if (!($caminhao = Caminhao::find($idCaminhao))) {
+                        throw new ModelNotFoundException("Caminhão não foi encontrado");
+                    } else {
+                        $caminhao->fill($extraCaminhoes);
+                        $caminhao->save();
+                        $caminhoesDB[$idCaminhao]['presente'] = true;
+                    }
+                } else {
+
+                    $caminhoes = Caminhao::create([
+                        'placa' => $extraCaminhoes['placa'],
+                        'modelo' => $extraCaminhoes['modelo'],
+                        'cor' => $extraCaminhoes['cor'],
+                        'id_parceiro' => $parceiro->id
+                    ]);
+
+                }
+            }
+        }
+
+
+        foreach ($caminhoesDB as $caminhao) {
+            if(!$caminhao['presente']){
+                Caminhao::find($caminhao['id'])->delete();
+            }
+        }
+
+        if(is_array($dataMot['extraMotoristas'])) {
+            foreach ($dataMot['extraMotoristas'] as $extraMotoristas) {
+
+                if (key_exists('id', $extraMotoristas)) {
+                    $idMotorista = intval($extraMotoristas['id']);
+                } else {
+                    $idMotorista = 0;
+                }
+                if ($idMotorista > 0) {
+                    if (!($motorista = Motorista::find($idMotorista))) {
+                        throw new ModelNotFoundException("Motorista não foi encontrado");
+                    } else {
+                        $motorista->fill($extraMotoristas);
+                        $motorista->save();
+                        $motoristaDB[$idMotorista]['presente'] = true;
+                    }
+                } else {
+
+                    $motoristas = Motorista::create([
+                        'nome' => $extraMotoristas['nome'],
+                        'rg' => $extraMotoristas['rg'],
+                        'telefone' => $extraMotoristas['telefone'],
+                        'id_parceiro' => $parceiro->id
+                    ]);
+
+                }
+            }
+        }
+
+
+        foreach ($motoristasDB as $motorista) {
+//            dd($motorista);
+            if(!$motorista['presente']){
+                Motorista::find($motorista['id'])->delete();
+            }
+        }
+
+        $parceiro->fill($dataParc);
+        $parceiro->save();
+
+//        $motorista = Motorista::find($idMotorista);
+        if ($parceiro) {
+            echo 'Sucesso';
+            \DB::commit();
+        } else {
+            echo 'Falha';
+            \DB::rollBack();
+        }
+
+
+//        return "Editando Parceiro";
+        return redirect()->route('parceiros.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if (!($parceiro = Parceiro::find($id))) {
+            throw new ModelNotFoundException("Parceiro não foi encontrado");
+        }
+
+        $parceiro->delete();
+        return redirect()->route('parceiros.index');
+    }
+
+    public function postOcorrencia()
+    {
+        $data = $this->request->all();
+        Ocorrencia::create($data);
+        return redirect()->route('painel.parceiros.index');
+    }
+
 }

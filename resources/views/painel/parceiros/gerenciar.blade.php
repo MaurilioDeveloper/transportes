@@ -13,7 +13,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{ route('listarParceiros') }}"><i class="fa fa-truck"></i> Parceiros</a></li>
+        <li><a href="{{ route('parceiros.index') }}"><i class="fa fa-briefcase"></i> Parceiros</a></li>
         <li class="active">{{ $titulo }}</li>
     </ol>
 @endsection
@@ -30,14 +30,8 @@
                 <!-- form start -->
                 <form role="form">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="tipoPessoaF">Pessoa Física</label>
-                            <input type="radio" id="tipoPessoaF" name="tipoPessoa" value="F" class="minimal">
-                        </div>
-                        <div class="form-group">
-                            <label for="tipoPessoaJ">Pessoa Jurídica</label>
-                            <input type="radio" id="tipoPessoaJ" name="tipoPessoa" value="J" class="minimal">
-                        </div>
+                        <a class="btn btn-primary btn-sm" href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_FISICA]) }}"><i class="fa fa-user-secret"></i> Pessoa Física</a>
+                        <a class="btn btn-warning btn-sm" href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_JURIDICA]) }}"><i class="fa fa-briefcase"></i> Pessoa Jurídica</a>
                     </div>
                     <!-- /.box-body -->
                 </form><!-- /form end -->
@@ -48,6 +42,7 @@
 @endsection
 
 @section('scripts-footer')
+    <!--
     <script>
         $(function () {
             //iCheck for checkbox and radio inputs
@@ -57,4 +52,5 @@
             });
         });
     </script>
+    -->
 @endsection

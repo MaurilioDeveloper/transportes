@@ -3,6 +3,10 @@
     font-size: 0px;
     margin: 0px;
 }
+
+#field {
+    margin-bottom:20px;
+}
 .btn-padrao{
     font-size: 18px;
     padding: 10px 60px;
