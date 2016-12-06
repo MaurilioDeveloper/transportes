@@ -15,7 +15,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{ route('parceiros.index') }}"><i class="fa fa-briefcase"></i> Parceiros</a></li>
+        <li><a href="{{ route('listarFretes') }}"><i class="fa fa-briefcase"></i> Fretes</a></li>
         <li class="active">{{ $titulo }}</li>
     </ol>
 @endsection
@@ -41,8 +41,12 @@
                 {{--@include('painel.errors._errors_form')--}}
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Frete Cadastrado com Sucesso</div>
-                {!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete']) !!}
 
+                @if(isset($frete->id) && $frete->id > 0)
+                    {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'method' => 'PUT']) !!}
+                @else
+                    {!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete']) !!}
+                @endif
 
                 <fieldset class="callout column small-12">
                     <legend><b>Parceiro | Datas</b></legend>
@@ -80,32 +84,36 @@
 
 
                 <fieldset class="callout column small-12">
-                    <legend><b>Origem</b></legend>
+                    <legend><b>Origem | Destino</b></legend>
 
 
-                    <div class="form-group col-md-6">
-                        {!! Form::label('cidade', 'Cidade Origem*') !!}
-                        {!! Form::text('cidade_origem', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}
+                    <div class="form-group col-md-3">
+                        {!! Form::label('cidade', 'Cidade*') !!}
+                        {{--{!! Form::text('cidade_origem', null, ['class' => 'form-control', 'placeholder' => 'Cidade', 'value' => "@if(isset($frete->cidade_origem)){{$frete->cidade_origem}}@else{{old('cidade_origem')}}@endif"]) !!}--}}
+                        <input type="text" name="cidade_origem" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_origem)){{$frete->cidade_origem}}@else{{old('cidade_origem')}}@endif" />
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         {!! Form::label('estado', 'Estado Origem*') !!}
-                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}
+{{--                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
+                        <input type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_origem)){{$frete->estado_origem}}@else{{old('estado_origem')}}@endif" />
                     </div>
 
-                </fieldset>
+                {{--</fieldset>--}}
 
-                <fieldset class="callout column small-12">
-                    <legend><b>Destino</b></legend>
+                {{--<fieldset class="callout column small-12">--}}
+                    {{--<legend><b>Destino</b></legend>--}}
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         {!! Form::label('cidade', 'Cidade Destino*') !!}
-                        {!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}
+                        {{--{!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}--}}
+                        <input type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_destino)){{$frete->cidade_destino}}@else{{old('cidade_destino')}}@endif" />
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         {!! Form::label('estado', 'Estado Destino*') !!}
-                        {!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}
+                        {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
+                        <input type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_destino)){{$frete->estado_destino}}@else{{old('estado_destino')}}@endif" />
                     </div>
 
                 </fieldset>
@@ -116,22 +124,26 @@
 
                     <div class="form-group col-md-6">
                         {!! Form::label('tipo', 'Tipo *') !!}
-                        {!! Form::text('tipo', null, ['class' => 'form-control', 'placeholder' => 'Carro, Barco, etc']) !!}
+{{--                        {!! Form::text('tipo', null, ['class' => 'form-control', 'placeholder' => 'Carro, Barco, etc']) !!}--}}
+                        <input type="text" name="tipo" class="form-control" placeholder="Estado" value="@if(isset($frete->tipo)){{$frete->tipo}}@else{{old('tipo')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">
-                        {!! Form::label('identificacao', 'Identificacao *') !!}
-                        {!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}
+                        {!! Form::label('identificacao', 'Identificação *') !!}
+                        {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
+                        <input type="text" name="identificacao" class="form-control" placeholder="Identificação" value="@if(isset($frete->identificacao)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">
                         {!! Form::label('valor', 'Valor *') !!}
-                        {!! Form::text('valor_item', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}
+                        {{--{!! Form::text('valor_item', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}--}}
+                        <input type="text" name="valor_item" class="form-control moeda" placeholder="Valor" value="@if(isset($frete->valor_item)){{$frete->valor_item}}@else{{old('valor_item')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">
                         {!! Form::label('cor', 'Cor *') !!}
-                        {!! Form::text('cor', null, ['class' => 'form-control', 'placeholder' => 'Azul']) !!}
+                        {{--{!! Form::text('cor', null, ['class' => 'form-control', 'placeholder' => 'Azul']) !!}--}}
+                        <input type="text" name="cor" class="form-control" placeholder="Azul" value="@if(isset($frete->cor)){{$frete->cor}}@else{{old('cor')}}@endif" />
                     </div>
                 </fieldset>
 
@@ -143,7 +155,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="status">Status</label>
-                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], $status), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
+                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
                     </div>
                     <div class="form-group col-md-3">
                         <label class="columns" for="unit-yes-no-coleta">
@@ -157,7 +169,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <div class="switch large">
-                            <input class="switch-input" id="unit-yes-no5" type="checkbox">
+                            <input class="switch-input" id="unit-yes-no5" name="iscoleta" type="checkbox">
                             <label class="switch-paddle" for="unit-yes-no5">
                                 <span class="switch-active" aria-hidden="true">Sim</span>
                                 <span class="switch-inactive" aria-hidden="true">Não</span>
@@ -168,7 +180,7 @@
 
                     <div class="form-group col-md-3">
                         <div class="switch large">
-                            <input class="switch-input" id="unit-yes-no4" type="checkbox">
+                            <input class="switch-input" id="unit-yes-no4" name="isentrega" type="checkbox">
                             <label class="switch-paddle" id="colet" for="unit-yes-no4">
                                 <span class="switch-active" aria-hidden="true">Sim</span>
                                 <span class="switch-inactive" aria-hidden="true">Não</span>
@@ -180,24 +192,25 @@
                     <div id="coletor" style="display: none;">
                         <div class="form-group col-md-6">
                             <label for="Nome">Coletor </label>
-                            {!! Form::select('id_parceiro_coletor', [], null, ['class' => 'form-control select2_ce', 'required' => 'true', 'id' => 'id_coletor']) !!}
+                            {!! Form::select('id_parceiro_coletor', [], null, ['class' => 'form-control select2_ce', 'id' => 'id_coletor']) !!}
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="Nome">Valor Coleta </label>
-                            {!! Form::text('valor_coleta', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}
+                            {!! Form::text('valor_coleta', null, ['class' => 'form-control moeda', 'placeholder' => 'R$00,00']) !!}
                         </div>
                     </div>
                     <div id="entregador" style="display: none;">
 
                         <div class="form-group col-md-6">
                             <label for="Nome">Entregador </label>
-                            {!! Form::select('id_parceiro_entregador', [], null, ['class' => 'form-control select2_ce', 'required' => 'true', 'id' => 'id_entrega']) !!}
+                            {!! Form::select('id_parceiro_entregador', [], null, ['class' => 'form-control select2_ce', 'id' => 'id_entrega']) !!}
+                            {{--<select class="form-control select2_ce"></select>--}}
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="Nome">Valor Entrega </label>
-                            {!! Form::text('valor_entrega', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}
+                            {!! Form::text('valor_entrega', null, ['class' => 'form-control moeda', 'placeholder' => 'R$00,00']) !!}
                         </div>
 
                     </div>
@@ -211,7 +224,7 @@
 
                     <div class="form-group col-md-6">
                         {!! Form::label('valor_total', 'Valor Total *') !!}
-                        {!! Form::text('valor_total', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}
+                        {!! Form::text('valor_total', null, ['class' => 'form-control moeda', 'placeholder' => 'R$00,00']) !!}
                     </div>
 
                     <div class="form-group col-md-12">
@@ -298,7 +311,8 @@
                 {!! Form::hidden('pessoa', null, ['class' => 'pessoa']) !!}
                 {!! Form::hidden('sexo', null, ['class' => 'sexo']) !!}
 
-                <?php $pessoa = "<script>$('.pessoa').val();</script>"?>
+                <script>var pessoa = $('.pessoa').val();</script>
+                <?php $pessoa = "<script></script>"?>
                 <?php $sexo =  '<script>$(".sexo").val();</script>'?>
                 <div class="form-group col-md-6">
                     <label for="Nome">Nome</label>
@@ -307,8 +321,8 @@
 
                 <div class="form-group col-md-6">
                     {!! Form::label('documento', ['class' => 'pessoa'] == "juridica" ? 'CNPJ *': 'CPF *') !!}
-                    <?php var_dump($pessoa) ?>
-                    @if($pessoa == "juridica")
+                    {{--<script>$('.pessoa').val();</script>--}}
+                    @if("<script>$('.pessoa').val();</script>" === "juridica")
                         {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cnpj']) !!}
                     @else
                         {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cpf']) !!}
@@ -356,7 +370,7 @@
                     {{--{!! Form::text('site', null, ['class' => 'form-control']) !!}--}}
                 </div>
 
-                @if($pessoa == \App\Parceiro::PESSOA_JURIDICA)
+                @if("<script>$('.pessoa').val();</script>" == \App\Parceiro::PESSOA_JURIDICA)
                     <div class="form-group col-md-6">
                         {!! Form::label('fantasia', 'Fantasia *') !!}
                         {!! Form::text('fantasia', null, ['class' => 'form-control fantasia', 'disabled' => 'true']) !!}
@@ -486,6 +500,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="{{url('/assets/js/cad-frete.js')}}"></script>
     <script src="{{url('/assets/js/ischeck.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="{{url('/assets/js/masks.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>
 @endsection
 

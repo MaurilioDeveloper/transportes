@@ -34,14 +34,14 @@
                 <a href="#"><i class="fa fa-truck"></i> <span>Fretes</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('adicionarFrete') }}"><i class="fa fa-plus"></i>Novo</a></li>
-                    <li><a href=""><i class="fa fa-search"></i>Ver Todos</a></li>
+                    <li><a href="{{ route('listarFretes') }}"><i class="fa fa-search"></i>Ver Todos</a></li>
                 </ul>
             </li>
 
             <li class="treeview">
                 <a href="#"><i class="fa fa-users"></i> <span>Parceiros</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('parceiros.create') }}"><i class="fa fa-plus"></i>Novo</a></li>
+                    <li><a href="{{ route('adicionarParceiro') }}"><i class="fa fa-plus"></i>Novo</a></li>
                     <li><a href="{{ route('parceiros.index') }}"><i class="fa fa-search"></i>Ver Todos</a></li>
                 </ul>
             </li>

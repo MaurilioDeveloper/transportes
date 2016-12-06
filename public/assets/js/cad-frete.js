@@ -138,7 +138,7 @@ $(document).ready(function () {
                     form.fadeOut('slow', function () {
                         jQuery(".msg-suc").show();
                         setTimeout(function () {
-                            window.location.href = '/';
+                            window.location.href = '/painel/fretes';
                         }, 3000);
                     });
                 } else {

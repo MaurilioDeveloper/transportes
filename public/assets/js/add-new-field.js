@@ -30,7 +30,7 @@ $(document).ready(function(){
         var x = $('.count-contato').val();
         var m = $('#campos>#id>.row-fluid').length
         var resultado = (parseInt(x) + parseInt(m));
-        console.log(x, m, resultado);
+        // console.log(x, m, resultado);
         var t = parseInt(resultado);
         $("#campos>#id")
             .append('<div class="row-fluid " id="column-'+ (t + 1) +'"><div class="col-md-12"><hr style="border: 1px solid #ccc"/></div>' +

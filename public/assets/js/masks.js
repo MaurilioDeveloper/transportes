@@ -12,7 +12,7 @@ $(document).ready(function(){
   $('#cpf').mask('000.000.000-00', {placeholder: "000.000.000-00"});
   $('#cnpj').mask('00.000.000/0000-00', {placeholder: "00.000.000/0000-00"});
   $('#money').mask('000.000.000.000.000,00', {reverse: true});
-  $('#money2').mask("#.##0,00", {reverse: true});
+  $('.moeda').mask("R$000,00", {placeholder: "R$00,00"});
   $('.phone').mask('(00)00000-0000', {placeholder: "(00) 00000-0000"});
   $('#ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
     translation: {

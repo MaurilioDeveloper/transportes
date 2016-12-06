@@ -16,10 +16,13 @@ Route::group(['prefix' => 'painel'], function(){
     //Fretes
     Route::group(['prefix' => 'fretes'], function(){
         Route::get('/busca-parceiro/{name}', 'FreteController@getFindParceiro')->name('buscaParceiro');
+        Route::get('/lista-fretes', 'FreteController@listaFretes')->name('listaFretes');
+        Route::get('/delete-frete/{id}', 'FreteController@deleteFrete')->name('deleteFrete');
         Route::get('/create', 'FreteController@create')->name('adicionarFrete');
         Route::get('/edit/{id}', 'FreteController@edit');
         Route::post('/cadastrar-frete', 'FreteController@store')->name('cadastrarFrete');
         Route::post('/postParceiro', 'FreteController@postParceiro')->name('postParceiro');
+        Route::put('/update/{id}', 'FreteController@update')->name('updateFrete');
         Route::get('/', 'FreteController@index')->name('listarFretes');
     });
 

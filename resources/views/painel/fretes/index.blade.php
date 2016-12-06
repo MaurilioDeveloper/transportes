@@ -25,7 +25,7 @@
         </ol>
     </section>
     <div style="display: none;" id="dialog-confirm" title="Deletar">
-        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja realmente excluir este parceiro?</p>
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja realmente excluir este frete?</p>
     </div>
     <!-- Main content -->
     <section class="content">
@@ -38,12 +38,12 @@
 
                     <div class='box-header'>Listagem de Dados</div>
                     <div class='col-lg-8'>
-                        <a class="btn btn-success btn-sm" href="{{ route('cadastrarFrete')}}"><i class="fa fa-briefcase"></i> Cadastrar Frete</a>
+                        <a class="btn btn-success btn-sm" href="{{ route('adicionarFrete')}}"><i class="fa fa-briefcase"></i> Cadastrar Frete</a>
                     </div>
                     <br/>
                     <br/>
                     <div class='box-body'>
-                        <table class='table table-bordered display ui table' id="fretes-table">
+                            <table class='table table-bordered display ui table' id="fretes-table">
                             <thead>
                             <tr style='background: #2e6da4; color: white;'>
                                 <th style="text-align: center;">Parceiro</th>
@@ -51,10 +51,11 @@
                                 <th style="text-align: center;">Cidade Destino</th>
                                 <th style="text-align: center;">Tipo</th>
                                 <th style="text-align: center;">Status</th>
-                                <th style="text-align: center; display: inline-block">Açao</th>
+                                <th style="text-align: center; width: 160px">Açao</th>
                             </tr>
                             </thead>
                             <tbody>
+                            {{--
                             @forelse($fretes as $frete)
                             <tr class="warning">
                                 <td>{{ $frete->nome }}</td>
@@ -70,6 +71,7 @@
                             @empty
                                 <td colspan="7"> Nenhum Dado Cadastrado</td>
                             @endforelse
+                            --}}
                             </tbody>
                         </table>
                     </div>
@@ -106,5 +108,6 @@
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.rowReorder.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
+    <script src="{{url('/assets/js/list-frete.js')}}"></script>
 @endsection
 @endsection

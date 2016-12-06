@@ -29,9 +29,11 @@ class CreateFretesTable extends Migration
             $table->double('valor_item');
             $table->string('cor');
             $table->string('status');
+            $table->string('iscoleta');
             $table->integer('id_parceiro_coletor')->unsigned()->nullable();
             $table->foreign('id_parceiro_coletor')->references('id')->on('parceiros');
             $table->string('valor_coleta')->nullable();
+            $table->string('isentrega');
             $table->integer('id_parceiro_entregador')->unsigned()->nullable();
             $table->foreign('id_parceiro_entregador')->references('id')->on('parceiros');
             $table->string('valor_entrega')->nullable();

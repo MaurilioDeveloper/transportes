@@ -134,35 +134,38 @@ class ParceiroController extends Controller
 //        dd(Datatables::of(Parceiro::query())->make(true));
 //        dd($this->parceiro->get());
 //        return "xxxx";
-        /*
-        return '{ "data:"'. Parceiro::query()->select("parceiros.id",
+
+        return '{ "draw":0, "recordsTotal":10,"recordsFiltered":10, "data": '. Parceiro::query()->select("parceiros.id",
             "parceiros.nome",
             "parceiros.documento",
-            "parceiros.email",
+//            "parceiros.email",
             "parceiros.telefone",
-            "parceiros.data_nasc",
-            "parceiros.sexo",
+//            "parceiros.data_nasc",
+//            "parceiros.sexo",
             "parceiros.endereco",
-            "parceiros.numero",
+//            "parceiros.numero",
             "parceiros.cidade",
             "parceiros.estado")->get().'}';
-*/
-        return Datatables::of(Parceiro::query()
+
+
+//        return Parceiro::query()->select()
+/*
+         dd(Datatables::of(Parceiro::query()
             ->select("parceiros.id",
                 "parceiros.nome",
                 "parceiros.documento",
-                "parceiros.email",
+//                "parceiros.email",
                 "parceiros.telefone",
-                "parceiros.data_nasc",
-                "parceiros.sexo",
+//                "parceiros.data_nasc",
+//                "parceiros.sexo",
                 "parceiros.endereco",
-                "parceiros.numero",
+//                "parceiros.numero",
                 "parceiros.cidade",
                 "parceiros.estado"))
-            ->get();
+            ->make(true));
         //return Datatables::of(Visitante::query()
         //      ->select("visitantes.nome", "visitantes.estado", "visitantes.cidade", "visitantes.telefone", "visitantes.cargo", "visitantes.cidade", "visitantes.email"))->make(true);
-
+*/
     }
 
     public function deleteParceiro($id)

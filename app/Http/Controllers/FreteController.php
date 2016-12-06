@@ -32,30 +32,40 @@ class FreteController extends Controller
         $this->motorista = $motorista;
         $this->validate = $validate;
         $this->frete = $frete;
-//        $this->middleware('auth');
+        $this->middleware('auth');
 
     }
 
     public function index()
     {
         $fretes =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-        ->select("parceiros.nome", "fretes.id", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.status", "fretes.tipo as tipo")->get();
+        ->select("parceiros.nome", "fretes.id", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.status", "fretes.tipo as tipo")->paginate(10);
 //        dd($fretes);
-        return view('painel.fretes.index', compact('fretes'));
+        return view('painel.fretes.index');
     }
 
     public function create()
     {
-//        $dadosForm = $this->request->all();
-//        dd($dadosForm);
-        $status = Frete::STATUS;
-//        $data = '06/11/2016';
-//        $data_hoje = implode('-',array_reverse(explode('/', $data)));
-//        dd($data_hoje);
-
-//        dd($status);
+//        $status = Frete::STATUS;
         $titulo = "Cadastrar Frete";
-        return view('painel.fretes.create', compact('titulo', 'status'));
+        return view('painel.fretes.create', compact('titulo'));
+    }
+
+    public function listaFretes()
+    {
+        return '{ "draw":0, "recordsTotal":10,"recordsFiltered":10, "data": '. Frete::query()
+            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+            ->select("parceiros.nome", "fretes.id", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.status", "fretes.tipo as tipo")
+            ->get().'}';
+
+
+    }
+
+
+    public function deleteFrete($id)
+    {
+        Frete::findOrFail($id)->delete();
+        return 1;
     }
 
     public function store()
@@ -64,6 +74,26 @@ class FreteController extends Controller
         $data_hoje = implode('-',array_reverse(explode('/', $dadosForm['data_hoje'])));
         $data_inicio = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
         $data_fim = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
+
+        if($dadosForm['status'] == 1){
+            $status = "Em Edição";
+        }
+        if($dadosForm['status'] == 2){
+            $status = "Aguardando Coleta";
+        }
+        if($dadosForm['status'] == 3){
+            $status = "Aguardando Embarque";
+        }
+        if($dadosForm['status'] == 4){
+            $status = "Em trânsito";
+        }
+        if($dadosForm['status'] == 5){
+            $status = "Entregue";
+        }
+        if($dadosForm['status'] == 6){
+            $status = "Cancelado";
+        }
+
         $validate = $this->validate->make($dadosForm, Frete::$rules);
         if($validate->fails()){
             $messages = $validate->messages();
@@ -90,7 +120,9 @@ class FreteController extends Controller
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $dadosForm['valor_item'],
             'cor' => $dadosForm['cor'],
-            'status' => $dadosForm['status'],
+            'status' => $status,
+            'iscoleta' => $dadosForm['iscoleta'],
+            'isentrega' => $dadosForm['isentrega'],
             'id_parceiro_coletor' => $dadosForm['id_parceiro_coletor'],
             'valor_coleta' => $dadosForm['valor_coleta'],
             'id_parceiro_entregador' => $dadosForm['id_parceiro_entregador'],
@@ -104,10 +136,20 @@ class FreteController extends Controller
 
     public function edit($id)
     {
+        $titulo = 'Editar Frete';
         if (!($frete = Frete::find($id))) {
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
-        return view('painel.fretes.create', compact('frete'));
+//        dd($frete);
+        return view('painel.fretes.create', compact('frete', 'titulo'));
+    }
+
+    /**
+     * @return Update
+     */
+    public function update()
+    {
+        return "Atualizando";
     }
 
 
