@@ -12,7 +12,8 @@
         "laravelcollective/html": "5.3.0",
         "codeedu/code_validator": "0.0.2",
         "barryvdh/laravel-debugbar": "^2.3",
-        "yajra/laravel-datatables-oracle": "6.16"
+        "yajra/laravel-datatables-oracle": "6.16",
+        "jenssegers/date": "^3.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

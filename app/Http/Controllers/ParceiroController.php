@@ -159,7 +159,7 @@ class ParceiroController extends Controller
                 "parceiros.numero",
                 "parceiros.cidade",
                 "parceiros.estado"))
-            ->make(true);
+            ->get();
         //return Datatables::of(Visitante::query()
         //      ->select("visitantes.nome", "visitantes.estado", "visitantes.cidade", "visitantes.telefone", "visitantes.cargo", "visitantes.cidade", "visitantes.email"))->make(true);
 

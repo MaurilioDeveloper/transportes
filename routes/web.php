@@ -11,30 +11,30 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-
 Route::group(['prefix' => 'painel'], function(){
 
     //Fretes
-    Route::get('fretes/', 'FreteController@index')->name('listarFretes');
-    Route::get('fretes/add', 'FreteController@create')->name('adicionarFrete');
-    Route::get('fretes/edit/{id?}', 'FreteController@edit')->name('editarFrete');
+    Route::group(['prefix' => 'fretes'], function(){
+        Route::get('/busca-parceiro/{name}', 'FreteController@getFindParceiro')->name('buscaParceiro');
+        Route::get('/create', 'FreteController@create')->name('adicionarFrete');
+        Route::get('/edit/{id}', 'FreteController@edit');
+        Route::post('/cadastrar-frete', 'FreteController@store')->name('cadastrarFrete');
+        Route::post('/postParceiro', 'FreteController@postParceiro')->name('postParceiro');
+        Route::get('/', 'FreteController@index')->name('listarFretes');
+    });
 
-    //Contatos
-//    Route::get('parceiros/delete-motorista/{id}', 'ParceiroController@deleteMotorista');
 
     //Parceiros
-    Route::get('parceiros/listaParceiros', 'ParceiroController@listaParceiros')->name('listarParceiros');
-//    Route::post('parceiros/postOcorrencia', 'ParceiroController@postOcorrencia')->name('postOcorrencia');
-//    Route::get('parceiros/delete-parceiro/{id}', 'ParceiroController@deleteParceiro')->name('deleteParceiro');
-    Route::get('parceiros/cadastrar', 'ParceiroController@cadastrar')->name('adicionarParceiro')->middleware('auth');
-    Route::get('parceiros/edit/{id}', 'ParceiroController@edit')->name('editarParceiro');
-//    Route::get('parceiros', 'ParceiroController@index')->name('parceiros');
+    Route::group(['prefix' => 'parceiros'], function(){
+        Route::get('/delete-motorista/{id}', 'ParceiroController@deleteMotorista');
+        Route::get('/listaParceiros', 'ParceiroController@listaParceiros')->name('listarParceiros');
+        Route::post('/postOcorrencia', 'ParceiroController@postOcorrencia')->name('postOcorrencia');
+        Route::get('/delete-parceiro/{id}', 'ParceiroController@deleteParceiro')->name('deleteParceiro');
+        Route::get('/cadastrar', 'ParceiroController@cadastrar')->name('adicionarParceiro');
+        Route::get('/edit/{id}', 'ParceiroController@edit')->name('editarParceiro');
+    });
 
-//    Route::get('parceiros/cadastrar', 'ParceiroController@create')->name('adicionarParceiro');
-//    Route::get('parceiros/edit/{id}', 'ParceiroController@edit')->name('editarParceiro');
     Route::resource('parceiros', 'ParceiroController');
-//    Route::get('parceiros', 'ParceiroController@index')->name('listaParceiro')->middleware('auth');
 
 
 
@@ -43,8 +43,7 @@ Route::group(['prefix' => 'painel'], function(){
     Route::get('delete-usuario/{id}', 'UsuarioController@destroy');
     Route::get('usuarios/listaUsuarios', 'UsuarioController@listaUsuarios');
 
-    //Pessoas
-//    Route::resource('pessoas', 'PessoaController');
+
     Route::get('/', 'PainelController@index')->name('dashboard');
 
 });
@@ -57,6 +56,7 @@ $this->post('/login', 'Auth\LoginController@login');
 $this->get('/logout', 'Auth\LoginController@logout');
 
 Auth::routes();
-Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
+

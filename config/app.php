@@ -171,6 +171,9 @@ return [
          * Package Service Providers...
          */
 
+        //Date
+        Jenssegers\Date\DateServiceProvider::class,
+
         //
         Collective\Html\HtmlServiceProvider::class,
         //
@@ -235,6 +238,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Date' => Jenssegers\Date\Date::class,
 
     ],
 
