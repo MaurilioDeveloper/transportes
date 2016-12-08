@@ -49,7 +49,7 @@
                 @endif
 
                 <fieldset class="callout column small-12">
-                    <legend><b>Parceiro | Datas</b></legend>
+                    <legend><b>Parceiro - Datas</b></legend>
                     <div class="form-group col-md-9">
                         <label for="Nome">Parceiro *</label>
                         {!! Form::select('id_parceiro', [], null, ['class' => 'form-control select2_frete', 'required' => 'true', 'id' => 'frete']) !!}
@@ -84,7 +84,7 @@
 
 
                 <fieldset class="callout column small-12">
-                    <legend><b>Origem | Destino</b></legend>
+                    <legend><b>Origem - Destino</b></legend>
 
 
                     <div class="form-group col-md-3">
@@ -149,7 +149,7 @@
 
 
                 <fieldset class="callout column small-12">
-                    <legend><b>Status | Coleta | Entrega</b></legend>
+                    <legend><b>Status - Coleta - Entrega</b></legend>
 
                     {{--<hr style="border: 1px solid #ccc"/>--}}
 
@@ -220,7 +220,7 @@
 
                 </script>
                 <fieldset class="callout column small-12">
-                    <legend><b>Valor Total | Informações</b></legend>
+                    <legend><b>Valor Total - Informações</b></legend>
 
                     <div class="form-group col-md-6">
                         {!! Form::label('valor_total', 'Valor Total *') !!}

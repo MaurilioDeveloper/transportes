@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Caminhao;
 use App\Motorista;
 use App\Ocorrencia;
+use App\TipoOcorrencia;
 use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Contato;
@@ -22,8 +23,15 @@ class ParceiroController extends Controller
     private $contato;
     private $motorista;
     private $validate;
+    private $ocorrencia;
+    private $tipoOcorrencia;
 
-    public function __construct(Parceiro $parceiro, Request $request, Caminhao $caminhao, Contato $contato, Motorista $motorista, Validate $validate)
+    public function __construct(Parceiro $parceiro, Request $request,
+                                Caminhao $caminhao, Contato $contato,
+                                Motorista $motorista,
+                                Ocorrencia $ocorrencia,
+                                TipoOcorrencia $tipoOcorrencia,
+                                Validate $validate)
     {
         $this->middleware('auth');
 
@@ -33,6 +41,8 @@ class ParceiroController extends Controller
         $this->contato = $contato;
         $this->motorista = $motorista;
         $this->validate = $validate;
+        $this->ocorrencia = $ocorrencia;
+        $this->tipoOcorrencia = $tipoOcorrencia;
     }
 
     public function index()
@@ -180,6 +190,13 @@ class ParceiroController extends Controller
         return 1;
     }
 
+    public function deleteOcorrencia($id)
+    {
+        Ocorrencia::findOrFail($id)->delete();
+        return 1;
+    }
+
+
 
     public function edit($id)
     {
@@ -191,6 +208,13 @@ class ParceiroController extends Controller
         $caminhoes = $this->caminhao->all()->where('id_parceiro', $id);
         $contatos = $this->contato->all()->where('id_parceiro', $id);
         $motoristas = $this->motorista->all()->where('id_parceiro', $id);
+        $ocorrencias = Ocorrencia::query()
+            ->join('users', 'users.id', '=', 'ocorrencias.id_usuario')
+            ->join('tipo_ocorrencias', 'tipo_ocorrencias.id', '=', 'ocorrencias.id_tipo_ocorrencia')
+            ->select("ocorrencias.id", "ocorrencias.data", "tipo_ocorrencias.nome as tipo", "ocorrencias.descricao", "users.name as usuario")
+            ->where('id_parceiro', $id)->paginate(10);
+        $tipo_ocorrencia = $this->tipoOcorrencia->pluck('nome', 'id')->toArray();
+
 //        dd($motoristas);
 
 //        dd($motoristas);
@@ -198,7 +222,7 @@ class ParceiroController extends Controller
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
         $pessoa = $parceiro->pessoa;
-        return view('painel.parceiros.edit', compact('parceiro', 'pessoa', 'titulo', 'caminhoes', 'contatos', 'motoristas'));
+        return view('painel.parceiros.edit', compact('parceiro', 'tipo_ocorrencia', 'pessoa', 'titulo', 'caminhoes', 'contatos', 'motoristas', 'ocorrencias'));
     }
 
     public function update(ParceiroRequest $request, $id)
@@ -377,8 +401,23 @@ class ParceiroController extends Controller
     public function postOcorrencia()
     {
         $data = $this->request->all();
-        Ocorrencia::create($data);
-        return redirect()->route('painel.parceiros.index');
+//        dd($data);
+        $dataOcorrencia = implode('-',array_reverse(explode('/', $data['data'])));
+        Ocorrencia::create([
+            'data' => $dataOcorrencia,
+            'id_tipo_ocorrencia' => $data['tipo_ocorrencia'],
+            'id_usuario' => $data['id_user'],
+            'id_parceiro' => $data['id_parceiro'],
+            'descricao' => $data['descricao']
+        ]);
+        return redirect()->route('parceiros.index');
+    }
+
+    public function postTipoOcorrencia()
+    {
+        $dataForm = $this->request->all();
+        TipoOcorrencia::create($dataForm);
+        return redirect()->route('parceiros.index');
     }
 
 }

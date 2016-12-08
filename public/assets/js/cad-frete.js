@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $( function() {
-        $( ".datapicker" ).datepicker({
+        $(".datapicker" ).datepicker({
             dateFormat: 'dd/mm/yy',
             nextText: 'Próximo',
             prevText: 'Anterior'

@@ -109,6 +109,10 @@ $(document).ready(function(){
 
     });
 
+    $("#botao-tipo-ocorrencia").click(function(){
+        $("#ocorrencia").modal('hide');
+        $("#tipoOcorrencia").modal();
+    });
 });
 
 function removerContato(id) {

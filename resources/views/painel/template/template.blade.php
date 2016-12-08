@@ -90,5 +90,6 @@
 
             });
         </script>
+        <script type="text/javascript" src="{{url('/assets/js/data-picker.js')}}"></script>
     </body>
 </html>

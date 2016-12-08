@@ -15,6 +15,7 @@ class CreateTipoOcorrenciasTable extends Migration
     {
         Schema::create('tipo_ocorrencias', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nome');
             $table->timestamps();
         });
     }

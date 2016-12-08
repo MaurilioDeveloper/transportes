@@ -18,7 +18,9 @@ class CreateOcorrenciasTable extends Migration
             $table->integer('id_tipo_ocorrencia')->unsigned();
             $table->foreign('id_tipo_ocorrencia')->references('id')->on('tipo_ocorrencia');
             $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->foreign('id_usuario')->references('id')->on('parceiros');
+            $table->integer('id_parceiro')->unsigned();
+            $table->foreign('id_parceiro')->references('id')->on('parceiros');
             $table->date('data');
             $table->text('descricao');
             $table->timestamps();

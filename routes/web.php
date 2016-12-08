@@ -32,6 +32,8 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/delete-motorista/{id}', 'ParceiroController@deleteMotorista');
         Route::get('/listaParceiros', 'ParceiroController@listaParceiros')->name('listarParceiros');
         Route::post('/postOcorrencia', 'ParceiroController@postOcorrencia')->name('postOcorrencia');
+        Route::post('/postTipoOcorrencia', 'ParceiroController@postTipoOcorrencia')->name('postTipoOcorrencia');
+        Route::get('/delete-ocorrencia/{id}', 'ParceiroController@deleteOcorrencia')->name('deleteOcorrencia');
         Route::get('/delete-parceiro/{id}', 'ParceiroController@deleteParceiro')->name('deleteParceiro');
         Route::get('/cadastrar', 'ParceiroController@cadastrar')->name('adicionarParceiro');
         Route::get('/edit/{id}', 'ParceiroController@edit')->name('editarParceiro');
