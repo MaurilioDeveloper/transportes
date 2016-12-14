@@ -1,4 +1,9 @@
-var inputEntrega = $('#unit-yes-no4').prop("checked",false);
+if($('#isentregaON').val() === "on"){
+    var inputEntrega = $('#unit-yes-no4').prop("checked",true);
+    $("#entregador").show();
+}else {
+    var inputEntrega = $('#unit-yes-no4').prop("checked", false);
+}
 $("#unit-yes-no4").change(function(){
     if(inputEntrega.prop("checked") === true){
         inputCheck = inputEntrega.prop("checked", true);
@@ -9,7 +14,12 @@ $("#unit-yes-no4").change(function(){
     }
 });
 
-var inputColeta = $('#unit-yes-no5').prop("checked",false);
+if($('#iscoletaON').val() === "on") {
+    var inputColeta = $('#unit-yes-no5').prop("checked", true);
+    $("#coletor").show();
+}else{
+    var inputColeta = $('#unit-yes-no5').prop("checked", false);
+}
 $("#unit-yes-no5").change(function(){
     if(inputColeta.prop("checked") === true){
         inputCheck = inputColeta.prop("checked", true);

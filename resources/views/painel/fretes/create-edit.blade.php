@@ -43,16 +43,26 @@
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Frete Cadastrado com Sucesso</div>
 
                 @if(isset($frete->id) && $frete->id > 0)
-                    {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'method' => 'PUT']) !!}
+                    {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'send' => 'updateFrete', 'name' => 'form', 'method' => 'PUT']) !!}
+
                 @else
                     {!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete']) !!}
                 @endif
 
+
                 <fieldset class="callout column small-12">
                     <legend><b>Parceiro - Datas</b></legend>
                     <div class="form-group col-md-9">
+                        <input type="hidden"  />
                         <label for="Nome">Parceiro *</label>
-                        {!! Form::select('id_parceiro', [], null, ['class' => 'form-control select2_frete', 'required' => 'true', 'id' => 'frete']) !!}
+{{--                        {!! Form::select('id_parceiro', [], null, ['class' => 'form-control select2_frete', 'required' => 'true', 'id' => 'frete']) !!}--}}
+                        <select class="form-control select2_frete" id="frete" name="id_parceiro">
+                            @if(isset($frete->id_parceiro))
+                                <option value="{{$frete->id_parceiro}}" selected>{{$freteParceiroNome}}</option>
+                            @else
+                                <option value="0" selected>Selecione um parceiro</option>
+                            @endif
+                        </select>
                     </div>
 
                     <div class="form-group col-md-3">
@@ -66,19 +76,19 @@
                     <div class="form-group col-md-4">
                         <label>Data Atual</label>
                         <input required="" name='data_hoje' type="text" placeholder="dd/mm/yyyy"
-                               class="form-control datapicker" value="{{ $data->format('d/m/Y') }}"/>
+                               class="form-control datapicker" value="{{ $data_hoje or $data->format('d/m/Y') }}"/>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Data Prevista Inicio</label>
                         <input required="" name='data_inicio' type="text" placeholder="dd/mm/yyyy"
-                               class="form-control datapicker" value=""/>
+                               class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Data Prevista Fim</label>
                         <input required="" name='data_fim' type="text" placeholder="dd/mm/yyyy"
-                               class="form-control datapicker" value=""/>
+                               class="form-control datapicker" value="{{$data_fim or old('data_fim')}}"/>
                     </div>
                 </fieldset>
 
@@ -125,7 +135,7 @@
                     <div class="form-group col-md-6">
                         {!! Form::label('tipo', 'Tipo *') !!}
 {{--                        {!! Form::text('tipo', null, ['class' => 'form-control', 'placeholder' => 'Carro, Barco, etc']) !!}--}}
-                        <input type="text" name="tipo" class="form-control" placeholder="Estado" value="@if(isset($frete->tipo)){{$frete->tipo}}@else{{old('tipo')}}@endif" />
+                        <input type="text" name="tipo" class="form-control" placeholder="Carro, Barco, etc.." value="@if(isset($frete->tipo)){{$frete->tipo}}@else{{old('tipo')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">
@@ -137,7 +147,7 @@
                     <div class="form-group col-md-6">
                         {!! Form::label('valor', 'Valor *') !!}
                         {{--{!! Form::text('valor_item', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}--}}
-                        <input type="text" name="valor_item" class="form-control moeda" placeholder="Valor" value="@if(isset($frete->valor_item)){{$frete->valor_item}}@else{{old('valor_item')}}@endif" />
+                        <input type="text" name="valor_item" class="form-control moeda" data-prefix="R$" placeholder="Valor" value="@if(isset($frete->valor_item)){{$frete->valor_item}}@else{{old('valor_item')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">
@@ -155,7 +165,8 @@
 
                     <div class="form-group col-md-6">
                         <label for="status">Status</label>
-                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
+                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), isset($frete->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
+
                     </div>
                     <div class="form-group col-md-3">
                         <label class="columns" for="unit-yes-no-coleta">
@@ -167,17 +178,42 @@
                             Tem Entrega?
                         </label>
                     </div>
-                    <div class="form-group col-md-3">
-                        <div class="switch large">
-                            <input class="switch-input" id="unit-yes-no5" name="iscoleta" type="checkbox">
-                            <label class="switch-paddle" for="unit-yes-no5">
-                                <span class="switch-active" aria-hidden="true">Sim</span>
-                                <span class="switch-inactive" aria-hidden="true">Não</span>
-                            </label>
+                    @if(isset($iscoleta) && $iscoleta === "on")
+                        <input type="hidden" value="{{$iscoleta}}" id="iscoletaON" />
+                        <div class="form-group col-md-3">
+                            <div class="switch large">
+                                <input class="switch-input ativo" id="unit-yes-no5" value="{{$iscoleta}}" name="iscoleta" type="checkbox">
+                                <label class="switch-paddle" for="unit-yes-no5">
+                                    <span class="switch-active" aria-hidden="true">Sim</span>
+                                    <span class="switch-inactive" aria-hidden="true">Não</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="form-group col-md-3">
+                            <div class="switch large">
+                                <input class="switch-input" id="unit-yes-no5" name="iscoleta" type="checkbox">
+                                <label class="switch-paddle" for="unit-yes-no5">
+                                    <span class="switch-active" aria-hidden="true">Sim</span>
+                                    <span class="switch-inactive" aria-hidden="true">Não</span>
+                                </label>
+                            </div>
+                        </div>
+                    @endif
 
 
+                    @if(isset($isentrega) && $isentrega === "on")
+                        <input type="hidden" value="{{$isentrega}}" id="isentregaON" />
+                        <div class="form-group col-md-3">
+                            <div class="switch large">
+                                <input class="switch-input ativo" id="unit-yes-no4" value="{{$isentrega}}" name="isentrega" type="checkbox">
+                                <label class="switch-paddle" id="colet" for="unit-yes-no4">
+                                    <span class="switch-active" aria-hidden="true">Sim</span>
+                                    <span class="switch-inactive" aria-hidden="true">Não</span>
+                                </label>
+                            </div>
+                        </div>
+                    @else
                     <div class="form-group col-md-3">
                         <div class="switch large">
                             <input class="switch-input" id="unit-yes-no4" name="isentrega" type="checkbox">
@@ -187,30 +223,48 @@
                             </label>
                         </div>
                     </div>
+                    @endif
 
 
                     <div id="coletor" style="display: none;">
                         <div class="form-group col-md-6">
                             <label for="Nome">Coletor </label>
-                            {!! Form::select('id_parceiro_coletor', [], null, ['class' => 'form-control select2_ce', 'id' => 'id_coletor']) !!}
+{{--                            {!! Form::select('id_parceiro_coletor', [], null, ['class' => 'form-control select2_ce', 'id' => 'id_coletor']) !!}--}}
+                            <select name="id_parceiro_coletor" class="form-control select2_ce" id="id_coletor">
+                                @if(isset($frete->id_parceiro_coletor))
+                                    <option value="{{$frete->id_parceiro_coletor}}" selected>{{$freteParceiroColetorNome}}</option>
+                                @else
+                                    <option value="0">Selecione um Coletor</option>
+                                @endif
+                            </select>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="Nome">Valor Coleta </label>
-                            {!! Form::text('valor_coleta', null, ['class' => 'form-control moeda', 'placeholder' => 'R$00,00']) !!}
+                            {{--{!! Form::text('valor_coleta', $frete->valor_coleta or old('valor_coleta'), ['class' => 'form-control moeda', 'data-prefix' => 'R$', 'placeholder' => 'R$00,00']) !!}--}}
+                            <input name="valor_coleta" type="text" value="@if(isset($frete->valor_coleta)){{$frete->valor_coleta}}@else{{old('valor_coleta')}}@endif" class="form-control moeda" data-prefix="R$" placeholder="R$000,00" />
                         </div>
                     </div>
                     <div id="entregador" style="display: none;">
 
                         <div class="form-group col-md-6">
                             <label for="Nome">Entregador </label>
-                            {!! Form::select('id_parceiro_entregador', [], null, ['class' => 'form-control select2_ce', 'id' => 'id_entrega']) !!}
+
+                            <select name="id_parceiro_entregador" class="form-control select2_ce" id="id_entregador">
+                                @if(isset($frete->id_parceiro_entregador))
+                                    <option value="{{$frete->id_parceiro_entregador}}" selected>{{$freteParceiroEntregadorNome}}</option>
+                                @else
+                                    <option value="0">Selecione um Entregador</option>
+                                @endif
+                            </select>
+{{--                            {!! Form::select('id_parceiro_entregador', [], null, ['class' => 'form-control select2_ce', 'id' => 'id_entrega']) !!}--}}
                             {{--<select class="form-control select2_ce"></select>--}}
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="Nome">Valor Entrega </label>
-                            {!! Form::text('valor_entrega', null, ['class' => 'form-control moeda', 'placeholder' => 'R$00,00']) !!}
+                            <label for="valor_entrega">Valor Entrega </label>
+                            {{--{!! Form::text('valor_entrega', $frete->valor_entrega or old('valor_entrega'), ['class' => 'form-control moeda', 'data-prefix' => 'R$', 'placeholder' => 'R$00,00']) !!}--}}
+                            <input type="text" name="valor_entrega" class="form-control moeda" data-prefix="R$" placeholder="Valor" value="@if(isset($frete->valor_entrega)){{$frete->valor_entrega}}@else{{old('valor_entrega')}}@endif" />
                         </div>
 
                     </div>
@@ -224,7 +278,7 @@
 
                     <div class="form-group col-md-6">
                         {!! Form::label('valor_total', 'Valor Total *') !!}
-                        {!! Form::text('valor_total', null, ['class' => 'form-control moeda', 'placeholder' => 'R$00,00']) !!}
+                        {!! Form::text('valor_total', null, ['class' => 'form-control moeda', 'data-prefix' => 'R$', 'placeholder' => 'R$00,00']) !!}
                     </div>
 
                     <div class="form-group col-md-12">
@@ -261,30 +315,6 @@
                 <!-- Tem Entrega -->
 
 
-                <div class="form-group col-md-12" style="display: none;">
-                    <div class="box box-primary box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Entrega</h3>
-
-                            <div class="box-tools pull-right">
-                                {{--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>--}}
-                                {{--</button>--}}
-                            </div><!-- /.box-tools -->
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="form-group col-md-6">
-                                <label for="id_parceiro_coletor">Entregador</label>
-                                {!! Form::select('id_parceiro_entregador', [], null, ['class' => 'form-control', 'id' => 'coletor']) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="valor_coleta">Valor</label>
-                                {!! Form::text('valor_entrega', null, ['class' => 'form-control']) !!}
-                            </div>
-                        </div><!-- /.box-body -->
-                    </div>
-                </div>
-
-
                 <div class="form-group col-md-6">
                     <button type="submit" id="botao" class="btn btn-primary"><img src="{{url('/assets/imgs/carregar.gif')}}" class="load" alt="Carregando" style="display: none; width: 30px; height: 30px;"/> Cadastrar</button>
                     {{--{!! Form::submit('Cadastrar', ['class' => 'btn btn-primary', 'id' => 'botao']) !!}--}}
@@ -311,22 +341,27 @@
                 {!! Form::hidden('pessoa', null, ['class' => 'pessoa']) !!}
                 {!! Form::hidden('sexo', null, ['class' => 'sexo']) !!}
 
-                <script>var pessoa = $('.pessoa').val();</script>
-                <?php $pessoa = "<script></script>"?>
-                <?php $sexo =  '<script>$(".sexo").val();</script>'?>
                 <div class="form-group col-md-6">
                     <label for="Nome">Nome</label>
                     {!! Form::text('nome', null, ['class' => 'form-control nome_parceiro', 'disabled' => 'true']) !!}
                 </div>
 
-                <div class="form-group col-md-6">
-                    {!! Form::label('documento', ['class' => 'pessoa'] == "juridica" ? 'CNPJ *': 'CPF *') !!}
-                    {{--<script>$('.pessoa').val();</script>--}}
-                    @if("<script>$('.pessoa').val();</script>" === "juridica")
-                        {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cnpj']) !!}
-                    @else
-                        {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cpf']) !!}
-                    @endif
+                <div class="cnpj" style="display: none">
+                    <div class="form-group col-md-6">
+                        <label for="cnpj">Cnpj*</label>
+                        {{--<script>$('.pessoa').val();</script>--}}
+                        {{--@if($fretePessoa === "juridica")--}}
+                            {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cnpj']) !!}
+
+                        {{--@endif--}}
+                    </div>
+                </div>
+
+                <div class="cpf"  style="display: none">
+                    <div class="form-group col-md-6">
+                            <label for="cnpj">Cpf*</label>
+                            {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cpf']) !!}
+                    </div>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -365,12 +400,8 @@
                     {!! Form::text('cep', null, ['class' => 'form-control cep', 'disabled' => 'true', 'id' => 'cep']) !!}
                 </div>
 
-                <div class="form-group col-md-6">
-                    {{--{!! Form::label('site', 'Site') !!}--}}
-                    {{--{!! Form::text('site', null, ['class' => 'form-control']) !!}--}}
-                </div>
 
-                @if("<script>$('.pessoa').val();</script>" == \App\Parceiro::PESSOA_JURIDICA)
+                <div class="juridica" style="display: none">
                     <div class="form-group col-md-6">
                         {!! Form::label('fantasia', 'Fantasia *') !!}
                         {!! Form::text('fantasia', null, ['class' => 'form-control fantasia', 'disabled' => 'true']) !!}
@@ -380,10 +411,11 @@
                         {!! Form::label('inscricao_estadual', 'Inscrição Estadual *') !!}
                         {!! Form::text('inscricao_estadual', null, ['class' => 'form-control inscricao_estadual', 'disabled' => 'true']) !!}
                     </div>
-                @else
+                </div>
+                <div class="fisica" style="display: none">
                     <div class="form-group col-md-6">
                         {!! Form::label('estado_civil', 'Estado Civil *') !!}
-                        {!! Form::select('estado_civil', array_merge([0 => 'Selecione'],\App\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control estado_civil', 'disabled' => 'true']) !!}
+                        {!! Form::select('estado_civil', array_merge([0 => 'S elecione'],\App\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control estado_civil', 'disabled' => 'true']) !!}
                     </div>
 
                     <div class="form-group col-md-6">
@@ -450,7 +482,7 @@
                 @endif
 
 
-                @endif
+                </div>
 
             </div>
             <div class="modal-footer">
@@ -501,6 +533,7 @@
     <script src="{{url('/assets/js/cad-frete.js')}}"></script>
     <script src="{{url('/assets/js/ischeck.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="{{url('/assets/js/maskMoney.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>
 @endsection

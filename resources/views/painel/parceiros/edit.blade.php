@@ -32,7 +32,7 @@
                 <!-- form start -->
                 <div class="box-body">
                     <h4 class="box-title">Os campos com * são obrigatórios</h4>
-                    {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form']) !!}
+                    {!! Form::open(['route' => 'postTipoOcorrencia', 'class' => 'form']) !!}
 
                     <div class="form-group col-md-12">
                         {!! Form::label('nome', 'Tipo Ocorrência *') !!}

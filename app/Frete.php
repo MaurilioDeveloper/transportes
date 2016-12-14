@@ -29,7 +29,7 @@ class Frete extends Model
         'valor_item' => 'required',
         'cor' => 'required',
         'identificacao' => 'required',
-        'valor_total' => 'required'
+        'valor_total' => 'required',
 
     ];
 

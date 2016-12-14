@@ -416,6 +416,7 @@ class ParceiroController extends Controller
     public function postTipoOcorrencia()
     {
         $dataForm = $this->request->all();
+//        dd($dataForm);
         TipoOcorrencia::create($dataForm);
         return redirect()->route('parceiros.index');
     }

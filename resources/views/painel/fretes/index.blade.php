@@ -2,17 +2,28 @@
 
 @section('styles-head')
     <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/datatables.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/dataTables.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/autoFill.bootstrap.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/buttons.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/colReorder.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/fixedColumns.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/fixedHeader.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/keyTable.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/responsive.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/rowReorder.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/scroller.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/dataTables.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/autoFill.bootstrap.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/buttons.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/colReorder.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/fixedColumns.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/fixedHeader.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/keyTable.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/responsive.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/rowReorder.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/scroller.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
 @endsection
 
 @section('content')
@@ -24,56 +35,102 @@
             <li class="active"><i class="fa fa-briefcase"></i> Fretes</li>
         </ol>
     </section>
-    <div style="display: none;" id="dialog-confirm" title="Deletar">
-        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja realmente excluir este frete?</p>
-    </div>
     <!-- Main content -->
-    <section class="content">
+    <section class="content" ng-app="app">
         <div class="row">
             <div class="col-md-12">
                 <div class='box box-primary'>
-                    <div style="display: none;" id="dialog-confirm" title="Deletar">
-                        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja realmente excluir esse visitante?</p>
-                    </div>
 
                     <div class='box-header'>Listagem de Dados</div>
                     <div class='col-lg-8'>
-                        <a class="btn btn-success btn-sm" href="{{ route('adicionarFrete')}}"><i class="fa fa-briefcase"></i> Cadastrar Frete</a>
+                        <a class="btn btn-success btn-sm" href="{{ route('adicionarFrete')}}"><i
+                                    class="fa fa-briefcase"></i> Cadastrar Frete</a>
                     </div>
                     <br/>
                     <br/>
                     <div class='box-body'>
-                            <table class='table table-bordered display ui table' id="fretes-table">
-                            <thead>
-                            <tr style='background: #2e6da4; color: white;'>
-                                <th style="text-align: center;">Parceiro</th>
-                                <th style="text-align: center;">Cidade Origem</th>
-                                <th style="text-align: center;">Cidade Destino</th>
-                                <th style="text-align: center;">Tipo</th>
-                                <th style="text-align: center;">Status</th>
-                                <th style="text-align: center; width: 160px">Açao</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{--
-                            @forelse($fretes as $frete)
-                            <tr class="warning">
-                                <td>{{ $frete->nome }}</td>
-                                <td>{{ $frete->cidade_origem}}</td>
-                                <td>{{ $frete->cidade_destino }}</td>
-                                <td>{{ $frete->tipo}}</td>
-                                <td>{{ $frete->status}}</td>
-                                <td>
-                                    <a href="" class="btn btn-primary btn-sm" style=""><i class="fa fa-edit"></i> Editar</a>
-                                    <a href="" id-parceiro="{{$frete->id}}}" class="btn btn-danger btn-sm editor_remove" style=""><i class="fa fa-trash"></i> Deletar</a>
-                                </td>
-                            </tr>
-                            @empty
-                                <td colspan="7"> Nenhum Dado Cadastrado</td>
-                            @endforelse
-                            --}}
-                            </tbody>
-                        </table>
+                        {{--<table class='table table-bordered display ui table' id="fretes-table">--}}
+                        {{--<thead>--}}
+                        {{--<tr style='background: #2e6da4; color: white;'>--}}
+                        {{--<th style="text-align: center;">Parceiro</th>--}}
+                        {{--<th style="text-align: center;">Cidade Origem</th>--}}
+                        {{--<th style="text-align: center;">Cidade Destino</th>--}}
+                        {{--<th style="text-align: center;">Tipo</th>--}}
+                        {{--<th style="text-align: center;">Status</th>--}}
+                        {{--<th style="text-align: center; width: 160px">Açao</th>--}}
+                        {{--</tr>--}}
+                        {{--</thead>--}}
+                        {{--<tbody>--}}
+                        {{--
+                        @forelse($fretes as $frete)
+                        <tr class="warning">
+                            <td>{{ $frete->nome }}</td>
+                            <td>{{ $frete->cidade_origem}}</td>
+                            <td>{{ $frete->cidade_destino }}</td>
+                            <td>{{ $frete->tipo}}</td>
+                            <td>{{ $frete->status}}</td>
+                            <td>
+                                <a href="" class="btn btn-primary btn-sm" style=""><i class="fa fa-edit"></i> Editar</a>
+                                <a href="" id-parceiro="{{$frete->id}}}" class="btn btn-danger btn-sm editor_remove" style=""><i class="fa fa-trash"></i> Deletar</a>
+                            </td>
+                        </tr>
+                        @empty
+                            <td colspan="7"> Nenhum Dado Cadastrado</td>
+                        @endforelse
+                        --}}
+                        {{--</tbody>--}}
+                        {{--</table>--}}
+                        <div style="display: none;" id="dialog-confirm" title="Deletar">
+                            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja
+                                realmente excluir esse frete?</p>
+                        </div>
+                        <div ng-controller="HttpGetController">
+                            <div style="float: right"><label>Pesquisar: <input class="" ng-model="searchText"></label></div>
+                            <table class='table table-bordered' id="fretes-table-two">
+                                {{--<thead>--}}
+                                <tr style='background: #2e6da4; color: white;'>
+                                    <th  ng-click="sortBy('nome')" style="text-align: center;">Parceiro</th>
+                                    <th  ng-click="sortBy('cidade_origem')" style="text-align: center;">Cidade Origem</th>
+                                    <th  ng-click="sortBy('cidade_destino')" style="text-align: center;">Cidade Destino</th>
+                                    <th  ng-click="sortBy('tipo')" style="text-align: center;">Tipo</th>
+                                    <th  ng-click="sortBy('status')" style="text-align: center;">Status</th>
+                                    <th style="text-align: center; width: 160px">Açao</th>
+                                </tr>
+                                {{--</thead>--}}
+                                {{--<tbody>--}}
+                                @verbatim
+                                <tr ng:repeat="f in fretes | orderBy:sortField:reverseOrder | filter : searchText">
+                                    <td>{{ f.nome }}</td>
+                                    <td>{{ f.cidade_origem }}</td>
+                                    <td>{{ f.cidade_destino }}</td>
+                                    <td>{{ f.tipo }}</td>
+                                    <td>{{ f.status }}</td>
+                                    <td>
+                                        <a href="fretes/edit/{{ f.id }}" id-frete="{{ f.id }}" class="btn btn-primary btn-sm" style="display: inline-block"><i class="fa fa-edit"></i> Editar</a>
+                                        <a href="" id-frete="{{f.id}}" class="btn btn-danger btn-sm editor_remove"><i class="fa fa-trash"></i> Deletar</a>
+                                    </td>
+                                </tr>
+                                @endverbatim
+                                {{--
+                                @forelse($fretes as $frete)
+                                <tr class="warning">
+                                    <td>{{ $frete->nome }}</td>
+                                    <td>{{ $frete->cidade_origem}}</td>
+                                    <td>{{ $frete->cidade_destino }}</td>
+                                    <td>{{ $frete->tipo}}</td>
+                                    <td>{{ $frete->status}}</td>
+                                    <td>
+                                        <a href="" class="btn btn-primary btn-sm" style=""><i class="fa fa-edit"></i> Editar</a>
+                                        <a href="" id-parceiro="{{$frete->id}}}" class="btn btn-danger btn-sm editor_remove" style=""><i class="fa fa-trash"></i> Deletar</a>
+                                    </td>
+                                </tr>
+                                @empty
+                                    <td colspan="7"> Nenhum Dado Cadastrado</td>
+                                @endforelse
+                                --}}
+                                {{--</tbody>--}}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,6 +141,7 @@
 
 
 @section('scripts-footer')
+    <script src="{{url('/assets/js/lista-fretes.js')}}"></script>
     <script src="{{url('/assets/js/jquery.blockUI.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/datatables.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/jszip.min.js')}}"></script>

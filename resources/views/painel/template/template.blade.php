@@ -17,8 +17,10 @@
 
         <!-- jQuery UI -->
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
 {{--        <script src="{{url('/assets/js/jquery-1.6.2.js')}}"></script>--}}
         <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
+        <script src="{{url('/assets/js/angular.min.js')}}"></script>
         {{--<script--}}
             {{--src="https://code.jquery.com/jquery-2.2.2.min.js"--}}
             {{--integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="--}}
@@ -56,6 +58,8 @@
     @include('painel.includes.footer')
 
         @yield('scripts-footer')
+
+
         <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
         <!-- Latest compiled and minified JavaScript -->

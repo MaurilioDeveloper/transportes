@@ -51,7 +51,7 @@ $(document).ready(function () {
         minimumInputLength: 1
     });
     $(".select2_frete").on('select2:select', function (e) {
-        console.log(e.params.data);
+        // console.log(e.params.data);
         $(".nome_parceiro").val(e.params.data.text);
         $(".documento").val(e.params.data.documento);
         $(".telefone").val(e.params.data.telefone);
@@ -59,14 +59,21 @@ $(document).ready(function () {
         $(".inscricao_estadual").val(e.params.data.inscricao_estadual);
         $(".cidade").val(e.params.data.cidade);
         $(".estado").val(e.params.data.estado);
-        $(".pessoa").val(e.params.data.pessoa);
         $(".endereco").val(e.params.data.endereco);
         $(".cep").val(e.params.data.cep);
         $(".fantasia").val(e.params.data.fantasia);
         $(".data_nasc").val(e.params.data.data_nasc);
         $(".estado_civil").val(e.params.data.estado_civil);
         $(".sexo").val(e.params.data.sexo);
-        console.log(e.params.data.nome);
+        console.log(e.params.data.pessoa);
+        var pessoa = (e.params.data.pessoa);
+        if(pessoa === 'juridica'){
+            $(".cnpj").show();
+            $(".juridica").show();
+        }else{
+            $(".cpf").show();
+            $(".fisica").show();
+        }
         $("#parceiros").modal();
     });
 
@@ -144,8 +151,15 @@ $(document).ready(function () {
                 } else {
                     jQuery(".msg-warn").show();
                     jQuery(".msg-warn").html(data);
+                    console.log(data)
                     setTimeout("jQuery('.msg-warn').hide();", 3500);
                 }
+            },
+            error: function (event, request, settings) {
+                console.log(event);
+                console.log("erro");
+                console.log(request);
+                console.log(settings);
             }
         });
         return false;

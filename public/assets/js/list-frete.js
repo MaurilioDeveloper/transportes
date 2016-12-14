@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 
 // Deletar Fretes
-    $('#fretes-table').on('click', 'a.editor_remove', function (e) {
+    $('#fretes-table-two').on('click', 'a.editor_remove', function (e) {
         e.preventDefault();
 
         var id = $(this).attr("id-frete");
