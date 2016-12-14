@@ -78,7 +78,7 @@
                                     {{--<th>Numero</th>--}}
                                     <th ng-click="sortBy('cidade')" style="text-align: center;">Cidade</th>
                                     <th ng-click="sortBy('estado')"  style="text-align: center;">Estado</th>
-                                    <th style="text-align: center; display: inline-block">Açao</th>
+                                    <th style="width: 160px;">Açao</th>
                                 </tr>
                                 @verbatim
                                 <tr ng:repeat="p in parceiros | orderBy:sortField:reverseOrder | filter : searchText">
