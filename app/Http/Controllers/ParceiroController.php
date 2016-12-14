@@ -144,7 +144,7 @@ class ParceiroController extends Controller
 //        dd(Datatables::of(Parceiro::query())->make(true));
 //        dd($this->parceiro->get());
 //        return "xxxx";
-
+/*
         return '{ "draw":0, "recordsTotal":10,"recordsFiltered":10, "data": '. Parceiro::query()->select("parceiros.id",
             "parceiros.nome",
             "parceiros.documento",
@@ -156,6 +156,20 @@ class ParceiroController extends Controller
 //            "parceiros.numero",
             "parceiros.cidade",
             "parceiros.estado")->get().'}';
+*/
+
+
+        return '{ "data": '. Parceiro::query()->select("parceiros.id",
+            "parceiros.nome",
+            "parceiros.documento",
+//            "parceiros.email",
+            "parceiros.telefone",
+//            "parceiros.data_nasc",
+//            "parceiros.sexo",
+            "parceiros.endereco",
+//            "parceiros.numero",
+            "parceiros.cidade",
+            "parceiros.estado")->get()->toJson().'}';
 
 
 //        return Parceiro::query()->select()

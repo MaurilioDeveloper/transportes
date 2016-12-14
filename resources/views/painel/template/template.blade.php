@@ -20,7 +20,7 @@
 
 {{--        <script src="{{url('/assets/js/jquery-1.6.2.js')}}"></script>--}}
         <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
-        <script src="{{url('/assets/js/angular.min.js')}}"></script>
+        <script src="{{url('/assets/js/vendor/angular.min.js')}}"></script>
         {{--<script--}}
             {{--src="https://code.jquery.com/jquery-2.2.2.min.js"--}}
             {{--integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="--}}
@@ -65,7 +65,7 @@
         <!-- Latest compiled and minified JavaScript -->
         {{--<script src="{{url('/assets/js/bootstrap.min.js')}}"></script>--}}
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-        <script src="{{url('/assets/js/script.js')}}"></script>
+        <script src="{{url('/assets/js/adminLTE/script.js')}}"></script>
         <script src="{{url('/assets/plugins/iCheck/icheck.min.js')}}"></script>
         <script src="{{url('/assets/plugins/colorpiker/colorpiker.js')}}"></script>
         <script>

@@ -47,7 +47,7 @@
 
 @section('scripts-footer')
 
-<script src="{{url('/assets/js/dataTables.min.js')}}"></script>
-<script src="{{url('/assets/js/jquery.blockUI.js')}}"></script>
-<script src="{{url('/assets/js/users.js')}}"></script>
+<script src="{{url('/assets/js/vendor/dataTables.min.js')}}"></script>
+<script src="{{url('/assets/js/vendor/jquery.blockUI.js')}}"></script>
+<script src="{{url('/assets/js/datatable-lists/users.js')}}"></script>
 @endsection

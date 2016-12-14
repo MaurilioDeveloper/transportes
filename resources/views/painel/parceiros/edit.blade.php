@@ -242,9 +242,9 @@
 </section>
 
 @section('scripts-footer')
-    <script src="{{url('/assets/js/jquery.blockUI.js')}}"></script>
+    <script src="{{url('/assets/js/vendor/jquery.blockUI.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
-    <script type="text/javascript" src="{{url('/assets/js/masks.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/add-new-field.js')}}"></script>
 @endsection
 @endsection

@@ -437,7 +437,8 @@
                         {!! Form::text('deficiencia_fisica', null , ['class' => 'form-control deficiencia_fisica', 'disabled' => 'true']) !!}
                     </div>
 
-                @if($sexo == 'm')
+                @if(isset($sexo) && $sexo == 'm')
+                    {{--<div style="display: none" class="masculino">--}}
                         <div class="form-group col-md-3" style="margin-top: 30px">
                             <label>
                                 <div class="iradio_flat-green hover" aria-checked="false"
@@ -458,6 +459,7 @@
                                 Feminino
                             </label>
                         </div>
+                    {{--</div>--}}
                 @else
                         <div class="form-group col-md-3" style="margin-top: 30px">
                             <label>
@@ -530,11 +532,11 @@
 @section('scripts-footer')
     {{--<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="{{url('/assets/js/cad-frete.js')}}"></script>
+    <script src="{{url('/assets/js/cadastros/cad-frete.js')}}"></script>
     <script src="{{url('/assets/js/ischeck.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
-    <script type="text/javascript" src="{{url('/assets/js/maskMoney.js')}}"></script>
-    <script type="text/javascript" src="{{url('/assets/js/masks.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/masks/maskMoney.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>
 @endsection
 

@@ -141,8 +141,8 @@
 
 
 @section('scripts-footer')
-    <script src="{{url('/assets/js/lista-fretes.js')}}"></script>
-    <script src="{{url('/assets/js/jquery.blockUI.js')}}"></script>
+    <script src="{{url('/assets/js/angular-lists/lista-fretes.js')}}"></script>
+    <script src="{{url('/assets/js/vendor/jquery.blockUI.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/datatables.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/jszip.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/pdfmake.min.js')}}"></script>
@@ -166,6 +166,6 @@
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.rowReorder.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
-    <script src="{{url('/assets/js/list-frete.js')}}"></script>
+    <script src="{{url('/assets/js/datatable-lists/list-frete.js')}}"></script>
 @endsection
 @endsection
