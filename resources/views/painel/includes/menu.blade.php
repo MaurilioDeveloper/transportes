@@ -39,7 +39,25 @@
             </li>
 
             <li class="treeview">
-                <a href="#"><i class="fa fa-users"></i> <span>Parceiros</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-briefcase"></i> <span>Parceiros</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('adicionarParceiro') }}"><i class="fa fa-plus"></i>Novo</a></li>
+                    <li><a href="{{ route('parceiros.index') }}"><i class="fa fa-search"></i>Ver Todos</a></li>
+                </ul>
+            </li>
+
+
+            <li class="treeview">
+                <a href="#"><i class="fa fa-gears"></i> <span>Tipo de Ocorrências</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('adicionarParceiro') }}"><i class="fa fa-plus"></i>Novo</a></li>
+                    <li><a href="{{ route('parceiros.index') }}"><i class="fa fa-search"></i>Ver Todos</a></li>
+                </ul>
+            </li>
+
+
+            <li class="treeview">
+                <a href="#"><i class="fa fa-users"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('adicionarParceiro') }}"><i class="fa fa-plus"></i>Novo</a></li>
                     <li><a href="{{ route('parceiros.index') }}"><i class="fa fa-search"></i>Ver Todos</a></li>

@@ -110,8 +110,8 @@
 
                 <div class="box-header with-border">
                         <h3 class="box-title">Os campos com * são obrigatórios</h3>
-                        <div class="pull-right"><a href="#" class="btn btn-info" data-toggle="modal" data-target="#tipoOcorrencia"><i class="fa fa-gear"></i> Tipo de Ocorrências</a></div>
-                        <div class="pull-right" style="margin-right: 10px"><a href="#" class="btn btn-warning" data-toggle="modal" data-target="#ocorrencia"><i class="fa fa-gear"></i> Ocorrências</a></div>
+                        {{--<div class="pull-right"><a href="#" class="btn btn-info" data-toggle="modal" data-target="#tipoOcorrencia"><i class="fa fa-gear"></i> Tipo de Ocorrências</a></div>--}}
+                        {{--<div class="pull-right" style="margin-right: 10px"><a href="#" class="btn btn-warning" data-toggle="modal" data-target="#ocorrencia"><i class="fa fa-gear"></i> Ocorrências</a></div>--}}
                 </div>
 
                     <div class="box-body">

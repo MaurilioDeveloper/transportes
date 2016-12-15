@@ -3,7 +3,7 @@ var app = angular.module("app", []);
 app.controller('CtrlListaParceiros', function ($scope, $http) {
     $scope.BuscarInformacao = function () {
 
-        $http.get('http://localhost:8000/painel/parceiros/listaParceiros')
+        $http.get('/painel/parceiros/listaParceiros')
             .success(function (data) {
                 $scope.parceiros = data["data"];
             }).error(
