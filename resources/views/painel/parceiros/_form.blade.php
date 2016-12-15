@@ -79,16 +79,12 @@
             <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </div>
-            {!! Form::date('data_nasc', null , ['class' => 'form-control pull-right', 'id' => '']) !!}
+{{--            {!! Form::input('data_nasc', null , ['class' => 'form-control pull-right', 'id' => '']) !!}--}}
+            <input type="text" class="form-control datapicker pull-right" name="data_nasc" />
         </div>
 
     </div>
 
-
-    <div class="form-group col-md-6">
-        {!! Form::label('deficiencia_fisica', 'Deficiência Física') !!}
-        {!! Form::text('deficiencia_fisica', null , ['class' => 'form-control']) !!}
-    </div>
 
     <div class="form-group col-md-3" style="margin-top: 30px">
         <label>

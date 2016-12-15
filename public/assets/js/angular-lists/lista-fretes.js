@@ -3,7 +3,7 @@ var app = angular.module("app", []);
 app.controller('HttpGetController', function ($scope, $http) {
     $scope.BuscarInformacao = function () {
 
-        $http.get('http://localhost:8000/painel/fretes/lista-fretes')
+        $http.get('/painel/fretes/lista-fretes')
             .success(function (data) {
                 $scope.fretes = data["data"];
             }).error(

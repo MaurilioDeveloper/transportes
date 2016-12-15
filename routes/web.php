@@ -44,9 +44,10 @@ Route::group(['prefix' => 'painel'], function(){
 
 
     //Usuários
-    Route::resource('usuarios', 'UsuarioController');
     Route::get('delete-usuario/{id}', 'UsuarioController@destroy');
     Route::get('usuarios/listaUsuarios', 'UsuarioController@listaUsuarios');
+    Route::get('usuarios/edit/{id}', 'UsuarioController@edit')->name('editarUsuario');
+    Route::resource('usuarios', 'UsuarioController');
 
 
     Route::get('/', 'PainelController@index')->name('dashboard');

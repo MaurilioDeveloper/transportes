@@ -1,43 +1,8 @@
 //$.fn.dataTable.ext.errMode = 'throw';
 //var editor; // use a global for the submit and return data rendering in the examples
 $(document).ready(function() {
-   /*
-   editor = new $.fn.dataTable.Editor( {
-        ajax: "",
-        table: "#table-usuarios",
-        fields: [ {
-                label: "Nome:",
-                name: "name"
-            }, {
-                label: "Last name:",
-                name: "email"
-            }, {
-                label: "Senha:",
-                name: "password"
-            }
-        ]
-    } );
- 
-    $('#table-usuarios').on( 'click', 'a.editor_edit', function (e) {
-        var index = $(this).index();
- 
-        if ( index === 1 ) {
-            editor.bubble( this, {
-                title: 'Nome:'
-            } );
-        }
-        else if ( index === 2 ) {
-            editor.bubble( this, {
-                buttons: false
-            } );
-        }
-        else if ( index === 3 ) {
-            editor.bubble( this );
-        }
-       
-    } );
-   */
-// Deletar Visita
+   
+// Deletar Usuarios
     $('#table-usuarios').on('click', 'a.editor_remove', function (e) {
         e.preventDefault();
         
@@ -83,8 +48,8 @@ $('#table-usuarios').DataTable({
             data: 'id',
             className: "center",
             render: function(data, type, row){
-                return '<a href="" id-usuario="'+data+'" class="editor_edit btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</a>\n\
-                        <a href="" id-usuario="'+data+'" class="editor_remove btn btn-sm btn-danger"><i class="fa fa-trash"></i> Deletar</a>';
+                return '<a href="usuarios/edit/'+row.id+'" id-usuario="'+data+'" class="editor_edit btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</a>\n\
+                        <a href=""  id-usuario="'+data+'" class="editor_remove btn btn-sm btn-danger"><i class="fa fa-trash"></i> Deletar</a>';
             }
         }
         

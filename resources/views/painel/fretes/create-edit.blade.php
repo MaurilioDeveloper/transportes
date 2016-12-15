@@ -242,7 +242,7 @@
                         <div class="form-group col-md-6">
                             <label for="Nome">Valor Coleta </label>
                             {{--{!! Form::text('valor_coleta', $frete->valor_coleta or old('valor_coleta'), ['class' => 'form-control moeda', 'data-prefix' => 'R$', 'placeholder' => 'R$00,00']) !!}--}}
-                            <input name="valor_coleta" type="text" value="@if(isset($frete->valor_coleta)){{$frete->valor_coleta}}@else{{old('valor_coleta')}}@endif" class="form-control moeda" data-prefix="R$" placeholder="R$000,00" />
+                            <input name="valor_coleta" type="text" value="@if(isset($frete->valor_coleta)){{$frete->valor_coleta}}@else{{old('valor_coleta')}}@endif" class="form-control moeda" data-prefix="R$" placeholder="Valor" />
                         </div>
                     </div>
                     <div id="entregador" style="display: none;">
@@ -432,10 +432,6 @@
 
 
 
-                    <div class="form-group col-md-6">
-                        {!! Form::label('deficiencia_fisica', 'Deficiência Física') !!}
-                        {!! Form::text('deficiencia_fisica', null , ['class' => 'form-control deficiencia_fisica', 'disabled' => 'true']) !!}
-                    </div>
 
                 @if(isset($sexo) && $sexo == 'm')
                     {{--<div style="display: none" class="masculino">--}}

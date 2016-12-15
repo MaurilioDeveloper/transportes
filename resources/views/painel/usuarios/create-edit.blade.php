@@ -9,7 +9,7 @@
     @endif
    
     <ol class="breadcrumb">
-        <li><a href="starter.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('usuarios.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         @if ( isset($usuario->id) )
            <li class="active">Edição do Usuário</li>
         @else
@@ -34,12 +34,14 @@
                 </div>
                 @endif
                 @if ( isset($usuario->id) )
-                <form name='form' method='post' action='/m1-transportes/public/painel/usuarios/{{$usuario->id}}'>
-                    <input name="_method" value="PUT" type="hidden">
+                    {!! Form::model($usuario, ['route' => ['usuarios.update','client' => $usuario->id], 'class' => 'form', 'method' => 'PUT']) !!}
+                {{--<form name='form' method='post' action='/m1-transportes/public/painel/usuarios/{{$usuario->id}}'>--}}
+                    {{--<input name="_method" value="PUT" type="hidden">--}}
                     @else
-                    <form name='form' method='post' action='/m1-transportes/public/painel/usuarios'>
+                    {{--<form name='form' method='post' action='{{route('usuarios.store')}}'>--}}
+                    {!! Form::open(['route' => 'usuarios.store', 'class' => 'form']) !!}
                         @endif
-                        {{ csrf_field() }}
+                        {{--{{ csrf_field() }}--}}
 
                         <div class="box-body">
                             <div class="form-group col-md-6">
@@ -55,7 +57,7 @@
                                 <input type="password" value="{{old('password')}}" name='password' placeholder="Insira uma Senha" class='form-control'>
                             </div>
                         </div>
-                         <div class="box-footer col-md-6">
+                         <div class="box-footer col-md-12">
                             <button type="submit" class="btn btn-primary">Salvar</button>&nbsp;&nbsp;<button type="reset" class="btn">Limpar</button>
                         </div>
                     </form>
