@@ -16,7 +16,7 @@ class CreateOcorrenciasTable extends Migration
         Schema::create('ocorrencias', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_tipo_ocorrencia')->unsigned();
-            $table->foreign('id_tipo_ocorrencia')->references('id')->on('tipo_ocorrencia');
+            $table->foreign('id_tipo_ocorrencia')->references('id')->on('tipo_ocorrencias');
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('parceiros');
             $table->integer('id_parceiro')->unsigned();
