@@ -83,7 +83,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $titulo = "Cadastro de Usuarios";
+        $titulo = "Cadastro de Usuários";
         return view('painel.usuarios.create-edit', compact('titulo'));
     }
 

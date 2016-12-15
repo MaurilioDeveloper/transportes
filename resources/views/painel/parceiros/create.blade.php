@@ -20,8 +20,8 @@
     </ol>
 @endsection
 
-{{--<div id="gritter-notice-wrapper" style="display: none"><div id="gritter-item-4" class="gritter-item-wrapper success-notice" role="alert"><div class="gritter-item"><a class="gritter-close" href="#" tabindex="1"><i class="en-cross"></i></a><i class="ec-trashcan gritter-icon"></i><div class="gritter-without-image"><span class="gritter-title">Sucesso !!!</span><p>Parceiro Cadastrado com Sucesso. </p></div><div style="clear:both"></div></div></div></div>--}}
-{{--<button id="success-notice" type="button" class="btn btn-success mr15 mb15">Success notice</button>--}}
+<div id="gritter-notice-wrapper" style="display: none"><div id="gritter-item-4" class="gritter-item-wrapper success-notice" role="alert"><div class="gritter-item"><a class="gritter-close" href="#" tabindex="1"><i class="en-cross"></i></a><i class="ec-trashcan gritter-icon"></i><div class="gritter-without-image"><span class="gritter-title">Sucesso !!!</span><p>Parceiro Cadastrado com Sucesso. </p></div><div style="clear:both"></div></div></div></div>
+{{--<button id="success-notice" type="button" onclick="$('#gritter-notice-wrapper').show()"  class="btn btn-success mr15 mb15">Success notice</button>--}}
 <!-- Main content -->
     {{--<section class="content">--}}
         <div class="row">
@@ -58,14 +58,20 @@
 
 @section('scripts-footer')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="{{url('/assets/js/masks/maskMoney.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/add-new-field.js')}}"></script>
+    {{--<script src="{{url('/assets/plugins/core/slimscroll/jquery.slimscroll.min.js')}}"></script>--}}
+{{--    <script src="{{url('/assets/plugins/core/slimscroll/jquery.slimscroll.horizontal.min.js')}}"></script>--}}
+{{--    <script src="{{url('/assets/plugins/forms/tinymce/tinymce.min.js')}}"></script>--}}
+{{--    <script src="{{url('/assets/plugins/forms/tags/jquery.tagsinput.min.js')}}"></script>--}}
     <!-- Core plugins ( not remove ever) -->
-    <script type="text/javascript" src="{{url('/assets/js/libs/modernizr.custom.js')}}"></script>
+    {{--<script type="text/javascript" src="{{url('/assets/js/vendor/modernizr.custom.js')}}"></script>--}}
     <!-- Handle responsive view functions -->
-    <script type="text/javascript" src="{{url('/assets/js/jRespond.min.js')}}"></script>
-    <script type= src="{{url('/assets/js/jquery.sprFlat.js')}}"></script>
-    <script type="text/javascript" src="{{url('/assets/js/notification.js')}}"></script>
-    <script type="text/javascript" src="{{url('/assets/plugins/ui/notify/jquery.gritter.js')}}"></script>
+    {{--<script type="text/javascript" src="{{url('/assets/js/jRespond.min.js')}}"></script>--}}
+{{--    <script type="text/javascript" src="{{url('/assets/plugins/ui/notify/jquery.gritter.js')}}"></script>--}}
+    {{--<script type="text/javascript" src="{{url('/assets/plugins/misc/countTo/jquery.countTo.js')}}"></script>--}}
+    {{--<script type="text/javascript" src="{{url('/assets/js/jquery.sprFlat.js')}}"></script>--}}
+    {{--<script type="text/javascript" src="{{url('/assets/js/notification.js')}}"></script>--}}
 @endsection
 @endsection

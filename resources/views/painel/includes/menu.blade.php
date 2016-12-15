@@ -57,7 +57,7 @@
 
 
             <li class="treeview">
-                <a href="#"><i class="fa fa-users"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-users"></i> <span>Usuários</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('usuarios.create') }}"><i class="fa fa-plus"></i>Novo</a></li>
                     <li><a href="{{ route('usuarios.index') }}"><i class="fa fa-search"></i>Ver Todos</a></li>
@@ -90,13 +90,13 @@
                     {{--<li><a href=""><i class="fa fa-search"></i>Consultar</a></li>--}}
                 {{--</ul>--}}
             {{--</li>--}}
-            <li class="treeview">
-                <a href="#"><i class="fa fa-user-plus"></i> <span>Dados do Usuário</span> <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-user"></i>Meu perfil</a></li>
-                    <li><a href=""><i class="fa fa-edit"></i>Editar dados</a></li>
-                </ul>
-            </li>
+            {{--<li class="treeview">--}}
+                {{--<a href="#"><i class="fa fa-user-plus"></i> <span>Dados do Usuário</span> <i class="fa fa-angle-left pull-right"></i></a>--}}
+                {{--<ul class="treeview-menu">--}}
+                    {{--<li><a href=""><i class="fa fa-user"></i>Meu perfil</a></li>--}}
+                    {{--<li><a href=""><i class="fa fa-edit"></i>Editar dados</a></li>--}}
+                {{--</ul>--}}
+            {{--</li>--}}
         </ul>
         <!-- /.sidebar-menu -->
     </section>

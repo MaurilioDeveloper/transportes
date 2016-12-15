@@ -144,6 +144,7 @@ $(document).ready(function () {
                 if (data == "1") {
                     form.fadeOut('slow', function () {
                         jQuery(".msg-suc").show();
+                        jQuery("#gritter-notice-wrapper").show();
                         setTimeout(function () {
                             window.location.href = '/painel/fretes';
                         }, 3000);

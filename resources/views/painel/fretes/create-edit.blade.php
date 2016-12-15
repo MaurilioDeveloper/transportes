@@ -4,6 +4,7 @@
     {{--<link type="text/css" href="css/custom-theme/jquery-ui-1.8.20.custom.css" rel="stylesheet" />--}}
     <link href="{{url('/assets/css/select2.min.css')}}" rel="stylesheet"/>
     <link href="{{url('/assets/css/app.css')}}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{url('/assets/css/plugin.css')}}"/>
 @endsection
 
 @section('content')
@@ -28,6 +29,7 @@
 
 <!-- Main content -->
 {{--<section class="content">--}}
+<div id="gritter-notice-wrapper" style="display: none"><div id="gritter-item-4" class="gritter-item-wrapper success-notice" role="alert"><div class="gritter-item"><a class="gritter-close" href="#" tabindex="1"><i class="en-cross"></i></a><i class="ec-trashcan gritter-icon"></i><div class="gritter-without-image"><span class="gritter-title">Sucesso !!!</span><p>Frete Cadastrado com Sucesso. </p></div><div style="clear:both"></div></div></div></div>
 <div class="row">
     <div class="col-md-12">
 
