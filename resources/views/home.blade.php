@@ -97,13 +97,13 @@
                                 <tr style="background: #0d3625; color: white">
                                     <th>Nome Parceiro</th>
                                     <th>Tipo do Item</th>
-                                    <th>Data Prevista Inicial</th>
+                                    <th style="width: 180px">Data Prevista Inicial</th>
                                 </tr>
                                 @forelse($tableDash as $freteDash)
                                     @if($freteDash->data_inicio < date('Y-m-d'))
                                         <tr style="background: red; color: white">
                                     @else
-                                        <tr >
+                                        <tr class="success">
                                     @endif
                                         <td>{{$freteDash->nome}}</td>
                                         <td>{{$freteDash->tipo}}</td>
@@ -111,7 +111,7 @@
                                         @if($freteDash->data_inicio > date('Y-m-d'))
                                             <td>{{date('Y-m-d') - $freteDash->data_inicio}} dias</td>
                                         @else
-                                            <td>Atrasado</td>
+                                            <td style=""><span style="font-size: 15px" class="label label-danger">Atrasado</span></td>
                                         @endif
 
                                         @empty
@@ -156,7 +156,7 @@
 //            console.log(data);
 
             var options = {
-//                title: 'Fretes por STATUS',
+                title: 'Fretes por STATUS',
                 is3D: true,
             };
 
