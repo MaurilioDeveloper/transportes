@@ -19,17 +19,12 @@ class Frete extends Model
 
     static $rules = [
         'id_parceiro' => 'required',
-        'data_hoje' => 'required',
         'data_inicio' => 'required',
-        'data_fim' => 'required',
         'cidade_origem' => 'required',
         'estado_origem' => 'required|min:2|max:2',
         'cidade_destino' => 'required',
         'estado_destino' => 'required|min:2|max:2',
         'valor_item' => 'required',
-        'cor' => 'required',
-        'identificacao' => 'required',
-        'valor_total' => 'required',
 
     ];
 

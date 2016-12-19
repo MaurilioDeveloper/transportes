@@ -48,13 +48,7 @@ class Parceiro extends Model
     ];
 
     static $rules = [
-        'nome' => 'required',
-        'documento' => 'required',
-        'email' => 'required',
-        'telefone' => 'required',
-        'endereco' => 'required',
-        'numero' => 'required'
-
+        'nome' => 'required'
     ];
 
     public static function getPessoa($value)

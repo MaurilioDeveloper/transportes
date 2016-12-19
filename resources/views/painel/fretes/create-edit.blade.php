@@ -15,7 +15,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li><a href="{{ route('listarFretes') }}"><i class="fa fa-briefcase"></i> Fretes</a></li>
         <li class="active">{{ $titulo }}</li>
     </ol>
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label>Data Prevista Inicio</label>
+                        <label>Data Prevista Inicio *</label>
                         <input required="" name='data_inicio' type="text" placeholder="dd/mm/yyyy"
                                class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
                     </div>
@@ -100,13 +100,13 @@
 
 
                     <div class="form-group col-md-3">
-                        {!! Form::label('cidade', 'Cidade*') !!}
+                        {!! Form::label('cidade', 'Cidade Origem*') !!}
                         {{--{!! Form::text('cidade_origem', null, ['class' => 'form-control', 'placeholder' => 'Cidade', 'value' => "@if(isset($frete->cidade_origem)){{$frete->cidade_origem}}@else{{old('cidade_origem')}}@endif"]) !!}--}}
                         <input type="text" name="cidade_origem" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_origem)){{$frete->cidade_origem}}@else{{old('cidade_origem')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-3">
-                        {!! Form::label('estado', 'Estado Origem*') !!}
+                        {!! Form::label('estado', 'Estado Origem *') !!}
 {{--                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
                         <input type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_origem)){{$frete->estado_origem}}@else{{old('estado_origem')}}@endif" />
                     </div>
@@ -117,13 +117,13 @@
                     {{--<legend><b>Destino</b></legend>--}}
 
                     <div class="form-group col-md-3">
-                        {!! Form::label('cidade', 'Cidade Destino*') !!}
+                        {!! Form::label('cidade', 'Cidade Destino *') !!}
                         {{--{!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}--}}
                         <input type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_destino)){{$frete->cidade_destino}}@else{{old('cidade_destino')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-3">
-                        {!! Form::label('estado', 'Estado Destino*') !!}
+                        {!! Form::label('estado', 'Estado Destino *') !!}
                         {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
                         <input type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_destino)){{$frete->estado_destino}}@else{{old('estado_destino')}}@endif" />
                     </div>
@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        {!! Form::label('identificacao', 'Identificação *') !!}
+                        {!! Form::label('identificacao', 'Identificação') !!}
                         {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
                         <input type="text" name="identificacao" class="form-control" placeholder="Identificação" value="@if(isset($frete->identificacao)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />
                     </div>
@@ -153,7 +153,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        {!! Form::label('cor', 'Cor *') !!}
+                        {!! Form::label('cor', 'Cor') !!}
                         {{--{!! Form::text('cor', null, ['class' => 'form-control', 'placeholder' => 'Azul']) !!}--}}
                         <input type="text" name="cor" class="form-control" placeholder="Azul" value="@if(isset($frete->cor)){{$frete->cor}}@else{{old('cor')}}@endif" />
                     </div>
@@ -166,7 +166,7 @@
                     {{--<hr style="border: 1px solid #ccc"/>--}}
 
                     <div class="form-group col-md-6">
-                        <label for="status">Status</label>
+                        <label for="status">Status *</label>
                         {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), isset($frete->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
 
                     </div>
@@ -279,7 +279,7 @@
                     <legend><b>Valor Total - Informações</b></legend>
 
                     <div class="form-group col-md-6">
-                        {!! Form::label('valor_total', 'Valor Total *') !!}
+                        {!! Form::label('valor_total', 'Valor Total') !!}
                         {!! Form::text('valor_total', null, ['class' => 'form-control moeda', 'data-prefix' => 'R$', 'placeholder' => 'R$00,00']) !!}
                     </div>
 

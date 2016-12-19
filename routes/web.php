@@ -31,6 +31,9 @@ Route::group(['prefix' => 'painel'], function(){
     Route::group(['prefix' => 'parceiros'], function(){
         Route::get('/delete-motorista/{id}', 'ParceiroController@deleteMotorista');
         Route::get('/listaParceiros', 'ParceiroController@listaParceiros')->name('listarParceiros');
+        Route::get('/busca-parceiros/{pesquisa}', 'ParceiroController@buscaParceiros')->name('buscarParceiros');
+//        Route::get('/buscaParceiros', 'ParceiroController@buscaParceiros')->name('buscarParceiros');
+        Route::post('/pesquisar', 'ParceiroController@pesquisar')->name('pesquisarParceiro');
         Route::post('/postOcorrencia', 'ParceiroController@postOcorrencia')->name('postOcorrencia');
         Route::post('/postTipoOcorrencia', 'ParceiroController@postTipoOcorrencia')->name('postTipoOcorrencia');
         Route::get('/delete-ocorrencia/{id}', 'ParceiroController@deleteOcorrencia')->name('deleteOcorrencia');
@@ -41,16 +44,15 @@ Route::group(['prefix' => 'painel'], function(){
 
     Route::resource('parceiros', 'ParceiroController');
 
-
-
     //Usuários
     Route::get('delete-usuario/{id}', 'UsuarioController@destroy');
     Route::get('usuarios/listaUsuarios', 'UsuarioController@listaUsuarios');
     Route::get('usuarios/edit/{id}', 'UsuarioController@edit')->name('editarUsuario');
     Route::resource('usuarios', 'UsuarioController');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index');
 
-
-    Route::get('/', 'PainelController@index')->name('dashboard');
+//    Route::get('/', 'PainelController@index')->name('dashboard');
 
 });
 
@@ -63,6 +65,4 @@ $this->get('/logout', 'Auth\LoginController@logout');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
-Route::get('/', 'HomeController@index');
 

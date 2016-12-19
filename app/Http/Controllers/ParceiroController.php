@@ -51,6 +51,35 @@ class ParceiroController extends Controller
         return view('painel.parceiros.index', compact('parceiros'));
     }
 
+    public function pesquisar()
+    {
+//        $palavraPesquisa = $this->request->input('pesquisar');
+
+        $palavraPesquisa = $this->request->get('nome');
+        $dadosPesquisa = Parceiro::query()->select("parceiros.id",
+            "parceiros.nome",
+            "parceiros.documento",
+//            "parceiros.email",
+            "parceiros.telefone",
+//            "parceiros.data_nasc",
+//            "parceiros.sexo",
+            "parceiros.endereco",
+//            "parceiros.numero",
+            "parceiros.cidade",
+            "parceiros.estado")->where('nome', 'LIKE', "%$palavraPesquisa%")
+                                ->paginate(10);
+
+//
+        return view("painel.parceiros.index", compact('dadosPesquisa'));
+//
+//        $dataBusca = $this->parceiro
+//            ->where('nome', 'LIKE', "%$palavraPesquisa%")
+//            ->paginate(10);
+
+//        return $data;
+//        return view("painel.parceiros.index", compact('dataBusca'));
+    }
+
     public function store(ParceiroRequest $request)
     {
 

@@ -6,7 +6,7 @@
 </div>
 
 <div class="form-group col-md-6">
-    {!! Form::label('documento', $pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'CNPJ *': 'CPF *') !!}
+    {!! Form::label('documento', $pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'CNPJ': 'CPF') !!}
     @if($pessoa == \App\Parceiro::PESSOA_JURIDICA)
         {!! Form::text('documento', null, ['class' => 'form-control', 'id' => 'cnpj']) !!}
     @else
@@ -16,18 +16,18 @@
 </div>
 
 <div class="form-group col-md-6">
-    {!! Form::label('email', 'E-mail *') !!}
+    {!! Form::label('email', 'E-mail') !!}
     {!! Form::email('email', null, ['class' => 'form-control']) !!}
 </div>
 
 
 <div class="form-group col-md-6">
-    {!! Form::label('telefone', 'Telefone *') !!}
+    {!! Form::label('telefone', 'Telefone') !!}
     {!! Form::text('telefone', null, ['class' => 'form-control', 'id' => 'phone']) !!}
 </div>
 
 <div class="form-group col-md-6">
-    {!! Form::label('estado', 'Estado *') !!}
+    {!! Form::label('estado', 'Estado') !!}
     {!! Form::text('estado', null, ['class' => 'form-control', 'id' => 'state']) !!}
 </div>
 
@@ -42,7 +42,7 @@
 </div>
 
 <div class="form-group col-md-6">
-    {!! Form::label('endereco', 'Endereco *') !!}
+    {!! Form::label('endereco', 'Endereco') !!}
     {!! Form::text('endereco', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -58,23 +58,23 @@
 
 @if($pessoa == \App\Parceiro::PESSOA_JURIDICA)
     <div class="form-group col-md-6">
-        {!! Form::label('fantasia', 'Fantasia *') !!}
+        {!! Form::label('fantasia', 'Fantasia') !!}
         {!! Form::text('fantasia', null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group col-md-6">
-        {!! Form::label('inscricao_estadual', 'Inscrição Estadual *') !!}
+        {!! Form::label('inscricao_estadual', 'Inscrição Estadual') !!}
         {!! Form::text('inscricao_estadual', null, ['class' => 'form-control']) !!}
     </div>
 @else
     <div class="form-group col-md-6">
-        {!! Form::label('estado_civil', 'Estado Civil *') !!}
+        {!! Form::label('estado_civil', 'Estado Civil') !!}
         {!! Form::select('estado_civil', array_merge([0 => 'Selecione'],\App\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group col-md-6">
 
-        {!! Form::label('data_nasc', 'Data Nascimento *') !!}
+        {!! Form::label('data_nasc', 'Data Nascimento') !!}
         <div class="input-group date">
             <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>

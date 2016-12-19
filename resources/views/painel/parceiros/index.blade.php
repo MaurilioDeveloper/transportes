@@ -50,20 +50,64 @@
                     </div>
 
                     <div class='box-header'>Listagem de Dados</div>
-                    <div class='col-lg-8'>
+                    <!--<div class='col-lg-8'>
                         <a class="btn btn-success btn-sm"
-                           href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_FISICA]) }}"><i
+                           {{--href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_FISICA]) }}"><i--}}
                                     class="fa fa-user-secret"></i> Pessoa Física</a>
                         <a class="btn btn-success btn-sm"
-                           href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_JURIDICA]) }}"><i
+                           {{--href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_JURIDICA]) }}"><i--}}
                                     class="fa fa-briefcase"></i> Pessoa Jurídica</a>
-                    </div>
+                    </div>-->
                     <br/>
                     <br/>
                     <div class='box-body'>
-                        <div ng-controller="CtrlListaParceiros">
+                        {{--@if(isset($dataBusca))--}}
+                            {{--<div ng-controller="CtrlListaParceirosSearch">--}}
+                        {{--@else--}}
+
+                        @if(isset($dadosPesquisa))
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th style="text-align: center;">Nome</th>
+                                    <th style="text-align: center;">Cnpj/Cpf</th>
+                                    {{--<th>Data Nasc</th>--}}
+                                    {{--<th>Email</th>--}}
+                                    <th style="text-align: center;">Telefone</th>
+                                    {{--<th>Sexo</th>--}}
+                                    <th style="text-align: center;">Endereco</th>
+                                    {{--<th>Numero</th>--}}
+                                    <th style="text-align: center;">Cidade</th>
+                                    <th style="text-align: center;">Estado</th>
+                                    <th style="width: 160px;">Açao</th>
+                                </tr>
+                                @forelse ($dadosPesquisa as $dados)
+                                <tr class="warning">
+
+{{--                                        @if(count($dados > 0))--}}
+                                        <td>{{ $dados->nome }}</td>
+                                        <td>{{ $dados->documento }}</td>
+                                        <td>{{ $dados->telefone }}</td>
+                                        <td>{{ $dados->endereco }}</td>
+                                        <td>{{ $dados->cidade }}</td>
+                                        <td>{{ $dados->estado }}</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
+                                            <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Deletar</a>
+                                        </td>
+                                        {{--@else--}}
+                                        @empty
+                                            <td colspan="7">Nenhum dado Cadastrado</td>
+                                        {{--@endif--}}
+
+                                </tr>
+                                @endforelse
+                            </table>
+                        @else
+                            <div ng-controller="CtrlListaParceiros">
+                        {{--@endif--}}
                             <div style="float: right"><label>Pesquisar: <input class="" ng-model="searchText"></label>
                             </div>
+
                             {{--<table class='table table-bordered display ui table' id="parceiros-table">--}}
                             <table class='table table-bordered display ui table' id="parceiros-table-two">
                                 {{--<thead>--}}
@@ -99,6 +143,8 @@
                                 @endverbatim
                             </table>
                         </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -110,6 +156,7 @@
 
 @section('scripts-footer')
     <script src="{{url('/assets/js/angular-lists/lista-parceiros.js')}}"></script>
+    {{--<script src="{{url('/assets/js/angular-lists/lista-parceiros-search.js')}}"></script>--}}
     <script src="{{url('/assets/js/vendor/jquery.blockUI.js')}}"></script>
     <script src="{{url('/assets/js/cadastros/cad-parceiro.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/datatables.min.js')}}"></script>

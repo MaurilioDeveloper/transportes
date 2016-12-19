@@ -1,14 +1,15 @@
 var app = angular.module("app", []);
 
-app.controller('HttpGetController', function ($scope, $http) {
-    $scope.BuscarInformacao = function () {
+app.controller('CtrlListaParceirosSearch', function ($scope, $http) {
+    $scope.SearchInformacao = function (nome) {
 
-        $http.get('http://localhost:8000/painel/fretes/lista-fretes')
+        console.log(nome);
+        $http.get('/painel/parceiros/busca-parceiros/'+nome)
             .success(function (data) {
-                $scope.fretes = data["data"];
+                $scope.parceiros = data["data"];
             }).error(
             function (data, status, header, config) {
-                $scope.Resposta = $scope.fretes;
+                $scope.Resposta = $scope.parceiros;
             });
         ;
     };
@@ -19,5 +20,6 @@ app.controller('HttpGetController', function ($scope, $http) {
         $scope.reverseOrder = ($scope.sortField === sortField) ? !$scope.reverseOrder : false;
         $scope.sortField = sortField;
     };
-    $scope.BuscarInformacao();
+    $scope.SearchInformacao(pesquisa);
 });
+
