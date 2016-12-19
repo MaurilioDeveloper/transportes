@@ -16,7 +16,6 @@
     <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
     <ol class="breadcrumb">
         <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><i class="fa fa-briefcase"></i> Dashboard</li>
     </ol>
     {{--</section>--}}
 

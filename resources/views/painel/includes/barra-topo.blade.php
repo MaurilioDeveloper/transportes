@@ -30,7 +30,7 @@
                             <img src="{{url("/assets/imgs/user.png")}}" class="img-circle" alt="User Image">
 
                             <p>
-                                {{ auth()->user()->name }} - Nobody
+                                {{ auth()->user()->name }} - Administrador
                                 <small></small>
                             </p>
                         </li>
