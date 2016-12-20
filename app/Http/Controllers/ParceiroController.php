@@ -101,12 +101,12 @@ class ParceiroController extends Controller
         $dataCam = $request->only(['extraCaminhoes']);
         $dataMot = $request->only(['extraMotoristas']);
 
-        $parceiro = Parceiro::insert($dataParc);
+        $parceiro = Parceiro::create($dataParc);
 
 
 //
         foreach ($dataCont['extras'] as $extra) {
-            $contatos = Contato::insert([
+            $contatos = Contato::create([
                 'nome' => $extra['nome'],
                 'setor' => $extra['setor'],
                 'email' => $extra['email'],
@@ -117,7 +117,7 @@ class ParceiroController extends Controller
 
         foreach ($dataCam['extraCaminhoes'] as $extraCaminhoes) {
 //        dd($extraCaminhoes['placa']);
-            $caminhoes = Caminhao::insert([
+            $caminhoes = Caminhao::create([
                 'placa' => $extraCaminhoes['placa'],
                 'modelo' => $extraCaminhoes['modelo'],
                 'cor' => $extraCaminhoes['cor'],
@@ -127,7 +127,7 @@ class ParceiroController extends Controller
 
         foreach ($dataMot['extraMotoristas'] as $extraMotoristas) {
 
-            $motoristas = Motorista::insert([
+            $motoristas = Motorista::create([
                 'nome' => $extraMotoristas['nome'],
                 'rg' => $extraMotoristas['rg'],
                 'telefone' => $extraMotoristas['telefone'],
@@ -170,6 +170,23 @@ class ParceiroController extends Controller
 
     public function listaParceiros()
     {
+//        dd(Datatables::of(Parceiro::query())->make(true));
+//        dd($this->parceiro->get());
+//        return "xxxx";
+/*
+        return '{ "draw":0, "recordsTotal":10,"recordsFiltered":10, "data": '. Parceiro::query()->select("parceiros.id",
+            "parceiros.nome",
+            "parceiros.documento",
+//            "parceiros.email",
+            "parceiros.telefone",
+//            "parceiros.data_nasc",
+//            "parceiros.sexo",
+            "parceiros.endereco",
+//            "parceiros.numero",
+            "parceiros.cidade",
+            "parceiros.estado")->get().'}';
+*/
+
 
         return '{ "data": '. Parceiro::query()->select("parceiros.id",
             "parceiros.nome",
@@ -183,6 +200,8 @@ class ParceiroController extends Controller
             "parceiros.cidade",
             "parceiros.estado")->get()->toJson().'}';
 
+
+//        return Parceiro::query()->select()
 /*
          dd(Datatables::of(Parceiro::query()
             ->select("parceiros.id",
@@ -297,7 +316,7 @@ class ParceiroController extends Controller
                     }
                 } else {
 
-                    $contatos = Contato::insert([
+                    $contatos = Contato::create([
                         'nome' => $extra['nome'],
                         'setor' => $extra['setor'],
                         'email' => $extra['email'],
@@ -334,7 +353,7 @@ class ParceiroController extends Controller
                     }
                 } else {
 
-                    $caminhoes = Caminhao::insert([
+                    $caminhoes = Caminhao::create([
                         'placa' => $extraCaminhoes['placa'],
                         'modelo' => $extraCaminhoes['modelo'],
                         'cor' => $extraCaminhoes['cor'],
@@ -370,7 +389,7 @@ class ParceiroController extends Controller
                     }
                 } else {
 
-                    $motoristas = Motorista::insert([
+                    $motoristas = Motorista::create([
                         'nome' => $extraMotoristas['nome'],
                         'rg' => $extraMotoristas['rg'],
                         'telefone' => $extraMotoristas['telefone'],
