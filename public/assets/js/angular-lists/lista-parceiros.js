@@ -1,6 +1,6 @@
 var app = angular.module("app", []);
 
-app.controller('CtrlListaParceiros', function ($scope, $http) {
+app.controller('CtrlListaParceiros', function ($scope, $http, $filter) {
     $scope.BuscarInformacao = function () {
 
         $http.get('/painel/parceiros/listaParceiros')
@@ -20,4 +20,5 @@ app.controller('CtrlListaParceiros', function ($scope, $http) {
         $scope.sortField = sortField;
     };
     $scope.BuscarInformacao();
+
 });

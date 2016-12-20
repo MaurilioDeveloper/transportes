@@ -112,7 +112,6 @@ class UsuarioController extends Controller
         }
         return redirect("/painel/usuarios/create")
             ->withErrors('errors', 'Falha ao Cadastrar');
-//        return 'CADASTRANDO OS DADOS DO PRODUTO';
     }
 
     /**

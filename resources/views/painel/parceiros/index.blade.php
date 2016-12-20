@@ -102,6 +102,7 @@
                                 </tr>
                                 @endforelse
                             </table>
+
                         @else
                             <div ng-controller="CtrlListaParceiros">
                         {{--@endif--}}
