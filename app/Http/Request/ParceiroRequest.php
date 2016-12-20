@@ -36,22 +36,22 @@ class ParceiroRequest extends FormRequest
         $id = $this->route('parceiro');
         $rules = [
             'nome' => 'required|max:100',
-            'documento' => "required|documento:$documentType|unique:parceiros,documento,$id",
-            'email' => 'required|email',
-            'telefone' => 'required',
+//            'documento' => "required|documento:$documentType|unique:parceiros,documento,$id",
+//            'email' => 'required|email',
+//            'telefone' => 'required',
         ];
 
         if ($pessoa == Parceiro::PESSOA_FISICA) {
             $estadosCivis = implode(',', array_keys(Parceiro::ESTADOS_CIVIS));
-            $rules = array_merge($rules, [
-                'data_nasc' => 'required|date',
-                'estado_civil' => "required|in:$estadosCivis",
-                'sexo' => 'required|in:m,f'
-            ]);
+//            $rules = array_merge($rules, [
+//                'data_nasc' => 'required|date',
+//                'estado_civil' => "required|in:$estadosCivis",
+//                'sexo' => 'required|in:m,f'
+//            ]);
         } else {
-            $rules = array_merge($rules, [
-                'fantasia' => 'required',
-            ]);
+//            $rules = array_merge($rules, [
+//                'fantasia' => 'required',
+//            ]);
         }
 
         return $rules;
