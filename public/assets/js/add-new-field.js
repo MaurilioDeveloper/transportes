@@ -40,7 +40,7 @@ $(document).ready(function(){
                             '<input type="text" placeholder="Nome" name="extras[' + (t + 1) + '][nome]" class="form-control" />' +
                         '</div>' +
                         '<div class="form-group  col-md-3"><label for="setor">Setor </label>' +
-                            '<input type="text" placeholder="Setor ['+ (t + 1) +']" name="extras[' + (t + 1) + '][setor]" class="form-control" />' +
+                            '<input type="text" placeholder="Setor" name="extras[' + (t + 1) + '][setor]" class="form-control" />' +
                         '</div>' +
                         '<div class="form-group  col-md-3"><label for="email">Email </label>' +
                             '<input type="text" placeholder="Email" name="extras[' + (t + 1) + '][email]" class="form-control" />' +
@@ -70,7 +70,7 @@ $(document).ready(function(){
                     '<input type="text" placeholder="AAA-9999" name="extrasCaminhoes[' + (t + 1) + '][placa]" class="form-control" />' +
                 '</div>' +
                 '<div class="form-group  col-md-4"><label for="modelo">Modelo </label>' +
-                    '<input type="text" placeholder="Modelo ['+ (parseInt(t) + parseInt(1)) +']" name="extrasCaminhoes[' + (t + 1) + '][modelo]" class="form-control" />' +
+                    '<input type="text" placeholder="Modelo" name="extrasCaminhoes[' + (t + 1) + '][modelo]" class="form-control" />' +
                 '</div>' +
                 '<div class="form-group  col-md-3"><label for="cor">Cor </label>' +
                     '<input type="text" placeholder="Cor" name="extrasCaminhoes[' + (t + 1) + '][cor]" class="form-control" />' +
@@ -95,12 +95,12 @@ $(document).ready(function(){
                     '<input type="text" placeholder="Nome" name="extrasCaminhoes[' + (t + 1) + '][nome]" class="form-control" />' +
                 '</div>' +
                 '<div class="form-group  col-md-4">' +
-                    '<label for="rg">Rg </label>' +
-                    '<input type="text" placeholder="Rg ['+ (t + 1) +']" name="extrasCaminhoes[' + (t + 1) + '][rg]" class="form-control" />' +
+                    '<label for="rg">RG </label>' +
+                    '<input type="text" placeholder="RG" name="extrasCaminhoes[' + (t + 1) + '][rg]" class="form-control" />' +
                 '</div>' +
                 '<div class="form-group  col-md-3">' +
-                    '<label for="telefone">Cor </label>' +
-                    '<input type="text" placeholder="Telefone" name="extrasCaminhoes[' + (t + 1) + '][telefone]" class="form-control" />' +
+                    '<label for="telefone">Telefone </label>' +
+                    '<input type="text" placeholder="Telefone" name="extrasCaminhoes[' + (t + 1) + '][telefone]" class="form-control phone" />' +
                 '</div>' +
                 '<div class="col-lg-1">' +
                     '<label><hr></label>' +

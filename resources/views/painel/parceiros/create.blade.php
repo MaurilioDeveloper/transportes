@@ -39,6 +39,7 @@
                         <h4>{{$pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h4>
                         @include('painel.errors._errors_form')
                         {!! Form::open(['route' => 'parceiros.store', 'class' => 'form']) !!}
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         @include('painel.parceiros._form')
 

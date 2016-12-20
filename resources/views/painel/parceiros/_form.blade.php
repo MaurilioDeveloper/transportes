@@ -178,7 +178,7 @@
                                     </div>
                                     <div class="form-group  col-md-3">
                                         <label for="telefone">Telefone </label>
-                                        <input type="text" name="extras[0][telefone]" class="form-control" id="phone_with_ddd">
+                                        <input type="text" name="extras[0][telefone]" class="form-control phone">
                                     </div>
                                 {{--<hr style="border: 1px solid #ccc"/>--}}
 
@@ -265,7 +265,7 @@
                             <input type="text" class="form-control" name="extraCaminhoes[0][cor]" placeholder="Azul"
                                    value="">
                         </div>
-                            <div class="col-md-12"><hr style="border: 1px solid #ccc"/></div>
+                            {{--<div class="col-md-12"><hr style="border: 1px solid #ccc"/></div>--}}
                      @endif
                 </div>
                 </div>
@@ -338,17 +338,17 @@
                                 </div>
                                 <!-- /.form group -->
                                 <div class="form-group col-md-4">
-                                    <label for="cidade_reg">Rg </label>
-                                    <input type="text" class="form-control" name="extraMotoristas[0][rg]">
+                                    <label for="cidade_reg">RG </label>
+                                    <input type="text" class="form-control" name="extraMotoristas[0][rg]" placeholder="RG">
                                 </div>
                                 <div class="form-group  col-md-4">
                                     <label for="telefone">Telefone </label>
-                                    <input type="text" class="form-control" name="extraMotoristas[0][telefone]"
+                                    <input type="text" class="form-control phone" name="extraMotoristas[0][telefone]"
                                            id="telefone">
                                 </div>
-                                <div class="col-md-12">
-                                    <hr style="border: 1px solid #ccc"/>
-                                </div>
+                                {{--<div class="col-md-12">--}}
+                                    {{--<hr style="border: 1px solid #ccc"/>--}}
+                                {{--</div>--}}
                             @endif
                             </div>
 
