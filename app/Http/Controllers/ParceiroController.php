@@ -106,7 +106,7 @@ class ParceiroController extends Controller
         if(strlen($dataParc['documento']) === 0){
             $dataParc['documento'] = null;
         }
-        if(strlen($dataParc['data_nasc']) === 0){
+        if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0){
             $dataParc['data_nasc'] = null;
         }
 //        dd($dataParc);
