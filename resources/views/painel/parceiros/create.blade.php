@@ -39,7 +39,7 @@
                         <h4>{{$pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h4>
                         @include('painel.errors._errors_form')
                         {!! Form::open(['route' => 'parceiros.store', 'class' => 'form']) !!}
-                        {{--<form class="form" action="{{route('parceiros.store')}}">--}}
+{{--                        <form class="form" action="{{route('parceiros.store')}}">--}}
                         {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
                         {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
 
@@ -47,11 +47,11 @@
 
                         <div class="form-group col-md-6">
                             {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary']) !!}
-                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            {{--<button type="submit" class="btn btn-primary">Cadastrar</button>--}}
                             <a class="btn btn-info" href="{{route('parceiros.index')}}">Voltar</a>
                             <button type="reset" class="btn">Limpar</button>
                         </div>
-                        {{--</form>--}}
+                        </form>
                         {!! Form::close() !!}
                     </div>
                 </div>

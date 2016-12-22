@@ -112,7 +112,7 @@ class ParceiroController extends Controller
 //        dd($dataParc);
 
 
-        $parceiro = Parceiro::create($dataParc);
+        $parceiro = $this->parceiro->create($dataParc);
 
 
 
@@ -309,7 +309,7 @@ class ParceiroController extends Controller
                     }
                 } else {
 
-                    $contatos = Contato::insert([
+                    $contatos = Contato::create([
                         'nome' => $extra['nome'],
                         'setor' => $extra['setor'],
                         'email' => $extra['email'],
@@ -346,7 +346,7 @@ class ParceiroController extends Controller
                     }
                 } else {
 
-                    $caminhoes = Caminhao::insert([
+                    $caminhoes = Caminhao::create([
                         'placa' => $extraCaminhoes['placa'],
                         'modelo' => $extraCaminhoes['modelo'],
                         'cor' => $extraCaminhoes['cor'],
