@@ -98,6 +98,7 @@
                                 </tr>
                                 {{--</thead>--}}
                                 {{--<tbody>--}}
+                                @if(isset($fretes) && count($fretes) > 0)
                                 @verbatim
                                 <tr ng:repeat="f in fretes | orderBy:sortField:reverseOrder | filter : searchText">
                                     <td>{{ f.nome }}</td>
@@ -111,6 +112,9 @@
                                     </td>
                                 </tr>
                                 @endverbatim
+                                @else
+                                    <td colspan="6" style="text-align: center">Nenhum dado cadastrado</td>
+                                @endif
                                 {{--
                                 @forelse($fretes as $frete)
                                 <tr class="warning">

@@ -120,8 +120,10 @@
                                     {{--<th>Data Nasc</th>--}}
                                     {{--<th>Email</th>--}}
                                     <th ng-click="sortBy('telefone')"  style="text-align: center;">Telefone</th>
+                                    <th ng-click="sortBy('cep')"  style="text-align: center;">Cep</th>
                                     {{--<th>Sexo</th>--}}
-                                    <th ng-click="sortBy('endereco')"  style="text-align: center;">Endereco</th>
+                                    <th ng-click="sortBy('endereco')"  style="text-align: center;">Endereço</th>
+                                    <th ng-click="sortBy('bairro')"  style="text-align: center;">Bairro</th>
                                     {{--<th>Numero</th>--}}
                                     <th ng-click="sortBy('cidade')" style="text-align: center;">Cidade</th>
                                     <th ng-click="sortBy('estado')"  style="text-align: center;">Estado</th>
@@ -132,7 +134,9 @@
                                     <td>{{ p.nome }}</td>
                                     <td>{{ p.documento }}</td>
                                     <td>{{ p.telefone }}</td>
+                                    <td>{{ p.cep }}</td>
                                     <td>{{ p.endereco }}</td>
+                                    <td>{{ p.bairro }}</td>
                                     <td>{{ p.cidade }}</td>
                                     <td>{{ p.estado }}</td>
                                     <td>

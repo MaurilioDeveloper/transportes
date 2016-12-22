@@ -10,4 +10,11 @@ class Ocorrencia extends Model
 
     protected $guarded = ['id'];
 
+    static $rules = [
+        'data' => 'required',
+        'id_tipo_ocorrencia' => 'required',
+        'id_usuario' => 'required',
+    ];
+
+
 }

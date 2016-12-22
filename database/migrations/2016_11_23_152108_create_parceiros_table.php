@@ -19,8 +19,6 @@ class CreateParceirosTable extends Migration
             $table->string('documento')->nullable();
             $table->string('email')->nullable();
             $table->string('telefone')->nullable();
-//            $table->boolean('inadimplente');
-            // Attr Nullable(), deixa que o campo possa ser Nulo
             $table->date('data_nasc')->nullable();
             $table->char('sexo')->nullable();
             /*

@@ -65,8 +65,10 @@ $(document).ready(function() {
             { data: 'telefone', name: 'parceiros.telefone' },
             // { data: 'data_nasc', name: 'parceiros.data_nasc' },
             // { data: 'sexo', name: 'parceiros.sexo' },
+            { data: 'cep', name: 'parceiros.cep' },
             { data: 'endereco', name: 'parceiros.endereco' },
             // { data: 'numero', name: 'parceiros.numero' },
+            { data: 'bairro', name: 'parceiros.bairro' },
             { data: 'cidade', name: 'parceiros.cidade' },
             { data: 'estado', name: 'parceiros.estado' },
             {

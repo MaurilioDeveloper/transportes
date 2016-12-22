@@ -73,10 +73,9 @@ $('#table-usuarios').DataTable({
 
         ],
 
-    language: {
-                "url": "../assets/datatables/Portuguese-Brasil.json"
-              }
-      
+        "language": {
+            "url": "/assets/Portuguese-Brasil.json"
+        },
     
 });
 

@@ -28,21 +28,23 @@
                 <div class="box-header with-border">
                     <h3 class="modal-title" id="myModalLabel">Cadastrar Tipo Ocorrência</h3>
                 </div>
+                <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn-tipo" role="alert"></div>
+                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc-tipo" role="alert">Tipo de Ocorrência Cadastrada com Sucesso</div>
 
                 <!-- form start -->
                 <div class="box-body">
+                    {!! Form::open(['route' => 'postTipoOcorrencia', 'class' => 'form', 'name' => 'form-tipo-ocorrencia', 'send' => '/painel/parceiros/postTipoOcorrencia']) !!}
                     <h4 class="box-title">Os campos com * são obrigatórios</h4>
-                    {!! Form::open(['route' => 'postTipoOcorrencia', 'class' => 'form']) !!}
 
                     <div class="form-group col-md-12">
                         {!! Form::label('nome', 'Tipo Ocorrência *') !!}
-                        {!! Form::text('nome', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('nome', null, ['class' => 'form-control', 'required' => 'true']) !!}
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
+                    {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'id' => 'btn-tipo']) !!}
                 </div>
                 {!! Form::close() !!}
             </div><!--box-primary-->
@@ -65,36 +67,39 @@
 
                 <!-- form start -->
                 <div class="box-body">
+                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
+                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Ocorrência Cadastrada com Sucesso</div>
+
+                    {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '/painel/parceiros/postOcorrencia']) !!}
                     <h4 class="box-title">Os campos com * são obrigatórios</h4>
-                    {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form-ocorrencia']) !!}
                     <div class="form-group col-md-12">
                         {!! Form::label('data', 'Data *') !!}
                         <div class="input-group date">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            {!! Form::input('text', 'data', null,  ['class' => 'form-control pull-right datapicker', 'id' => 'datapicker']) !!}
+                            {!! Form::input('text', 'data', null,  ['class' => 'form-control pull-right datapicker', 'id' => 'datapicker', 'required' => 'true']) !!}
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        {!! Form::label('tipo_ocorrencia', 'Tipo De Ocorrência *') !!}
-                        {!! Form::select('tipo_ocorrencia',  array_merge([0 => 'Selecione Uma Ocorrencia'], $tipo_ocorrencia), null, ['class' => 'form-control']) !!}
+                        {!! Form::label('id_tipo_ocorrencia', 'Tipo de Ocorrência *') !!}
+                        {!! Form::select('id_tipo_ocorrencia',  array_merge([0 => '(Selecione)'], $tipo_ocorrencia), null, ['class' => 'form-control', 'required' => 'true']) !!}
                     </div>
                     {{--<div class="form-group col-md-12">--}}
                     {{--<div class=""><a href="#" class="btn btn-info" id="botao-tipo-ocorrencia"><i class="fa fa-plus"></i> Cadastrar Tipo de Ocorrências</a></div>--}}
                     {{--</div>--}}
                     <div class="form-group col-md-12">
                         <div style="display: none;">
-                            {!! Form::input('text', 'id_user', auth()->user()->id, ['class' => '','style' => 'width:217px; background: #f0f0f0 !important; color: #aaa !important; border: #ccc;']) !!}
+                            {!! Form::input('text', 'id_usuario', auth()->user()->id, ['class' => '','style' => 'width:217px; background: #f0f0f0 !important; color: #aaa !important; border: #ccc;']) !!}
                         </div>
                         <div style="display: none;">
                             {!! Form::input('text', 'id_parceiro', $parceiro->id, ['class' => '','style' => 'width:217px; background: #f0f0f0 !important; color: #aaa !important; border: #ccc;']) !!}
                         </div>
-                        {!! Form::label('usuario', 'Usuario Autor *') !!}
+                        {!! Form::label('usuario', 'Usuário Autor *') !!}
                         {!! Form::select('usuario', [auth()->user()->name], auth()->user()->name, ['class' => 'form-control', 'disabled' => 'true']) !!}
                     </div>
                     <div class="form-group col-md-12">
-                        {!! Form::label('descricao', 'Descrição *') !!}
+                        {!! Form::label('descricao', 'Descrição') !!}
                         {!! Form::textarea('descricao', null, ['class' => 'form-control']) !!}
                     </div>
 
@@ -102,7 +107,7 @@
                         <div class="pull-right">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar
                             </button>
-                            {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'id' => 'botao']) !!}
                         </div>
                     </div>
                 </div>
@@ -154,8 +159,8 @@
                                         <thead>
                                         <th>Data</th>
                                         <th>Tipo</th>
-                                        <th>Descricao</th>
-                                        <th>Usuario Autor</th>
+                                        <th>Descrição</th>
+                                        <th>Usuário Autor</th>
                                         <th>Ações</th>
                                         </thead>
                                         <tbody>
@@ -248,5 +253,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/add-new-field.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-ocorrencia.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-tipo-ocorrencia.js')}}"></script>
 @endsection
 @endsection

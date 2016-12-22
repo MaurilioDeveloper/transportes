@@ -11,9 +11,15 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        <!-- /.search form -->
-        {!! Form::open(['route' => 'pesquisarParceiro', 'class' => 'sidebar-form']) !!}
-{{--        <form class="sidebar-form" method="post" action="{{route('pesquisarParceiro')}}">--}}
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu">
+            <li class="header" style="text-align: center; color: #b8c7ce; font-size: 14px"><i class="fa fa-dashboard"></i> MENU DE NAVEGAÇÃO</li>
+            <!-- Optionally, you can add icons to the links -->
+
+            <!-- /.search form -->
+            {!! Form::open(['route' => 'pesquisarParceiro', 'class' => 'sidebar-form']) !!}
+            {{--        <form class="sidebar-form" method="post" action="{{route('pesquisarParceiro')}}">--}}
             {{--{{csrf_field()}}--}}
             <div class="input-group">
                 <input type="text" name="nome" class="form-control" placeholder="Pesquisar Parceiro">
@@ -23,13 +29,8 @@
                     </button>
                 </span>
             </div>
-        {{--</form>--}}
-        {!! Form::close() !!}
-
-        <!-- Sidebar Menu -->
-        <ul class="sidebar-menu">
-            <li class="header"><i class="fa fa-dashboard"></i> MENU DE NAVEGAÇÃO</li>
-            <!-- Optionally, you can add icons to the links -->
+            {{--</form>--}}
+            {!! Form::close() !!}
 
 
             <li class="treeview">

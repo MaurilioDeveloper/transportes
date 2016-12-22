@@ -22,7 +22,7 @@ class CreateOcorrenciasTable extends Migration
             $table->integer('id_parceiro')->unsigned();
             $table->foreign('id_parceiro')->references('id')->on('parceiros');
             $table->date('data');
-            $table->text('descricao');
+            $table->text('descricao')->nullable();
             $table->timestamps();
         });
     }

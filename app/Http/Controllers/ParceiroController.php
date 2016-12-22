@@ -48,7 +48,7 @@ class ParceiroController extends Controller
     public function index()
     {
         $parceiros = $this->parceiro->paginate(10);
-        return view('painel.parceiros.index', compact('parceiros'));
+        return view('painel.parceiros.index2', compact('parceiros'));
     }
 
     public function pesquisar()
@@ -182,36 +182,40 @@ class ParceiroController extends Controller
 
     public function listaParceiros()
     {
-
+/*
         return '{ "data": '. Parceiro::query()->select("parceiros.id",
             "parceiros.nome",
             "parceiros.documento",
 //            "parceiros.email",
             "parceiros.telefone",
+            "parceiros.cep",
 //            "parceiros.data_nasc",
 //            "parceiros.sexo",
             "parceiros.endereco",
+            "parceiros.bairro",
 //            "parceiros.numero",
             "parceiros.cidade",
             "parceiros.estado")->get()->toJson().'}';
+*/
 
-/*
-         dd(Datatables::of(Parceiro::query()
+         return Datatables::of(Parceiro::query()
             ->select("parceiros.id",
                 "parceiros.nome",
                 "parceiros.documento",
-//                "parceiros.email",
+//            "parceiros.email",
                 "parceiros.telefone",
-//                "parceiros.data_nasc",
-//                "parceiros.sexo",
+                "parceiros.cep",
+//            "parceiros.data_nasc",
+//            "parceiros.sexo",
                 "parceiros.endereco",
-//                "parceiros.numero",
+                "parceiros.bairro",
+//            "parceiros.numero",
                 "parceiros.cidade",
                 "parceiros.estado"))
-            ->make(true));
+            ->make(true);
         //return Datatables::of(Visitante::query()
         //      ->select("visitantes.nome", "visitantes.estado", "visitantes.cidade", "visitantes.telefone", "visitantes.cargo", "visitantes.cidade", "visitantes.email"))->make(true);
-*/
+
     }
 
     public function deleteParceiro($id)
@@ -439,22 +443,60 @@ class ParceiroController extends Controller
         $data = $this->request->all();
 //        dd($data);//
         $dataOcorrencia = implode('-',array_reverse(explode('/', $data['data'])));
-        Ocorrencia::create([
+
+        $validate = $this->validate->make($data, Ocorrencia::$rules);
+        if($validate->fails()){
+            $messages = $validate->messages();
+            $displayErrors = '';
+
+            foreach($messages->all("<p>:message</p>") as $error){
+                $displayErrors .= $error;
+            }
+
+            return $displayErrors;
+        }
+
+//        dd($data);
+
+        $ocorrencia = Ocorrencia::create([
             'data' => $dataOcorrencia,
-            'id_tipo_ocorrencia' => $data['tipo_ocorrencia'],
-            'id_usuario' => $data['id_user'],
+            'id_tipo_ocorrencia' => $data['id_tipo_ocorrencia'],
+            'id_usuario' => $data['id_usuario'],
             'id_parceiro' => $data['id_parceiro'],
             'descricao' => $data['descricao']
         ]);
-        return redirect()->route('parceiros.index');
+
+        if($ocorrencia){
+            return 1;
+        }else{
+            return "Erro Inesperado";
+        }
+
+
+//        return redirect()->route('parceiros.index');
     }
 
     public function postTipoOcorrencia()
     {
         $dataForm = $this->request->all();
+
+        $validate = $this->validate->make($dataForm, TipoOcorrencia::$rules);
+        if($validate->fails()){
+            $messages = $validate->messages();
+            $displayErrors = '';
+
+            foreach($messages->all("<p>:message</p>") as $error){
+                $displayErrors .= $error;
+            }
+
+            return $displayErrors;
+        }
+
 //        dd($dataForm);
         TipoOcorrencia::create($dataForm);
-        return redirect()->route('parceiros.index');
+        return 1;
+
+//        return redirect()->route('parceiros.index');
     }
 
 }
