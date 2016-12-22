@@ -16,9 +16,9 @@ class CreateParceirosTable extends Migration
         Schema::create('parceiros', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('documento')->unique();
-            $table->string('email');
-            $table->string('telefone');
+            $table->string('documento')->nullable();
+            $table->string('email')->nullable();
+            $table->string('telefone')->nullable();
 //            $table->boolean('inadimplente');
             // Attr Nullable(), deixa que o campo possa ser Nulo
             $table->date('data_nasc')->nullable();
@@ -33,13 +33,13 @@ class CreateParceirosTable extends Migration
             // Nome Popular da empresa.. Campo não obrigatório, pode ser NULL
             $table->string('fantasia')->nullable();
             $table->string('inscricao_estadual', 15)->nullable();
-            $table->string('endereco');
+            $table->string('endereco')->nullable();
             $table->integer('numero')->nullable();
             $table->string('complemento')->nullable();
             $table->string('bairro')->nullable();
-            $table->string('cep');
-            $table->string('cidade', 50);
-            $table->string('estado', 2);
+            $table->string('cep')->nullable();
+            $table->string('cidade', 50)->nullable();
+            $table->string('estado', 2)->nullable();
             $table->string('site', 50)->nullable();
             $table->string('pessoa');
             $table->timestamps();

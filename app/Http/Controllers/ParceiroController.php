@@ -47,7 +47,7 @@ class ParceiroController extends Controller
 
     public function index()
     {
-        $parceiros = $this->parceiro->get();
+        $parceiros = $this->parceiro->paginate(10);
         return view('painel.parceiros.index', compact('parceiros'));
     }
 
@@ -101,12 +101,24 @@ class ParceiroController extends Controller
         $dataCam = $request->only(['extraCaminhoes']);
         $dataMot = $request->only(['extraMotoristas']);
 
-        $parceiro = Parceiro::insert($dataParc);
+        \DB::beginTransaction();
+//        dd(strlen($dataParc['documento']) === 0);
+        if(strlen($dataParc['documento']) === 0){
+            $dataParc['documento'] = null;
+        }
+        if(strlen($dataParc['data_nasc']) === 0){
+            $dataParc['data_nasc'] = null;
+        }
+//        dd($dataParc);
+
+
+        $parceiro = Parceiro::create($dataParc);
+
 
 
 //
         foreach ($dataCont['extras'] as $extra) {
-            $contatos = Contato::insert([
+            $contatos = Contato::create([
                 'nome' => $extra['nome'],
                 'setor' => $extra['setor'],
                 'email' => $extra['email'],
@@ -117,7 +129,7 @@ class ParceiroController extends Controller
 
         foreach ($dataCam['extraCaminhoes'] as $extraCaminhoes) {
 //        dd($extraCaminhoes['placa']);
-            $caminhoes = Caminhao::insert([
+            $caminhoes = Caminhao::create([
                 'placa' => $extraCaminhoes['placa'],
                 'modelo' => $extraCaminhoes['modelo'],
                 'cor' => $extraCaminhoes['cor'],
@@ -127,7 +139,7 @@ class ParceiroController extends Controller
 
         foreach ($dataMot['extraMotoristas'] as $extraMotoristas) {
 
-            $motoristas = Motorista::insert([
+            $motoristas = Motorista::create([
                 'nome' => $extraMotoristas['nome'],
                 'rg' => $extraMotoristas['rg'],
                 'telefone' => $extraMotoristas['telefone'],
@@ -425,7 +437,7 @@ class ParceiroController extends Controller
     public function postOcorrencia()
     {
         $data = $this->request->all();
-//        dd($data);
+//        dd($data);//
         $dataOcorrencia = implode('-',array_reverse(explode('/', $data['data'])));
         Ocorrencia::create([
             'data' => $dataOcorrencia,

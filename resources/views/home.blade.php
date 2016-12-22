@@ -14,6 +14,7 @@
     <!-- Content Header (Page header) -->
     {{--<section class="content-header">--}}
     <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
+
     <ol class="breadcrumb">
         <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>
     </ol>
@@ -99,10 +100,10 @@
                                     <th style="width: 180px">Data Prevista Inicial</th>
                                 </tr>
                                 @forelse($tableDash as $freteDash)
-                                    @if($freteDash->data_inicio < date('Y-m-d'))
-                                        <tr style="background: red; color: white">
-                                    @else
+                                    @if($freteDash->data_inicio > date('Y-m-d'))
                                         <tr class="success">
+                                    @else
+                                        <tr style="background: red; color: white">
                                     @endif
                                         <td>{{$freteDash->nome}}</td>
                                         <td>{{$freteDash->tipo}}</td>

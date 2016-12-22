@@ -101,7 +101,9 @@
 
                                 </tr>
                                 @endforelse
+
                             </table>
+                            <div class="pull-right">{!! $dadosPesquisa->render() !!}</div>
 
                         @else
                             <div ng-controller="CtrlListaParceiros">
@@ -143,6 +145,8 @@
                                 </tr>
                                 @endverbatim
                             </table>
+                                {{--<dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>--}}
+{{--                                @include('pagination.default', ['paginator' => $parceiros])--}}
                         </div>
                         @endif
 
