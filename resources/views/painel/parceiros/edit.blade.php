@@ -83,7 +83,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         {!! Form::label('id_tipo_ocorrencia', 'Tipo de Ocorrência *') !!}
-                        {!! Form::select('id_tipo_ocorrencia',  array_merge([0 => '(Selecione)'], $tipo_ocorrencia), null, ['class' => 'form-control', 'required' => 'true']) !!}
+                        {!! Form::select('id_tipo_ocorrencia',  array_merge([0 => '(Selecione)'], $tipo_ocorrencia), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'tipo-ocorrencia']) !!}
                     </div>
                     {{--<div class="form-group col-md-12">--}}
                     {{--<div class=""><a href="#" class="btn btn-info" id="botao-tipo-ocorrencia"><i class="fa fa-plus"></i> Cadastrar Tipo de Ocorrências</a></div>--}}

@@ -106,7 +106,7 @@
                             <div class="pull-right">{!! $dadosPesquisa->render() !!}</div>
 
                         @else
-                            <table class="table table-bordered" id="parceiros-table">
+                            <table class="table table-bordered" id="parceiros-table" style="width: 100%">
                                 <thead>
                                     <tr style='background: #2e6da4; color: white;'>
                                         <th style="text-align: center;">Nome</th>
@@ -125,6 +125,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+
+                                    </tr>
                                 </tbody>
                             </table>
                         @endif

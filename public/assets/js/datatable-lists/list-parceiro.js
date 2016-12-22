@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 
 // Deletar Parceiro
-    $('#parceiros-table-two').on('click', 'a.editor_remove', function (e) {
+    $('#parceiros-table').on('click', 'a.editor_remove', function (e) {
         e.preventDefault();
 
         var id = $(this).attr("id-parceiro");
