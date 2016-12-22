@@ -422,8 +422,9 @@ class ComposerStaticInit3bdf2a35f3693c28b25e3c071520a804
         'CreateOcorrenciasTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_25_161117_create_ocorrencias_table.php',
         'CreateParceirosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_23_152108_create_parceiros_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreateTipoOcorrenciasTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_02_160945_create_tipo_ocorrencias_table.php',
+        'CreateTipoOcorrenciasTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_01_100000_create_tipo_ocorrencias_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateViagemsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_22_195248_create_viagems_table.php',
         'DOMPDF' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf.cls.php',
         'DOMPDF_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_exception.cls.php',
         'DOMPDF_Image_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_image_exception.cls.php',
@@ -1076,8 +1077,6 @@ class ComposerStaticInit3bdf2a35f3693c28b25e3c071520a804
         'Text_Renderer' => __DIR__ . '/..' . '/dompdf/dompdf/include/text_renderer.cls.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UsuarioTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsuarioTableSeeder.php',
-        'parceiro' => __DIR__ . '/../..' . '/database/seeds/parceiro.php',
-        'user' => __DIR__ . '/../..' . '/database/seeds/user.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

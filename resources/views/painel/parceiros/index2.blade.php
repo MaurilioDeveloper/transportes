@@ -121,7 +121,7 @@
                                         {{--<th>Numero</th>--}}
                                         <th style="text-align: center;">Cidade</th>
                                         <th style="text-align: center;">Estado</th>
-                                        <th style="width: 160px;">Açao</th>
+                                        <th style="width: 140px;">Açao</th>
                                     </tr>
                                 </thead>
                                 <tbody>

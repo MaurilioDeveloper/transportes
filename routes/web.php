@@ -44,15 +44,24 @@ Route::group(['prefix' => 'painel'], function(){
 
     Route::resource('parceiros', 'ParceiroController');
 
+
+
+    //Viagens
+    Route::group(['prefix' => 'viagens'], function(){
+        Route::get('/create-edit', 'ViagemController@create')->name('cadastrarViagens');
+        Route::get('/', 'ViagemController@index')->name('listaViagens');
+    });
+
     //Usuários
     Route::get('delete-usuario/{id}', 'UsuarioController@destroy');
     Route::get('usuarios/listaUsuarios', 'UsuarioController@listaUsuarios');
     Route::get('usuarios/edit/{id}', 'UsuarioController@edit')->name('editarUsuario');
     Route::resource('usuarios', 'UsuarioController');
+
+    //Dashboard
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/', 'HomeController@index');
 
-//    Route::get('/', 'PainelController@index')->name('dashboard');
 
 });
 
@@ -63,6 +72,6 @@ Route::get('/login', function () {
 $this->post('/login', 'Auth\LoginController@login');
 $this->get('/logout', 'Auth\LoginController@logout');
 
-Auth::routes();
+//Auth::routes();
 
 

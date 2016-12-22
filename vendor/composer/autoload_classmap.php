@@ -27,8 +27,9 @@ return array(
     'CreateOcorrenciasTable' => $baseDir . '/database/migrations/2016_11_25_161117_create_ocorrencias_table.php',
     'CreateParceirosTable' => $baseDir . '/database/migrations/2016_11_23_152108_create_parceiros_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-    'CreateTipoOcorrenciasTable' => $baseDir . '/database/migrations/2016_12_02_160945_create_tipo_ocorrencias_table.php',
+    'CreateTipoOcorrenciasTable' => $baseDir . '/database/migrations/2016_10_01_100000_create_tipo_ocorrencias_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreateViagemsTable' => $baseDir . '/database/migrations/2016_12_22_195248_create_viagems_table.php',
     'DOMPDF' => $vendorDir . '/dompdf/dompdf/include/dompdf.cls.php',
     'DOMPDF_Exception' => $vendorDir . '/dompdf/dompdf/include/dompdf_exception.cls.php',
     'DOMPDF_Image_Exception' => $vendorDir . '/dompdf/dompdf/include/dompdf_image_exception.cls.php',
@@ -681,6 +682,4 @@ return array(
     'Text_Renderer' => $vendorDir . '/dompdf/dompdf/include/text_renderer.cls.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UsuarioTableSeeder' => $baseDir . '/database/seeds/UsuarioTableSeeder.php',
-    'parceiro' => $baseDir . '/database/seeds/parceiro.php',
-    'user' => $baseDir . '/database/seeds/user.php',
 );

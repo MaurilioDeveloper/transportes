@@ -26,6 +26,11 @@
           href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
 @endsection
 
+@section('breadcrumb')
+
+
+@endsection
+
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -170,6 +175,6 @@
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.rowReorder.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
-    <script src="{{url('/assets/js/datatable-lists/list-frete.js')}}"></script>
+    {{--<script src="{{url('/assets/js/datatable-lists/list-frete.js')}}"></script>--}}
 @endsection
 @endsection
