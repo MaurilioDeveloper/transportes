@@ -104,14 +104,17 @@ class ParceiroController extends Controller
 //        \DB::beginTransaction();
 //
         if($data['pessoa'] === "fisica") {
-            if (strlen($dataParc['data_nasc']) === 0) {
+//            dd(strlen($dataParc['data_nasc']));
+            if (strlen($dataParc['data_nasc']) <= 1) {
                 $dataParc['data_nasc'] = null;
+//                dd($dataParc['data_nasc'] );
             } else {
                 $dataParc['data_nasc'] = implode('-', array_reverse(explode('/', $dataParc['data_nasc'])));
             }
         }
 
-        if(strlen($dataParc['documento']) === 0){
+//        dd(strlen($dataParc['documento']));
+        if(strlen($dataParc['documento']) == 0){
             $dataParc['documento'] = null;
         }
 
@@ -420,7 +423,8 @@ class ParceiroController extends Controller
         }
 
         if($data['pessoa'] === "fisica") {
-            if (isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0) {
+
+            if (isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) <= 1) {
                 $dataParc['data_nasc'] = null;
             } else if ($dataParc['data_nasc'] == "[null]") {
                 $dataParc['data_nasc'] = null;
@@ -430,7 +434,7 @@ class ParceiroController extends Controller
             dd($dataParc['data_nasc']);
         }
 
-        if(strlen($dataParc['documento']) === 0){
+        if(strlen($dataParc['documento']) == 1){
             $dataParc['documento'] = null;
         }
 
