@@ -32,7 +32,6 @@ class Parceiro extends Model
         'cidade',
         'estado',
         'site'
-//        'inadimplente',
     ];
 
     protected $fillableFisica = [

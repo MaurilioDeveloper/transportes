@@ -101,7 +101,7 @@ class ParceiroController extends Controller
         $dataCam = $request->only(['extraCaminhoes']);
         $dataMot = $request->only(['extraMotoristas']);
 
-        \DB::beginTransaction();
+//        \DB::beginTransaction();
 //
         if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0){
             $dataParc['data_nasc'] = null;
@@ -109,7 +109,7 @@ class ParceiroController extends Controller
             $dataParc['data_nasc'] = implode('-',array_reverse(explode('/', $dataParc['data_nasc'])));
         }
 
-//        dd($dataParc['data_nasc']);
+        dd($dataParc['data_nasc']);
 
 
 
@@ -252,6 +252,10 @@ class ParceiroController extends Controller
 
 //        dd($data_nascimento);
         $data_nasc = implode('/',array_reverse(explode('-', $data_nascimento)));
+        if($data_nasc == '[null]'){
+            $data_nasc = null;
+        }
+//        dd($data_nasc);
 //        $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
 //        $dataCont = $request->only(['extras']);
 //        $dataCam = $request->only(['extraCaminhoes']);
@@ -416,6 +420,18 @@ class ParceiroController extends Controller
             if(!$motorista['presente']){
                 Motorista::find($motorista['id'])->delete();
             }
+        }
+
+        if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0){
+            $dataParc['data_nasc'] = null;
+        }else if($dataParc['data_nasc'] == "[null]"){
+            $dataParc['data_nasc'] = null;
+        }
+        else{
+//            if($dataParc['data_nasc'] = str_replace('[', '',str_replace(']','',$dataParc['data_nasc'] == "null"))){
+//                $dataParc['data_nasc'] = null;
+//            }
+            $dataParc['data_nasc'] = implode('-',array_reverse(explode('/', $dataParc['data_nasc'])));
         }
 
         $parceiro->fill($dataParc);
