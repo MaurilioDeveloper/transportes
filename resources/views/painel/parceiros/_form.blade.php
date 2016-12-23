@@ -26,30 +26,36 @@
     {!! Form::text('telefone', null, ['class' => 'form-control', 'id' => 'phone']) !!}
 </div>
 
-<div class="form-group col-md-6">
-    {!! Form::label('estado', 'Estado') !!}
-    {!! Form::text('estado', null, ['class' => 'form-control', 'id' => 'state']) !!}
-</div>
 
 <div class="form-group col-md-6">
-    {!! Form::label('cidade', 'Cidade *') !!}
-    {!! Form::text('cidade', null, ['class' => 'form-control']) !!}
+    {!! Form::label('cep', 'Cep') !!}
+    {!! Form::text('cep', null, ['class' => 'form-control', 'id' => 'cep']) !!}
 </div>
 
-<div class="form-group col-md-6">
-    {!! Form::label('bairro', 'Bairro') !!}
-    {!! Form::text('bairro', null, ['class' => 'form-control']) !!}
-</div>
 
 <div class="form-group col-md-6">
     {!! Form::label('endereco', 'Endereco') !!}
     {!! Form::text('endereco', null, ['class' => 'form-control']) !!}
 </div>
 
+
 <div class="form-group col-md-6">
-    {!! Form::label('cep', 'Cep') !!}
-    {!! Form::text('cep', null, ['class' => 'form-control', 'id' => 'cep']) !!}
+    {!! Form::label('bairro', 'Bairro') !!}
+    {!! Form::text('bairro', null, ['class' => 'form-control']) !!}
 </div>
+
+
+<div class="form-group col-md-6">
+    {!! Form::label('cidade', 'Cidade *') !!}
+    {!! Form::text('cidade', null, ['class' => 'form-control']) !!}
+</div>
+
+
+<div class="form-group col-md-6">
+    {!! Form::label('estado', 'Estado') !!}
+    {!! Form::text('estado', null, ['class' => 'form-control', 'id' => 'state']) !!}
+</div>
+
 
 <div class="form-group col-md-6">
     {!! Form::label('site', 'Site') !!}

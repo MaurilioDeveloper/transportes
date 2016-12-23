@@ -111,6 +111,10 @@ class ParceiroController extends Controller
             }
         }
 
+        if(strlen($dataParc['documento']) === 0){
+            $dataParc['documento'] = null;
+        }
+
 //        dd($dataParc['data_nasc']);
 
 
@@ -295,7 +299,7 @@ class ParceiroController extends Controller
         $motoristasDB = Motorista::where('id_parceiro', $id)->get()->keyBy('id');
 
         $data['pessoa'] = Parceiro::getPessoa($request->get('pessoa'));
-        dd($data['pessoa']);
+//        dd($data['pessoa']);
         $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
         $dataCont = $request->only(['extras']);
         $dataCam = $request->only(['extraCaminhoes']);
@@ -437,6 +441,10 @@ class ParceiroController extends Controller
 //            }
                 $dataParc['data_nasc'] = implode('-', array_reverse(explode('/', $dataParc['data_nasc'])));
             }
+        }
+
+        if(strlen($dataParc['documento']) === 0){
+            $dataParc['documento'] = null;
         }
 
         $parceiro->fill($dataParc);
