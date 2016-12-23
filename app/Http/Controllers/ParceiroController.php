@@ -104,16 +104,12 @@ class ParceiroController extends Controller
 //        \DB::beginTransaction();
 //
         if($data['pessoa'] === "fisica") {
-//            dd(strlen($dataParc['data_nasc']));
             if (strlen($dataParc['data_nasc']) <= 1) {
                 $dataParc['data_nasc'] = null;
-//                dd($dataParc['data_nasc'] );
             } else {
                 $dataParc['data_nasc'] = implode('-', array_reverse(explode('/', $dataParc['data_nasc'])));
             }
         }
-
-//        dd(strlen($dataParc['documento']));
         if(strlen($dataParc['documento']) == 0){
             $dataParc['documento'] = null;
         }
@@ -249,12 +245,10 @@ class ParceiroController extends Controller
         $titulo = 'Editar Parceiro';
         $data_nascimento = str_replace('["', '', str_replace('"]', '',$this->parceiro->where('id', $id)->pluck('data_nasc')->toJson()));
 
-//        dd($data_nascimento);
         $data_nasc = implode('/',array_reverse(explode('-', $data_nascimento)));
         if($data_nasc == '[null]'){
             $data_nasc = null;
         }
-//        dd($data_nasc);
 //        $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
 //        $dataCont = $request->only(['extras']);
 //        $dataCam = $request->only(['extraCaminhoes']);
@@ -525,11 +519,8 @@ class ParceiroController extends Controller
             return $displayErrors;
         }
 
-//        dd($dataForm);
         TipoOcorrencia::create($dataForm);
         return 1;
-
-//        return redirect()->route('parceiros.index');
     }
 
 }
