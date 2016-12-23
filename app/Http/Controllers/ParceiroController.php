@@ -114,7 +114,7 @@ class ParceiroController extends Controller
         if(strlen($dataParc['documento']) === 0){
             $dataParc['documento'] = null;
         }
-        
+
         $parceiro = $this->parceiro->create($dataParc);
 
 
@@ -425,11 +425,10 @@ class ParceiroController extends Controller
             } else if ($dataParc['data_nasc'] == "[null]") {
                 $dataParc['data_nasc'] = null;
             } else {
-//            if($dataParc['data_nasc'] = str_replace('[', '',str_replace(']','',$dataParc['data_nasc'] == "null"))){
-//                $dataParc['data_nasc'] = null;
-//            }
                 $dataParc['data_nasc'] = implode('-', array_reverse(explode('/', $dataParc['data_nasc'])));
             }
+        }else{
+            $dataParc['data_nasc'] = null;
         }
 
         if(strlen($dataParc['documento']) === 0){
