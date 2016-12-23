@@ -71,7 +71,7 @@
 {{--    <script src="{{url('/assets/plugins/forms/tinymce/tinymce.min.js')}}"></script>--}}
 {{--    <script src="{{url('/assets/plugins/forms/tags/jquery.tagsinput.min.js')}}"></script>--}}
     <!-- Core plugins ( not remove ever) -->
-    {{--<script type="text/javascript" src="{{url('/assets/js/vendor/modernizr.custom.js')}}"></script>--}}
+    {{--<script type="text  /javascript" src="{{url('/assets/js/vendor/modernizr.custom.js')}}"></script>--}}
     <!-- Handle responsive view functions -->
     {{--<script type="text/javascript" src="{{url('/assets/js/jRespond.min.js')}}"></script>--}}
 {{--    <script type="text/javascript" src="{{url('/assets/plugins/ui/notify/jquery.gritter.js')}}"></script>--}}

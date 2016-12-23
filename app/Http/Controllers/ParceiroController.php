@@ -102,16 +102,14 @@ class ParceiroController extends Controller
         $dataMot = $request->only(['extraMotoristas']);
 
         \DB::beginTransaction();
-//        dd(strlen($dataParc['documento']) === 0);
-        if(strlen($dataParc['documento']) === 0){
-            $dataParc['documento'] = null;
-        }
+//
         if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0){
             $dataParc['data_nasc'] = null;
+        }else{
+            $dataParc['data_nasc'] = implode('-',array_reverse(explode('/', $dataParc['data_nasc'])));
         }
 
-        $dataParc['data_nasc'] = implode('-',array_reverse(explode('/', $dataParc['data_nasc'])));
-//        dd($dataParc);
+//        dd($dataParc['data_nasc']);
 
 
 
