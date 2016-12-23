@@ -114,17 +114,7 @@ class ParceiroController extends Controller
         if(strlen($dataParc['documento']) === 0){
             $dataParc['documento'] = null;
         }
-
-//        dd($dataParc['data_nasc']);
-
-
-
-
-        /*$parceiro = $this->parceiro->create([
-            'nome' => $dataParc['nome'],
-            'documento' =>
-        ]);*/
-
+        
         $parceiro = $this->parceiro->create($dataParc);
 
 
@@ -299,7 +289,6 @@ class ParceiroController extends Controller
         $motoristasDB = Motorista::where('id_parceiro', $id)->get()->keyBy('id');
 
         $data['pessoa'] = Parceiro::getPessoa($request->get('pessoa'));
-//        dd($data['pessoa']);
         $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
         $dataCont = $request->only(['extras']);
         $dataCam = $request->only(['extraCaminhoes']);
