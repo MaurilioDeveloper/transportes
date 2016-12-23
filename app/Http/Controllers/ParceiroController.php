@@ -103,10 +103,12 @@ class ParceiroController extends Controller
 
 //        \DB::beginTransaction();
 //
-        if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0){
-            $dataParc['data_nasc'] = null;
-        }else if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) != 0){
-            $dataParc['data_nasc'] = implode('-',array_reverse(explode('/', $dataParc['data_nasc'])));
+        if($data['pessoa'] == 'fisica') {
+            if (isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0) {
+                $dataParc['data_nasc'] = null;
+            } else if (isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) != 0) {
+                $dataParc['data_nasc'] = implode('-', array_reverse(explode('/', $dataParc['data_nasc'])));
+            }
         }
 
 //        dd($dataParc['data_nasc']);
