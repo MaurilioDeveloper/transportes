@@ -105,11 +105,11 @@ class ParceiroController extends Controller
 //
         if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0){
             $dataParc['data_nasc'] = null;
-        }else{
+        }else if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) != 0){
             $dataParc['data_nasc'] = implode('-',array_reverse(explode('/', $dataParc['data_nasc'])));
         }
 
-//        dd($dataParc['data_nasc']);
+        dd($dataParc['data_nasc']);
 
 
 

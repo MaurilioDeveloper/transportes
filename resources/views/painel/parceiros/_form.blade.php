@@ -80,7 +80,7 @@
                 <i class="fa fa-calendar"></i>
             </div>
 {{--            {!! Form::input('data_nasc', null , ['class' => 'form-control pull-right', 'id' => '']) !!}--}}
-            <input type="text" class="form-control datapicker pull-right" name="data_nasc" value="{{$data_nasc or old('data_nasc')}}"/>
+            <input type="text" class="form-control datapicker pull-right" name="data_nasc" value="@if(isset($data_nasc)){{$data_nasc}}@else {{old('data_nasc')}}@endif"/>
         </div>
 
     </div>
