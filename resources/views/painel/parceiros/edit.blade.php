@@ -228,7 +228,7 @@
 
                                     {!! Form::model($parceiro, ['route' => ['parceiros.update','client' => $parceiro->id], 'class' => 'form', 'method' => 'PUT']) !!}
 
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
                                     
                                     @include('painel.parceiros._form')
 

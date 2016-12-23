@@ -109,8 +109,17 @@ class ParceiroController extends Controller
         if(isset($dataParc['data_nasc']) && strlen($dataParc['data_nasc']) === 0){
             $dataParc['data_nasc'] = null;
         }
+
+        $dataParc['data_nasc'] = implode('-',array_reverse(explode('/', $dataParc['data_nasc'])));
 //        dd($dataParc);
 
+
+
+
+        /*$parceiro = $this->parceiro->create([
+            'nome' => $dataParc['nome'],
+            'documento' =>
+        ]);*/
 
         $parceiro = $this->parceiro->create($dataParc);
 
@@ -241,6 +250,10 @@ class ParceiroController extends Controller
     public function edit($id)
     {
         $titulo = 'Editar Parceiro';
+        $data_nascimento = str_replace('["', '', str_replace('"]', '',$this->parceiro->where('id', $id)->pluck('data_nasc')->toJson()));
+
+//        dd($data_nascimento);
+        $data_nasc = implode('/',array_reverse(explode('-', $data_nascimento)));
 //        $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
 //        $dataCont = $request->only(['extras']);
 //        $dataCam = $request->only(['extraCaminhoes']);
@@ -254,6 +267,8 @@ class ParceiroController extends Controller
             ->select("ocorrencias.id", "ocorrencias.data", "tipo_ocorrencias.nome as tipo", "ocorrencias.descricao", "users.name as usuario")
             ->where('id_parceiro', $id)->paginate(10);
         $tipo_ocorrencia = $this->tipoOcorrencia->pluck('nome', 'id')->toArray();
+//        dd($tipo_ocorrencia);
+
 
 //        dd($motoristas);
 
@@ -262,7 +277,7 @@ class ParceiroController extends Controller
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
         $pessoa = $parceiro->pessoa;
-        return view('painel.parceiros.edit', compact('parceiro', 'tipo_ocorrencia', 'pessoa', 'titulo', 'caminhoes', 'contatos', 'motoristas', 'ocorrencias'));
+        return view('painel.parceiros.edit', compact('parceiro', 'tipo_ocorrencia', 'pessoa', 'titulo', 'caminhoes', 'contatos', 'motoristas', 'ocorrencias', 'data_nasc'));
     }
 
     public function update(ParceiroRequest $request, $id)

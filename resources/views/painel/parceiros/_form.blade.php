@@ -80,7 +80,7 @@
                 <i class="fa fa-calendar"></i>
             </div>
 {{--            {!! Form::input('data_nasc', null , ['class' => 'form-control pull-right', 'id' => '']) !!}--}}
-            <input type="text" class="form-control datapicker pull-right" name="data_nasc" />
+            <input type="text" class="form-control datapicker pull-right" name="data_nasc" value="{{$data_nasc or old('data_nasc')}}"/>
         </div>
 
     </div>
@@ -317,7 +317,7 @@
                                     </div>
                                     <div class="form-group  col-md-3">
                                         <label for="extraMotoristas[{{$i}}][telefone]">Telefone </label>
-                                        <input type="text" class="form-control" name="extraMotoristas[{{$i}}][telefone]" value="@if(isset($motorista->telefone)){{$motorista->telefone}}@else{{old('extraMotoristas[0][telefone]')}}@endif"
+                                        <input type="text" class="form-control phone" name="extraMotoristas[{{$i}}][telefone]" value="@if(isset($motorista->telefone)){{$motorista->telefone}}@else{{old('extraMotoristas[0][telefone]')}}@endif"
                                                id="telefone">
                                     </div>
                                         <div class="form-group col-md-1">
