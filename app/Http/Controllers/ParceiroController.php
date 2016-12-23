@@ -427,8 +427,7 @@ class ParceiroController extends Controller
             } else {
                 $dataParc['data_nasc'] = implode('-', array_reverse(explode('/', $dataParc['data_nasc'])));
             }
-        }else{
-            $dataParc['data_nasc'] = null;
+            dd($dataParc['data_nasc']);
         }
 
         if(strlen($dataParc['documento']) === 0){
