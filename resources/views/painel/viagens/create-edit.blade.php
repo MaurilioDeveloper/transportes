@@ -80,16 +80,16 @@
                     <input type="hidden"  />
                     <label for="id_parceiro">Parceiro Viagem*</label>
                     {{--                        {!! Form::select('id_parceiro', [], null, ['class' => 'form-control select2_frete', 'required' => 'true', 'id' => 'frete']) !!}--}}
-                    <select class="form-control select2_viagem" id="viagem" name="id_parceiro">
-                        @if(isset($viagem->id_parceiro))
-                            <option value="{{$viagem->id_parceiro}}" selected>{{$viagemNome}}</option>
+                    <select class="form-control select2_viagem" id="viagem" name="id_parceiro_viagem">
+                        @if(isset($viagem->id_parceiro_viagem))
+                            <option value="{{$viagem->id_parceiro_viagem}}" selected>{{$viagemNome}}</option>
                         @else
                             <option value="0" selected>Selecione um parceiro</option>
                         @endif
                     </select>
                 </div>
                 <div>
-                    <hr style="border: 1px solid #ccc"/>
+                    <hr style="border: 1px solid #3c8dbc"/>
 
                     <div class="form-group col-md-6">
                         <select class="form-control select2_viagem" id="viagem_caminhao" name="id_caminhao">
@@ -116,8 +116,8 @@
                     </div>
                     <div class="form-group col-md-6">
                             <label>Horario de Inicio *</label>
-                            <input required="" name='horario_inicio' type="time"
-                                   class="form-control" value=""/>
+                            <input required="" name='horario_inicio' type="text"
+                                   class="form-control time" value=""/>
                     </div>
                     <div class="form-group col-md-6">
                             <label>Data Prevista Termino *</label>
@@ -126,8 +126,8 @@
                     </div>
                     <div class="form-group col-md-6">
                             <label>Horario de Termino *</label>
-                            <input required="" name='horario_fim' type="time"
-                                   class="form-control" value=""/>
+                            <input required="" name='horario_fim' type="text"
+                                   class="form-control time" value=""/>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="status">Status *</label>
@@ -165,8 +165,16 @@
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR</button>
                     </div>
 
-                </div>
+                    <div class="form-group col-md-12">
+                        <hr style="border: 1px solid #3c8dbc"/>
+                        {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary']) !!}
+                        {{--<button type="submit" class="btn btn-primary">Cadastrar</button>--}}
+                        <a class="btn btn-info" href="{{route('listaViagens')}}">Voltar</a>
+                        <button type="reset" class="btn">Limpar</button>
+                    </div>
 
+                </div>
+                {!! Form::close() !!}
 
             </div>
         </div>

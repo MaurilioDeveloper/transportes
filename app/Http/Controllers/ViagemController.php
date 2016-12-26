@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Frete;
+use App\Viagem;
 use DB;
 use Datatables;
 
@@ -43,10 +44,10 @@ class ViagemController extends Controller
 
     public function listaFretes()
     {
-        return  Datatables::of(Frete::query()
-            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino")
-            ->where('status', 'Aguardando Embarque'))
+        return  Datatables::of(Viagem::query()
+            ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
+            ->join('fretes', 'fretes.id', '=', 'viagens.id_frete')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "viagens.cidade_origem", "viagens.cidade_destino"))
             ->make(true);
 
 //        return $this->frete->get()->where('status', 'Aguardando Embarque');
