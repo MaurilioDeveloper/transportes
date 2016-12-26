@@ -16,7 +16,7 @@ class CreateCaminhaosTable extends Migration
         Schema::create('caminhoes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_parceiro')->unsigned();
-            $table->foreign('id_parceiro')->references('id')->on('parceiros');
+            $table->foreign('id_parceiro')->references('id')->on('parceiros')->onDelete('cascade');
             $table->string('placa', 8);
             $table->string('modelo');
             $table->string('cor');

@@ -16,7 +16,7 @@ class CreateContatosTable extends Migration
         Schema::create('contatos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_parceiro')->unsigned();
-            $table->foreign('id_parceiro')->references('id')->on('parceiros');
+            $table->foreign('id_parceiro')->references('id')->on('parceiros')->onDelete('cascade');
             $table->string('nome');
             $table->string('site')->nullable();
             $table->string('setor');
