@@ -111,8 +111,10 @@ class ParceiroController extends Controller
             }
         }
         if(strlen($dataParc['documento']) == 0){
+
             $dataParc['documento'] = null;
         }
+//        dd($dataParc);
 
         $parceiro = $this->parceiro->create($dataParc);
 
@@ -522,5 +524,7 @@ class ParceiroController extends Controller
         TipoOcorrencia::create($dataForm);
         return 1;
     }
+
+
 
 }

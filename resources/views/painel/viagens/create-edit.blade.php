@@ -5,6 +5,30 @@
     <link href="{{url('/assets/css/select2.min.css')}}" rel="stylesheet"/>
     <link href="{{url('/assets/css/app.css')}}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{url('/assets/css/plugin.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url('/assets/plugins/tables/datatables/css/datatables.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/dataTables.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/autoFill.bootstrap.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/buttons.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/colReorder.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/fixedColumns.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/fixedHeader.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/keyTable.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/responsive.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/rowReorder.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/scroller.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
+
 @endsection
 
 @section('content')
@@ -42,17 +66,154 @@
             <div class="box-body">
                 {{--@include('painel.errors._errors_form')--}}
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
-                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Frete Cadastrado com Sucesso</div>
+                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Cadastrado com Sucesso</div>
 
-                {{--@if(isset($frete->id) && $frete->id > 0)--}}
-                    {{--{!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'send' => 'updateFrete', 'name' => 'form', 'method' => 'PUT']) !!}--}}
+                @if(isset($viagem->id) && $viagem->id > 0)
+                    {!! Form::model($viagem, ['route' => ['updateViagem','viagem' => $viagem->id], 'class' => 'form', 'send' => 'updateViagem', 'name' => 'form', 'method' => 'PUT']) !!}
 
-                {{--@else--}}
-                    {{--{!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete']) !!}--}}
-                {{--@endif--}}
+                @else
+                    {!! Form::open(['route' => 'cadastrarViagem', 'class' => 'form', 'send' => 'cadastrar-viagem', 'name' => 'form-viagem']) !!}
+                @endif
 
 
+                <div class="form-group col-md-12">
+                    <input type="hidden"  />
+                    <label for="id_parceiro">Parceiro Viagem*</label>
+                    {{--                        {!! Form::select('id_parceiro', [], null, ['class' => 'form-control select2_frete', 'required' => 'true', 'id' => 'frete']) !!}--}}
+                    <select class="form-control select2_viagem" id="viagem" name="id_parceiro">
+                        @if(isset($viagem->id_parceiro))
+                            <option value="{{$viagem->id_parceiro}}" selected>{{$viagemNome}}</option>
+                        @else
+                            <option value="0" selected>Selecione um parceiro</option>
+                        @endif
+                    </select>
+                </div>
+                <div>
+                    <hr style="border: 1px solid #ccc"/>
 
+                    <div class="form-group col-md-6">
+                        <select class="form-control select2_viagem" id="viagem_caminhao" name="id_caminhao">
+{{--                            @if(isset($viagem->id_parceiro))--}}
+{{--                                <option value="{{$viagem->id_parceiro}}" selected>{{$viagemNome}}</option>--}}
+                            {{--@else--}}
+                                <option value="0" selected>Selecione um caminhao</option>
+                            {{--@endif--}}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="form-control select2_viagem" id="viagem_motorista" name="id_motorista">
+                            {{--                            @if(isset($viagem->id_parceiro))--}}
+                            {{--                                <option value="{{$viagem->id_parceiro}}" selected>{{$viagemNome}}</option>--}}
+                            {{--@else--}}
+                            <option value="0" selected>Selecione um motorista</option>
+                            {{--@endif--}}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                            <label>Data Prevista Inicio *</label>
+                            <input required="" name='data_inicio' type="text" placeholder="Data Inicio"
+                                   class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                            <label>Horario de Inicio *</label>
+                            <input required="" name='horario_inicio' type="time"
+                                   class="form-control" value=""/>
+                    </div>
+                    <div class="form-group col-md-6">
+                            <label>Data Prevista Termino *</label>
+                            <input required="" name='data_fim' type="text" placeholder="Data Fim"
+                                   class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                            <label>Horario de Termino *</label>
+                            <input required="" name='horario_fim' type="time"
+                                   class="form-control" value=""/>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="status">Status *</label>
+                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Viagem::STATUS), isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {!! Form::label('cidade', 'Cidade Origem*') !!}
+                        {{--{!! Form::text('cidade_origem', null, ['class' => 'form-control', 'placeholder' => 'Cidade', 'value' => "@if(isset($frete->cidade_origem)){{$frete->cidade_origem}}@else{{old('cidade_origem')}}@endif"]) !!}--}}
+                        <input type="text" name="cidade_origem" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_origem)){{$viagem->cidade_origem}}@else{{old('cidade_origem')}}@endif" />
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        {!! Form::label('estado', 'Estado Origem *') !!}
+                        {{--                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
+                        <input type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_origem)){{$viagem->estado_origem}}@else{{old('estado_origem')}}@endif" />
+                    </div>
+
+                    {{--</fieldset>--}}
+
+                    {{--<fieldset class="callout column small-12">--}}
+                    {{--<legend><b>Destino</b></legend>--}}
+
+                    <div class="form-group col-md-3">
+                        {!! Form::label('cidade', 'Cidade Destino *') !!}
+                        {{--{!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}--}}
+                        <input type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_destino)){{$frete->cidade_destino}}@else{{old('cidade_destino')}}@endif" />
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        {!! Form::label('estado', 'Estado Destino *') !!}
+                        {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
+                        <input type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_destino)){{$frete->estado_destino}}@else{{old('estado_destino')}}@endif" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="adicionarFrete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Adicionar um Frete</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr style="background: #2e6da4; color: white">
+                            <th>Nome Parceiro</th>
+                            <th>Modelo</th>
+                            <th>Identificação</th>
+                            <th>Origem</th>
+                            <th>Destino</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($fretes as $frete)
+                        {{--{{$fretes}}--}}
+                        <tr class="success">
+                            <td>{{$frete->nome}}</td>
+                            <td>{{$frete->tipo}}</td>
+                            <td>{{$frete->identificacao}}</td>
+                            <td>{{$frete->cidade_origem}}</td>
+                            <td>{{$frete->cidade_destino}}</td>
+                            <td><button class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
+                        </tr>
+                    @empty
+                        <p>Vazio</p>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
@@ -67,6 +228,30 @@
     <script type="text/javascript" src="{{url('/assets/js/masks/maskMoney.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/datatables.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/jszip.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/pdfmake.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/vfs_fonts.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.autoFill.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/autoFill.bootstrap.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/buttons.colVis.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/buttons.flash.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/buttons.html5.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/buttons.print.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.colReorder.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.fixedColumns.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.fixedHeader.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.keyTable.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/responsive.bootstrap.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.rowReorder.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
+    <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
+    {{--<script src="{{url('/assets/js/datatable-lists/list-viagem.js')}}"></script>--}}
 @endsection
 
 @endsection

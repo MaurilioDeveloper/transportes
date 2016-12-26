@@ -49,6 +49,9 @@ Route::group(['prefix' => 'painel'], function(){
     //Viagens
     Route::group(['prefix' => 'viagens'], function(){
         Route::get('/create-edit', 'ViagemController@create')->name('cadastrarViagens');
+        Route::get('/busca-parceiro/{name}', 'ViagemController@buscaParceiro')->name('buscaParceiro');
+        Route::get('/lista-fretes', 'ViagemController@listaFretes')->name('listaFretes');
+        Route::post('/cadastrar-viagem', 'ViagemController@store')->name('cadastrarViagem');
         Route::get('/', 'ViagemController@index')->name('listaViagens');
     });
 

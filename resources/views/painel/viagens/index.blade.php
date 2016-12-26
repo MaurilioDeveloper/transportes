@@ -53,18 +53,19 @@
                     <br/>
                     <br/>
                     <div class='box-body'>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="lista-viagens">
                             <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                                <tr style="background: #2e6da4; color: white">
+                                    <th>Nome Parceiro</th>
+                                    <th>Modelo</th>
+                                    <th>Identificação</th>
+                                    <th>Origem</th>
+                                    <th>Destino</th>
+                                    <th style="width: 140px">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr class="warning">
 
                                 </tr>
                             </tbody>
@@ -79,7 +80,6 @@
 
 
 @section('scripts-footer')
-    <script src="{{url('/assets/js/datatable-lists/lista-viagem.js')}}"></script>
     <script src="{{url('/assets/js/vendor/jquery.blockUI.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/datatables.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/jszip.min.js')}}"></script>
@@ -104,5 +104,6 @@
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.rowReorder.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
+    <script src="{{url('/assets/js/datatable-lists/list-viagem.js')}}"></script>
 @endsection
 @endsection

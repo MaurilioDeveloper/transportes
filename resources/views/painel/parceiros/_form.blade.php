@@ -35,19 +35,19 @@
 
 <div class="form-group col-md-6">
     {!! Form::label('endereco', 'Endereco') !!}
-    {!! Form::text('endereco', null, ['class' => 'form-control']) !!}
+    {!! Form::text('endereco', null, ['class' => 'form-control', 'id' => 'rua']) !!}
 </div>
 
 
 <div class="form-group col-md-6">
     {!! Form::label('bairro', 'Bairro') !!}
-    {!! Form::text('bairro', null, ['class' => 'form-control']) !!}
+    {!! Form::text('bairro', null, ['class' => 'form-control', 'id' => 'bairro']) !!}
 </div>
 
 
 <div class="form-group col-md-6">
     {!! Form::label('cidade', 'Cidade *') !!}
-    {!! Form::text('cidade', null, ['class' => 'form-control']) !!}
+    {!! Form::text('cidade', null, ['class' => 'form-control', 'id' => 'cidade']) !!}
 </div>
 
 

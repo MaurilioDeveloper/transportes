@@ -2,6 +2,7 @@
 
 @section('styles-head')
     <link rel="stylesheet" type="text/css" href="{{url('/assets/css/plugin.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url('/assets/css/loading.css')}}"/>
 @endsection
 
 
@@ -21,6 +22,7 @@
 @endsection
 
 <div id="gritter-notice-wrapper" style="display: none"><div id="gritter-item-4" class="gritter-item-wrapper success-notice" role="alert"><div class="gritter-item"><a class="gritter-close" href="#" tabindex="1"><i class="en-cross"></i></a><i class="ec-trashcan gritter-icon"></i><div class="gritter-without-image"><span class="gritter-title">Sucesso !!!</span><p>Parceiro Cadastrado com Sucesso. </p></div><div style="clear:both"></div></div></div></div>
+<div class="overlay-loading" style="display: none;"></div>
 {{--<button id="success-notice" type="button" onclick="$('#gritter-notice-wrapper').show()"  class="btn btn-success mr15 mb15">Success notice</button>--}}
 <!-- Main content -->
     {{--<section class="content">--}}
@@ -66,6 +68,7 @@
     <script type="text/javascript" src="{{url('/assets/js/masks/maskMoney.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/add-new-field.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-parceiro.js')}}"></script>
     {{--<script src="{{url('/assets/plugins/core/slimscroll/jquery.slimscroll.min.js')}}"></script>--}}
 {{--    <script src="{{url('/assets/plugins/core/slimscroll/jquery.slimscroll.horizontal.min.js')}}"></script>--}}
 {{--    <script src="{{url('/assets/plugins/forms/tinymce/tinymce.min.js')}}"></script>--}}
