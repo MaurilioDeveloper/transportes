@@ -93,9 +93,11 @@
                     <hr style="border: 1px solid #3c8dbc"/>
 
                     <div class="form-group col-md-6">
+                        <label for="id_caminhao">Caminhão Viagem</label>
                         {!! Form::select('id_caminhao', [0 => 'Selecione um caminhão'], isset($caminhao) or old('id_caminhao'), ['class' => 'form-control', 'id' => 'caminhao']) !!}
                     </div>
                     <div class="form-group col-md-6">
+                        <label for="id_motorista">Motorista Viagem</label>
                         {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], isset($motorista) or old('id_motorista'), ['class' => 'form-control', 'id' => 'motorista']) !!}
                     </div>
                     <div class="form-group col-md-6">
