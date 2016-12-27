@@ -101,23 +101,23 @@
                         {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], isset($motorista) or old('id_motorista'), ['class' => 'form-control', 'id' => 'motorista']) !!}
                     </div>
                     <div class="form-group col-md-6">
-                            <label>Data Prevista Inicio *</label>
-                            <input required="" name='data_inicio' type="text" placeholder="__/__/____"
+                            <label>Data Prevista Inicio</label>
+                            <input  name='data_inicio' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
                     </div>
                     <div class="form-group col-md-6">
-                            <label>Horario de Inicio *</label>
-                            <input required="" name='horario_inicio' type="text"
+                            <label>Horario de Inicio</label>
+                            <input name='horario_inicio' type="text"
                                    class="form-control timepicker" value=""/>
                     </div>
                     <div class="form-group col-md-6">
-                            <label>Data Prevista Termino *</label>
-                            <input required="" name='data_fim' type="text" placeholder="__/__/____"
+                            <label>Data Prevista Termino</label>
+                            <input  name='data_fim' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
                     </div>
                     <div class="form-group col-md-6">
-                            <label>Horario de Termino *</label>
-                            <input required="" name='horario_fim' type="text"
+                            <label>Horario de Termino</label>
+                            <input  name='horario_fim' type="text"
                                    class="form-control timepicker" value=""/>
                     </div>
                     <div class="form-group col-md-12">
@@ -125,15 +125,15 @@
                         {!! Form::select('status', \App\Viagem::STATUS, isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
                     </div>
                     <div class="form-group col-md-3">
-                        {!! Form::label('cidade', 'Cidade Origem*') !!}
+                        {!! Form::label('cidade', 'Cidade Origem *') !!}
                         {{--{!! Form::text('cidade_origem', null, ['class' => 'form-control', 'placeholder' => 'Cidade', 'value' => "@if(isset($frete->cidade_origem)){{$frete->cidade_origem}}@else{{old('cidade_origem')}}@endif"]) !!}--}}
-                        <input type="text" name="cidade_origem" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_origem)){{$viagem->cidade_origem}}@else{{old('cidade_origem')}}@endif" />
+                        <input required type="text" name="cidade_origem" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_origem)){{$viagem->cidade_origem}}@else{{old('cidade_origem')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-3">
                         {!! Form::label('estado', 'Estado Origem *') !!}
                         {{--                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
-                        <input type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_origem)){{$viagem->estado_origem}}@else{{old('estado_origem')}}@endif" />
+                        <input required type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_origem)){{$viagem->estado_origem}}@else{{old('estado_origem')}}@endif" />
                     </div>
 
                     {{--</fieldset>--}}
@@ -144,13 +144,13 @@
                     <div class="form-group col-md-3">
                         {!! Form::label('cidade', 'Cidade Destino *') !!}
                         {{--{!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}--}}
-                        <input type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_destino)){{$frete->cidade_destino}}@else{{old('cidade_destino')}}@endif" />
+                        <input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_destino)){{$frete->cidade_destino}}@else{{old('cidade_destino')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-3">
                         {!! Form::label('estado', 'Estado Destino *') !!}
                         {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
-                        <input type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_destino)){{$frete->estado_destino}}@else{{old('estado_destino')}}@endif" />
+                        <input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_destino)){{$frete->estado_destino}}@else{{old('estado_destino')}}@endif" />
                     </div>
                     <input type="hidden" id="id_parceiro" />
                     <input type="hidden" id="id_frete" name="id_frete" />
