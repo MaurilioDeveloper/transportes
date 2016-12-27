@@ -61,7 +61,7 @@
                                     <th>Identificação</th>
                                     <th>Origem</th>
                                     <th>Destino</th>
-                                    <th style="width: 140px">Ações</th>
+                                    {{--<th style="width: 140px">Ações</th>--}}
                                 </tr>
                             </thead>
                             <tbody>

@@ -40,7 +40,7 @@
                     <div class="box-body">
                         <h4>{{$pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h4>
                         @include('painel.errors._errors_form')
-                        {!! Form::open(['route' => 'parceiros.store', 'class' => 'form']) !!}
+                        {!! Form::open(['route' => 'parceiros.store', 'class' => 'form', 'id' => 'meuForm']) !!}
 {{--                        <form class="form" action="{{route('parceiros.store')}}">--}}
                         {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
                         {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
@@ -68,6 +68,7 @@
     <script type="text/javascript" src="{{url('/assets/js/masks/maskMoney.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/add-new-field.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/vendor/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-parceiro.js')}}"></script>
     {{--<script src="{{url('/assets/plugins/core/slimscroll/jquery.slimscroll.min.js')}}"></script>--}}
 {{--    <script src="{{url('/assets/plugins/core/slimscroll/jquery.slimscroll.horizontal.min.js')}}"></script>--}}

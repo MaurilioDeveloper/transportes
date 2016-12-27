@@ -43,8 +43,82 @@ $(".select2_viagem").select2({
     minimumInputLength: 1
 });
 
+$("#dados").hide();
+
 $(".select2_viagem").on('select2:select', function (e) {
     console.log(e.params.data);
+    $("#id_parceiro").val(e.params.data.id);
+    var id = $("#id_parceiro").val();
+    var idCaminhao = $("#id_parceiro").val();
+    $("#dados").show();
+    $.getJSON('/painel/viagens/busca-motorista/'+id, function (dados) {
+        console.log(dados);
+        $.each(dados, function(i, obj){
+            // console.log(i);
+            // console.log(obj);
+            option = '<option value="'+obj.id+'">'+obj.nome+'</option>';
+            $("#motorista").append(option);
+        });
+    });
+    $.getJSON('/painel/viagens/busca-caminhao/'+idCaminhao, function (dados) {
+        console.log(dados);
+        $.each(dados, function(i, obj){
+            // console.log(i);
+            // console.log(dados[i]);
+            option = '<option value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
+            $("#caminhao").append(option);
+        });
+    });
 
 });
 
+function adicionarFrete(id){
+    $("#adicionarFrete").modal('toggle');
+    $("#id_frete").val(id);
+}
+$(document).ready(function () {
+
+    jQuery('form[name="form-viagem"]').submit(function () {
+        jQuery(".msg-warn").hide();
+        jQuery(".msg-suc").hide();
+        var dadosForm = jQuery(this).serialize();
+        var form = jQuery(this);
+        var botao = $(this).find('#botao');
+        $.ajax({
+            url: $(this).attr("send"),
+            type: "POST",
+            data: dadosForm,
+            beforeSend: function () {
+                botao.attr('disabled', true).html('Carregando...', true);
+                // jQuery(".load").show();
+            },
+            success: function (data) {
+                botao.attr('disabled', false).html('Salvar');
+                // jQuery(".load").hide();
+                console.log(data);
+                if (data == "1") {
+                    form.fadeOut('slow', function () {
+                        jQuery(".msg-suc").show();
+                        // jQuery("#gritter-notice-wrapper").show();
+                        setTimeout(function () {
+                            window.location.href = '/painel/viagens';
+                        }, 3000);
+                    });
+                } else {
+                    jQuery(".msg-warn").show();
+                    jQuery(".msg-warn").html(data);
+                    console.log(data)
+                    setTimeout("jQuery('.msg-warn').hide();", 3500);
+                }
+            },
+            error: function (event, request, settings) {
+                console.log(event);
+                console.log("erro");
+                console.log(request);
+                console.log(settings);
+            }
+        });
+        return false;
+    });
+
+});

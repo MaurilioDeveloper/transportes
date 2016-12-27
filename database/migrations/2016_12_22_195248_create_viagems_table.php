@@ -21,10 +21,10 @@ class CreateViagemsTable extends Migration
             $table->foreign('id_caminhao')->references('id')->on('caminhoes');
             $table->integer('id_motorista')->unsigned();
             $table->foreign('id_motorista')->references('id')->on('motoristas');
-            $table->date('data_hoje');
-            $table->time('horario_inicio');
             $table->date('data_inicio');
-            $table->time('horario_termino');
+            $table->time('horario_inicio');
+            $table->date('data_fim');
+            $table->time('horario_fim');
             $table->string('status');
             $table->string('cidade_origem');
             $table->string('estado_origem', 2);

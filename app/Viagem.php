@@ -16,4 +16,12 @@ class Viagem extends Model
         3 => 'Concluida',
         4 => 'Cancelada'
     ];
+
+    static $rules = [
+        'status' => 'required',
+        'cidade_origem' => 'required',
+        'cidade_destino' => 'required',
+        'estado_origem' => 'required',
+        'estado_destino' => 'required'
+    ];
 }

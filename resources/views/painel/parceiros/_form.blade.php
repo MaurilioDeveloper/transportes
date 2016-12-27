@@ -1,4 +1,4 @@
-{!! Form::hidden('pessoa', $pessoa) !!}
+{!! Form::hidden('pessoa', $pessoa, ['id' => 'pessoa']) !!}
 
 <div class="form-group col-md-6">
     <label for="Nome">Nome *</label>

@@ -28,6 +28,7 @@
           href="{{url('/assets/plugins/tables/datatables/css/scroller.bootstrap.min.css')}}"/>
     <link rel="stylesheet" type="text/css"
           href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url('/assets/css/timepicki.css')}}" />
 
 @endsection
 
@@ -66,7 +67,7 @@
             <div class="box-body">
                 {{--@include('painel.errors._errors_form')--}}
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
-                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Cadastrado com Sucesso</div>
+                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Cadastrada com Sucesso</div>
 
                 @if(isset($viagem->id) && $viagem->id > 0)
                     {!! Form::model($viagem, ['route' => ['updateViagem','viagem' => $viagem->id], 'class' => 'form', 'send' => 'updateViagem', 'name' => 'form', 'method' => 'PUT']) !!}
@@ -88,50 +89,38 @@
                         @endif
                     </select>
                 </div>
-                <div>
+                <div id="dados" style="display: none;">
                     <hr style="border: 1px solid #3c8dbc"/>
 
                     <div class="form-group col-md-6">
-                        <select class="form-control select2_viagem" id="viagem_caminhao" name="id_caminhao">
-{{--                            @if(isset($viagem->id_parceiro))--}}
-{{--                                <option value="{{$viagem->id_parceiro}}" selected>{{$viagemNome}}</option>--}}
-                            {{--@else--}}
-                                <option value="0" selected>Selecione um caminhao</option>
-                            {{--@endif--}}
-                        </select>
+                        {!! Form::select('id_caminhao', [0 => 'Selecione um caminhão'], isset($caminhao) or old('id_caminhao'), ['class' => 'form-control', 'id' => 'caminhao']) !!}
                     </div>
                     <div class="form-group col-md-6">
-                        <select class="form-control select2_viagem" id="viagem_motorista" name="id_motorista">
-                            {{--                            @if(isset($viagem->id_parceiro))--}}
-                            {{--                                <option value="{{$viagem->id_parceiro}}" selected>{{$viagemNome}}</option>--}}
-                            {{--@else--}}
-                            <option value="0" selected>Selecione um motorista</option>
-                            {{--@endif--}}
-                        </select>
+                        {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], isset($motorista) or old('id_motorista'), ['class' => 'form-control', 'id' => 'motorista']) !!}
                     </div>
                     <div class="form-group col-md-6">
                             <label>Data Prevista Inicio *</label>
-                            <input required="" name='data_inicio' type="text" placeholder="Data Inicio"
+                            <input required="" name='data_inicio' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
                     </div>
                     <div class="form-group col-md-6">
                             <label>Horario de Inicio *</label>
                             <input required="" name='horario_inicio' type="text"
-                                   class="form-control time" value=""/>
+                                   class="form-control timepicker" value=""/>
                     </div>
                     <div class="form-group col-md-6">
                             <label>Data Prevista Termino *</label>
-                            <input required="" name='data_fim' type="text" placeholder="Data Fim"
+                            <input required="" name='data_fim' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
                     </div>
                     <div class="form-group col-md-6">
                             <label>Horario de Termino *</label>
                             <input required="" name='horario_fim' type="text"
-                                   class="form-control time" value=""/>
+                                   class="form-control timepicker" value=""/>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="status">Status *</label>
-                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Viagem::STATUS), isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
+                        {!! Form::select('status', \App\Viagem::STATUS, isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
                     </div>
                     <div class="form-group col-md-3">
                         {!! Form::label('cidade', 'Cidade Origem*') !!}
@@ -161,13 +150,15 @@
                         {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
                         <input type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_destino)){{$frete->estado_destino}}@else{{old('estado_destino')}}@endif" />
                     </div>
+                    <input type="hidden" id="id_parceiro" />
+                    <input type="hidden" id="id_frete" name="id_frete" />
                     <div class="form-group col-md-4">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR</button>
                     </div>
 
                     <div class="form-group col-md-12">
                         <hr style="border: 1px solid #3c8dbc"/>
-                        {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary', 'id' => 'botao', 'send' => 'cadastrarViagem']) !!}
                         {{--<button type="submit" class="btn btn-primary">Cadastrar</button>--}}
                         <a class="btn btn-info" href="{{route('listaViagens')}}">Voltar</a>
                         <button type="reset" class="btn">Limpar</button>
@@ -212,10 +203,12 @@
                             <td>{{$frete->identificacao}}</td>
                             <td>{{$frete->cidade_origem}}</td>
                             <td>{{$frete->cidade_destino}}</td>
-                            <td><button class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
+                            <td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
                         </tr>
                     @empty
-                        <p>Vazio</p>
+                        <tr>
+                            <td colspan="6" class="warning" style="text-align: center;">Nenhum dado cadastrado</td>
+                        </tr>
                     @endforelse
                     </tbody>
                 </table>
@@ -232,6 +225,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="{{url('/assets/js/cadastros/cad-viagem.js')}}"></script>
     <script src="{{url('/assets/js/ischeck.js')}}"></script>
+    <script src="{{url('/assets/js/vendor/timepicki.js')}}"></script>
+    <script>$('.timepicker').timepicki({show_meridian:false});</script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/maskMoney.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
