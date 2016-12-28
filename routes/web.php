@@ -77,6 +77,6 @@ Route::get('/login', function () {
 $this->post('/login', 'Auth\LoginController@login');
 $this->get('/logout', 'Auth\LoginController@logout');
 
-//Auth::routes();
+Auth::routes();
 
 
