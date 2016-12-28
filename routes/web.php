@@ -26,6 +26,12 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/', 'FreteController@index')->name('listarFretes');
     });
 
+    //Tipo de Ocorrências
+    Route::group(['prefix' => 'tipo-ocorrencias'], function(){
+       Route::get('/lista-tipo-ocorrencias', 'TipoOcorrenciaController@listaTipoOcorrencias')->name('listaTipoOcorrencias');
+       Route::get('/create', 'TipoOcorrenciaController@create')->name('adicionarTipoOcorrencia');
+       Route::get('/', 'TipoOcorrenciaController@index')->name('listagemTO');
+    });
 
     //Parceiros
     Route::group(['prefix' => 'parceiros'], function(){
