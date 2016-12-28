@@ -30,6 +30,7 @@ Route::group(['prefix' => 'painel'], function(){
     Route::group(['prefix' => 'tipo-ocorrencias'], function(){
        Route::get('/lista-tipo-ocorrencias', 'TipoOcorrenciaController@listaTipoOcorrencias')->name('listaTipoOcorrencias');
        Route::get('/create', 'TipoOcorrenciaController@create')->name('adicionarTipoOcorrencia');
+        Route::get('/edit/{id}', 'TipoOcorrenciaController@edit');
        Route::get('/', 'TipoOcorrenciaController@index')->name('listagemTO');
     });
 

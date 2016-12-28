@@ -29,4 +29,12 @@ class TipoOcorrenciaController extends Controller
     {
         return view('painel.tipo-ocorrencias.create-edit');
     }
+
+    public function edit($id)
+    {
+        if (!($tipoOcorrencia = TipoOcorrencia::find($id))) {
+            throw new ModelNotFoundException("Tipo de Ocorrência não foi encontrado");
+        }
+        return view('painel.tipo-ocorrencias.create-edit', compact('tipoOcorrencia'));
+    }
 }
