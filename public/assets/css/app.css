@@ -16,6 +16,9 @@ button.ui-button::-moz-focus-inner {
 .select2_ce{
   width: 465px;
 }
+aside.control-sidebar.control-sidebar-dark{
+  display: none;
+}
 
 .ui-datepicker {
   width: 17em;
