@@ -46,15 +46,15 @@
                         <div class="box-body">
                             <div class="form-group col-md-6">
                                 <label for="Nome">Nome *</label>
-                                <input type="text" value="@if(isset($usuario->name)){{$usuario->name}}@else{{old('name')}}@endif" name='name' placeholder="Insira o Nome" class='form-control'>
+                                <input type="text" value="@if(isset($usuario->name)){{$usuario->name}}@else{{old('name')}}@endif" name='name' placeholder="Insira o Nome" class='form-control' required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail">E-mail *</label>
-                                <input type="text" value="@if(isset($usuario->email)){{$usuario->email}}@else{{old('email')}}@endif" name='email' placeholder="Insira um Email" class='form-control'>
+                                <input type="email" value="@if(isset($usuario->email)){{$usuario->email}}@else{{old('email')}}@endif" name='email' placeholder="Insira um Email" class='form-control' required>
                             </div>
                             <div class="form-group  col-md-6">
                                 <label for="Senha">Senha *</label>
-                                <input type="password" value="{{old('password')}}" name='password' placeholder="Insira uma Senha" class='form-control'>
+                                <input type="password" value="{{old('password')}}" name='password' placeholder="Insira uma Senha" class='form-control' required>
                             </div>
                         </div>
                          <div class="box-footer col-md-12">
