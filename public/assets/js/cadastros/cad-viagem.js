@@ -53,6 +53,17 @@ $(".select2_viagem").on('select2:select', function (e) {
     $("#dados").show();
     $.getJSON('/painel/viagens/busca-motorista/'+id, function (dados) {
         console.log(dados);
+        console.log("Abaixo vem o Length dos Motoristas");
+
+        if($("#motorista option").size() > 1){
+            $("#motorista").find('option')
+                .remove().end().append('<option value="0">Selecione um motorista</option>');
+        }
+
+        if($("#caminhao option").size() > 1){
+            $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
+        }
+
         $.each(dados, function(i, obj){
             // console.log(i);
             // console.log(obj);

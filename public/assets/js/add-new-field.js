@@ -127,12 +127,12 @@ function removerCaminhao(id) {
 function removerMotorista(id) {
     $('#motorista-'+id).remove();
 
-    $.ajax({
-        url: "/painel/parceiros/delete-motorista/"+id,
-        type: "GET",
-        success: function (data) {
+    // $.ajax({
+    //     url: "/painel/parceiros/delete-motorista/"+id,
+    //     type: "GET",
+    //     success: function (data) {
 
-        }
-    });
+        // }
+    // });
 
 }
