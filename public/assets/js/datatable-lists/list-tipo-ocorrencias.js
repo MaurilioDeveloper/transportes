@@ -4,10 +4,10 @@ $(document).ready(function() {
 
 
 // Deletar Parceiro
-    $('#tipo-ocorrencia-table').on('click', 'a.editor_remove', function (e) {
+    $('#tipo-ocorrencia').on('click', 'a.editor_remove', function (e) {
         e.preventDefault();
 
-        var id = $(this).attr("id-ocorrencia");
+        var id = $(this).attr("id-tipo-ocorrencia");
 
         $("#dialog-confirm").dialog({
             resizable: false,

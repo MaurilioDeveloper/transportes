@@ -28,10 +28,12 @@ Route::group(['prefix' => 'painel'], function(){
 
     //Tipo de Ocorrências
     Route::group(['prefix' => 'tipo-ocorrencias'], function(){
-       Route::get('/lista-tipo-ocorrencias', 'TipoOcorrenciaController@listaTipoOcorrencias')->name('listaTipoOcorrencias');
-       Route::get('/create', 'TipoOcorrenciaController@create')->name('adicionarTipoOcorrencia');
+        Route::get('/lista-tipo-ocorrencias', 'TipoOcorrenciaController@listaTipoOcorrencias')->name('listaTipoOcorrencias');
+        Route::get('/create', 'TipoOcorrenciaController@create')->name('adicionarTipoOcorrencia');
         Route::get('/edit/{id}', 'TipoOcorrenciaController@edit');
-       Route::get('/', 'TipoOcorrenciaController@index')->name('listagemTO');
+        Route::get('/delete-tipo-ocorrencia/{id}', 'TipoOcorrenciaController@delete');
+        Route::get('/update/{id}', 'TipoOcorrenciaController@update')->name('updateTipoOcorrencia');
+        Route::get('/', 'TipoOcorrenciaController@index')->name('listagemTO');
     });
 
     //Parceiros

@@ -57,7 +57,8 @@
                     <br/>
                     <div class='box-body'>
 
-                        <table class="table table-bordered" id="tipo-ocorrencias-table" style="width: 100%">
+                        {{--<table class="table table-bordered" id="tipo-ocorrencias-table" style="width: 100%">--}}
+                        <table class="table table-bordered" style="width: 100%" id="tipo-ocorrencia">
                             <thead>
                             <tr style='background: #2e6da4; color: white;'>
                                 <th style="text-align: center;">Nome</th>
@@ -65,9 +66,16 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @forelse($tipoOcorrencias as $tipoOcorrencia)
                             <tr>
-
+                                <td style="text-align: center">{{$tipoOcorrencia->nome}}</td>
+                                <td><a href="tipo-ocorrencias/edit/{{$tipoOcorrencia->id}}" id-tipo-ocorrencia="{{$tipoOcorrencia->id}}" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-tipo-ocorrencia="{{$tipoOcorrencia->id}}" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a></td>
                             </tr>
+                            @empty
+                            <tr class="warning">
+                                <td colspan="2" style="text-align: center">Nenhum dado foi encontrado</td>
+                            </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
