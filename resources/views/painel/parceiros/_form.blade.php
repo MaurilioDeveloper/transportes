@@ -34,8 +34,18 @@
 
 
 <div class="form-group col-md-6">
-    {!! Form::label('endereco', 'Endereco') !!}
+    {!! Form::label('endereco', 'Endereço') !!}
     {!! Form::text('endereco', null, ['class' => 'form-control', 'id' => 'rua']) !!}
+</div>
+
+<div class="form-group col-md-6">
+    {!! Form::label('numero', 'Número') !!}
+    {!! Form::text('numero', null, ['class' => 'form-control', 'id' => 'numero']) !!}
+</div>
+
+<div class="form-group col-md-6">
+    {!! Form::label('complemento', 'Complemento') !!}
+    {!! Form::text('complemento', null, ['class' => 'form-control', 'id' => 'complemento']) !!}
 </div>
 
 

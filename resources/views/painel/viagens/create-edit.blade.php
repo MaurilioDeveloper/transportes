@@ -225,14 +225,13 @@
 @section('scripts-footer')
     {{--<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="{{url('/assets/js/cadastros/cad-viagem.js')}}"></script>
     <script src="{{url('/assets/js/ischeck.js')}}"></script>
     <script src="{{url('/assets/js/vendor/timepicki.js')}}"></script>
     <script>$('.timepicker').timepicki({show_meridian:false});</script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/maskMoney.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>
+    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>--}}
     <script src="{{url('/assets/plugins/tables/datatables/js/datatables.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/jszip.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/pdfmake.min.js')}}"></script>
@@ -256,6 +255,8 @@
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.rowReorder.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>
+    <script src="{{url('/assets/js/cadastros/cad-viagem.js')}}"></script>
     {{--<script src="{{url('/assets/js/datatable-lists/list-viagem.js')}}"></script>--}}
 @endsection
 

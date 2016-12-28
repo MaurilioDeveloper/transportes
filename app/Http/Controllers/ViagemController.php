@@ -102,7 +102,7 @@ class ViagemController extends Controller
               where c.id_parceiro = p.id and m.id_parceiro = p.id
               and (select count(m1.id) from motoristas m1 where m1.id_parceiro = p.id) >= 1
               and (select count(c1.id) from caminhoes c1 where c1.id_parceiro = p.id) >= 1
-              and p.nome LIKE '%$name%' group by id
+              and p.nome LIKE '%$name%' group by p.id
             ")
         );
         return $busca;
