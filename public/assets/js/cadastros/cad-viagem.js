@@ -52,8 +52,8 @@ $(".select2_viagem").on('select2:select', function (e) {
     var idCaminhao = $("#id_parceiro").val();
     $("#dados").show();
     $.getJSON('/painel/viagens/busca-motorista/'+id, function (dados) {
-        console.log(dados);
-        console.log("Abaixo vem o Length dos Motoristas");
+        // console.log(dados);
+        // console.log("Abaixo vem o Length dos Motoristas");
 
         if($("#motorista option").size() > 1){
             $("#motorista").find('option')
@@ -71,6 +71,7 @@ $(".select2_viagem").on('select2:select', function (e) {
             $("#motorista").append(option);
         });
     });
+    console.log(idCaminhao);
     $.getJSON('/painel/viagens/busca-caminhao/'+idCaminhao, function (dados) {
         console.log(dados);
         $.each(dados, function(i, obj){

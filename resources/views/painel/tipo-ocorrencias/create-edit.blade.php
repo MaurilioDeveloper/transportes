@@ -21,7 +21,7 @@
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc-tipo" role="alert">Tipo de Ocorrência Cadastrado com Sucesso</div>
 
                     @if(isset($tipoOcorrencia->id) && $tipoOcorrencia->id > 0)
-                        {!! Form::model($tipoOcorrencia, ['route' => ['updateTipoOcorrencia','tipo-ocorrencia' => $tipoOcorrencia->id], 'class' => 'form', 'send' => 'updateTipoOcorrencia', 'name' => 'form', 'method' => 'PUT']) !!}
+                        {!! Form::model($tipoOcorrencia, ['route' => ['updateTipoOcorrencia','tipoOcorrencia' => $tipoOcorrencia->id], 'class' => 'form', 'send' => 'updateFrete', 'name' => 'form', 'method' => 'PUT']) !!}
 
                     @else
                         {!! Form::open(['route' => 'postTipoOcorrencia', 'class' => 'form', 'name' => 'form-tipo-ocorrencia', 'send' => '/painel/parceiros/postTipoOcorrencia']) !!}

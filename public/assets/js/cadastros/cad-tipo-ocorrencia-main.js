@@ -1,4 +1,4 @@
-jQuery('form[name="form-tipo-ocorrencia"]').submit(function () {
+jQuery('.form').submit(function () {
     jQuery(".msg-warn-tipo").hide();
     jQuery(".msg-suc-tipo").hide();
     var dadosForm = jQuery(this).serialize();

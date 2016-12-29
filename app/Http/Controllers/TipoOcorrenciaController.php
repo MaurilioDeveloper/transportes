@@ -59,7 +59,7 @@ class TipoOcorrenciaController extends Controller
 
         $tipoOcorrencia = TipoOcorrencia::findOrFail($id);
 
-        dd($dadosForm);
+//        dd($dadosForm);
 
         $validate = $this->validate->make($dadosForm, TipoOcorrencia::$rules);
         if($validate->fails()){
@@ -73,6 +73,8 @@ class TipoOcorrenciaController extends Controller
             return $displayErrors;
         }
 
+        $tipoOcorrencia->fill($dadosForm)->save();
+        return 1;
     }
 
 }

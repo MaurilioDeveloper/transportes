@@ -32,7 +32,7 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/create', 'TipoOcorrenciaController@create')->name('adicionarTipoOcorrencia');
         Route::get('/edit/{id}', 'TipoOcorrenciaController@edit');
         Route::get('/delete-tipo-ocorrencia/{id}', 'TipoOcorrenciaController@delete');
-        Route::get('/update/{id}', 'TipoOcorrenciaController@update')->name('updateTipoOcorrencia');
+        Route::put('/update/{id}', 'TipoOcorrenciaController@update')->name('updateTipoOcorrencia');
         Route::get('/', 'TipoOcorrenciaController@index')->name('listagemTO');
     });
 
