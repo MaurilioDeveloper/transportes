@@ -30,7 +30,7 @@
           href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{url('/assets/css/timepicki.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('/assets/css/loading.css')}}"/>
-    
+
 @endsection
 
 @section('content')

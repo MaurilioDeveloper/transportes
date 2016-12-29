@@ -15,10 +15,15 @@
 
                     {{--@include('painel.errors._errors_form')--}}
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn-tipo" role="alert"></div>
-                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc-tipo" role="alert">Tipo de Ocorrência Cadastrado com Sucesso</div>
+                    @if(isset($tipoOcorrencia->id) && $tipoOcorrencia->id > 0)
+                        <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc-tipo" role="alert">Tipo de Ocorrência Alterado com Sucesso</div>
+                    @else
+                        <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc-tipo" role="alert">Tipo de Ocorrência Cadastrado com Sucesso</div>
+                    @endif
+{{--                    {{$tipoOcorrencia}}--}}
 
                     @if(isset($tipoOcorrencia->id) && $tipoOcorrencia->id > 0)
-                        {!! Form::model($tipoOcorrencia, ['route' => ['updateTipoOcorrencia','tipoOcorrencia' => $tipoOcorrencia->id], 'class' => 'form', 'send' => 'updateFrete', 'name' => 'form', 'method' => 'PUT']) !!}
+                        {!! Form::model($tipoOcorrencia, ['route' => ['updateTipoOcorrencia','tipoOcorrencia' => $tipoOcorrencia->id], 'class' => 'form', 'send' => '/painel/tipo-ocorrencias/update/'.$tipoOcorrencia->id, 'name' => 'form', 'method' => 'PUT']) !!}
 
                     @else
                         {!! Form::open(['route' => 'postTipoOcorrencia', 'class' => 'form', 'name' => 'form-tipo-ocorrencia', 'send' => '/painel/parceiros/postTipoOcorrencia']) !!}
