@@ -27,22 +27,18 @@
 @endsection
 
 @section('breadcrumb')
-
-
+    <h1>CONSULTAR FRETES</h1>
+    <ol class="breadcrumb">
+        <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><i class="fa fa-briefcase"></i> Fretes</li>
+    </ol>
 @endsection
 
 @section('content')
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>CONSULTAR FRETES</h1>
-        <ol class="breadcrumb">
-            <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active"><i class="fa fa-briefcase"></i> Fretes</li>
-        </ol>
-    </section>
+
     <!-- Main content -->
-    <section class="content" ng-app="app">
-        <div class="row">
+    {{--<section class="content" >--}}
+        <div class="row" ng-app="app">
             <div class="col-md-12">
                 <div class='box box-primary'>
 
@@ -99,7 +95,7 @@
                                     <th  ng-click="sortBy('cidade_destino')" style="text-align: center;">Cidade Destino</th>
                                     <th  ng-click="sortBy('tipo')" style="text-align: center;">Tipo</th>
                                     <th  ng-click="sortBy('status')" style="text-align: center;">Status</th>
-                                    <th style="text-align: center; width: 160px">Açao</th>
+                                    <th style="text-align: center; width: 160px">Ação</th>
                                 </tr>
                                 {{--</thead>--}}
                                 {{--<tbody>--}}
@@ -145,7 +141,7 @@
             </div>
         </div>
         <!-- /.row -->
-    </section>
+    {{--</section>--}}
     <!-- /.content -->
 
 

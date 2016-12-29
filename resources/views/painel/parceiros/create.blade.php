@@ -6,20 +6,17 @@
 @endsection
 
 
-
-@section('content')
-
-@section('title')
-    <h1>{{ $titulo }}</h1>
-@endsection
-
 @section('breadcrumb')
+    <h1>{{ $titulo }}</h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li><a href="{{ route('parceiros.index') }}"><i class="fa fa-briefcase"></i> Parceiros</a></li>
         <li class="active">{{ $titulo }}</li>
     </ol>
 @endsection
+
+@section('content')
+
 
 <div id="gritter-notice-wrapper" style="display: none"><div id="gritter-item-4" class="gritter-item-wrapper success-notice" role="alert"><div class="gritter-item"><a class="gritter-close" href="#" tabindex="1"><i class="en-cross"></i></a><i class="ec-trashcan gritter-icon"></i><div class="gritter-without-image"><span class="gritter-title">Sucesso !!!</span><p>Parceiro Cadastrado com Sucesso. </p></div><div style="clear:both"></div></div></div></div>
 <div class="overlay-loading" style="display: none;"></div>

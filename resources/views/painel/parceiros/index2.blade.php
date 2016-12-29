@@ -26,21 +26,22 @@
           href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
 @endsection
 
+@section('breadcrumb')
+    <h1>CONSULTAR DADOS DE PARCEIROS</h1>
+    <ol class="breadcrumb">
+        <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><i class="fa fa-briefcase"></i> Parceiros</li>
+    </ol>
+@endsection
+
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>CONSULTAR DADOS DE PARCEIROS</h1>
-        <ol class="breadcrumb">
-            <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active"><i class="fa fa-briefcase"></i> Parceiros</li>
-        </ol>
-    </section>
     <div style="display: none;" id="dialog-confirm" title="Deletar">
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja realmente
             excluir este parceiro?</p>
     </div>
     <!-- Main content -->
-    <section class="content">
+    {{--<section class="content">--}}
         <div class="row">
             <div class="col-md-12">
                 <div class='box box-primary'>
@@ -137,7 +138,7 @@
             </div>
         </div>
         <!-- /.row -->
-    </section>
+    {{--</section>--}}
     <!-- /.content -->
 
 

@@ -167,7 +167,19 @@
 
                     <div class="form-group col-md-6">
                         <label for="status">Status *</label>
-                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), isset($frete->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
+                        {{$frete->status}}
+                        <select id="status" class="form-control" name="status" required>
+                            <option value="0">Selecione um status</option>
+                            @foreach(\App\Frete::STATUS as $key => $value)
+                                <option value="{{$key}}" {{old('status', $frete->status) == $key ? 'selected="selected"': ''}}>{{$value}}</option>
+                            @endforeach
+{{--                            @if(isset($frete->status))--}}
+                                {{--<option  selected>{{$frete->status}}</option>--}}
+                            {{--@else--}}
+                                {{--<option value="0">Selecione um status</option>--}}
+                            {{--@endif--}}
+                        </select>
+{{--                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), isset($frete->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}--}}
 
                     </div>
                     <div class="form-group col-md-3">
@@ -318,7 +330,7 @@
 
 
                 <div class="form-group col-md-6">
-                    <button type="submit" id="botao" class="btn btn-primary"><img src="{{url('/assets/imgs/carregar.gif')}}" class="load" alt="Carregando" style="display: none; width: 30px; height: 30px;"/> Cadastrar</button>
+                    <button type="submit" id="botao" class="btn btn-primary"><img src="{{url('/assets/imgs/carregar.gif')}}" class="load" alt="Carregando" style="display: none; width: 30px; height: 30px;"/> @if(isset($frete->id) && $frete->id > 0) Salvar @else Cadastrar @endif</button>
                     {{--{!! Form::submit('Cadastrar', ['class' => 'btn btn-primary', 'id' => 'botao']) !!}--}}
                     <a class="btn btn-info" href="{{route('listarFretes')}}">Voltar</a>
                     <button type="reset" class="btn">Limpar</button>

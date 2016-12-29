@@ -33,10 +33,11 @@ class ParceiroRequest extends FormRequest
     {
         $pessoa = Parceiro::getPessoa($this->get('pessoa'));
         $documentType = $pessoa == Parceiro::PESSOA_FISICA ? 'cpf' : 'cnpj';
+        // Pega o Identificação do documento.
         $id = $this->route('parceiro');
         $rules = [
             'nome' => 'required|max:100',
-//            'documento' => "required|documento:$documentType|unique:parceiros,documento,$id",
+            'documento' => "documento:$documentType|unique:parceiros,documento,$id",
 //            'email' => 'required|email',
 //            'telefone' => 'required',
         ];

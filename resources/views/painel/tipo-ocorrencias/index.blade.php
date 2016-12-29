@@ -39,7 +39,7 @@
 @section('content')
 
     <!-- Main content -->
-    <section class="content">
+    {{--<section class="content">--}}
         <div class="row">
             <div class="col-md-12">
                 <div class='box box-primary'>
@@ -62,7 +62,7 @@
                             <thead>
                             <tr style='background: #2e6da4; color: white;'>
                                 <th style="text-align: center;">Nome</th>
-                                <th style="width: 140px;">Açao</th>
+                                <th style="width: 140px;">Ação</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    {{--</section>--}}
 
 @section('scripts-footer')
     <script src="{{url('/assets/plugins/tables/datatables/js/datatables.min.js')}}"></script>

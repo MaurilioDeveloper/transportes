@@ -14,7 +14,7 @@ class Parceiro extends Model
         3 => 'Divorciado'
     ];
 
-    const ESTADOS = 'PR';
+//    const ESTADOS = 'PR';
 
     const PESSOA_FISICA = 'fisica';
     const PESSOA_JURIDICA = 'juridica';
@@ -46,8 +46,9 @@ class Parceiro extends Model
         'inscricao_estadual'
     ];
 
+
     static $rules = [
-        'nome' => 'required'
+        'nome' => 'required',
     ];
 
     public static function getPessoa($value)
@@ -87,11 +88,15 @@ class Parceiro extends Model
     {
         $string = $this->documento;
 
-        if (!empty($string)) {
-            if (strlen($string) == 11) {
-                $string = preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $string);
-            } else {
-                $string = preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '$1.$2.$3.$4-$5', $string);
+        if(strlen($string) == 0){
+            $string = NULL;
+        }else {
+            if (!empty($string)) {
+                if (strlen($string) == 11) {
+                    $string = preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $string);
+                } else {
+                    $string = preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '$1.$2.$3.$4-$5', $string);
+                }
             }
         }
 

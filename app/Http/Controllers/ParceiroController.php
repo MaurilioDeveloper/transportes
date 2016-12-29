@@ -112,7 +112,7 @@ class ParceiroController extends Controller
         }
         if(strlen($dataParc['documento']) == 0){
 
-            $dataParc['documento'] = null;
+            $dataParc['documento'] = NULL;
         }
 //        dd($dataParc);
 
