@@ -29,7 +29,8 @@
     <link rel="stylesheet" type="text/css"
           href="{{url('/assets/plugins/tables/datatables/css/select.bootstrap.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{url('/assets/css/timepicki.css')}}" />
-
+    <link rel="stylesheet" type="text/css" href="{{url('/assets/css/loading.css')}}"/>
+    
 @endsection
 
 @section('content')
@@ -46,6 +47,7 @@
     </ol>
 @endsection
 
+<div class="overlay-loading" style="display: none;"></div>
 <!-- Retorna a Data do Servidor, convertendo-a em Brasileiro -->
 <div style="display: none">
     {{ \Date::setLocale('pt-BR') }}

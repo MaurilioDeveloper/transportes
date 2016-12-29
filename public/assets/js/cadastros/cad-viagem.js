@@ -51,10 +51,12 @@ $(".select2_viagem").on('select2:select', function (e) {
     var id = $("#id_parceiro").val();
     var idCaminhao = $("#id_parceiro").val();
     $("#dados").show();
+    $(".overlay-loading").show();
     $.getJSON('/painel/viagens/busca-motorista/'+id, function (dados) {
         // console.log(dados);
         // console.log("Abaixo vem o Length dos Motoristas");
 
+        $(".overlay-loading").hide();
         if($("#motorista option").size() > 1){
             $("#motorista").find('option')
                 .remove().end().append('<option value="0">Selecione um motorista</option>');

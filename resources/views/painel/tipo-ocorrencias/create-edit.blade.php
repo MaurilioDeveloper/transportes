@@ -1,10 +1,7 @@
 @extends('painel.template.template')
 
-@section('styles-head')
-
-@endsection
-
 @section('content')
+    <div class="overlay-loading" style="display: none;"></div>
     <div class="row">
         <div class="col-md-6">
 

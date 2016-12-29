@@ -1,5 +1,11 @@
 @extends('painel.template.template')
 
+@section('styles-head')
+    <link rel="stylesheet" type="text/css" href="{{url('/assets/css/plugin.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url('/assets/css/loading.css')}}"/>
+@endsection
+
+
 @section('content')
 <style>
     .ui-datepicker{
@@ -17,6 +23,7 @@
         <li class="active">{{ $titulo }}</li>
     </ol>
 @endsection
+
 
 {{--<!----}}
 <div class="modal fade bs-example-modal-lg5 in" id="cadastra-tipo-ocorrencia" tabindex="-1" role="dialog"
