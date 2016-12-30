@@ -13,7 +13,7 @@ class Viagem extends Model
     const STATUS = [
         1 => 'Aguardando Inicio',
         2 => 'Em Viagem',
-        3 => 'Concluida',
+        3 => 'Concluída',
         4 => 'Cancelada'
     ];
 

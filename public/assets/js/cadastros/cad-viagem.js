@@ -101,7 +101,6 @@ if($("#edicao").val() >= 1){
         // console.log(dados);
         // console.log("Abaixo vem o Length dos Motoristas");
 
-        $(".overlay-loading").hide();
         if($("#motorista option").size() > 1){
             $("#motorista").find('option')
                 .remove().end().append('<option value="0">Selecione um motorista</option>');
@@ -111,42 +110,52 @@ if($("#edicao").val() >= 1){
             $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
         }
 
+        var nomeMotorista = $("#nomeMotorista").val();
+        var idMotorista = $("#idMotorista").val();
+        var idCaminhao = $("#idCaminhao").val();
+
         $.each(dados, function(i, obj){
-            // console.log(i);
-            // console.log(obj);
-            option = '<option value="'+obj.id+'">'+obj.nome+'</option>';
+            $("#motorista option[value=idMotorista]").attr('selected', 'selected');
+
+            if(idMotorista == obj.id){
+                option = '<option selected value="'+obj.id+'">'+obj.nome+'</option>';
+                // alert(option);
+            }else {
+                option = '<option value="' + obj.id + '">' + obj.nome + '</option>';
+            }
             $("#motorista").append(option);
         });
+
     });
+    // $("#motorista option[value=idMotorista]").prop('selected', true)
     // console.log(idCaminhao);
     $.getJSON('/painel/viagens/busca-caminhao/'+idCaminhao, function (dados) {
-        console.log(dados);
+        // console.log(dados);
         $.each(dados, function(i, obj){
             // console.log(i);
-            // console.log(dados[i]);
-            option = '<option value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
+            console.log(dados);
+            if(idCaminhao == obj.id){
+                option = '<option selected value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
+                // alert(option);
+            }else{
+                option = '<option value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
+            }
             $("#caminhao").append(option);
             $(".overlay-loading").hide();
         });
     });
-    // console.log($("#motorista").find('option').each(function(){$("#motorista").val()}));
-    $.getJSON('/painel/viagens/busca-dados/'+idEd, function (dados) {
-        // console.log(dados);
-        $.each(dados, function(i, obj){
-            // option = '<option selected value="'+obj.id_caminhao+'">Caminhão</option>';
-            // option2 = '<option selected value="'+obj.id_motorista+'">Motorista</option>';
 
-            // $("#caminhao").append(option);
-            // $("#motorista").append(option2);
-            // $(".overlay-loading").hide();
-        });
-    });
+    $("#noneFrete").hide();
+    $("#freteAdicionado").show();
+    // $("#status").val();
 
 }
 
 function adicionarFrete(id){
     $("#adicionarFrete").modal('toggle');
     $("#id_frete").val(id);
+
+    $("#freteAdicionado").show();
 }
 $(document).ready(function () {
 

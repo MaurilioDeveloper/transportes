@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Frete;
 use App\Viagem;
+use App\Caminhao;
 use DB;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
@@ -17,14 +18,16 @@ class ViagemController extends Controller
     private $request;
     private $viagem;
     private $parceiro;
+    private $caminhao;
     private $validate;
 
-    public function __construct(Frete $frete, Request $request, Viagem $viagem, Parceiro $parceiro, Validate $validate)
+    public function __construct(Frete $frete, Request $request, Viagem $viagem, Parceiro $parceiro, Caminhao $caminhao, Validate $validate)
     {
         $this->frete = $frete;
         $this->request = $request;
         $this->viagem = $viagem;
         $this->parceiro = $parceiro;
+        $this->caminhao = $caminhao;
         $this->validate = $validate;
         $this->middleware('auth');
     }
@@ -144,6 +147,19 @@ class ViagemController extends Controller
         $viagem['data_fim'] = implode('/',array_reverse(explode('-',$viagem->data_fim)));
         $viagemNome = $this->parceiro->where('id', $viagem->id_parceiro_viagem)->pluck('nome')->toJson();
         $viagemNome = str_replace('["', '', str_replace('"]', '',$viagemNome));
+        $nomeCaminhao = Viagem::query()
+            ->join('caminhoes', 'caminhoes.id', '=', 'viagens.id_caminhao')
+            ->select("caminhoes.modelo", "caminhoes.placa")->where('id_caminhao', $viagem->id_caminhao)
+            ->pluck('modelo', 'placa')->toJson();
+        $nomeCaminhao = str_replace('{"', '', str_replace('"','',str_replace('{','', str_replace('}','',implode(' - ', explode(':',$nomeCaminhao))))));
+
+        $nomeMotorista = Viagem::query()
+            ->join('motoristas', 'motoristas.id', '=', 'viagens.id_motorista')
+            ->select("motoristas.nome")->where('id_motorista', $viagem->id_motorista)
+            ->pluck('nome')->toJson();
+        $nomeMotorista = str_replace('["', '', str_replace('"]','',$nomeMotorista));
+
+//        dd($nomeCaminhao);
 //        dd($viagemNome);
 //        dd($viagem);
         $fretes = Frete::query()
@@ -151,8 +167,17 @@ class ViagemController extends Controller
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
 
+//        dd($viagem->id_frete);
 
-        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome'));
+        $fretesAdicionado = Frete::query()
+            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+            ->join('viagens', 'viagens.id', '=', 'viagens.id_frete')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
+            ->where('viagens.id_frete', $viagem->id_frete)->get();
+
+//        dd($fretesAdicionado);
+
+        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado'));
 
 
     }
@@ -191,17 +216,12 @@ class ViagemController extends Controller
 
             return $displayErrors;
         }
+//        dd($viagem);
 
-        $this->viagem->fill($dadosForm)->save();
+        $viagem->fill($dadosForm)->save();
         return 1;
 //        dd($dadosForm);
     }
 
 
-    public function dadosViagem($id)
-    {
-//        dd(Viagem::findOrFail($id));
-        return Viagem::findOrFail($id);
-
-    }
 }

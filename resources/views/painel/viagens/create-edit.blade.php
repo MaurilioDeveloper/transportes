@@ -42,7 +42,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{ route('listarFretes') }}"><i class="fa fa-plus-circle"></i> Cadastra Viagens</a></li>
+        {{--<li><a href="{{ route('listarFretes') }}"><i class="fa fa-plus-circle"></i> Cadastra Viagens</a></li>--}}
         <li class="active">{{ $titulo }}</li>
     </ol>
 @endsection
@@ -69,14 +69,15 @@
             <div class="box-body">
                 {{--@include('painel.errors._errors_form')--}}
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
-                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Cadastrada com Sucesso</div>
 
                 @if(isset($viagem->id) && $viagem->id > 0)
+                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Alterada com Sucesso</div>
                     {!! Form::model($viagem, ['route' => ['updateViagem','viagem' => $viagem->id], 'class' => 'form', 'send' => '/painel/viagens/update/'.$viagem->id, 'name' => 'form-viagem', 'method' => 'PUT']) !!}
                     <input type="hidden" id="edicao" value="{{$viagem->id}}" />
                     <input type="hidden" id="parceiro-viagem" value="{{$viagem->id_parceiro_viagem}}" />
 
                 @else
+                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Cadastrada com Sucesso</div>
                     {!! Form::open(['route' => 'cadastrarViagem', 'class' => 'form', 'send' => 'cadastrar-viagem', 'name' => 'form-viagem']) !!}
                 @endif
 
@@ -98,11 +99,17 @@
 
                     <div class="form-group col-md-6">
                         <label for="id_caminhao">Caminhão Viagem</label>
-                        {!! Form::select('id_caminhao', [0 => 'Selecione um caminhão'], isset($caminhao) or old('id_caminhao'), ['class' => 'form-control', 'id' => 'caminhao']) !!}
+                        {!! Form::select('id_caminhao', [0 => 'Selecione um caminhão'], isset($nomeCaminhao) or old('id_caminhao'), ['class' => 'form-control', 'id' => 'caminhao']) !!}
                     </div>
+                    {{--<input id="nomeMotorista" value="{{$nomeMotorista}}" type="hidden" />--}}
+                    <input id="idMotorista" value="@if(isset($viagem->id_motorista)){{$viagem->id_motorista}}@endif" type="hidden" />
+                    <input id="idCaminhao" value="@if(isset($viagem->id_caminhao)){{$viagem->id_caminhao}}@endif" type="hidden" />
                     <div class="form-group col-md-6">
                         <label for="id_motorista">Motorista Viagem</label>
-                        {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], isset($motorista) or old('id_motorista'), ['class' => 'form-control', 'id' => 'motorista']) !!}
+                        <select name="id_motorista" class="form-control" id="motorista">
+                            <option value="0">Selecione um motorista</option>
+                        </select>
+{{--                        {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], null, ['class' => 'form-control', 'id' => 'motorista']) !!}--}}
                     </div>
                     <div class="form-group col-md-3">
                             <label>Data Prevista Início</label>
@@ -126,7 +133,22 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label for="status">Status *</label>
-                        {!! Form::select('status', \App\Viagem::STATUS, isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
+{{--                        {{$viagem->status}}--}}
+                        <input type="hidden" id="status" value="@if(isset($viagem->status)){{$viagem->status}}@endif" />
+{{--                        {{$viagem->status}}--}}
+                        <select name="status" class="form-control" id="status" required>
+                            <option value="0">Selecione um Status</option>
+                            @foreach(\App\Viagem::STATUS as $key => $value)
+                                {{--{{$value}}--}}
+                                @if(isset($viagem->status) && $value === $viagem->status)
+                                    <option value="{{$key}}" selected>{{$value}}</option>
+                                            {{--{{old('status')}}--}}
+                                @else
+                                    <option value="{{$key}}" {{old('status') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+{{--                        {!! Form::select('status', \App\Viagem::STATUS, isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}--}}
                     </div>
                     <div class="form-group col-md-3">
                         {!! Form::label('cidade', 'Cidade Origem *') !!}
@@ -160,6 +182,47 @@
                     <input type="hidden" id="id_frete" name="id_frete" />
                     <div class="form-group col-md-4">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR FRETES A ESTA VIAGEM</button>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label style="">Frete Adicionado a Viagem</label>
+                        <hr style="border: 1px solid #3c8dbc"/>
+                    </div>
+
+                    <div id="noneFrete" class="form-group col-md-12">
+                        <h4 style="text-align: center; font-style: italic;">Nenhum Frete Adicionado até o momento</h4>
+                    </div>
+
+                    <div class="form-group col-md-12" style="display: none;" id="freteAdicionado">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr style="background: #2e6da4; color: white">
+                            <th>Nome Parceiro</th>
+                            <th>Modelo</th>
+                            <th>Identificação</th>
+                            <th>Origem</th>
+                            <th>Destino</th>
+                            {{--<th>Ação</th>--}}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($fretesAdicionado as $frete)
+                            {{--{{$fretes}}--}}
+                            <tr class="success">
+                                <td>{{$frete->nome}}</td>
+                                <td>{{$frete->tipo}}</td>
+                                <td>{{$frete->identificacao}}</td>
+                                <td>{{$frete->cidade_origem}}</td>
+                                <td>{{$frete->cidade_destino}}</td>
+                                {{--<td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>--}}
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="warning" style="text-align: center;">Nenhum dado cadastrado</td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
                     </div>
 
                     <div class="form-group col-md-12">
