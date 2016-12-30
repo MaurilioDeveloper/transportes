@@ -40,7 +40,7 @@ $(document).ready(function() {
 
 
     $('#lista-viagens').DataTable({
-        processing: true,
+        // processing: true,
         serverSide: true,
         responsive: {
             details: {
@@ -60,17 +60,19 @@ $(document).ready(function() {
         columns: [
 
             { data: 'nome', name: 'parceiros.nome'},
-            { data: 'tipo', name: 'fretes.tipo' },
-            { data: 'identificacao', name: 'fretes.identificacao' },
-            { data: 'cidade_origem', name: 'fretes.cidade_origem' },
-            { data: 'cidade_destino', name: 'fretes.cidade_destino' },
-            // {
-            //     data: 'nome',
-            //     className: "center",
-            //     render: function(data, type, row){
-            //         return '<a href="viagens/edit/'+row.id+'" id-viagem="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-viagem="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
-            //     }
-            // },
+            { data: 'status', name: 'viagens.status' },
+            { data: 'horario_inicio', name: 'viagens.horario_inicio' },
+            { data: 'cidade_origem', name: 'viagens.cidade_origem' },
+            { data: 'cidade_destino', name: 'viagens.cidade_destino' },
+            {
+                data: 'nome',
+                className: "center",
+                render: function(data, type, row){
+                    // console.log(data);
+                    // console.log(row);
+                    return '<a href="viagens/edit/'+row.id+'" id-viagem="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>';
+                }
+            },
         ],
         "language": {
             "url": "/assets/Portuguese-Brasil.json"

@@ -273,6 +273,7 @@ class ParceiroController extends Controller
         if (!($parceiro = Parceiro::find($id))) {
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
+//        dd($parceiro);
         $pessoa = $parceiro->pessoa;
         return view('painel.parceiros.edit', compact('parceiro', 'tipo_ocorrencia', 'pessoa', 'titulo', 'caminhoes', 'contatos', 'motoristas', 'ocorrencias', 'data_nasc'));
     }

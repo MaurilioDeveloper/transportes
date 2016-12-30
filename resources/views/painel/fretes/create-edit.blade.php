@@ -166,20 +166,20 @@
                     {{--<hr style="border: 1px solid #ccc"/>--}}
 
                     <div class="form-group col-md-6">
-                        <label for="status">Status *</label>
-                        {{$frete->status}}
-                        <select id="status" class="form-control" name="status" required>
-                            <option value="0">Selecione um status</option>
-                            @foreach(\App\Frete::STATUS as $key => $value)
-                                <option value="{{$key}}" {{old('status', $frete->status) == $key ? 'selected="selected"': ''}}>{{$value}}</option>
-                            @endforeach
+                        {!! Form::label('status', 'Status *') !!}
+                        {{--{{$frete->status}}--}}
+                        {{--<select id="status" class="form-control" name="status" required>--}}
+                            {{--<option value="0">Selecione um status</option>--}}
+                            {{--@foreach(\App\Frete::STATUS as $key => $value)--}}
+                                {{--<option value="{{$key}}" {{old('status', $frete->status) == $key ? 'selected="selected"': ''}}>{{$value}}</option>--}}
+                            {{--@endforeach--}}
 {{--                            @if(isset($frete->status))--}}
                                 {{--<option  selected>{{$frete->status}}</option>--}}
                             {{--@else--}}
                                 {{--<option value="0">Selecione um status</option>--}}
                             {{--@endif--}}
-                        </select>
-{{--                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), isset($frete->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}--}}
+                        {{--</select>--}}
+                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
 
                     </div>
                     <div class="form-group col-md-3">

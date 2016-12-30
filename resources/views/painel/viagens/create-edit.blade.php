@@ -72,7 +72,9 @@
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Cadastrada com Sucesso</div>
 
                 @if(isset($viagem->id) && $viagem->id > 0)
-                    {!! Form::model($viagem, ['route' => ['updateViagem','viagem' => $viagem->id], 'class' => 'form', 'send' => 'updateViagem', 'name' => 'form', 'method' => 'PUT']) !!}
+                    {!! Form::model($viagem, ['route' => ['updateViagem','viagem' => $viagem->id], 'class' => 'form', 'send' => '/painel/viagens/update/'.$viagem->id, 'name' => 'form-viagem', 'method' => 'PUT']) !!}
+                    <input type="hidden" id="edicao" value="{{$viagem->id}}" />
+                    <input type="hidden" id="parceiro-viagem" value="{{$viagem->id_parceiro_viagem}}" />
 
                 @else
                     {!! Form::open(['route' => 'cadastrarViagem', 'class' => 'form', 'send' => 'cadastrar-viagem', 'name' => 'form-viagem']) !!}
@@ -102,25 +104,25 @@
                         <label for="id_motorista">Motorista Viagem</label>
                         {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], isset($motorista) or old('id_motorista'), ['class' => 'form-control', 'id' => 'motorista']) !!}
                     </div>
-                    <div class="form-group col-md-6">
-                            <label>Data Prevista Inicio</label>
+                    <div class="form-group col-md-3">
+                            <label>Data Prevista Início</label>
                             <input  name='data_inicio' type="text" placeholder="__/__/____"
-                                   class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
+                                   class="form-control datapicker" value="{{$viagem->data_inicio or old('data_inicio')}}"/>
                     </div>
-                    <div class="form-group col-md-6">
-                            <label>Horario de Inicio</label>
-                            <input name='horario_inicio' type="text"
-                                   class="form-control timepicker" value=""/>
+                    <div class="form-group col-md-3">
+                            <label>Horário de Início</label>
+                            <input name='horario_inicio' type="text" placeholder="__:__"
+                                   class="form-control timepicker" value="{{$viagem->horario_inicio or old('horario_inicio')}}"/>
                     </div>
-                    <div class="form-group col-md-6">
-                            <label>Data Prevista Termino</label>
+                    <div class="form-group col-md-3">
+                            <label>Data Prevista Término</label>
                             <input  name='data_fim' type="text" placeholder="__/__/____"
-                                   class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
+                                   class="form-control datapicker" value="{{$viagem->data_fim or old('data_fim')}}"/>
                     </div>
-                    <div class="form-group col-md-6">
-                            <label>Horario de Termino</label>
-                            <input  name='horario_fim' type="text"
-                                   class="form-control timepicker" value=""/>
+                    <div class="form-group col-md-3">
+                            <label>Horário de Término</label>
+                            <input  name='horario_fim' type="text" placeholder="__:__"
+                                   class="form-control timepicker" value="{{$viagem->horario_inicio or old('horario_fim')}}"/>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="status">Status *</label>
@@ -146,23 +148,23 @@
                     <div class="form-group col-md-3">
                         {!! Form::label('cidade', 'Cidade Destino *') !!}
                         {{--{!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}--}}
-                        <input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($frete->cidade_destino)){{$frete->cidade_destino}}@else{{old('cidade_destino')}}@endif" />
+                        <input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_destino)){{$viagem->cidade_destino}}@else{{old('cidade_destino')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-3">
                         {!! Form::label('estado', 'Estado Destino *') !!}
                         {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
-                        <input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($frete->estado_destino)){{$frete->estado_destino}}@else{{old('estado_destino')}}@endif" />
+                        <input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_destino)){{$viagem->estado_destino}}@else{{old('estado_destino')}}@endif" />
                     </div>
                     <input type="hidden" id="id_parceiro" />
                     <input type="hidden" id="id_frete" name="id_frete" />
                     <div class="form-group col-md-4">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR FRETES A ESTA VIAGEM</button>
                     </div>
 
                     <div class="form-group col-md-12">
                         <hr style="border: 1px solid #3c8dbc"/>
-                        {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary', 'id' => 'botao', 'send' => 'cadastrarViagem']) !!}
+                        <button type="submit" id="botao" class="btn btn-primary"><img src="{{url('/assets/imgs/carregar.gif')}}" class="load" alt="Carregando" style="display: none; width: 30px; height: 30px;"/> @if(isset($viagem->id) && $viagem->id > 0) Salvar @else Cadastrar @endif</button>
                         {{--<button type="submit" class="btn btn-primary">Cadastrar</button>--}}
                         <a class="btn btn-info" href="{{route('listaViagens')}}">Voltar</a>
                         <button type="reset" class="btn">Limpar</button>
@@ -195,7 +197,7 @@
                             <th>Identificação</th>
                             <th>Origem</th>
                             <th>Destino</th>
-                            <th>Ações</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>

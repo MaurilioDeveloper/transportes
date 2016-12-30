@@ -57,11 +57,11 @@
                             <thead>
                                 <tr style="background: #2e6da4; color: white">
                                     <th>Nome Parceiro</th>
-                                    <th>Modelo</th>
-                                    <th>Identificação</th>
-                                    <th>Origem</th>
-                                    <th>Destino</th>
-                                    {{--<th style="width: 140px">Ações</th>--}}
+                                    <th>Status</th>
+                                    <th>Horário Início</th>
+                                    <th>Cidade Origem</th>
+                                    <th>Cidade Destino</th>
+                                    <th style="width: 80px">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>

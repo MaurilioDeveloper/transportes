@@ -66,8 +66,8 @@
                         {{--@else--}}
 
                         @if(isset($dadosPesquisa))
-                            <table class="table table-bordered">
-                                <tr>
+                            <table class="table table-bordered" id="parceiros-table-pesquisa">
+                                <tr style='background: #2e6da4; color: white;'>
                                     <th style="text-align: center;">Nome</th>
                                     <th style="text-align: center;">Cnpj/Cpf</th>
                                     {{--<th>Data Nasc</th>--}}
@@ -78,7 +78,7 @@
                                     {{--<th>Numero</th>--}}
                                     <th style="text-align: center;">Cidade</th>
                                     <th style="text-align: center;">Estado</th>
-                                    <th style="width: 160px;">Açao</th>
+                                    <th style="width: 160px;">Ação</th>
                                 </tr>
                                 @forelse ($dadosPesquisa as $dados)
                                 <tr class="warning">
@@ -91,8 +91,8 @@
                                         <td>{{ $dados->cidade }}</td>
                                         <td>{{ $dados->estado }}</td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
-                                            <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Deletar</a>
+                                            <a href="{{route('editarParceiro', $dados->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
+                                            <a id-parceiro-pesquisa="{{$dados->id}}" class="btn btn-danger btn-sm editor_remove"><i class="fa fa-trash"></i> Deletar</a>
                                         </td>
                                         {{--@else--}}
                                         @empty
@@ -192,5 +192,6 @@
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
     <script src="{{url('/assets/js/datatable-lists/list-parceiro.js')}}"></script>
+    <script src="{{url('/assets/js/delete/delete-parceiro.js')}}"></script>
 @endsection
 @endsection

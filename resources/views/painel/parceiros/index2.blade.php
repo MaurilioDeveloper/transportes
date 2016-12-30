@@ -68,7 +68,7 @@
 
                         @if(isset($dadosPesquisa))
                             <table class="table table-bordered">
-                                <tr>
+                                <tr style='background: #2e6da4; color: white;'>
                                     <th style="text-align: center;">Nome</th>
                                     <th style="text-align: center;">Cnpj/Cpf</th>
                                     {{--<th>Data Nasc</th>--}}
@@ -79,7 +79,7 @@
                                     {{--<th>Numero</th>--}}
                                     <th style="text-align: center;">Cidade</th>
                                     <th style="text-align: center;">Estado</th>
-                                    <th style="width: 160px;">Açao</th>
+                                    <th style="width: 160px;">Ação</th>
                                 </tr>
                                 @forelse ($dadosPesquisa as $dados)
                                 <tr class="warning">
@@ -92,7 +92,7 @@
                                         <td>{{ $dados->cidade }}</td>
                                         <td>{{ $dados->estado }}</td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
+                                            <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
                                             <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Deletar</a>
                                         </td>
                                         {{--@else--}}

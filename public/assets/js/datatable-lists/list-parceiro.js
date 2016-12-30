@@ -40,7 +40,7 @@ $(document).ready(function() {
 
 
     $('#parceiros-table').DataTable({
-        processing: true,
+        // processing: true,
         serverSide: true,
         responsive: {
             details: {

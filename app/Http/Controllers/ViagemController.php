@@ -16,13 +16,15 @@ class ViagemController extends Controller
     private $frete;
     private $request;
     private $viagem;
+    private $parceiro;
     private $validate;
 
-    public function __construct(Frete $frete, Request $request, Viagem $viagem, Validate $validate)
+    public function __construct(Frete $frete, Request $request, Viagem $viagem, Parceiro $parceiro, Validate $validate)
     {
         $this->frete = $frete;
         $this->request = $request;
         $this->viagem = $viagem;
+        $this->parceiro = $parceiro;
         $this->validate = $validate;
         $this->middleware('auth');
     }
@@ -85,8 +87,7 @@ class ViagemController extends Controller
     {
         return  Datatables::of(Viagem::query()
             ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
-            ->join('fretes', 'fretes.id', '=', 'viagens.id_frete')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "viagens.cidade_origem", "viagens.cidade_destino"))
+            ->select("viagens.id", "parceiros.nome", "viagens.status", "viagens.horario_inicio", "viagens.cidade_origem", "viagens.cidade_destino"))
             ->make(true);
 
 //        return $this->frete->get()->where('status', 'Aguardando Embarque');
@@ -132,5 +133,75 @@ class ViagemController extends Controller
         );
 //        return view('painel.viagens.create-edit', compact('busca'));
         return $busca;
+    }
+
+    public function edit($id)
+    {
+        $titulo = 'Editar Viagem';
+        // Retorna todos os dados da Viagem conforme seu ID.
+        $viagem = Viagem::findOrFail($id);
+        $viagem['data_inicio'] = implode('/',array_reverse(explode('-',$viagem->data_inicio)));
+        $viagem['data_fim'] = implode('/',array_reverse(explode('-',$viagem->data_fim)));
+        $viagemNome = $this->parceiro->where('id', $viagem->id_parceiro_viagem)->pluck('nome')->toJson();
+        $viagemNome = str_replace('["', '', str_replace('"]', '',$viagemNome));
+//        dd($viagemNome);
+//        dd($viagem);
+        $fretes = Frete::query()
+            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
+            ->where('status', 'Aguardando Embarque')->get();
+
+
+        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome'));
+
+
+    }
+
+
+    public function update($id)
+    {
+        $dadosForm = $this->request->all();
+//        dd($dadosForm['id']);
+        $viagem = Viagem::findOrFail($id);
+        $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/',$viagem->data_inicio)));
+        $dadosForm['data_fim'] = implode('-',array_reverse(explode('/',$viagem->data_fim)));
+
+
+        if($dadosForm['status'] == 1){
+            $dadosForm['status'] = "Aguardando Inicio";
+        }
+        if($dadosForm['status'] == 2){
+            $dadosForm['status'] = "Em Viagem";
+        }
+        if($dadosForm['status'] == 3){
+            $dadosForm['status'] = "Concluída";
+        }
+        if($dadosForm['status'] == 4){
+            $dadosForm['status'] = "Cancelada";
+        }
+
+        $validate = $this->validate->make($dadosForm, Viagem::$rules);
+        if($validate->fails()){
+            $messages = $validate->messages();
+            $displayErrors = '';
+
+            foreach($messages->all("<p>:message</p>") as $error){
+                $displayErrors .= $error;
+            }
+
+            return $displayErrors;
+        }
+
+        $this->viagem->fill($dadosForm)->save();
+        return 1;
+//        dd($dadosForm);
+    }
+
+
+    public function dadosViagem($id)
+    {
+//        dd(Viagem::findOrFail($id));
+        return Viagem::findOrFail($id);
+
     }
 }

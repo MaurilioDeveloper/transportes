@@ -9,7 +9,7 @@
         "laravel/framework": "5.3.*",
         "barryvdh/laravel-ide-helper": "2.2",
         "doctrine/dbal": "2.5",
-        "illuminate/html": "5.0.*@dev",
+        "laravelcollective/html": "5.3.0",
         "codeedu/code_validator": "0.0.2",
         "barryvdh/laravel-debugbar": "^2.3",
         "yajra/laravel-datatables-oracle": "6.16",
