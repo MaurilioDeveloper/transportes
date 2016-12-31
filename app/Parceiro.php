@@ -14,7 +14,7 @@ class Parceiro extends Model
         3 => 'Divorciado'
     ];
 
-//    const ESTADOS = 'PR';
+    const ESTADOS = 'PR';
 
     const PESSOA_FISICA = 'fisica';
     const PESSOA_JURIDICA = 'juridica';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\OrigemDestino;
 use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Frete;
@@ -43,9 +44,12 @@ class ViagemController extends Controller
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
+        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
+//        dd($estados);
 
         $titulo = "Cadastrar Viagens";
-        return view('painel.viagens.create-edit', compact('titulo', 'fretes'));
+        return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades', 'estados'));
     }
 
     public function store()

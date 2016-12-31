@@ -36,6 +36,16 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/', 'TipoOcorrenciaController@index')->name('listagemTO');
     });
 
+    //Origens e Destinos (CIDADES-ESTADOS)
+    Route::group(['prefix' => 'cidades-estados'], function(){
+       Route::get('/create', 'OrigemDestinoController@create')->name('createCidadesEstados');
+       Route::post('/cadastrar-CE', 'OrigemDestinoController@store')->name('cadastrarCidadesEstados');
+       Route::put('/update/{id}', 'OrigemDestinoController@update')->name('updateCidadesEstados');
+       Route::get('/edit/{id}', 'OrigemDestinoController@edit')->name('editCidadesEstados');
+       Route::get('/lista-cidades-estados', 'OrigemDestinoController@listaCidadesEstados')->name('listaCidadesEstados');
+       Route::get('/', 'OrigemDestinoController@index')->name('listaCidadesEstados');
+    });
+
     //Parceiros
     Route::group(['prefix' => 'parceiros'], function(){
         Route::get('/delete-motorista/{id}', 'ParceiroController@deleteMotorista');
