@@ -1,3 +1,4 @@
+$.fn.dataTable.ext.errMode = 'throw';
 $(".select2_viagem").select2({
     "language": "pt-BR",
     ajax: {
@@ -53,34 +54,34 @@ $(".select2_viagem").on('select2:select', function (e) {
     var idCaminhao = $("#id_parceiro").val();
     $("#dados").show();
     $(".overlay-loading").show();
-    $.getJSON('/painel/viagens/busca-motorista/'+id, function (dados) {
+    $.getJSON('/painel/viagens/busca-motorista/' + id, function (dados) {
         // console.log(dados);
         // console.log("Abaixo vem o Length dos Motoristas");
 
         $(".overlay-loading").hide();
-        if($("#motorista option").size() > 1){
+        if ($("#motorista option").size() > 1) {
             $("#motorista").find('option')
                 .remove().end().append('<option value="0">Selecione um motorista</option>');
         }
 
-        if($("#caminhao option").size() > 1){
+        if ($("#caminhao option").size() > 1) {
             $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
         }
 
-        $.each(dados, function(i, obj){
+        $.each(dados, function (i, obj) {
             // console.log(i);
             // console.log(obj);
-            option = '<option value="'+obj.id+'">'+obj.nome+'</option>';
+            option = '<option value="' + obj.id + '">' + obj.nome + '</option>';
             $("#motorista").append(option);
         });
     });
-    console.log(idCaminhao);
-    $.getJSON('/painel/viagens/busca-caminhao/'+idCaminhao, function (dados) {
-        console.log(dados);
-        $.each(dados, function(i, obj){
+    // console.log(idCaminhao);
+    $.getJSON('/painel/viagens/busca-caminhao/' + idCaminhao, function (dados) {
+        // console.log(dados);
+        $.each(dados, function (i, obj) {
             // console.log(i);
             // console.log(dados[i]);
-            option = '<option value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
+            option = '<option value="' + obj.id + '">' + obj.placa + ' - ' + obj.modelo + '</option>';
             $("#caminhao").append(option);
         });
     });
@@ -89,7 +90,7 @@ $(".select2_viagem").on('select2:select', function (e) {
 
 var idEd = $("#edicao").val();
 
-if($("#edicao").val() >= 1){
+if ($("#edicao").val() >= 1) {
     $("#dados").show();
     $(".overlay-loading").show();
     $("#parceiro-viagem").val();
@@ -97,16 +98,16 @@ if($("#edicao").val() >= 1){
     var idCaminhao = $("#parceiro-viagem").val();
     // $("#dados").show();
     // $(".overlay-loading").show();
-    $.getJSON('/painel/viagens/busca-motorista/'+id, function (dados) {
+    $.getJSON('/painel/viagens/busca-motorista/' + id, function (dados) {
         // console.log(dados);
         // console.log("Abaixo vem o Length dos Motoristas");
 
-        if($("#motorista option").size() > 1){
+        if ($("#motorista option").size() > 1) {
             $("#motorista").find('option')
                 .remove().end().append('<option value="0">Selecione um motorista</option>');
         }
 
-        if($("#caminhao option").size() > 1){
+        if ($("#caminhao option").size() > 1) {
             $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
         }
 
@@ -114,13 +115,13 @@ if($("#edicao").val() >= 1){
         var idMotorista = $("#idMotorista").val();
         // var idCaminhao = $("#idCaminhao").val();
 
-        $.each(dados, function(i, obj){
+        $.each(dados, function (i, obj) {
             $("#motorista option[value=idMotorista]").attr('selected', 'selected');
 
-            if(idMotorista == obj.id){
-                option = '<option selected value="'+obj.id+'">'+obj.nome+'</option>';
+            if (idMotorista == obj.id) {
+                option = '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
                 // alert(option);
-            }else {
+            } else {
                 option = '<option value="' + obj.id + '">' + obj.nome + '</option>';
             }
             $("#motorista").append(option);
@@ -130,18 +131,18 @@ if($("#edicao").val() >= 1){
     // $("#motorista option[value=idMotorista]").prop('selected', true)
     // console.log(idCaminhao);
 
-    $.getJSON('/painel/viagens/busca-caminhao/'+idCaminhao, function (dados) {
+    $.getJSON('/painel/viagens/busca-caminhao/' + idCaminhao, function (dados) {
         // console.log(dados);
         var idCam = $("#idCaminhao").val();
-        $.each(dados, function(i, obj){
+        $.each(dados, function (i, obj) {
             $("#motorista option[value=idCaminhao]").attr('selected', 'selected');
             // console.log(i);
             // alert(obj.id);
-            if(idCam == obj.id){
-                option = '<option selected value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
+            if (idCam == obj.id) {
+                option = '<option selected value="' + obj.id + '">' + obj.placa + ' - ' + obj.modelo + '</option>';
                 // alert(option);
-            }else{
-                option = '<option value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
+            } else {
+                option = '<option value="' + obj.id + '">' + obj.placa + ' - ' + obj.modelo + '</option>';
             }
             $("#caminhao").append(option);
 
@@ -155,11 +156,15 @@ if($("#edicao").val() >= 1){
 
 }
 
-function adicionarFrete(id){
+function adicionarFrete(id) {
     $("#adicionarFrete").modal('toggle');
     $("#id_frete").val(id);
-
+    $("#noneFrete").hide();
     $("#freteAdicionado").show();
+    var id_frete = id;
+    $.getJSON('/painel/viagens/fretes-adicionados/' + id_frete, function (dados) {
+        console.log(dados);
+    });
 }
 $(document).ready(function () {
 
@@ -180,7 +185,7 @@ $(document).ready(function () {
             success: function (data) {
                 botao.attr('disabled', false).html('Salvar');
                 // jQuery(".load").hide();
-                console.log(data);
+                // console.log(data);
                 if (data == "1") {
                     form.fadeOut('slow', function () {
                         jQuery(".msg-suc").show();
@@ -192,7 +197,7 @@ $(document).ready(function () {
                 } else {
                     jQuery(".msg-warn").show();
                     jQuery(".msg-warn").html(data);
-                    console.log(data)
+                    // console.log(data)
                     setTimeout("jQuery('.msg-warn').hide();", 3500);
                 }
             },

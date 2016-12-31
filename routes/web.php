@@ -71,6 +71,7 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/busca-parceiro/{name}', 'ViagemController@buscaParceiro')->name('buscaParceiro');
         Route::get('/busca-motorista/{id}', 'ViagemController@buscaMotorista')->name('buscaMotorista');
         Route::get('/busca-caminhao/{id}', 'ViagemController@buscaCaminhao')->name('buscaCaminhao');
+        Route::get('/fretes-adicionados/{id}', 'ViagemController@fretesAdicionados')->name('fretesAdicionados');
         Route::get('/lista-fretes', 'ViagemController@listaFretes')->name('buscaParceiro');
         Route::post('/cadastrar-viagem', 'ViagemController@store')->name('cadastrarViagem');
         Route::get('/edit/{id}', 'ViagemController@edit')->name('editarViagem');

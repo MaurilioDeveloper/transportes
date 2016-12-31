@@ -189,6 +189,17 @@ class ViagemController extends Controller
 
     }
 
+    public function fretesAdicionados($id)
+    {
+
+        $fretesAdicionado = Frete::query()
+            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+            ->join('viagens', 'viagens.id', '=', 'viagens.id_frete')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
+            ->where('viagens.id_frete', $id)->get();
+        return $fretesAdicionado;
+    }
+
 
     public function update($id)
     {

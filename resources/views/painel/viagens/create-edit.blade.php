@@ -115,7 +115,7 @@
                         </select>
 {{--                        {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], null, ['class' => 'form-control', 'id' => 'motorista']) !!}--}}
                     </div>
-                    <div class="form-group col-md-3">
+                        <div class="form-group col-md-3">
                             <label>Data Prevista Início</label>
                             <input  name='data_inicio' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{$viagem->data_inicio or old('data_inicio')}}"/>
@@ -244,7 +244,7 @@
                         {{--<input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_destino)){{$viagem->estado_destino}}@else{{old('estado_destino')}}@endif" />--}}
                     </div>
                     <input type="hidden" id="id_parceiro" />
-                    <input type="hidden" id="id_frete" name="id_frete" value="{{$viagem->id_frete or old('id_frete')}}"/>
+                    <input type="hidden" id="id_frete" name="id_frete" value="{{$viagem->id_frete or 0}}" onchange=""/>
                     <div class="form-group col-md-4">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR FRETES A ESTA VIAGEM</button>
                     </div>
@@ -259,7 +259,7 @@
                     </div>
 
                     <div class="form-group col-md-12" style="display: none;" id="freteAdicionado">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="frete-adicionado-table">
                         <thead>
                         <tr style="background: #2e6da4; color: white">
                             <th>Nome Parceiro</th>
@@ -267,7 +267,7 @@
                             <th>Identificação</th>
                             <th>Origem</th>
                             <th>Destino</th>
-                            {{--<th>Ação</th>--}}
+                            <th>Ação</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -281,15 +281,16 @@
                                 <td>{{$frete->identificacao}}</td>
                                 <td>{{$frete->cidade_origem}}</td>
                                 <td>{{$frete->cidade_destino}}</td>
-                                {{--<td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>--}}
+                                <td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
                             </tr>
+
                         @empty
                             <tr>
                                 <td colspan="6" class="warning" style="text-align: center;">Nenhum dado cadastrado</td>
                             </tr>
                         @endforelse
-
                         @endif
+
                         </tbody>
                     </table>
                     </div>
