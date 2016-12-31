@@ -19,9 +19,9 @@ class Viagem extends Model
 
     static $rules = [
         'status' => 'required',
-        'cidade_origem' => 'required',
-        'cidade_destino' => 'required',
-        'estado_origem' => 'required',
-        'estado_destino' => 'required'
+        'id_cidade_origem' => 'required',
+        'id_cidade_destino' => 'required',
+        'id_estado_origem' => 'required',
+        'id_estado_destino' => 'required'
     ];
 }

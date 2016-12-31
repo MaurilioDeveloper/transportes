@@ -112,7 +112,7 @@ if($("#edicao").val() >= 1){
 
         var nomeMotorista = $("#nomeMotorista").val();
         var idMotorista = $("#idMotorista").val();
-        var idCaminhao = $("#idCaminhao").val();
+        // var idCaminhao = $("#idCaminhao").val();
 
         $.each(dados, function(i, obj){
             $("#motorista option[value=idMotorista]").attr('selected', 'selected');
@@ -129,20 +129,24 @@ if($("#edicao").val() >= 1){
     });
     // $("#motorista option[value=idMotorista]").prop('selected', true)
     // console.log(idCaminhao);
+
     $.getJSON('/painel/viagens/busca-caminhao/'+idCaminhao, function (dados) {
         // console.log(dados);
+        var idCam = $("#idCaminhao").val();
         $.each(dados, function(i, obj){
+            $("#motorista option[value=idCaminhao]").attr('selected', 'selected');
             // console.log(i);
-            console.log(dados);
-            if(idCaminhao == obj.id){
+            // alert(obj.id);
+            if(idCam == obj.id){
                 option = '<option selected value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
                 // alert(option);
             }else{
                 option = '<option value="'+obj.id+'">'+obj.placa+' - '+obj.modelo+'</option>';
             }
             $("#caminhao").append(option);
-            $(".overlay-loading").hide();
+
         });
+        $(".overlay-loading").hide();
     });
 
     $("#noneFrete").hide();

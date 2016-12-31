@@ -44,8 +44,7 @@ class ViagemController extends Controller
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
-        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
-        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
+
 //        dd($estados);
 
         $titulo = "Cadastrar Viagens";
@@ -70,6 +69,8 @@ class ViagemController extends Controller
         if($dadosForm['status'] == 4){
             $dadosForm['status'] = "Cancelada";
         }
+
+//        dd($dadosForm);
 
         $validate = $this->validate->make($dadosForm, Viagem::$rules);
         if($validate->fails()){
@@ -162,6 +163,8 @@ class ViagemController extends Controller
             ->select("motoristas.nome")->where('id_motorista', $viagem->id_motorista)
             ->pluck('nome')->toJson();
         $nomeMotorista = str_replace('["', '', str_replace('"]','',$nomeMotorista));
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
+        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
 //        dd($nomeCaminhao);
 //        dd($viagemNome);
@@ -181,7 +184,7 @@ class ViagemController extends Controller
 
 //        dd($fretesAdicionado);
 
-        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado'));
+        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'estados'));
 
 
     }

@@ -99,9 +99,13 @@
 
                     <div class="form-group col-md-6">
                         <label for="id_caminhao">Caminhão Viagem</label>
-                        {!! Form::select('id_caminhao', [0 => 'Selecione um caminhão'], isset($nomeCaminhao) or old('id_caminhao'), ['class' => 'form-control', 'id' => 'caminhao']) !!}
+                        <select name="id_caminhao" class="form-control" id="caminhao">
+                            <option value="0">Selecione um caminhão</option>
+                        </select>
+{{--                        {!! Form::select('id_caminhao', [0 => 'Selecione um caminhão'], isset($nomeCaminhao) or old('id_caminhao'), ['class' => 'form-control', 'id' => 'caminhao']) !!}--}}
                     </div>
                     {{--<input id="nomeMotorista" value="{{$nomeMotorista}}" type="hidden" />--}}
+{{--                    {{dd($viagem)}}--}}
                     <input id="idMotorista" value="@if(isset($viagem->id_motorista)){{$viagem->id_motorista}}@endif" type="hidden" />
                     <input id="idCaminhao" value="@if(isset($viagem->id_caminhao)){{$viagem->id_caminhao}}@endif" type="hidden" />
                     <div class="form-group col-md-6">
@@ -155,15 +159,17 @@
                         <select name="id_cidade_origem" class="form-control" id="cidade_origem" required>
                             <option value="0">Selecione uma Cidade</option>
                             {{--                            {{$estados}}--}}
-                            @foreach($cidades as $key => $value)
-                                {{--{{$value}}--}}
-                                @if(isset($viagem->id_cidade_origem) && $value === $viagem->id_cidade_origem)
-                                    <option value="{{$key}}" selected>{{$value}}</option>
-                                    {{--{{old('status')}}--}}
-                                @else
-                                    <option value="{{$key}}" {{old('cidade_origem') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                @endif
-                            @endforeach
+                            @if(isset($cidades))
+                                @foreach($cidades as $key => $value)
+                                    {{$viagem->id_cidade_origem}}
+                                    @if(isset($viagem->id_cidade_origem) && $key === $viagem->id_cidade_origem)
+                                        <option value="{{$key}}" selected>{{$value}}</option>
+                                        {{--{{old('status')}}--}}
+                                    @else
+                                        <option value="{{$key}}" {{old('cidade_origem') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                         </select>
                         {{--{!! Form::text('cidade_origem', null, ['class' => 'form-control', 'placeholder' => 'Cidade', 'value' => "@if(isset($frete->cidade_origem)){{$frete->cidade_origem}}@else{{old('cidade_origem')}}@endif"]) !!}--}}
                         {{--<input required type="text" name="cidade_origem" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_origem)){{$viagem->cidade_origem}}@else{{old('cidade_origem')}}@endif" />--}}
@@ -174,15 +180,18 @@
                         <select name="id_estado_origem" class="form-control" id="estado_origem" required>
                             <option value="0">Selecione um Estado</option>
                             {{--                            {{$estados}}--}}
-                            @foreach($estados as $key => $value)
-                                {{--{{$value}}--}}
-                                @if(isset($viagem->id_estado_origem) && $value === $viagem->id_estado_origem)
-                                    <option value="{{$key}}" selected>{{$value}}</option>
-                                    {{--{{old('status')}}--}}
-                                @else
-                                    <option value="{{$key}}" {{old('cidade') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                @endif
-                            @endforeach
+                            @if(isset($estados))
+                                @foreach($estados as $key => $value)
+                                    {{--{{$value}}--}}
+                                    @if(isset($viagem->id_estado_origem) && $key === $viagem->id_estado_origem)
+                                        <option value="{{$key}}" selected>{{$value}}</option>
+                                        {{--{{old('status')}}--}}
+                                    @else
+                                        <option value="{{$key}}" {{old('cidade') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+
                         </select>
                         {{--                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
                         {{--<input required type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_origem)){{$viagem->estado_origem}}@else{{old('estado_origem')}}@endif" />--}}
@@ -198,15 +207,17 @@
                         <select name="id_cidade_destino" class="form-control" id="cidade_destino" required>
                             <option value="0">Selecione uma Cidade</option>
                             {{--                            {{$estados}}--}}
-                            @foreach($cidades as $key => $value)
-                                {{--{{$value}}--}}
-                                @if(isset($viagem->id_cidade_destino) && $value === $viagem->id_cidade_destino)
-                                    <option value="{{$key}}" selected>{{$value}}</option>
-                                    {{--{{old('status')}}--}}
-                                @else
-                                    <option value="{{$key}}" {{old('cidade_destino') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                @endif
-                            @endforeach
+                            @if(isset($cidades))
+                                @foreach($cidades as $key => $value)
+                                    {{--{{$value}}--}}
+                                    @if(isset($viagem->id_cidade_destino) && $key === $viagem->id_cidade_destino)
+                                        <option value="{{$key}}" selected>{{$value}}</option>
+                                        {{--{{old('status')}}--}}
+                                    @else
+                                        <option value="{{$key}}" {{old('cidade_destino') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                         </select>
                         {{--{!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}--}}
                         {{--<input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_destino)){{$viagem->cidade_destino}}@else{{old('cidade_destino')}}@endif" />--}}
@@ -217,21 +228,23 @@
                         <select name="id_estado_destino" class="form-control" id="estado_destino" required>
                             <option value="0">Selecione um Estado</option>
 {{--                            {{$estados}}--}}
-                            @foreach($estados as $key => $value)
-                                {{--{{$value}}--}}
-                                @if(isset($viagem->id_estado_destino) && $value === $viagem->id_estado_destino)
-                                    <option value="{{$key}}" selected>{{$value}}</option>
-                                    {{--{{old('status')}}--}}
-                                @else
-                                    <option value="{{$key}}" {{old('estado_destino') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                @endif
-                            @endforeach
+                            @if(isset($estados))
+                                @foreach($estados as $key => $value)
+                                    {{--{{$value}}--}}
+                                    @if(isset($viagem->id_estado_destino) && $key === $viagem->id_estado_destino)
+                                        <option value="{{$key}}" selected>{{$value}}</option>
+                                        {{--{{old('status')}}--}}
+                                    @else
+                                        <option value="{{$key}}" {{old('estado_destino') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                         </select>
                         {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
                         {{--<input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_destino)){{$viagem->estado_destino}}@else{{old('estado_destino')}}@endif" />--}}
                     </div>
                     <input type="hidden" id="id_parceiro" />
-                    <input type="hidden" id="id_frete" name="id_frete" />
+                    <input type="hidden" id="id_frete" name="id_frete" value="{{$viagem->id_frete or old('id_frete')}}"/>
                     <div class="form-group col-md-4">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR FRETES A ESTA VIAGEM</button>
                     </div>

@@ -116,6 +116,18 @@ class ParceiroController extends Controller
         }
 //        dd($dataParc);
 
+        $validate = $this->validate->make($dataParc, Parceiro::$rules);
+        if($validate->fails()){
+            $messages = $validate->messages();
+            $displayErrors = '';
+
+            foreach($messages->all("<p>:message</p>") as $error){
+                $displayErrors .= $error;
+            }
+
+            return $displayErrors;
+        }
+
         $parceiro = $this->parceiro->create($dataParc);
 
 
@@ -294,7 +306,14 @@ class ParceiroController extends Controller
         $dataCam = $request->only(['extraCaminhoes']);
         $dataMot = $request->only(['extraMotoristas']);
 
-        $validate = $this->validate->make($dataParc, Parceiro::$rules);
+
+        $rules = [
+            'nome' => 'required',
+            'documento' => "unique:parceiros,documento,{$id}",
+        ];
+
+
+        $validate = $this->validate->make($dataParc, $rules);
         if($validate->fails()){
             $messages = $validate->messages();
             $displayErrors = '';

@@ -49,6 +49,7 @@ class Parceiro extends Model
 
     static $rules = [
         'nome' => 'required',
+        'documento' => 'unique:parceiros'
     ];
 
     public static function getPessoa($value)
