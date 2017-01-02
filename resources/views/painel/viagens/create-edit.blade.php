@@ -161,7 +161,6 @@
                             {{--                            {{$estados}}--}}
                             @if(isset($cidades))
                                 @foreach($cidades as $key => $value)
-                                    {{$viagem->id_cidade_origem}}
                                     @if(isset($viagem->id_cidade_origem) && $key === $viagem->id_cidade_origem)
                                         <option value="{{$key}}" selected>{{$value}}</option>
                                         {{--{{old('status')}}--}}

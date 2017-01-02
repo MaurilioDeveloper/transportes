@@ -20,10 +20,17 @@ class CreateFretesTable extends Migration
             $table->date('data_hoje');
             $table->date('data_inicio');
             $table->date('data_fim');
-            $table->string('cidade_origem');
-            $table->string('estado_origem', 2);
-            $table->string('cidade_destino');
-            $table->string('estado_destino', 2);
+            $table->integer('id_cidade_origem')->unsigned();
+            $table->foreign('id_cidade_origem')->references('id')->on('origens_destinos');
+
+            $table->integer('id_estado_origem')->unsigned();
+            $table->foreign('id_estado_origem')->references('id')->on('origens_destinos');
+
+            $table->integer('id_cidade_destino')->unsigned();
+            $table->foreign('id_cidade_destino')->references('id')->on('origens_destinos');
+
+            $table->integer('id_estado_destino')->unsigned();
+            $table->foreign('id_estado_destino')->references('id')->on('origens_destinos');
             $table->string('tipo')->nullable();
             $table->string('identificacao');
             $table->string('valor_item');

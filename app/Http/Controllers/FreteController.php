@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Frete;
 use App\Caminhao;
 use App\Motorista;
+use App\OrigemDestino;
 use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Contato;
 //use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Request\ParceiroRequest;
 use Datatables;
+use DB;
 use Illuminate\Validation\Factory as Validate;
 
 class FreteController extends Controller
@@ -38,8 +40,22 @@ class FreteController extends Controller
 
     public function index()
     {
-        $fretes =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-        ->select("parceiros.nome", "fretes.id", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.status", "fretes.tipo as tipo")->paginate(10);
+
+        $fretes = DB::select(
+            DB::raw("SELECT p.nome, f.id, od.cidade, od2.cidade, f.status, f.tipo 
+                     FROM `fretes` as f
+                     INNER JOIN parceiros as p
+                     ON p.id = f.id_parceiro
+                     INNER JOIN origens_destinos as od
+                     ON od.id = f.id_cidade_origem
+                     INNER JOIN origens_destinos as od2
+                     ON od2.id = f.id_cidade_destino"
+            )
+        );
+//        $fretes =  Frete::query()
+//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+//            ->join('origens_destinos', 'origens_destinos.id', '=', 'fretes.id_cidade_origem')
+//        ->select("parceiros.nome", "fretes.id", "origens_destinos.cidade", "origens_destinos.cidade", "fretes.status", "fretes.tipo as tipo")->paginate(10);
 //        dd($fretes);
         return view('painel.fretes.index');
     }
@@ -48,14 +64,34 @@ class FreteController extends Controller
     {
 //        $status = Frete::STATUS;
         $titulo = "Cadastrar Frete";
-        return view('painel.fretes.create-edit', compact('titulo'));
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
+        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
+
+        return view('painel.fretes.create-edit', compact('titulo', 'cidades', 'estados'));
     }
 
     public function listaFretes()
     {
+//        $results = DB::select( DB::raw("SELECT * FROM some_table WHERE some_col = :somevariable"), array(
+//            'somevariable' => $someVariable,
+//        ));;
+//        $fretes =  DB::select(
+//            DB::raw("SELECT p.nome, f.id, od.cidade as cidade_origem, od2.cidade as cidade_destino, f.status, f.tipo
+//                     FROM `fretes` as f
+//                     INNER JOIN parceiros as p
+//                     ON p.id = f.id_parceiro
+//                     INNER JOIN origens_destinos as od
+//                     ON od.id = f.id_cidade_origem
+//                     INNER JOIN origens_destinos as od2
+//                     ON od2.id = f.id_cidade_destino"
+//            )
+//        );
+//        return $fretes;
         return '{ "data": '. Frete::query()
-            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->select("parceiros.nome", "fretes.id", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.status", "fretes.tipo")
+            ->join('parceiros as p', 'p.id', '=', 'fretes.id_parceiro')
+            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+            ->select("p.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo")
             ->get()->toJson().'}';
 
 
@@ -137,10 +173,10 @@ class FreteController extends Controller
             'data_hoje' => $data_hoje,
             'data_inicio' => $data_inicio,
             'data_fim' => $data_fim,
-            'cidade_origem' => $dadosForm['cidade_origem'],
-            'estado_origem' => $dadosForm['estado_origem'],
-            'cidade_destino' => $dadosForm['cidade_destino'],
-            'estado_destino' => $dadosForm['estado_destino'],
+            'id_cidade_origem' => $dadosForm['id_cidade_origem'],
+            'id_estado_origem' => $dadosForm['id_estado_origem'],
+            'id_cidade_destino' => $dadosForm['id_cidade_destino'],
+            'id_estado_destino' => $dadosForm['id_estado_destino'],
             'tipo' => $dadosForm['tipo'],
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
@@ -168,6 +204,9 @@ class FreteController extends Controller
         if (!($frete = Frete::find($id))) {
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
+
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
+        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
         $data_hoje = implode('/',array_reverse(explode('-',$frete->data_hoje)));
         $data_inicio = implode('/',array_reverse(explode('-',$frete->data_inicio)));
         $data_fim = implode('/',array_reverse(explode('-',$frete->data_fim)));
@@ -190,7 +229,7 @@ class FreteController extends Controller
         $isentrega = $frete->isentrega;
 
 //        dd($frete);
-        return view('painel.fretes.create-edit', compact('frete', 'titulo', 'data_hoje', 'data_inicio', 'data_fim', 'freteParceiroNome', 'iscoleta', 'isentrega', 'freteParceiroColetorNome', 'freteParceiroEntregadorNome', 'fretePessoa', 'sexo'));
+        return view('painel.fretes.create-edit', compact('frete', 'titulo', 'data_hoje', 'data_inicio', 'data_fim', 'freteParceiroNome', 'iscoleta', 'isentrega', 'freteParceiroColetorNome', 'freteParceiroEntregadorNome', 'fretePessoa', 'sexo', 'cidades', 'estados'));
     }
 
     /**

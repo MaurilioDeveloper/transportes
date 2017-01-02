@@ -42,8 +42,12 @@ class ViagemController extends Controller
     {
         $fretes = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
+            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
+        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
 //        dd($estados);
 
@@ -84,7 +88,7 @@ class ViagemController extends Controller
             return $displayErrors;
         }
 //        dd($dadosForm);
-
+    
         $this->viagem->create($dadosForm);
 
         return 1;
@@ -95,7 +99,9 @@ class ViagemController extends Controller
     {
         return  Datatables::of(Viagem::query()
             ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
-            ->select("viagens.id", "parceiros.nome", "viagens.status", "viagens.horario_inicio", "viagens.cidade_origem", "viagens.cidade_destino"))
+            ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'viagens.id_cidade_destino')
+            ->select("viagens.id", "parceiros.nome", "viagens.status", "viagens.horario_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino"))
             ->make(true);
 
 //        return $this->frete->get()->where('status', 'Aguardando Embarque');
