@@ -307,6 +307,10 @@
                     </table>
                     </div>
 
+                    @foreach($fretesAdd as $viagemFrete)
+                        <input type="hidden" class="frete_id" name="fretes[{{$viagemFrete->id_frete}}]" value="{{$viagemFrete->id_frete}}"/>
+                    @endforeach
+
                     <div class="form-group col-md-12">
                         <hr style="border: 1px solid #3c8dbc"/>
                         <button type="submit" id="botao" class="btn btn-primary"><img src="{{url('/assets/imgs/carregar.gif')}}" class="load" alt="Carregando" style="display: none; width: 30px; height: 30px;"/> @if(isset($viagem->id) && $viagem->id > 0) Salvar @else Cadastrar @endif</button>

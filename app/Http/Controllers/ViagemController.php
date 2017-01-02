@@ -217,11 +217,12 @@ class ViagemController extends Controller
             ->where('fretes_viagens.id_viagem', $viagem->id)
             ->get();
 
-//        $fretesAdicionados = $this->viagem->all()->where('id_viagem', $viagem->id);
+        $fretesAdd = $this->freteViagem->all()->where('id_viagem', $viagem->id);
+//        dd($fretesAdd);
 
 //        dd($fretesAdicionados);
 
-        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'estados', 'fretesAdicionados'));
+        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'estados', 'fretesAdicionados', 'fretesAdd'));
 
 
     }
