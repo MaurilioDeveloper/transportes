@@ -243,7 +243,7 @@
                         {{--<input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_destino)){{$viagem->estado_destino}}@else{{old('estado_destino')}}@endif" />--}}
                     </div>
                     <input type="hidden" id="id_parceiro" />
-                    <input type="hidden" id="id_frete" name="id_frete" value="{{$viagem->id_frete or 0}}" onchange=""/>
+                    <input type="hidden" id="id_frete"  value="{{$viagem->id_frete or 0}}"/>
                     <div class="form-group col-md-4">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarFrete"><i class="fa fa-plus-circle"></i> ADICIONAR FRETES A ESTA VIAGEM</button>
                     </div>
@@ -269,27 +269,40 @@
                             <th>Ação</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @if(isset($fretesAdicionado))
-
-                        @forelse($fretesAdicionado as $frete)
-                            {{--{{$fretes}}--}}
-                            <tr class="success">
-                                <td>{{$frete->nome}}</td>
-                                <td>{{$frete->tipo}}</td>
-                                <td>{{$frete->identificacao}}</td>
-                                <td>{{$frete->cidade_origem}}</td>
-                                <td>{{$frete->cidade_destino}}</td>
-                                <td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
-                            </tr>
-
-                        @empty
-                            <tr>
-                                <td colspan="6" class="warning" style="text-align: center;">Nenhum dado cadastrado</td>
-                            </tr>
-                        @endforelse
+                        <tbody id="freteAd">
+                        @if(isset($fretesAdicionados))
+                            @foreach($fretesAdicionados as $fretesAd)
+{{--                                <input type="hidden" value="{{$fretesAd->id}}" id="frete-disable{{$fretesAd->id}}" />--}}
+                                <tr class="warning" id="freteTable{{$fretesAd->id}}">
+                                    <td>{{$fretesAd->nome}}</td>
+                                    <td>{{$fretesAd->tipo}}</td>
+                                    <td>{{$fretesAd->identificacao}}</td>
+                                    <td>{{$fretesAd->cidade_origem}}</td>
+                                    <td>{{$fretesAd->cidade_destino}}</td>
+                                    <td><a onclick="removerFrete({{$fretesAd->id}})" class="remover btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+                                </tr>
+                            @endforeach
                         @endif
-
+                        {{--@if(isset($fretesAdicionado))--}}
+{{----}}
+                        {{--@forelse($fretesAdicionado as $frete)--}}
+                            {{--{{$fretes}}--}}
+                            {{--<tr class="success">--}}
+                                {{--<td>{{$frete->nome}}</td>--}}
+                                {{--<td>{{$frete->tipo}}</td>--}}
+                                {{--<td>{{$frete->identificacao}}</td>--}}
+                                {{--<td>{{$frete->cidade_origem}}</td>--}}
+                                {{--<td>{{$frete->cidade_destino}}</td>--}}
+                                {{--<td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>--}}
+                            {{--</tr>--}}
+{{----}}
+                        {{--@empty--}}
+                            {{--<tr>--}}
+                                {{--<td colspan="6" class="warning" style="text-align: center;">Nenhum dado cadastrado</td>--}}
+                            {{--</tr>--}}
+                        {{--@endforelse--}}
+                        {{--@endif--}}
+{{----}}
                         </tbody>
                     </table>
                     </div>
@@ -341,7 +354,7 @@
                             <td>{{$frete->identificacao}}</td>
                             <td>{{$frete->cidade_origem}}</td>
                             <td>{{$frete->cidade_destino}}</td>
-                            <td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
+                            <td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id="id-frete{{$frete->id}}" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
                         </tr>
                     @empty
                         <tr>

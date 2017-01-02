@@ -8,6 +8,7 @@ use App\Parceiro;
 use App\Frete;
 use App\Viagem;
 use App\Caminhao;
+use App\FreteViagem;
 use DB;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
@@ -20,15 +21,17 @@ class ViagemController extends Controller
     private $viagem;
     private $parceiro;
     private $caminhao;
+    private $freteViagem;
     private $validate;
 
-    public function __construct(Frete $frete, Request $request, Viagem $viagem, Parceiro $parceiro, Caminhao $caminhao, Validate $validate)
+    public function __construct(Frete $frete, Request $request, Viagem $viagem, Parceiro $parceiro, Caminhao $caminhao, FreteViagem $freteViagem, Validate $validate)
     {
         $this->frete = $frete;
         $this->request = $request;
         $this->viagem = $viagem;
         $this->parceiro = $parceiro;
         $this->caminhao = $caminhao;
+        $this->freteViagem = $freteViagem;
         $this->validate = $validate;
         $this->middleware('auth');
     }
@@ -57,7 +60,8 @@ class ViagemController extends Controller
 
     public function store()
     {
-        $dadosForm = $this->request->all();
+        $dadosForm = $this->request->except(['fretes']);
+        $dadosFormFretes = $this->request->only(['fretes']);
         $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
 
@@ -74,7 +78,6 @@ class ViagemController extends Controller
             $dadosForm['status'] = "Cancelada";
         }
 
-//        dd($dadosForm);
 
         $validate = $this->validate->make($dadosForm, Viagem::$rules);
         if($validate->fails()){
@@ -87,11 +90,23 @@ class ViagemController extends Controller
 
             return $displayErrors;
         }
-//        dd($dadosForm);
-    
-        $this->viagem->create($dadosForm);
 
-        return 1;
+        $viagem = $this->viagem->create($dadosForm);
+
+        foreach ($dadosFormFretes as $key => $value){
+            $fretesAdicionado = array_keys($value);
+            $count = count($fretesAdicionado);
+            for($i = 0; $i < $count; $i++){
+                $fretesAd = FreteViagem::create([
+                    'id_frete' => $fretesAdicionado[$i],
+                    'id_viagem' => $viagem->id
+                ]);
+            }
+        }
+
+//        if($viagem && $fretesAd){
+            return 1;
+//        }
 
     }
 
@@ -177,20 +192,36 @@ class ViagemController extends Controller
 //        dd($viagem);
         $fretes = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
+            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
 
 //        dd($viagem->id_frete);
 
-        $fretesAdicionado = Frete::query()
+//        $fretesAdicionado = Frete::query()
+//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+//            ->join('viagens', 'viagens.id', '=', 'viagens.id_frete')
+//            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+//            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
+//            ->where('viagens.id_frete', $viagem->id_frete)->get();
+//
+        $fretesAdicionados = Viagem::query()
+            ->join('fretes_viagens', 'fretes_viagens.id_viagem', '=', 'viagens.id')
+            ->join('fretes', 'fretes.id', '=', 'fretes_viagens.id_frete')
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->join('viagens', 'viagens.id', '=', 'viagens.id_frete')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
-            ->where('viagens.id_frete', $viagem->id_frete)->get();
+            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
+            ->where('fretes_viagens.id_viagem', $viagem->id)
+            ->get();
 
-//        dd($fretesAdicionado);
+//        $fretesAdicionados = $this->viagem->all()->where('id_viagem', $viagem->id);
 
-        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'estados'));
+//        dd($fretesAdicionados);
+
+        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'estados', 'fretesAdicionados'));
 
 
     }
@@ -201,8 +232,11 @@ class ViagemController extends Controller
         $fretesAdicionado = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('viagens', 'viagens.id', '=', 'viagens.id_frete')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.cidade_origem", "fretes.cidade_destino", "fretes.id")
-            ->where('viagens.id_frete', $id)->get();
+            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->join('fretes_viagens as fo', 'fo.id_frete', '=', 'fretes.id')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
+            ->where('fretes.id', $id)->get();
         return $fretesAdicionado;
     }
 
