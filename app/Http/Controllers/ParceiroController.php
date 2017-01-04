@@ -217,17 +217,17 @@ class ParceiroController extends Controller
          return Datatables::of(Parceiro::query()
             ->select("parceiros.id",
                 "parceiros.nome",
-                "parceiros.documento",
-//            "parceiros.email",
+//                "parceiros.documento",
+            "parceiros.email",
                 "parceiros.telefone",
-                "parceiros.cep",
+//                "parceiros.cep",
 //            "parceiros.data_nasc",
 //            "parceiros.sexo",
                 "parceiros.endereco",
                 "parceiros.bairro",
 //            "parceiros.numero",
-                "parceiros.cidade",
-                "parceiros.estado"))
+                "parceiros.cidade"
+            ))
             ->make(true);
         //return Datatables::of(Visitante::query()
         //      ->select("visitantes.nome", "visitantes.estado", "visitantes.cidade", "visitantes.telefone", "visitantes.cargo", "visitantes.cidade", "visitantes.email"))->make(true);

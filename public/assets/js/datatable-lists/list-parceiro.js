@@ -60,17 +60,17 @@ $(document).ready(function() {
         columns: [
 
             { data: 'nome', name: 'parceiros.nome'},
-            { data: 'documento', name: 'parceiros.documento' },
-            // { data: 'email', name: 'parceiros.email' },
+            // { data: 'documento', name: 'parceiros.documento' },
+            { data: 'email', name: 'parceiros.email' },
             { data: 'telefone', name: 'parceiros.telefone' },
             // { data: 'data_nasc', name: 'parceiros.data_nasc' },
             // { data: 'sexo', name: 'parceiros.sexo' },
-            { data: 'cep', name: 'parceiros.cep' },
+            // { data: 'cep', name: 'parceiros.cep' },
             { data: 'endereco', name: 'parceiros.endereco' },
             // { data: 'numero', name: 'parceiros.numero' },
             { data: 'bairro', name: 'parceiros.bairro' },
             { data: 'cidade', name: 'parceiros.cidade' },
-            { data: 'estado', name: 'parceiros.estado' },
+            // { data: 'estado', name: 'parceiros.estado' },
             {
                 data: 'nome',
                 className: "center",
