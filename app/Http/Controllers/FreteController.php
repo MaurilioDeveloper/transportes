@@ -327,7 +327,7 @@ class FreteController extends Controller
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
             'cor' => $dadosForm['cor'],
-            'status' => $dadosForm['status'],
+            'status' => $status,
             'iscoleta' => $iscoleta,
             'isentrega' => $isentrega,
             'id_parceiro_coletor' => $parceiro_coletor,
