@@ -42,10 +42,10 @@
             <div class="box-body">
                 {{--@include('painel.errors._errors_form')--}}
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
-                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Frete Cadastrado com Sucesso</div>
+                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">@if(isset($frete))Frete Alterado com Sucesso @else Frete Cadastrado com Sucesso @endif</div>
 
                 @if(isset($frete->id) && $frete->id > 0)
-                    {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'send' => 'updateFrete', 'name' => 'form', 'method' => 'PUT']) !!}
+                    {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'send' => '/painel/fretes/update/'.$frete->id, 'name' => 'form-frete', 'method' => 'PUT']) !!}
 
                 @else
                     {!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete']) !!}
@@ -110,7 +110,7 @@
                                         <option value="{{$key}}" selected>{{$value}}</option>
                                         {{--{{old('status')}}--}}
                                     @else
-                                        <option value="{{$key}}" {{old('cidade_origem') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
+                                        <option value="{{$key}}" {{old('id_cidade_origem') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
                                     @endif
                                 @endforeach
                             @endif
@@ -153,7 +153,7 @@
                     <div class="form-group col-md-6">
                         {!! Form::label('tipo', 'Tipo *') !!}
 {{--                        {!! Form::text('tipo', null, ['class' => 'form-control', 'placeholder' => 'Carro, Barco, etc']) !!}--}}
-                        <input type="text" name="tipo" class="form-control" placeholder="Carro, Barco, etc.." value="@if(isset($frete->tipo)){{$frete->tipo}}@else{{old('tipo')}}@endif" />
+                        <input type="text" name="tipo" class="form-control" placeholder="Carro, Barco, etc.." required="true" value="@if(isset($frete->tipo)){{$frete->tipo}}@else{{old('tipo')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">
@@ -183,19 +183,23 @@
 
                     <div class="form-group col-md-6">
                         {!! Form::label('status', 'Status *') !!}
-                        {{--{{$frete->status}}--}}
-                        {{--<select id="status" class="form-control" name="status" required>--}}
-                            {{--<option value="0">Selecione um status</option>--}}
+                        <select id="status" class="form-control" name="status" required>
+                            <option value="0">Selecione um status</option>
+                            @foreach(\App\Frete::STATUS as $key => $value)
+                            @if(isset($frete->status) && $value === $frete->status)
+                                <option  selected>{{$frete->status}}</option>
+                            @else
+                                <option value="{{$key}}">{{$value}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+{{--                        {!! Form::select('status', array_merge(['Selecione um status'], \App\Frete::STATUS), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}--}}
+                        {{--<select class="form-control" id="status" required="true">--}}
+                            {{--<option value="0">Selecione um Status</option>--}}
                             {{--@foreach(\App\Frete::STATUS as $key => $value)--}}
-                                {{--<option value="{{$key}}" {{old('status', $frete->status) == $key ? 'selected="selected"': ''}}>{{$value}}</option>--}}
+                                {{--<option value="{{$key}}">{{$value}}</option>--}}
                             {{--@endforeach--}}
-{{--                            @if(isset($frete->status))--}}
-                                {{--<option  selected>{{$frete->status}}</option>--}}
-                            {{--@else--}}
-                                {{--<option value="0">Selecione um status</option>--}}
-                            {{--@endif--}}
                         {{--</select>--}}
-                        {!! Form::select('status', array_merge([0 => 'Selecione um status'], \App\Frete::STATUS), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}
 
                     </div>
                     <div class="form-group col-md-3">

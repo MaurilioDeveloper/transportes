@@ -239,17 +239,20 @@
 
                                 <div role="tabpanel" class="tab-pane active" id="parceiro">
                                     {{--<div class="box-body">--}}
+                                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
+                                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Parceiro Alterado com Sucesso</div>
+
+
+                                    {!! Form::model($parceiro, ['route' => ['parceiros.update','client' => $parceiro->id], 'name' => 'update-parceiro', 'class' => 'form-parceiro-update', 'method' => 'PUT', 'send' => '/painel/parceiros/'.$parceiro->id]) !!}
+
                                     <h3 class="" style="font-size: 19px">Os campos com * são obrigatórios</h3>
                                     <div class="form-group col-md-12"><h3
                                                 class="box-title">{{$pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h3>
                                     </div>
-                                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
-                                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Parceiro Alterado com Sucesso</div>
+
                                     {{--@include('painel.errors._errors_form')--}}
 
 
-
-                                    {!! Form::model($parceiro, ['route' => ['parceiros.update','client' => $parceiro->id], 'name' => 'update-parceiro', 'class' => 'form-parceiro-update', 'method' => 'PUT', 'send' => '/painel/parceiros/'.$parceiro->id]) !!}
 
                                     {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
                                     
@@ -273,11 +276,11 @@
 
 @section('scripts-footer')
     <script src="{{url('/assets/js/vendor/jquery.blockUI.js')}}"></script>
+    <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-parceiro.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
     <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/add-new-field.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-ocorrencia.js')}}"></script>
     <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-tipo-ocorrencia.js')}}"></script>
-    <script type="text/javascript" src="{{url('/assets/js/cadastros/cad-parceiro.js')}}"></script>
 @endsection
 @endsection

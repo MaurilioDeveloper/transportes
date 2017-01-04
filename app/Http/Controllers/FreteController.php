@@ -319,15 +319,15 @@ class FreteController extends Controller
             'data_hoje' => $data_hoje,
             'data_inicio' => $data_inicio,
             'data_fim' => $data_fim,
-            'id_cidade_origem' => $dadosForm['cidade_origem'],
+            'id_cidade_origem' => $dadosForm['id_cidade_origem'],
 //            'estado_origem' => $dadosForm['estado_origem'],
-            'id_cidade_destino' => $dadosForm['cidade_destino'],
+            'id_cidade_destino' => $dadosForm['id_cidade_destino'],
 //            'estado_destino' => $dadosForm['estado_destino'],
             'tipo' => $dadosForm['tipo'],
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
             'cor' => $dadosForm['cor'],
-            'status' => $status,
+            'status' => $dadosForm['status'],
             'iscoleta' => $iscoleta,
             'isentrega' => $isentrega,
             'id_parceiro_coletor' => $parceiro_coletor,
@@ -340,6 +340,7 @@ class FreteController extends Controller
         ])->save();
 //        dd($dadosForm['valor_entrega']);
 //        dd($update);
+        return 1;
         return redirect()->route('listarFretes');
 
     }
