@@ -46,3 +46,26 @@ jQuery('form[name="form-ocorrencia"]').submit(function () {
         return false;
     }
 });
+
+function openOcorrenciaEdit(id){
+
+    var id_ocorrencia = id;
+    console.log(id_ocorrencia);
+
+    $("#title-cad").hide();
+    $("#postOcorrencia").remove();
+    $("#updateOcorrencia").show();
+    $("#form-ocorrencia-edit").attr('action', '/painel/parceiros/updateOcorrencia/'+id_ocorrencia);
+    $("#title-edit").show();
+    $("#myModalLabel").append("<h3 class='modal-title'>Editar Ocorrência</h3>");
+    $.getJSON('/painel/parceiros/editOcorrencia/' + id_ocorrencia, function (dados) {
+        console.log(dados);
+        $(".data-ocorrencia").val(dados.data);
+        $("#tipo-ocorrencia").val(dados.id_tipo_ocorrencia);
+        $("#id_usuario_ocorrencia").val(dados.id_usuario);
+        $(".descricao_ocorrencia").val(dados.descricao);
+        console.log(dados.descricao);
+    });
+
+
+}

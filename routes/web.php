@@ -54,6 +54,8 @@ Route::group(['prefix' => 'painel'], function(){
 //        Route::get('/buscaParceiros', 'ParceiroController@buscaParceiros')->name('buscarParceiros');
         Route::post('/pesquisar', 'ParceiroController@pesquisar')->name('pesquisarParceiro');
         Route::post('/postOcorrencia', 'ParceiroController@postOcorrencia')->name('postOcorrencia');
+        Route::get('/editOcorrencia/{id}', 'ParceiroController@editOcorrencia')->name('editOcorrencia');
+        Route::post('/updateOcorrencia', 'ParceiroController@postOcorrencia')->name('updateOcorrencia');
         Route::post('/postTipoOcorrencia', 'ParceiroController@postTipoOcorrencia')->name('postTipoOcorrencia');
         Route::get('/delete-ocorrencia/{id}', 'ParceiroController@deleteOcorrencia')->name('deleteOcorrencia');
         Route::get('/delete-parceiro/{id}', 'ParceiroController@deleteParceiro')->name('deleteParceiro');

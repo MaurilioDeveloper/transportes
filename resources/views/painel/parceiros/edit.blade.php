@@ -70,7 +70,8 @@
         <div class="modal-content">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="modal-title" id="myModalLabel">Cadastrar Ocorrência</h3>
+                    <div id="title-cad"><h3 class="modal-title" id="myModalLabel">Cadastrar Ocorrência</h3></div>
+                    <h3 id="title-edit" class="modal-title" style="display: none">Editar Ocorrência</h3>
                 </div>
 
                 <!-- form start -->
@@ -78,7 +79,16 @@
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Ocorrência Cadastrada com Sucesso</div>
 
-                    {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '/painel/parceiros/postOcorrencia']) !!}
+
+                    <div id="updateOcorrencia">
+{{--                        {!! Form::open(['class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '']) !!}--}}
+                        <form class="form-ocorrencia" id="form-ocorrencia-edit" name="form-ocorrencia-update" method="PUT">
+                        <input name="_token" type="hidden" value="{{ csrf_token() }}" />
+                    </div>
+                    <div id="postOcorrencia">
+                        {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '/painel/parceiros/postOcorrencia']) !!}
+                    </div>
+
                     <h4 class="box-title">Os campos com * são obrigatórios</h4>
                     <div class="form-group col-md-12">
                         {!! Form::label('data', 'Data *') !!}
@@ -86,7 +96,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            {!! Form::input('text', 'data', null,  ['class' => 'form-control pull-right datapicker', 'id' => 'datapicker', 'required' => 'true']) !!}
+                            {!! Form::input('text', 'data', null,  ['class' => 'form-control pull-right datapicker data-ocorrencia', 'id' => 'datapicker', 'required' => 'true']) !!}
                         </div>
                     </div>
                     <div class="form-group col-md-12">
@@ -104,11 +114,11 @@
                             {!! Form::input('text', 'id_parceiro', $parceiro->id, ['class' => '','style' => 'width:217px; background: #f0f0f0 !important; color: #aaa !important; border: #ccc;']) !!}
                         </div>
                         {!! Form::label('usuario', 'Usuário Autor *') !!}
-                        {!! Form::select('usuario', [auth()->user()->name], auth()->user()->name, ['class' => 'form-control', 'disabled' => 'true']) !!}
+                        {!! Form::select('usuario', [auth()->user()->name], auth()->user()->name, ['class' => 'form-control id_usuario_ocorrencia', 'disabled' => 'true']) !!}
                     </div>
                     <div class="form-group col-md-12">
                         {!! Form::label('descricao', 'Descrição') !!}
-                        {!! Form::textarea('descricao', null, ['class' => 'form-control']) !!}
+                        {!! Form::textarea('descricao', null, ['class' => 'form-control descricao_ocorrencia']) !!}
                     </div>
 
                     <div class="form-group col-md-12">
@@ -171,7 +181,7 @@
                                         <th>Usuário Autor</th>
                                         <th>Ações</th>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="tabela-ocorrencia">
                                         @forelse($ocorrencias as $ocorrencia)
                                             <tr class="warning">
 
@@ -179,7 +189,10 @@
                                                 <td>{{ $ocorrencia->tipo }}</td>
                                                 <td>{{ $ocorrencia->descricao }}</td>
                                                 <td>{{ $ocorrencia->usuario }}</td>
-                                                <td><a id-ocorrencia="{{$ocorrencia->id}}" class="btn btn-danger btn-sm remove"><i class="fa fa-trash"></i></a></td>
+                                                <td>
+                                                    <a id-ocorrencia="{{$ocorrencia->id}}"  class="btn btn-primary btn-sm edit" data-toggle="modal" data-target="#cadastra-ocorrencia" onclick="openOcorrenciaEdit({{$ocorrencia->id}})"><i class="fa fa-edit"></i></a>
+                                                    <a id-ocorrencia="{{$ocorrencia->id}}" class="btn btn-danger btn-sm remove"><i class="fa fa-trash"></i></a>
+                                                </td>
                                                 {{--</tr>--}}
                                                 @empty
                                                     <td colspan="7"> Nenhum Dado Cadastrado</td>

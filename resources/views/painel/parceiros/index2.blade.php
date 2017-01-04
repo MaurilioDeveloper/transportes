@@ -111,18 +111,18 @@
                                 <thead>
                                     <tr style='background: #2e6da4; color: white;'>
                                         <th style="text-align: center;">Nome</th>
-                                        <th style="text-align: center;">Cnpj/Cpf</th>
+                                        <th style="text-align: center;">CNPJ/CPF</th>
                                         {{--<th>Data Nasc</th>--}}
                                         {{--<th>Email</th>--}}
                                         <th style="text-align: center;">Telefone</th>
-                                        <th style="text-align: center;">Cep</th>
+                                        <th style="text-align: center;">CEP</th>
                                         {{--<th>Sexo</th>--}}
                                         <th style="text-align: center;">Endereço</th>
                                         <th style="text-align: center;">Bairro</th>
                                         {{--<th>Numero</th>--}}
                                         <th style="text-align: center;">Cidade</th>
                                         <th style="text-align: center;">Estado</th>
-                                        <th style="width: 140px;">Açao</th>
+                                        <th style="width: 140px;">Ação</th>
                                     </tr>
                                 </thead>
                                 <tbody>

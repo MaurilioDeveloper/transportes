@@ -36,8 +36,12 @@
 
                     <div class="box-body">
                         <h4>{{$pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h4>
+                        {{--@include('painel.errors._errors_form')--}}
+                        <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
+                        <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Parceiro Cadastrado com Sucesso</div>
+
                         @include('painel.errors._errors_form')
-                        {!! Form::open(['route' => 'parceiros.store', 'class' => 'form', 'id' => 'meuForm']) !!}
+                        {!! Form::open(['route' => 'parceiros.store', 'class' => 'form', 'id' => 'meuForm', 'name' => 'cad-parceiro', 'send' => '/painel/parceiros']) !!}
 {{--                        <form class="form" action="{{route('parceiros.store')}}">--}}
                         {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
                         {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
@@ -45,7 +49,7 @@
                         @include('painel.parceiros._form')
 
                         <div class="form-group col-md-6">
-                            {!! Form::submit('Cadastrar', ['class' => 'btn btn-primary']) !!}
+                            <button type="submit" id="botao" class="btn btn-primary"><img src="{{url('/assets/imgs/carregar.gif')}}" class="load" alt="Carregando" style="display: none; width: 30px; height: 30px;"/> Cadastrar</button>
                             {{--<button type="submit" class="btn btn-primary">Cadastrar</button>--}}
                             <a class="btn btn-info" href="{{route('parceiros.index')}}">Voltar</a>
                             <button type="reset" class="btn">Limpar</button>

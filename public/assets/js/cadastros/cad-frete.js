@@ -20,7 +20,7 @@ $(document).ready(function () {
             delay: 150,
             cache: true,
             processResults: function (data) {
-                console.log(data);
+                // console.log(data);
                 return {
                     results: $.map(data, function (item) {
                         return {

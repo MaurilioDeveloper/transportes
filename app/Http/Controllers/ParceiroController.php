@@ -166,8 +166,8 @@ class ParceiroController extends Controller
 
 
         if ($parceiro && $caminhoes && $motoristas) {
-            echo 'Sucesso';
             \DB::commit();
+            return 1;
         } else {
             echo 'Falha';
             \DB::rollBack();
@@ -523,6 +523,31 @@ class ParceiroController extends Controller
 
 
 //        return redirect()->route('parceiros.index');
+    }
+
+
+    public function editOcorrencia($id)
+    {
+        if (!($ocorrencia = Ocorrencia::find($id))) {
+            throw new ModelNotFoundException("Ocorrencia não foi encontrada");
+        }
+
+        $ocorrencia->data =implode('/', array_reverse(explode('-', $ocorrencia->data)));
+
+        return $ocorrencia;
+
+    }
+
+    public function updateOcorrencia($id)
+    {
+        $dadosForm = $this->request->all();
+
+        if (!($ocorrencia = Ocorrencia::find($id))) {
+            throw new ModelNotFoundException("Ocorrencia não foi encontrada");
+        }
+
+        $ocorrencia->fill($dadosForm);
+        $ocorrencia->save();
     }
 
     public function postTipoOcorrencia()
