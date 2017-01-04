@@ -459,8 +459,8 @@ class ParceiroController extends Controller
 
 //        $motorista = Motorista::find($idMotorista);
         if ($parceiro) {
-            echo 'Sucesso';
             \DB::commit();
+            return 1;
         } else {
             echo 'Falha';
             \DB::rollBack();
