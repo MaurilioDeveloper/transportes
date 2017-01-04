@@ -49,42 +49,43 @@ class ViagemController extends Controller
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
-        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
-        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
+//        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
 //        dd($estados);
 
         $titulo = "Cadastrar Viagens";
-        return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades', 'estados'));
+        return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades'));
     }
 
     public function store()
     {
         $dadosForm = $this->request->except(['fretes']);
         $dadosFormFretes = $this->request->only(['fretes']);
-        $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
-        $dadosForm['data_fim'] = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
+//        dd($dadosFormFretes);
+        $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
+        $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
 
-        if($dadosForm['status'] == 1){
+        if ($dadosForm['status'] == 1) {
             $dadosForm['status'] = "Aguardando Inicio";
         }
-        if($dadosForm['status'] == 2){
+        if ($dadosForm['status'] == 2) {
             $dadosForm['status'] = "Em Viagem";
         }
-        if($dadosForm['status'] == 3){
+        if ($dadosForm['status'] == 3) {
             $dadosForm['status'] = "Concluída";
         }
-        if($dadosForm['status'] == 4){
+        if ($dadosForm['status'] == 4) {
             $dadosForm['status'] = "Cancelada";
         }
 
 
         $validate = $this->validate->make($dadosForm, Viagem::$rules);
-        if($validate->fails()){
+        if ($validate->fails()) {
             $messages = $validate->messages();
             $displayErrors = '';
 
-            foreach($messages->all("<p>:message</p>") as $error){
+            foreach ($messages->all("<p>:message</p>") as $error) {
                 $displayErrors .= $error;
             }
 
@@ -93,10 +94,12 @@ class ViagemController extends Controller
 
         $viagem = $this->viagem->create($dadosForm);
 
-        foreach ($dadosFormFretes as $key => $value){
+        foreach ($dadosFormFretes as $key => $value) {
+//            dd($key);
             $fretesAdicionado = array_keys($value);
+//            dd($fretesAdicionado);
             $count = count($fretesAdicionado);
-            for($i = 0; $i < $count; $i++){
+            for ($i = 0; $i < $count; $i++) {
                 $fretesAd = FreteViagem::create([
                     'id_frete' => $fretesAdicionado[$i],
                     'id_viagem' => $viagem->id
@@ -105,14 +108,14 @@ class ViagemController extends Controller
         }
 
 //        if($viagem && $fretesAd){
-            return 1;
+        return 1;
 //        }
 
     }
 
     public function listaFretes()
     {
-        return  Datatables::of(Viagem::query()
+        return Datatables::of(Viagem::query()
             ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
             ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'viagens.id_cidade_destino')
@@ -121,7 +124,6 @@ class ViagemController extends Controller
 
 //        return $this->frete->get()->where('status', 'Aguardando Embarque');
     }
-
 
 
     public function buscaParceiro($name)
@@ -169,23 +171,23 @@ class ViagemController extends Controller
         $titulo = 'Editar Viagem';
         // Retorna todos os dados da Viagem conforme seu ID.
         $viagem = Viagem::findOrFail($id);
-        $viagem['data_inicio'] = implode('/',array_reverse(explode('-',$viagem->data_inicio)));
-        $viagem['data_fim'] = implode('/',array_reverse(explode('-',$viagem->data_fim)));
+        $viagem['data_inicio'] = implode('/', array_reverse(explode('-', $viagem->data_inicio)));
+        $viagem['data_fim'] = implode('/', array_reverse(explode('-', $viagem->data_fim)));
         $viagemNome = $this->parceiro->where('id', $viagem->id_parceiro_viagem)->pluck('nome')->toJson();
-        $viagemNome = str_replace('["', '', str_replace('"]', '',$viagemNome));
+        $viagemNome = str_replace('["', '', str_replace('"]', '', $viagemNome));
         $nomeCaminhao = Viagem::query()
             ->join('caminhoes', 'caminhoes.id', '=', 'viagens.id_caminhao')
             ->select("caminhoes.modelo", "caminhoes.placa")->where('id_caminhao', $viagem->id_caminhao)
             ->pluck('modelo', 'placa')->toJson();
-        $nomeCaminhao = str_replace('{"', '', str_replace('"','',str_replace('{','', str_replace('}','',implode(' - ', explode(':',$nomeCaminhao))))));
+        $nomeCaminhao = str_replace('{"', '', str_replace('"', '', str_replace('{', '', str_replace('}', '', implode(' - ', explode(':', $nomeCaminhao))))));
 
         $nomeMotorista = Viagem::query()
             ->join('motoristas', 'motoristas.id', '=', 'viagens.id_motorista')
             ->select("motoristas.nome")->where('id_motorista', $viagem->id_motorista)
             ->pluck('nome')->toJson();
-        $nomeMotorista = str_replace('["', '', str_replace('"]','',$nomeMotorista));
-        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
-        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
+        $nomeMotorista = str_replace('["', '', str_replace('"]', '', $nomeMotorista));
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
+//        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
 //        dd($nomeCaminhao);
 //        dd($viagemNome);
@@ -196,33 +198,22 @@ class ViagemController extends Controller
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
+//        dd($fretes);
 
-//        dd($viagem->id_frete);
-
-//        $fretesAdicionado = Frete::query()
-//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-//            ->join('viagens', 'viagens.id', '=', 'viagens.id_frete')
-//            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
-//            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-//            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
-//            ->where('viagens.id_frete', $viagem->id_frete)->get();
-//
         $fretesAdicionados = Viagem::query()
             ->join('fretes_viagens', 'fretes_viagens.id_viagem', '=', 'viagens.id')
             ->join('fretes', 'fretes.id', '=', 'fretes_viagens.id_frete')
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao",  "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
             ->where('fretes_viagens.id_viagem', $viagem->id)
             ->get();
-
-        $fretesAdd = $this->freteViagem->all()->where('id_viagem', $viagem->id);
-//        dd($fretesAdd);
-
 //        dd($fretesAdicionados);
 
-        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'estados', 'fretesAdicionados', 'fretesAdd'));
+        $fretesAdd = $this->freteViagem->all()->where('id_viagem', $viagem->id);
+
+        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'fretesAdicionados', 'fretesAdd'));
 
 
     }
@@ -232,7 +223,6 @@ class ViagemController extends Controller
 
         $fretesAdicionado = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->join('viagens', 'viagens.id', '=', 'viagens.id_frete')
             ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
 //            ->join('fretes_viagens as fo', 'fo.id_frete', '=', 'fretes.id')
@@ -244,32 +234,34 @@ class ViagemController extends Controller
 
     public function update($id)
     {
-        $dadosForm = $this->request->all();
-//        dd($dadosForm['id']);
+        $dadosForm = $this->request->except(['fretes']);
+        $dadosFormFretes = $this->request->only(['fretes']);
+        $fretesViagemDB = FreteViagem::where('id_viagem', $id)->get()->keyBy('id');
+//        dd($fretesViagemDB);
         $viagem = Viagem::findOrFail($id);
-        $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/',$viagem->data_inicio)));
-        $dadosForm['data_fim'] = implode('-',array_reverse(explode('/',$viagem->data_fim)));
+        $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $viagem->data_inicio)));
+        $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $viagem->data_fim)));
 
 
-        if($dadosForm['status'] == 1){
+        if ($dadosForm['status'] == 1) {
             $dadosForm['status'] = "Aguardando Inicio";
         }
-        if($dadosForm['status'] == 2){
+        if ($dadosForm['status'] == 2) {
             $dadosForm['status'] = "Em Viagem";
         }
-        if($dadosForm['status'] == 3){
+        if ($dadosForm['status'] == 3) {
             $dadosForm['status'] = "Concluída";
         }
-        if($dadosForm['status'] == 4){
+        if ($dadosForm['status'] == 4) {
             $dadosForm['status'] = "Cancelada";
         }
 
         $validate = $this->validate->make($dadosForm, Viagem::$rules);
-        if($validate->fails()){
+        if ($validate->fails()) {
             $messages = $validate->messages();
             $displayErrors = '';
 
-            foreach($messages->all("<p>:message</p>") as $error){
+            foreach ($messages->all("<p>:message</p>") as $error) {
                 $displayErrors .= $error;
             }
 
@@ -277,7 +269,68 @@ class ViagemController extends Controller
         }
 //        dd($viagem);
 
-        $viagem->fill($dadosForm)->save();
+        $viagemObj = $viagem->fill($dadosForm)->save();
+
+
+//        dd($dadosFormFretes);
+        if (is_array($dadosFormFretes)) {
+            foreach ($dadosFormFretes as $key => $value) {
+
+                if($value == null){
+                    $fretesAdicionado = null;
+                }else {
+                    $fretesAdicionado = array_keys($value);
+                }
+
+                $chave = array_keys($fretesViagemDB->toArray());
+                $countFrete = count($chave);
+                if (isset($chave) && count($fretesViagemDB) > 0) {
+                    for ($i = 0; $i < $countFrete; $i++) {
+                        if (!($viagemFrete = FreteViagem::find($chave[$i]))) {
+                            throw new ModelNotFoundException("Fretes Viagem não foi encontrado");
+                        } else {
+//                            dd($fretesAdicionado);
+                            $viagemFrete->delete($chave);
+
+                            if($value != null){
+                                $viagemFrete->create([
+                                    'id_frete' => $fretesAdicionado[$i],
+                                    'id_viagem' => $viagem->id
+                                ]);
+                            }
+                        }
+
+
+                        $i++;
+                    }
+                } else {
+                    $count = count($fretesAdicionado);
+                    for ($i = 0; $i < $count; $i++) {
+                        $fretesAd = FreteViagem::create([
+                            'id_frete' => $fretesAdicionado[$i],
+                            'id_viagem' => $viagem->id
+                        ]);
+                    }
+                }
+
+//            for($i = 0; $i < $count; $i++){
+//                $fretesAd = $this->freteViagem->fill([
+//                    'id_frete' => $fretesAdicionado[$i],
+//                    'id_viagem' => $viagem->id
+//                ]);
+
+//            }
+            }
+        }
+
+//        foreach ($fretesViagemDB as $viagemFrete) {
+//            if (!$viagemFrete['presente']) {
+//                FreteViagem::find($viagemFrete['id'])->delete();
+//            }
+//        }
+
+
+//        $fretesAd->save();
         return 1;
 //        dd($dadosForm);
     }

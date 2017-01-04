@@ -29,17 +29,9 @@ class CreateViagemsTable extends Migration
             $table->integer('id_cidade_origem')->unsigned();
             $table->foreign('id_cidade_origem')->references('id')->on('origens_destinos');
 
-            $table->integer('id_estado_origem')->unsigned();
-            $table->foreign('id_estado_origem')->references('id')->on('origens_destinos');
-
             $table->integer('id_cidade_destino')->unsigned();
             $table->foreign('id_cidade_destino')->references('id')->on('origens_destinos');
 
-            $table->integer('id_estado_destino')->unsigned();
-            $table->foreign('id_estado_destino')->references('id')->on('origens_destinos');
-
-            $table->integer('id_frete')->unsigned();
-            $table->foreign('id_frete')->references('id')->on('fretes');
             $table->timestamps();
         });
     }

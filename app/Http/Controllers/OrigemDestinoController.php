@@ -45,6 +45,7 @@ class OrigemDestinoController extends Controller
     {
         $dadosForm = $this->request->all();
 
+        $dadosForm['estado'] = strtoupper($dadosForm['estado']);
         $validate = $this->validate->make($dadosForm, OrigemDestino::$rules);
         if($validate->fails()){
             $messages = $validate->messages();
@@ -79,6 +80,8 @@ class OrigemDestinoController extends Controller
     {
         $dadosForm = $this->request->all();
 //        dd($dadosForm['id']);
+        $dadosForm['estado'] = strtoupper($dadosForm['estado']);
+
         $cidadesEstados = OrigemDestino::findOrFail($id);
 
 

@@ -21,10 +21,11 @@ class Frete extends Model
         'id_parceiro' => 'required',
         'data_inicio' => 'required',
         'id_cidade_origem' => 'required',
-        'id_estado_origem' => 'required',
+//        'id_estado_origem' => 'required',
         'id_cidade_destino' => 'required',
-        'id_estado_destino' => 'required',
+//        'id_estado_destino' => 'required',
         'valor_item' => 'required',
+        'status' => 'required'
 
     ];
 

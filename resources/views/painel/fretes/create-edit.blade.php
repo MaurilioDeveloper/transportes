@@ -99,7 +99,7 @@
                     <legend><b>Origem - Destino</b></legend>
 
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-6">
                         {!! Form::label('cidade', 'Cidade Origem *') !!}
                         <select name="id_cidade_origem" class="form-control" id="cidade_origem" required>
                             <option value="0">Selecione uma Cidade</option>
@@ -117,34 +117,13 @@
                         </select>
                     </div>
 
-                    <div class="form-group col-md-3">
-                        {!! Form::label('estado', 'Estado Origem *') !!}
-                        <select name="id_estado_origem" class="form-control" id="estado_origem" required>
-                            <option value="0">Selecione um Estado</option>
-                            {{--                            {{$estados}}--}}
-                            @if(isset($estados))
-                                @foreach($estados as $key => $value)
-                                    {{--{{$value}}--}}
-                                    @if(isset($frete->id_estado_origem) && $key === $frete->id_estado_origem)
-                                        <option value="{{$key}}" selected>{{$value}}</option>
-                                        {{--{{old('status')}}--}}
-                                    @else
-                                        <option value="{{$key}}" {{old('cidade') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                    @endif
-                                @endforeach
-                            @endif
-
-                        </select>
-                        {{--                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
-                        {{--<input required type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_origem)){{$viagem->estado_origem}}@else{{old('estado_origem')}}@endif" />--}}
-                    </div>
 
                     {{--</fieldset>--}}
 
                     {{--<fieldset class="callout column small-12">--}}
                     {{--<legend><b>Destino</b></legend>--}}
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-6">
                         {!! Form::label('cidade', 'Cidade Destino *') !!}
                         <select name="id_cidade_destino" class="form-control" id="cidade_destino" required>
                             <option value="0">Selecione uma Cidade</option>
@@ -165,26 +144,6 @@
                         {{--<input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_destino)){{$viagem->cidade_destino}}@else{{old('cidade_destino')}}@endif" />--}}
                     </div>
 
-                    <div class="form-group col-md-3">
-                        {!! Form::label('estado', 'Estado Destino *') !!}
-                        <select name="id_estado_destino" class="form-control" id="estado_destino" required>
-                            <option value="0">Selecione um Estado</option>
-                            {{--                            {{$estados}}--}}
-                            @if(isset($estados))
-                                @foreach($estados as $key => $value)
-                                    {{--{{$value}}--}}
-                                    @if(isset($frete->id_estado_destino) && $key === $frete->id_estado_destino)
-                                        <option value="{{$key}}" selected>{{$value}}</option>
-                                        {{--{{old('status')}}--}}
-                                    @else
-                                        <option value="{{$key}}" {{old('estado_destino') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </select>
-                        {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
-                        {{--<input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_destino)){{$viagem->estado_destino}}@else{{old('estado_destino')}}@endif" />--}}
-                    </div>
                 </fieldset>
 
                 <fieldset class="callout column small-12">
@@ -206,7 +165,7 @@
                     <div class="form-group col-md-6">
                         {!! Form::label('valor', 'Valor *') !!}
                         {{--{!! Form::text('valor_item', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}--}}
-                        <input type="text" name="valor_item" class="form-control moeda" data-prefix="R$" placeholder="Valor" value="@if(isset($frete->valor_item)){{$frete->valor_item}}@else{{old('valor_item')}}@endif" />
+                        <input type="text" name="valor_item" class="form-control moeda" data-prefix="R$" placeholder="Valor" required value="@if(isset($frete->valor_item)){{$frete->valor_item}}@else{{old('valor_item')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">
@@ -353,7 +312,7 @@
                     </div>
 
                     <div class="form-group col-md-12">
-                        {!! Form::label('informacoes_complementares', 'Informações Complementares *') !!}
+                        {!! Form::label('informacoes_complementares', 'Informações Complementares') !!}
                         {!! Form::textarea('informacoes_complementares', null, ['class' => 'form-control']) !!}
                     </div>
                 </fieldset>
@@ -419,7 +378,7 @@
 
                 <div class="cnpj" style="display: none">
                     <div class="form-group col-md-6">
-                        <label for="cnpj">Cnpj*</label>
+                        <label for="cnpj">CNPJ*</label>
                         {{--<script>$('.pessoa').val();</script>--}}
                         {{--@if($fretePessoa === "juridica")--}}
                             {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cnpj']) !!}
@@ -430,7 +389,7 @@
 
                 <div class="cpf"  style="display: none">
                     <div class="form-group col-md-6">
-                            <label for="cnpj">Cpf*</label>
+                            <label for="cnpj">CPF*</label>
                             {!! Form::text('documento', null, ['class' => 'form-control documento', 'disabled' => 'true', 'id' => 'cpf']) !!}
                     </div>
                 </div>
@@ -467,7 +426,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    {!! Form::label('cep', 'Cep') !!}
+                    {!! Form::label('cep', 'CEP') !!}
                     {!! Form::text('cep', null, ['class' => 'form-control cep', 'disabled' => 'true', 'id' => 'cep']) !!}
                 </div>
 
@@ -483,6 +442,7 @@
                         {!! Form::text('inscricao_estadual', null, ['class' => 'form-control inscricao_estadual', 'disabled' => 'true']) !!}
                     </div>
                 </div>
+
                 <div class="fisica" style="display: none">
                     <div class="form-group col-md-6">
                         {!! Form::label('estado_civil', 'Estado Civil *') !!}
@@ -555,6 +515,7 @@
 
             </div>
             <div class="modal-footer">
+                <a class="btn btn-success edit" style="float: left;" target="_blank"><i class="fa fa-edit"></i> Alterar</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 {{--{!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}--}}
             </div>

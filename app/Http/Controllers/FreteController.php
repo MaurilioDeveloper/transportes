@@ -9,6 +9,7 @@ use App\OrigemDestino;
 use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Contato;
+use App\Viagem;
 //use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Request\ParceiroRequest;
 use Datatables;
@@ -64,10 +65,10 @@ class FreteController extends Controller
     {
 //        $status = Frete::STATUS;
         $titulo = "Cadastrar Frete";
-        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
-        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
+//        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
-        return view('painel.fretes.create-edit', compact('titulo', 'cidades', 'estados'));
+        return view('painel.fretes.create-edit', compact('titulo', 'cidades'));
     }
 
     public function listaFretes()
@@ -87,14 +88,26 @@ class FreteController extends Controller
 //            )
 //        );
 //        return $fretes;
-        return '{ "data": '. Frete::query()
+
+        return '{ "data": '.Frete::query()
             ->join('parceiros as p', 'p.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
             ->select("p.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo")
-            ->get()->toJson().'}';
+            ->get()->toJson(). '}';
 
 
+    }
+
+
+    public function listaViagem()
+    {
+        return Datatables::of(Viagem::query()
+            ->join('parceiros as p', 'p.id', '=', 'viagens.id_parceiro_viagem')
+            ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'viagens.id_cidade_destino')
+            ->select("p.nome", "viagens.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "viagens.status", "viagens.tipo"))
+            ->make(true);
     }
 
 
@@ -174,9 +187,9 @@ class FreteController extends Controller
             'data_inicio' => $data_inicio,
             'data_fim' => $data_fim,
             'id_cidade_origem' => $dadosForm['id_cidade_origem'],
-            'id_estado_origem' => $dadosForm['id_estado_origem'],
+//            'id_estado_origem' => $dadosForm['id_estado_origem'],
             'id_cidade_destino' => $dadosForm['id_cidade_destino'],
-            'id_estado_destino' => $dadosForm['id_estado_destino'],
+//            'id_estado_destino' => $dadosForm['id_estado_destino'],
             'tipo' => $dadosForm['tipo'],
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
@@ -205,8 +218,8 @@ class FreteController extends Controller
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
 
-        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->pluck('cidade', 'id');
-        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
+        $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
+//        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
         $data_hoje = implode('/',array_reverse(explode('-',$frete->data_hoje)));
         $data_inicio = implode('/',array_reverse(explode('-',$frete->data_inicio)));
         $data_fim = implode('/',array_reverse(explode('-',$frete->data_fim)));
@@ -229,7 +242,7 @@ class FreteController extends Controller
         $isentrega = $frete->isentrega;
 
 //        dd($frete);
-        return view('painel.fretes.create-edit', compact('frete', 'titulo', 'data_hoje', 'data_inicio', 'data_fim', 'freteParceiroNome', 'iscoleta', 'isentrega', 'freteParceiroColetorNome', 'freteParceiroEntregadorNome', 'fretePessoa', 'sexo', 'cidades', 'estados'));
+        return view('painel.fretes.create-edit', compact('frete', 'titulo', 'data_hoje', 'data_inicio', 'data_fim', 'freteParceiroNome', 'iscoleta', 'isentrega', 'freteParceiroColetorNome', 'freteParceiroEntregadorNome', 'fretePessoa', 'sexo', 'cidades'));
     }
 
     /**
@@ -306,10 +319,10 @@ class FreteController extends Controller
             'data_hoje' => $data_hoje,
             'data_inicio' => $data_inicio,
             'data_fim' => $data_fim,
-            'cidade_origem' => $dadosForm['cidade_origem'],
-            'estado_origem' => $dadosForm['estado_origem'],
-            'cidade_destino' => $dadosForm['cidade_destino'],
-            'estado_destino' => $dadosForm['estado_destino'],
+            'id_cidade_origem' => $dadosForm['cidade_origem'],
+//            'estado_origem' => $dadosForm['estado_origem'],
+            'id_cidade_destino' => $dadosForm['cidade_destino'],
+//            'estado_destino' => $dadosForm['estado_destino'],
             'tipo' => $dadosForm['tipo'],
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,

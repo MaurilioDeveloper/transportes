@@ -154,7 +154,7 @@
                         </select>
 {{--                        {!! Form::select('status', \App\Viagem::STATUS, isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}--}}
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-6">
                         {!! Form::label('cidade', 'Cidade Origem *') !!}
                         <select name="id_cidade_origem" class="form-control" id="cidade_origem" required>
                             <option value="0">Selecione uma Cidade</option>
@@ -174,34 +174,13 @@
                         {{--<input required type="text" name="cidade_origem" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_origem)){{$viagem->cidade_origem}}@else{{old('cidade_origem')}}@endif" />--}}
                     </div>
 
-                    <div class="form-group col-md-3">
-                        {!! Form::label('estado', 'Estado Origem *') !!}
-                        <select name="id_estado_origem" class="form-control" id="estado_origem" required>
-                            <option value="0">Selecione um Estado</option>
-                            {{--                            {{$estados}}--}}
-                            @if(isset($estados))
-                                @foreach($estados as $key => $value)
-                                    {{--{{$value}}--}}
-                                    @if(isset($viagem->id_estado_origem) && $key === $viagem->id_estado_origem)
-                                        <option value="{{$key}}" selected>{{$value}}</option>
-                                        {{--{{old('status')}}--}}
-                                    @else
-                                        <option value="{{$key}}" {{old('cidade') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                    @endif
-                                @endforeach
-                            @endif
-
-                        </select>
-                        {{--                        {!! Form::text('estado_origem', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
-                        {{--<input required type="text" name="estado_origem" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_origem)){{$viagem->estado_origem}}@else{{old('estado_origem')}}@endif" />--}}
-                    </div>
 
                     {{--</fieldset>--}}
 
                     {{--<fieldset class="callout column small-12">--}}
                     {{--<legend><b>Destino</b></legend>--}}
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-6">
                         {!! Form::label('cidade', 'Cidade Destino *') !!}
                         <select name="id_cidade_destino" class="form-control" id="cidade_destino" required>
                             <option value="0">Selecione uma Cidade</option>
@@ -222,26 +201,7 @@
                         {{--<input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_destino)){{$viagem->cidade_destino}}@else{{old('cidade_destino')}}@endif" />--}}
                     </div>
 
-                    <div class="form-group col-md-3">
-                        {!! Form::label('estado', 'Estado Destino *') !!}
-                        <select name="id_estado_destino" class="form-control" id="estado_destino" required>
-                            <option value="0">Selecione um Estado</option>
-{{--                            {{$estados}}--}}
-                            @if(isset($estados))
-                                @foreach($estados as $key => $value)
-                                    {{--{{$value}}--}}
-                                    @if(isset($viagem->id_estado_destino) && $key === $viagem->id_estado_destino)
-                                        <option value="{{$key}}" selected>{{$value}}</option>
-                                        {{--{{old('status')}}--}}
-                                    @else
-                                        <option value="{{$key}}" {{old('estado_destino') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </select>
-                        {{--{!! Form::text('estado_destino', null, ['class' => 'form-control', 'id' => 'state', 'placeholder' => 'PR']) !!}--}}
-                        {{--<input required type="text" name="estado_destino" class="form-control" placeholder="Estado" value="@if(isset($viagem->estado_destino)){{$viagem->estado_destino}}@else{{old('estado_destino')}}@endif" />--}}
-                    </div>
+
                     <input type="hidden" id="id_parceiro" />
                     <input type="hidden" id="id_frete"  value="{{$viagem->id_frete or 0}}"/>
                     <div class="form-group col-md-4">
@@ -270,8 +230,9 @@
                         </tr>
                         </thead>
                         <tbody id="freteAd">
+                        {{--{{$fretesAdicionados}}--}}
                         @if(isset($fretesAdicionados))
-                            @foreach($fretesAdicionados as $fretesAd)
+                            @forelse($fretesAdicionados as $fretesAd)
 {{--                                <input type="hidden" value="{{$fretesAd->id}}" id="frete-disable{{$fretesAd->id}}" />--}}
                                 <tr class="warning" id="freteTable{{$fretesAd->id}}">
                                     <td>{{$fretesAd->nome}}</td>
@@ -281,35 +242,27 @@
                                     <td>{{$fretesAd->cidade_destino}}</td>
                                     <td><a onclick="removerFrete({{$fretesAd->id}})" class="remover btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                                 </tr>
-                            @endforeach
+
+                            @empty
+                                <tr class="nenhum"><td class="warning" style="text-align: center" colspan="6">Nenhum frete adicionado até o momento</td></tr>
+                            @endforelse
                         @endif
-                        {{--@if(isset($fretesAdicionado))--}}
-{{----}}
-                        {{--@forelse($fretesAdicionado as $frete)--}}
-                            {{--{{$fretes}}--}}
-                            {{--<tr class="success">--}}
-                                {{--<td>{{$frete->nome}}</td>--}}
-                                {{--<td>{{$frete->tipo}}</td>--}}
-                                {{--<td>{{$frete->identificacao}}</td>--}}
-                                {{--<td>{{$frete->cidade_origem}}</td>--}}
-                                {{--<td>{{$frete->cidade_destino}}</td>--}}
-                                {{--<td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>--}}
-                            {{--</tr>--}}
-{{----}}
-                        {{--@empty--}}
-                            {{--<tr>--}}
-                                {{--<td colspan="6" class="warning" style="text-align: center;">Nenhum dado cadastrado</td>--}}
-                            {{--</tr>--}}
-                        {{--@endforelse--}}
-                        {{--@endif--}}
 {{----}}
                         </tbody>
                     </table>
                     </div>
 
-                    @foreach($fretesAdd as $viagemFrete)
-                        <input type="hidden" class="frete_id" name="fretes[{{$viagemFrete->id_frete}}]" value="{{$viagemFrete->id_frete}}"/>
-                    @endforeach
+                    <div id="fretesPreenchidos">
+                        <?php $i=0 ?>
+                        @if(isset($fretesAdd) && count($fretesAdd) > 0)
+                            @foreach($fretesAdd as $viagemFrete)
+                                <div id="listaFrete">
+                                    <input type="hidden" class="frete_id" name="fretes[{{$viagemFrete->id_frete}}][idFrete]" value="{{$viagemFrete->id_frete}}"/>
+                                </div>
+                                <?php $i++ ?>
+                            @endforeach
+                        @endif
+                    </div>
 
                     <div class="form-group col-md-12">
                         <hr style="border: 1px solid #3c8dbc"/>
@@ -335,7 +288,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Adicionar um Frete</h4>
+                <h4 class="modal-title" id="myModalLabel">Adicionar um Frete (Aguardando Embarque)</h4>
             </div>
             <div class="modal-body">
                 <table class="table table-bordered">
@@ -344,6 +297,7 @@
                             <th>Nome Parceiro</th>
                             <th>Modelo</th>
                             <th>Identificação</th>
+                            {{--<th>Status</th>--}}
                             <th>Origem</th>
                             <th>Destino</th>
                             <th>Ação</th>
@@ -351,11 +305,12 @@
                     </thead>
                     <tbody>
                     @forelse($fretes as $frete)
-                        {{--{{$fretes}}--}}
+                        <input type="hidden" value="{{$frete->id}}" class="freteListaId" />
                         <tr class="success">
                             <td>{{$frete->nome}}</td>
                             <td>{{$frete->tipo}}</td>
                             <td>{{$frete->identificacao}}</td>
+                            {{--<td>{{$frete->status}}</td>--}}
                             <td>{{$frete->cidade_origem}}</td>
                             <td>{{$frete->cidade_destino}}</td>
                             <td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id="id-frete{{$frete->id}}" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>

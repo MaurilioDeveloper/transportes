@@ -20,7 +20,7 @@ $(document).ready(function () {
             delay: 150,
             cache: true,
             processResults: function (data) {
-                // console.log(data);
+                console.log(data);
                 return {
                     results: $.map(data, function (item) {
                         return {
@@ -33,6 +33,7 @@ $(document).ready(function () {
                             inscricao_estadual: item.inscricao_estadual,
                             cidade: item.cidade,
                             estado: item.estado,
+                            bairro: item.bairro,
                             endereco: item.endereco,
                             cep: item.cep,
                             fantasia: item.fantasia,
@@ -52,6 +53,7 @@ $(document).ready(function () {
     });
     $(".select2_frete").on('select2:select', function (e) {
         // console.log(e.params.data);
+        $(".edit").attr('href', '/painel/parceiros/edit/'+e.params.data.id);
         $(".nome_parceiro").val(e.params.data.text);
         $(".documento").val(e.params.data.documento);
         $(".telefone").val(e.params.data.telefone);
@@ -60,19 +62,25 @@ $(document).ready(function () {
         $(".cidade").val(e.params.data.cidade);
         $(".estado").val(e.params.data.estado);
         $(".endereco").val(e.params.data.endereco);
+        $(".bairro").val(e.params.data.bairro);
         $(".cep").val(e.params.data.cep);
         $(".fantasia").val(e.params.data.fantasia);
         $(".data_nasc").val(e.params.data.data_nasc);
         $(".estado_civil").val(e.params.data.estado_civil);
         $(".sexo").val(e.params.data.sexo);
-        console.log(e.params.data.pessoa);
+        console.log(e.params.data.data_nasc);
         var pessoa = (e.params.data.pessoa);
         if(pessoa === 'juridica'){
             $(".cnpj").show();
+            $(".cpf").hide();
             $(".juridica").show();
-        }else{
+            $(".fisica").hide();
+        }
+        if(pessoa === 'fisica'){
             $(".cpf").show();
+            $(".cnpj").hide();
             $(".fisica").show();
+            $(".juridica").hide();
         }
         $("#parceiros").modal();
     });

@@ -21,7 +21,5 @@ class Viagem extends Model
         'status' => 'required',
         'id_cidade_origem' => 'required',
         'id_cidade_destino' => 'required',
-        'id_estado_origem' => 'required',
-        'id_estado_destino' => 'required'
     ];
 }

@@ -55,7 +55,7 @@
 
                 <div class="form-group col-md-6">
                     {!! Form::label('estado', 'Estado') !!}
-                    {!! Form::text('estado', null, ['class' => 'form-control', 'id' => 'state']) !!}
+                    {!! Form::text('estado', null, ['class' => 'form-control', 'id' => 'state', 'maxlength' => '2', 'style' => 'text-transform: UPPERCASE']) !!}
                 </div>
 
                 <div class="form-group col-md-12">

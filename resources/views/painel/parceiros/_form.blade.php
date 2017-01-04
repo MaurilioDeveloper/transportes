@@ -28,7 +28,7 @@
 
 
 <div class="form-group col-md-6">
-    {!! Form::label('cep', 'Cep') !!}
+    {!! Form::label('cep', 'CEP') !!}
     {!! Form::text('cep', null, ['class' => 'form-control', 'id' => 'cep']) !!}
 </div>
 
@@ -320,7 +320,7 @@
                             {{--{{$motoristas}}--}}
                                 @foreach ($motoristas as $motorista)
                                     <div id="motorista-{{$i}}">
-                                    <input type="hidden" value="{{$motorista->id}}" name="$extraMotoristas[{{$i}}][id]"/>
+                                    <input type="hidden" value="{{$motorista->id}}" name="extraMotoristas[{{$i}}][id]"/>
                                     {{--{{$parceiro->id}}--}}
                                     <div class="form-group col-md-4">
                                         <label for="extraMotoristas[{{$i}}][nome]">Nome </label>
@@ -328,7 +328,7 @@
                                                placeholder="Nome" value="@if(isset($motorista->nome)){{$motorista->nome}}@else{{old('extraMotoristas[0][nome]')}}@endif">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="extraMotoristas[{{$i}}][rg]">Rg </label>
+                                        <label for="extraMotoristas[{{$i}}][rg]">RG </label>
                                         <input type="text" class="form-control" name="extraMotoristas[{{$i}}][rg]" value="@if(isset($motorista->rg)){{$motorista->rg}}@else{{old('extraMotoristas[0][rg]')}}@endif">
                                     </div>
                                     <div class="form-group  col-md-3">

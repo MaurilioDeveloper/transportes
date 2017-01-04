@@ -152,9 +152,24 @@ if ($("#edicao").val() >= 1) {
 
     $("#noneFrete").hide();
     $("#freteAdicionado").show();
+    $("#fretesPreenchidos > #listaFrete > .frete_id").each(function(index, value){
+        // $(".freteListaId").each(function (index, value) {
+            // alert(index);
+            if($(this).attr('value') === $(this).attr('value')){
+                $("#id-frete"+$(this).attr('value')).attr('disabled', true);
+            }
+        // });
+        // alert($(this).attr('value'));
+    });
+
     // $("#status").val();
     // $.each(idDesable, function(i, obj){
         // var idDesable = $("#frete-disable"+obj.id).val();
+    // jQuery("#nome").keydown(function(event){
+    //     if(event.which == "69"){
+    //         alert('Pressionou a tecla a')
+    //     }
+    // });
         // console.log(idDesable);
         // $("#id-frete"+idDesable).attr('disabled', true);
     // });
@@ -168,9 +183,12 @@ function adicionarFrete(id) {
     $("#adicionarFrete").modal('toggle');
     $("#id_frete").val(id);
     $("#noneFrete").hide();
+    $(".nenhum").remove();
     $("#freteAdicionado").show();
     var id_frete = id;
+
     $.getJSON('/painel/viagens/fretes-adicionados/' + id_frete, function (dados) {
+        console.log(dados);
         $.each(dados, function (i, obj) {
             // console.log($("#freteAd tr").length);
             // if($("#freteAd tr").length > 0) {
@@ -178,7 +196,7 @@ function adicionarFrete(id) {
                 $("#id-frete"+obj.id).attr('disabled', true);
                 $("#freteAd").append('<tr id="freteTable' + obj.id + '"><td>' + obj.nome + '</td><td>' + obj.tipo + '</td><td>' + obj.identificacao + '</td><td>' + obj.cidade_origem + '</td><td>' + obj.cidade_destino + '</td>' +
                     '<td><a onclick="removerFrete(' + obj.id + ')" class="remover btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td></tr>')
-                $("#dados").append('<input type="hidden" class="frete_id" name="fretes[' + obj.id + ']" value="' + obj.id + '"/>');
+                $("#dados>#fretesPreenchidos").append('<input type="hidden" class="frete_id" name="fretes[' + obj.id + '][idFrete]" value="' + obj.id + '"/>');
             // }
         });
         // console.log($("#freteAd tr").length);
@@ -237,7 +255,7 @@ $(document).ready(function () {
 
 function removerFrete(id){
     // console.log($("input[name='"+id+"][id]']"));
-    $("input[name='fretes["+id+"]']").remove();
+    $("input[name='fretes["+id+"][idFrete]']").remove();
     $("#freteTable"+id).remove();
     $("#id-frete"+id).attr('disabled', false);
     if($("#freteAd tr").length === 0){
