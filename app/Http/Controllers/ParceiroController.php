@@ -460,14 +460,13 @@ class ParceiroController extends Controller
 //        $motorista = Motorista::find($idMotorista);
         if ($parceiro) {
             \DB::commit();
-            return 1;
+//            return 1;
         } else {
             echo 'Falha';
             \DB::rollBack();
         }
 
 
-//        return "Editando Parceiro";
         return redirect()->route('parceiros.index');
     }
 
