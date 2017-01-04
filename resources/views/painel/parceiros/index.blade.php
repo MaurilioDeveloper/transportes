@@ -69,15 +69,15 @@
                             <table class="table table-bordered" id="parceiros-table-pesquisa">
                                 <tr style='background: #2e6da4; color: white;'>
                                     <th style="text-align: center;">Nome</th>
-                                    <th style="text-align: center;">Cnpj/Cpf</th>
+                                    {{--<th style="text-align: center;">Cnpj/Cpf</th>--}}
                                     {{--<th>Data Nasc</th>--}}
-                                    {{--<th>Email</th>--}}
+                                    <th>Email</th>
                                     <th style="text-align: center;">Telefone</th>
                                     {{--<th>Sexo</th>--}}
                                     <th style="text-align: center;">Endereco</th>
                                     {{--<th>Numero</th>--}}
                                     <th style="text-align: center;">Cidade</th>
-                                    <th style="text-align: center;">Estado</th>
+                                    {{--<th style="text-align: center;">Estado</th>--}}
                                     <th style="width: 160px;">Ação</th>
                                 </tr>
                                 @forelse ($dadosPesquisa as $dados)
@@ -85,11 +85,11 @@
 
 {{--                                        @if(count($dados > 0))--}}
                                         <td>{{ $dados->nome }}</td>
-                                        <td>{{ $dados->documento }}</td>
+                                        <td>{{ $dados->email }}</td>
                                         <td>{{ $dados->telefone }}</td>
                                         <td>{{ $dados->endereco }}</td>
                                         <td>{{ $dados->cidade }}</td>
-                                        <td>{{ $dados->estado }}</td>
+                                        {{--<td>{{ $dados->estado }}</td>--}}
                                         <td>
                                             <a href="{{route('editarParceiro', $dados->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
                                             <a id-parceiro-pesquisa="{{$dados->id}}" class="btn btn-danger btn-sm editor_remove"><i class="fa fa-trash"></i> Deletar</a>

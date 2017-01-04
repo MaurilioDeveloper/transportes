@@ -58,15 +58,14 @@ class ParceiroController extends Controller
         $palavraPesquisa = $this->request->get('nome');
         $dadosPesquisa = Parceiro::query()->select("parceiros.id",
             "parceiros.nome",
-            "parceiros.documento",
-//            "parceiros.email",
+//            "parceiros.documento",
+            "parceiros.email",
             "parceiros.telefone",
 //            "parceiros.data_nasc",
 //            "parceiros.sexo",
             "parceiros.endereco",
 //            "parceiros.numero",
-            "parceiros.cidade",
-            "parceiros.estado")->where('nome', 'LIKE', "%$palavraPesquisa%")
+            "parceiros.cidade")->where('nome', 'LIKE', "%$palavraPesquisa%")
                                 ->paginate(10);
 
 //

@@ -67,44 +67,44 @@
                         {{--@else--}}
 
                         @if(isset($dadosPesquisa))
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="parceiros-table">
                                 <tr style='background: #2e6da4; color: white;'>
                                     <th style="text-align: center;">Nome</th>
-                                    <th style="text-align: center;">Cnpj/Cpf</th>
+                                    {{--<th style="text-align: center;">Cnpj/Cpf</th>--}}
                                     {{--<th>Data Nasc</th>--}}
-                                    {{--<th>Email</th>--}}
+                                    <th>Email</th>
                                     <th style="text-align: center;">Telefone</th>
                                     {{--<th>Sexo</th>--}}
                                     <th style="text-align: center;">Endereco</th>
                                     {{--<th>Numero</th>--}}
                                     <th style="text-align: center;">Cidade</th>
-                                    <th style="text-align: center;">Estado</th>
+                                    {{--<th style="text-align: center;">Estado</th>--}}
                                     <th style="width: 160px;">Ação</th>
                                 </tr>
-                                @forelse ($dadosPesquisa as $dados)
+{{--                                @forelse ($dadosPesquisa as $dados)--}}
                                 <tr class="warning">
 
 {{--                                        @if(count($dados > 0))--}}
-                                        <td>{{ $dados->nome }}</td>
-                                        <td>{{ $dados->documento }}</td>
-                                        <td>{{ $dados->telefone }}</td>
-                                        <td>{{ $dados->endereco }}</td>
-                                        <td>{{ $dados->cidade }}</td>
-                                        <td>{{ $dados->estado }}</td>
-                                        <td>
-                                            <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>
-                                            <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Deletar</a>
-                                        </td>
+                                        {{--<td>{{ $dados->nome }}</td>--}}
+                                        {{--<td>{{ $dados->email }}</td>--}}
+                                        {{--<td>{{ $dados->telefone }}</td>--}}
+                                        {{--<td>{{ $dados->endereco }}</td>--}}
+                                        {{--<td>{{ $dados->cidade }}</td>--}}
+{{--                                        <td>{{ $dados->estado }}</td>--}}
+                                        {{--<td>--}}
+                                            {{--<a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>--}}
+                                            {{--<a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Deletar</a>--}}
+                                        {{--</td>--}}
                                         {{--@else--}}
-                                        @empty
-                                            <td colspan="7">Nenhum dado Cadastrado</td>
+                                        {{--@empty--}}
+                                            {{--<td colspan="7">Nenhum dado Cadastrado</td>--}}
                                         {{--@endif--}}
 
                                 </tr>
-                                @endforelse
+                                {{--@endforelse--}}
 
                             </table>
-                            <div class="pull-right">{!! $dadosPesquisa->render() !!}</div>
+                            {{--<div class="pull-right">{!! $dadosPesquisa->render() !!}</div>--}}
 
                         @else
                             <table class="table table-bordered" id="parceiros-table" style="width: 100%">
