@@ -303,7 +303,6 @@ class ViagemController extends Controller
                         if (!($viagemFrete = FreteViagem::find($chave[$i]))) {
                             throw new ModelNotFoundException("Fretes Viagem não foi encontrado");
                         } else {
-//                            dd($fretesAdicionado);
                             $viagemFrete->delete($chave);
 
                             if($value != null){
