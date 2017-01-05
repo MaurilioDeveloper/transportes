@@ -260,7 +260,7 @@
                         @if(isset($fretesAdd) && count($fretesAdd) > 0)
                             @foreach($fretesAdd as $viagemFrete)
                                 <div id="listaFrete">
-                                    <input type="hidden" class="frete_id" name="fretes[{{$viagemFrete->id_frete}}][idFrete]" value="{{$viagemFrete->id_frete}}"/>
+                                    <input type="hidden" class="frete_id" name="fretes[{{$viagemFrete->id_frete}}]" value="{{$viagemFrete->id_frete}}"/>
                                 </div>
                                 <?php $i++ ?>
                             @endforeach
