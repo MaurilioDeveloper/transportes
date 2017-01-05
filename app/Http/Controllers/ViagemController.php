@@ -62,7 +62,7 @@ class ViagemController extends Controller
     {
         $dadosForm = $this->request->except(['fretes']);
         $dadosFormFretes = $this->request->only(['fretes']);
-        dd($dadosFormFretes);
+//        dd($dadosFormFretes);
         $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
 //        dd($dadosForm['id_caminhao']);
