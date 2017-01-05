@@ -23,7 +23,7 @@ $(document).ready(function() {
                             if (data == "1") {
                                 setTimeout(function () {
                                     alert('Viagem Excluida Com Sucesso');
-                                    window.location.href = 'parceiros';
+                                    window.location.href = 'viagens';
                                 }, 2000);
                             }
                         }

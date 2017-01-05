@@ -39,7 +39,7 @@ $(document).ready(function() {
 
 
 
-    $('#fretes-table').DataTable({
+    $('#fretes-table-two').DataTable({
         processing: true,
         serverSide: true,
         responsive: {

@@ -217,20 +217,21 @@ $(document).ready(function () {
         var dadosForm = jQuery(this).serialize();
         var form = jQuery(this);
         var botao = $(this).find('#botao');
-        var status = $("#status>option:selected").val();
+        var status = $("#status-select>option:selected").val();
         var cidade_origem = $("#cidade_origem>option:selected").val();
         var cidade_destino = $("#cidade_destino>option:selected").val();
         console.log(status);
+
+        if(status == 0){
+            alert("Por Favor, preencha o campo de STATUS.");
+            return false;
+        }
         if(cidade_origem == 0){
             alert("Por Favor, preencha o campo de CIDADE ORIGEM.");
             return false;
         }
         if(cidade_destino == 0){
             alert("Por Favor, preencha o campo de CIDADE DESTINO.");
-            return false;
-        }
-        if(status == 0 || $("#status>option").val() === "0"){
-            alert("Por Favor, preencha o campo de STATUS.");
             return false;
         }
 

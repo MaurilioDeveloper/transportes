@@ -185,7 +185,7 @@
 
                     <div class="form-group col-md-6">
                         {!! Form::label('status', 'Status *') !!}
-                        <select id="status" class="form-control" name="status" required>
+                        <select id="status-select" class="form-control" name="status" required>
                             <option value="0">Selecione um status</option>
                             @foreach(\App\Frete::STATUS as $key => $value)
                             @if(isset($frete->status) && $value === $frete->status)
@@ -338,11 +338,11 @@
                         <div class="box-body">
                             <div class="form-group col-md-6">
                                 <label for="id_parceiro_coletor">Coletor</label>
-                                {!! Form::select('id_parceiro_coletor', [], null, ['class' => 'form-control', 'id' => 'coletor']) !!}
+{{--                                {!! Form::select('id_parceiro_coletor', [], null, ['class' => 'form-control', 'id' => 'coletor']) !!}--}}
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="valor_coleta">Valor</label>
-                                {!! Form::text('valor_coleta', null, ['class' => 'form-control']) !!}
+                                {{--<label for="valor_total">Valor</label>--}}
+{{--                                {!! Form::text('valor_total', null, ['class' => 'form-control']) !!}--}}
                             </div>
                         </div><!-- /.box-body -->
                     </div>

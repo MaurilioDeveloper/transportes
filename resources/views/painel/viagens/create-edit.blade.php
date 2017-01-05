@@ -138,12 +138,11 @@
                     <div class="form-group col-md-12">
                         <label for="status">Status *</label>
 {{--                        {{$viagem->status}}--}}
-                        <input type="hidden" id="status" value="@if(isset($viagem->status)){{$viagem->status}}@endif" id="status" />
+                        <input type="hidden" id="status" value="@if(isset($viagem->status)){{$viagem->status}}@endif"  />
 {{--                        {{$viagem->status}}--}}
-                        <select name="status" class="form-control" id="status" required>
+                        <select name="status" class="form-control" id="status-select" required>
                             <option value="0">Selecione um Status</option>
                             @foreach(\App\Viagem::STATUS as $key => $value)
-                                {{--{{$value}}--}}
                                 @if(isset($viagem->status) && $value === $viagem->status)
                                     <option value="{{$key}}" selected>{{$value}}</option>
                                             {{--{{old('status')}}--}}

@@ -89,12 +89,20 @@ class FreteController extends Controller
 //        );
 //        return $fretes;
 
-        return '{ "data": '.Frete::query()
-            ->join('parceiros as p', 'p.id', '=', 'fretes.id_parceiro')
-            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
-            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("p.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo")
-            ->get()->toJson(). '}';
+//        return '{ "data": '.Frete::query()
+//            ->join('parceiros as p', 'p.id', '=', 'fretes.id_parceiro')
+//            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+//            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->select("p.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo")
+//            ->get()->toJson(). '}';
+
+
+        return Datatables::of(Frete::query()
+            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo"))
+            ->make(true);
 
 
     }
@@ -128,6 +136,7 @@ class FreteController extends Controller
         $valor_entrega = str_replace('R$', '',$dadosForm['valor_entrega']);
         $valor_total = str_replace('R$', '',$dadosForm['valor_total']);
 
+//            dd($dadosForm);
         if($dadosForm['status'] == 1){
             $status = "Em Edição";
         }
