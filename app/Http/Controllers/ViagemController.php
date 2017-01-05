@@ -65,6 +65,7 @@ class ViagemController extends Controller
 //        dd($dadosFormFretes);
         $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
+        dd($dadosForm['id_caminhao']);
 
         if ($dadosForm['status'] == 1) {
             $dadosForm['status'] = "Aguardando Inicio";
