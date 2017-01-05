@@ -65,7 +65,7 @@ class ViagemController extends Controller
 //        dd($dadosFormFretes);
         $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
-        dd($dadosForm['id_caminhao']);
+//        dd($dadosForm['id_caminhao']);
 
         if ($dadosForm['status'] == 1) {
             $dadosForm['status'] = "Aguardando Inicio";
@@ -244,9 +244,11 @@ class ViagemController extends Controller
         $fretesViagemDB = FreteViagem::where('id_viagem', $id)->get()->keyBy('id');
 //        dd($fretesViagemDB);
         $viagem = Viagem::findOrFail($id);
-        $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $viagem->data_inicio)));
-        $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $viagem->data_fim)));
+//        dd(implode('-',array_reverse(explode('/',$dadosForm['data_fim']))));
+        $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/',$dadosForm['data_inicio'])));
+        $dadosForm['data_fim'] = implode('-',array_reverse(explode('/',$dadosForm['data_fim'])));
 
+//        dd($dadosForm['data_fim']);
 
         if ($dadosForm['status'] == 1) {
             $dadosForm['status'] = "Aguardando Inicio";
