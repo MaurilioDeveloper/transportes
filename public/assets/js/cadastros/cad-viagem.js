@@ -260,7 +260,7 @@ $(document).ready(function () {
                     jQuery(".msg-warn").show();
                     jQuery(".msg-warn").html(data);
                     // console.log(data)
-                    // setTimeout("jQuery('.msg-warn').hide();", 3500);
+                    setTimeout("jQuery('.msg-warn').hide();", 3500);
                 }
             },
             error: function (event, request, settings) {
