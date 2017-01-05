@@ -96,6 +96,8 @@
                 </div>
                 <div id="dados" style="display: none;">
                     <hr style="border: 1px solid #3c8dbc"/>
+                    <input id="idMotorista" value="@if(isset($viagem->id_motorista)){{$viagem->id_motorista}}@endif" type="hidden" />
+                    <input id="idCaminhao" value="@if(isset($viagem->id_caminhao)){{$viagem->id_caminhao}}@endif" type="hidden" />
 
                     <div class="form-group col-md-6">
                         <label for="id_caminhao">Caminhão Viagem</label>
@@ -106,8 +108,6 @@
                     </div>
                     {{--<input id="nomeMotorista" value="{{$nomeMotorista}}" type="hidden" />--}}
 {{--                    {{dd($viagem)}}--}}
-                    <input id="idMotorista" value="@if(isset($viagem->id_motorista)){{$viagem->id_motorista}}@endif" type="hidden" />
-                    <input id="idCaminhao" value="@if(isset($viagem->id_caminhao)){{$viagem->id_caminhao}}@endif" type="hidden" />
                     <div class="form-group col-md-6">
                         <label for="id_motorista">Motorista Viagem</label>
                         <select name="id_motorista" class="form-control" id="motorista">

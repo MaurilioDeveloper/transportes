@@ -54,19 +54,19 @@ $(".select2_viagem").on('select2:select', function (e) {
     var idCaminhao = $("#id_parceiro").val();
     $("#dados").show();
     $(".overlay-loading").show();
+
+    if ($("#motorista option").size() > 1) {
+        $("#motorista").find('option')
+            .remove().end().append('<option value="0">Selecione um motorista</option>');
+    }
+
+    if ($("#caminhao option").size() > 1) {
+        $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
+    }
+
     $.getJSON('/painel/viagens/busca-motorista/' + id, function (dados) {
         // console.log(dados);
         // console.log("Abaixo vem o Length dos Motoristas");
-
-        $(".overlay-loading").hide();
-        if ($("#motorista option").size() > 1) {
-            $("#motorista").find('option')
-                .remove().end().append('<option value="0">Selecione um motorista</option>');
-        }
-
-        if ($("#caminhao option").size() > 1) {
-            $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
-        }
 
         $.each(dados, function (i, obj) {
             // console.log(i);
@@ -78,12 +78,15 @@ $(".select2_viagem").on('select2:select', function (e) {
     // console.log(idCaminhao);
     $.getJSON('/painel/viagens/busca-caminhao/' + idCaminhao, function (dados) {
         // console.log(dados);
+
         $.each(dados, function (i, obj) {
             // console.log(i);
             // console.log(dados[i]);
             option = '<option value="' + obj.id + '">' + obj.placa + ' - ' + obj.modelo + '</option>';
             $("#caminhao").append(option);
         });
+
+        $(".overlay-loading").hide();
     });
 
 });
@@ -214,6 +217,23 @@ $(document).ready(function () {
         var dadosForm = jQuery(this).serialize();
         var form = jQuery(this);
         var botao = $(this).find('#botao');
+        var status = $("#status>option:selected").val();
+        var cidade_origem = $("#cidade_origem>option:selected").val();
+        var cidade_destino = $("#cidade_destino>option:selected").val();
+        // console.log(status);
+        if(cidade_origem == 0){
+            alert("Por Favor, preencha o campo de CIDADE ORIGEM.");
+            return false;
+        }
+        if(cidade_destino == 0){
+            alert("Por Favor, preencha o campo de CIDADE DESTINO.");
+            return false;
+        }
+        if(status == 0){
+            alert("Por Favor, preencha o campo de STATUS.");
+            return false;
+        }
+
         $.ajax({
             url: $(this).attr("send"),
             type: "POST",

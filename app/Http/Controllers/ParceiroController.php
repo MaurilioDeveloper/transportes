@@ -408,6 +408,7 @@ class ParceiroController extends Controller
                 } else {
                     $idMotorista = 0;
                 }
+//                dd($idMotorista);
                 if ($idMotorista > 0) {
                     if (!($motorista = Motorista::find($idMotorista))) {
                         throw new ModelNotFoundException("Motorista não foi encontrado");

@@ -171,7 +171,7 @@
                     <div class="form-group col-md-6">
                         {!! Form::label('cor', 'Cor') !!}
                         {{--{!! Form::text('cor', null, ['class' => 'form-control', 'placeholder' => 'Azul']) !!}--}}
-                        <input type="text" name="cor" class="form-control" placeholder="Azul" value="@if(isset($frete->cor)){{$frete->cor}}@else{{old('cor')}}@endif" />
+                        <input type="text" name="cor" class="form-control" placeholder="Cor" value="@if(isset($frete->cor)){{$frete->cor}}@else{{old('cor')}}@endif" />
                     </div>
                 </fieldset>
 
