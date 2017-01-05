@@ -280,9 +280,6 @@ class ViagemController extends Controller
         $viagemObj = $viagem->fill($dadosForm)->save();
 
 
-        dd($dadosFormFretes);
-
-
         if (is_array($dadosFormFretes)) {
 //            dd($dadosFormFretes);
             foreach ($dadosFormFretes as $key => $value) {
