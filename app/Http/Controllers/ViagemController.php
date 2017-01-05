@@ -62,7 +62,7 @@ class ViagemController extends Controller
     {
         $dadosForm = $this->request->except(['fretes']);
         $dadosFormFretes = $this->request->only(['fretes']);
-//        dd($dadosFormFretes);
+        dd($dadosFormFretes);
         $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
 
@@ -213,7 +213,7 @@ class ViagemController extends Controller
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao",  "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
             ->where('fretes_viagens.id_viagem', $viagem->id)
             ->get();
-//        dd($fretesAdicionados);
+        //dd($fretesAdicionados);
 
         $fretesAdd = $this->freteViagem->all()->where('id_viagem', $viagem->id);
 
@@ -243,8 +243,8 @@ class ViagemController extends Controller
         $fretesViagemDB = FreteViagem::where('id_viagem', $id)->get()->keyBy('id');
 //        dd($fretesViagemDB);
         $viagem = Viagem::findOrFail($id);
-        $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $viagem->data_inicio)));
-        $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $viagem->data_fim)));
+        $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
+        $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
 
 
         if ($dadosForm['status'] == 1) {
@@ -276,7 +276,7 @@ class ViagemController extends Controller
         $viagemObj = $viagem->fill($dadosForm)->save();
 
 
-//        dd($dadosFormFretes);
+        dd($dadosFormFretes);
 
 
         if (is_array($dadosFormFretes)) {

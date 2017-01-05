@@ -48,7 +48,7 @@
                 <div class='box-header'>Listagem de Dados</div>
                 <div class='col-lg-8'>
                     <a class="btn btn-success btn-sm" href="{{route('createCidadesEstados')}}"><i
-                                class="fa fa-plus-square"></i> Cadastrar Cidades - Estados</a>
+                                class="fa fa-plus-square"></i> Cadastrar Cidades</a>
                 </div>
                 <br/>
                 <br/>
@@ -56,8 +56,8 @@
                     <table class="table table-bordered" id="lista-cidades-estados">
                         <thead>
                         <tr style="background: #2e6da4; color: white">
-                            <th>Cidades</th>
-                            <th>Estados</th>
+                            <th>Cidade</th>
+                            <th>Estado</th>
                             <th style="width: 80px">Ação</th>
                         </tr>
                         </thead>
