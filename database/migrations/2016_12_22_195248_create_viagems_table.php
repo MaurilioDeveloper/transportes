@@ -18,9 +18,9 @@ class CreateViagemsTable extends Migration
             $table->integer('id_parceiro_viagem')->unsigned();
             $table->foreign('id_parceiro_viagem')->references('id')->on('parceiros');
             $table->integer('id_caminhao')->unsigned()->nullable();
-            $table->foreign('id_caminhao')->references('id')->on('caminhoes');
+            $table->foreign('id_caminhao')->references('id')->on('caminhoes')->onUpdate('cascade');;
             $table->integer('id_motorista')->unsigned()->nullable();
-            $table->foreign('id_motorista')->references('id')->on('motoristas');
+            $table->foreign('id_motorista')->references('id')->on('motoristas')->onUpdate('cascade');;
             $table->date('data_inicio')->nullable();
             $table->time('horario_inicio')->nullable();
             $table->date('data_fim')->nullable();

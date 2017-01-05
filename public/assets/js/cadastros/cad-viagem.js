@@ -199,7 +199,7 @@ function adicionarFrete(id) {
                 $("#id-frete"+obj.id).attr('disabled', true);
                 $("#freteAd").append('<tr id="freteTable' + obj.id + '"><td>' + obj.nome + '</td><td>' + obj.tipo + '</td><td>' + obj.identificacao + '</td><td>' + obj.cidade_origem + '</td><td>' + obj.cidade_destino + '</td>' +
                     '<td><a onclick="removerFrete(' + obj.id + ')" class="remover btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td></tr>')
-                $("#dados>#fretesPreenchidos>#listaFrete").append('<input type="hidden" class="frete_id" name="fretes[' + obj.id + ']" value="' + obj.id + '"/>');
+                $("#dados>#fretesPreenchidos").append('<input type="hidden" class="frete_id" name="fretes[' + obj.id + ']" value="' + obj.id + '"/>');
             // }
         });
         // console.log($("#freteAd tr").length);

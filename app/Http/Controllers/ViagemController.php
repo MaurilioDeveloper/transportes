@@ -241,6 +241,7 @@ class ViagemController extends Controller
     {
         $dadosForm = $this->request->except(['fretes']);
         $dadosFormFretes = $this->request->only(['fretes']);
+//        dd($dadosFormFretes);
         $fretesViagemDB = FreteViagem::where('id_viagem', $id)->get()->keyBy('id');
 //        dd($fretesViagemDB);
         $viagem = Viagem::findOrFail($id);
@@ -283,14 +284,18 @@ class ViagemController extends Controller
 
 
         if (is_array($dadosFormFretes)) {
+//            dd($dadosFormFretes);
             foreach ($dadosFormFretes as $key => $value) {
 
                 if($value == null){
                     $fretesAdicionado = null;
+                    FreteViagem::where('id_viagem', $id)->delete();
                 }else {
                     $fretesAdicionado = array_keys($value);
                 }
 
+
+//                dd($dadosFormFretes);
                 if(count($value) > 0){
                 {
                     $chave = array_keys($fretesViagemDB->toArray());
