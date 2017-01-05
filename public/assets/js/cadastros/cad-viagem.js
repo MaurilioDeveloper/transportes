@@ -220,7 +220,7 @@ $(document).ready(function () {
         var status = $("#status>option:selected").val();
         var cidade_origem = $("#cidade_origem>option:selected").val();
         var cidade_destino = $("#cidade_destino>option:selected").val();
-        // console.log(status);
+        console.log(status);
         if(cidade_origem == 0){
             alert("Por Favor, preencha o campo de CIDADE ORIGEM.");
             return false;
@@ -229,7 +229,7 @@ $(document).ready(function () {
             alert("Por Favor, preencha o campo de CIDADE DESTINO.");
             return false;
         }
-        if(status == 0){
+        if(status == 0 || $("#status>option").val() === "0"){
             alert("Por Favor, preencha o campo de STATUS.");
             return false;
         }

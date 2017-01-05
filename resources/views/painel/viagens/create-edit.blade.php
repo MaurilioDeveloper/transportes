@@ -138,7 +138,7 @@
                     <div class="form-group col-md-12">
                         <label for="status">Status *</label>
 {{--                        {{$viagem->status}}--}}
-                        <input type="hidden" id="status" value="@if(isset($viagem->status)){{$viagem->status}}@endif" />
+                        <input type="hidden" id="status" value="@if(isset($viagem->status)){{$viagem->status}}@endif" id="status" />
 {{--                        {{$viagem->status}}--}}
                         <select name="status" class="form-control" id="status" required>
                             <option value="0">Selecione um Status</option>
@@ -199,6 +199,10 @@
                         </select>
                         {{--{!! Form::text('cidade_destino', null, ['class' => 'form-control', 'placeholder' => 'Cidade']) !!}--}}
                         {{--<input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_destino)){{$viagem->cidade_destino}}@else{{old('cidade_destino')}}@endif" />--}}
+                    </div>
+                    <div class="form-group col-md-12">
+                        {!! Form::label('informacoes_complementares', 'Informações Complementares') !!}
+                        {!! Form::textarea('informacoes_complementares', null, ['class' => 'form-control']) !!}
                     </div>
 
 

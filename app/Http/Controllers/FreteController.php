@@ -263,22 +263,22 @@ class FreteController extends Controller
         $valor_total = str_replace('R$', '',$dadosForm['valor_total']);
 
         if($dadosForm['status'] == 1){
-            $status = "Em Edição";
+            $dadosForm['status'] = "Em Edição";
         }
         if($dadosForm['status'] == 2){
-            $status = "Aguardando Coleta";
+            $dadosForm['status']  = "Aguardando Coleta";
         }
         if($dadosForm['status'] == 3){
-            $status = "Aguardando Embarque";
+            $dadosForm['status']  = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 4){
-            $status = "Em trânsito";
+            $dadosForm['status']  = "Em trânsito";
         }
         if($dadosForm['status'] == 5){
-            $status = "Entregue";
+            $dadosForm['status']  = "Entregue";
         }
         if($dadosForm['status'] == 6){
-            $status = "Cancelado";
+            $dadosForm['status']  = "Cancelado";
         }
 
         if(isset($dadosForm['iscoleta'])){
@@ -327,7 +327,7 @@ class FreteController extends Controller
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
             'cor' => $dadosForm['cor'],
-            'status' => $status,
+            'status' => $dadosForm['status'],
             'iscoleta' => $iscoleta,
             'isentrega' => $isentrega,
             'id_parceiro_coletor' => $parceiro_coletor,

@@ -6,6 +6,11 @@ $(document).ready(function () {
             prevText: 'Anterior'
         });
     } );
+    
+    if($("#frete-id-dados").val() > 0){
+        $("#dados1").show();
+        $("#dados2").show();
+    }
     $(".select2_frete").select2({
         "language": "pt-BR",
         ajax: {
@@ -53,6 +58,8 @@ $(document).ready(function () {
     });
     $(".select2_frete").on('select2:select', function (e) {
         // console.log(e.params.data);
+        $("#dados1").show();
+        $("#dados2").show();
         $(".edit").attr('href', '/painel/parceiros/edit/'+e.params.data.id);
         $(".nome_parceiro").val(e.params.data.text);
         $(".documento").val(e.params.data.documento);
@@ -149,7 +156,7 @@ $(document).ready(function () {
             alert("Por Favor, preencha o campo de CIDADE DESTINO.");
             return false;
         }
-        if(status == 0){
+        if(status == 0 || $("#status>option").val() === "0"){
             alert("Por Favor, preencha o campo de STATUS.");
             return false;
         }

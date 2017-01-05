@@ -96,14 +96,18 @@ class ViagemController extends Controller
 
         foreach ($dadosFormFretes as $key => $value) {
 //            dd($key);
-            $fretesAdicionado = array_keys($value);
-//            dd($fretesAdicionado);
-            $count = count($fretesAdicionado);
-            for ($i = 0; $i < $count; $i++) {
-                $fretesAd = FreteViagem::create([
-                    'id_frete' => $fretesAdicionado[$i],
-                    'id_viagem' => $viagem->id
-                ]);
+            if(count($value) > 0){
+
+                $fretesAdicionado = array_keys($value);
+    //            dd($fretesAdicionado);
+                $count = count($fretesAdicionado);
+                for ($i = 0; $i < $count; $i++) {
+                    $fretesAd = FreteViagem::create([
+                        'id_frete' => $fretesAdicionado[$i],
+                        'id_viagem' => $viagem->id
+                    ]);
+                }
+
             }
         }
 
@@ -273,6 +277,8 @@ class ViagemController extends Controller
 
 
 //        dd($dadosFormFretes);
+
+
         if (is_array($dadosFormFretes)) {
             foreach ($dadosFormFretes as $key => $value) {
 
@@ -282,8 +288,11 @@ class ViagemController extends Controller
                     $fretesAdicionado = array_keys($value);
                 }
 
-                $chave = array_keys($fretesViagemDB->toArray());
-                $countFrete = count($chave);
+                if(count($value) > 0){
+                {
+                    $chave = array_keys($fretesViagemDB->toArray());
+                    $countFrete = count($chave);
+                }
                 if (isset($chave) && count($fretesViagemDB) > 0) {
                     for ($i = 0; $i < $countFrete; $i++) {
                         if (!($viagemFrete = FreteViagem::find($chave[$i]))) {
@@ -313,6 +322,8 @@ class ViagemController extends Controller
                     }
                 }
 
+            }
+
 //            for($i = 0; $i < $count; $i++){
 //                $fretesAd = $this->freteViagem->fill([
 //                    'id_frete' => $fretesAdicionado[$i],
@@ -334,6 +345,15 @@ class ViagemController extends Controller
         return 1;
 //        dd($dadosForm);
     }
+
+
+    public function deleteViagem($id)
+    {
+        Viagem::findOrFail($id)->delete();
+        FreteViagem::where('id_viagem', $id)->delete();
+        return 1;
+    }
+
 
 
 }

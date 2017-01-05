@@ -46,7 +46,7 @@
 
                 @if(isset($frete->id) && $frete->id > 0)
                     {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'send' => '/painel/fretes/update/'.$frete->id, 'name' => 'form-frete', 'method' => 'PUT']) !!}
-
+                    <input type="hidden" id="frete-id-dados" value="{{$frete->id}}" />
                 @else
                     {!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete']) !!}
                 @endif
@@ -66,7 +66,6 @@
                             @endif
                         </select>
                     </div>
-
                     <div class="form-group col-md-3">
                         <label>
                             <hr>
@@ -74,26 +73,29 @@
                         <a href="{{route('adicionarParceiro')}}" style="text-decoration: none"
                            class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Cadastrar Novo Parceiro</a>
                     </div>
+                    <div id="dados1" style="display: none;">
 
-                    <div class="form-group col-md-4">
-                        <label>Data Atual</label>
-                        <input required="" name='data_hoje' type="text" placeholder="dd/mm/yyyy"
-                               class="form-control datapicker" value="{{ $data_hoje or $data->format('d/m/Y') }}"/>
-                    </div>
+                        <div class="form-group col-md-4">
+                            <label>Data Atual</label>
+                            <input required="" name='data_hoje' type="text" placeholder="dd/mm/yyyy"
+                                   class="form-control datapicker" value="{{ $data_hoje or $data->format('d/m/Y') }}"/>
+                        </div>
 
-                    <div class="form-group col-md-4">
-                        <label>Data Prevista Inicio *</label>
-                        <input required="" name='data_inicio' type="text" placeholder="dd/mm/yyyy"
-                               class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
-                    </div>
+                        <div class="form-group col-md-4">
+                            <label>Data Prevista Inicio *</label>
+                            <input required="" name='data_inicio' type="text" placeholder="dd/mm/yyyy"
+                                   class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
+                        </div>
 
-                    <div class="form-group col-md-4">
-                        <label>Data Prevista Fim</label>
-                        <input required="" name='data_fim' type="text" placeholder="dd/mm/yyyy"
-                               class="form-control datapicker" value="{{$data_fim or old('data_fim')}}"/>
+                        <div class="form-group col-md-4">
+                            <label>Data Prevista Fim</label>
+                            <input required="" name='data_fim' type="text" placeholder="dd/mm/yyyy"
+                                   class="form-control datapicker" value="{{$data_fim or old('data_fim')}}"/>
+                        </div>
                     </div>
                 </fieldset>
 
+                <div id="dados2" style="display: none">
 
                 <fieldset class="callout column small-12">
                     <legend><b>Origem - Destino</b></legend>
@@ -354,6 +356,7 @@
                     {{--{!! Form::submit('Cadastrar', ['class' => 'btn btn-primary', 'id' => 'botao']) !!}--}}
                     <a class="btn btn-info" href="{{route('listarFretes')}}">Voltar</a>
                     <button type="reset" class="btn">Limpar</button>
+                </div>
                 </div>
                 {!! Form::close() !!}
             </div>

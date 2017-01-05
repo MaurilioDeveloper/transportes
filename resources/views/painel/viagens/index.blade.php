@@ -45,6 +45,11 @@
             <div class="col-md-12">
                 <div class='box box-primary'>
 
+                    <div style="display: none;" id="dialog-confirm" title="Deletar">
+                        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja
+                            realmente excluir essa viagem?</p>
+                    </div>
+
                     <div class='box-header'>Listagem de Dados</div>
                     <div class='col-lg-8'>
                         <a class="btn btn-success btn-sm" href="{{route('cadastrarViagens')}}"><i
