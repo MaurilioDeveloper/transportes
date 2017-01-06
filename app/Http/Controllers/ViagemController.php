@@ -45,13 +45,11 @@ class ViagemController extends Controller
     {
         $fretes = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')
+//            ->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
-            ->where('status', 'Aguardando Embarque')->whereNotExists(function ($query){
-                $query->where('fretes_viagens.id_frete', '=', 'fretes.id');
-            })->get();
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
+            ->where('status', 'Aguardando Embarque')->get();
 //        dd($fretes);
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
