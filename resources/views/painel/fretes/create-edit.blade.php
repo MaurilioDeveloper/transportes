@@ -323,6 +323,7 @@
                             {!! Form::label('image', 'Ficha Checklist') !!}
                             @if(isset($frete->image) && ($frete->image) != null)
                             <div class="form-group"><a target="_blank" href="{{url('/fretes_imagens/'.$frete->image)}}"><img width="350px" height="200px" style="border: 1px solid #ccc; border-radius: 10px" src="{{url('/fretes_imagens/'.$frete->image)}}" /></a></div>
+                            {!! Form::file('image') !!}
                             @else
                                 {!! Form::file('image') !!}
                             @endif

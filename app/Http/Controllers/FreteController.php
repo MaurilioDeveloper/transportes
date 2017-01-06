@@ -291,8 +291,16 @@ class FreteController extends Controller
         $valor_entrega = str_replace('R$', '',$dadosForm['valor_entrega']);
         $valor_total = str_replace('R$', '',$dadosForm['valor_total']);
 
-        $dadosForm['image'];
+//        dd($frete->image);
+        if(isset($dadosForm['image']) && $dadosForm['image'] != $frete->image){
+            $file = $this->request->file('image');
+            $frete->fill([
+                'image' => $dadosForm['image']
+            ]);
 
+            File::delete('fretes_imagens/'), $file->getClientOriginalName();
+
+        }
 
         if($dadosForm['status'] == 1){
             $dadosForm['status'] = "Em Edição";

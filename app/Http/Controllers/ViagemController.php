@@ -49,8 +49,10 @@ class ViagemController extends Controller
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
-            ->where('status', 'Aguardando Embarque')->get();
-//        dd($fretes);
+            ->where('status', 'Aguardando Embarque')->whereNotExists(function ($query){
+                Frete::query()->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')->select()->get();
+            })->get();
+        dd($fretes);
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
