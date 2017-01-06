@@ -128,6 +128,7 @@ class FreteController extends Controller
     public function store()
     {
         $dadosForm = $this->request->all();
+//        dd($dadosForm);
         $data_hoje = implode('-',array_reverse(explode('/', $dadosForm['data_hoje'])));
         $data_inicio = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
         $data_fim = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
@@ -135,6 +136,21 @@ class FreteController extends Controller
         $valor_coleta = str_replace('R$', '',$dadosForm['valor_coleta']);
         $valor_entrega = str_replace('R$', '',$dadosForm['valor_entrega']);
         $valor_total = str_replace('R$', '',$dadosForm['valor_total']);
+        $file = $this->request->file('image');
+        if($this->request->hasFile('image')){
+            $dadosForm['image'] = $file->getClientOriginalName();
+//        dd($imageName);
+            $file->move(public_path('fretes_imagens/'), $file->getClientOriginalName());
+        }else{
+            $dadosForm['image'] = NULL;
+        }
+
+//        dd($dadosForm['image']);
+//        dd($dadosForm['valor_total2']);
+//        dd($this->request->file('image'));
+
+
+
 
 //            dd($dadosForm);
         if($dadosForm['status'] == 1){
@@ -171,6 +187,8 @@ class FreteController extends Controller
             $isentrega = null;
             $parceiro_entregador = null;
         }
+
+
 
 //        $fretes =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
 //            ->select("parceiro.nome")->where('id_parceiro', $dadosForm['id_parceiro']);
@@ -211,13 +229,15 @@ class FreteController extends Controller
             'id_parceiro_entregador' => $parceiro_entregador,
             'valor_entrega' => $valor_entrega,
             'valor_total' => $valor_total,
+            'image' => $dadosForm['image'],
             'informacoes_complementares' => $dadosForm['informacoes_complementares'],
 
         ]);
 
 //        dd($dadosForm['valor_coleta']);
 
-        return 1;
+//        return 1;
+        return redirect()->route('listarFretes');
     }
 
     public function edit($id)
@@ -270,6 +290,9 @@ class FreteController extends Controller
         $valor_coleta = str_replace('R$', '',$dadosForm['valor_coleta']);
         $valor_entrega = str_replace('R$', '',$dadosForm['valor_entrega']);
         $valor_total = str_replace('R$', '',$dadosForm['valor_total']);
+
+        $dadosForm['image'];
+
 
         if($dadosForm['status'] == 1){
             $dadosForm['status'] = "Em Edição";
@@ -344,12 +367,13 @@ class FreteController extends Controller
             'id_parceiro_entregador' => $parceiro_entregador,
             'valor_entrega' => $valor_entrega,
             'valor_total' => $valor_total,
+            'image' => $dadosForm['image'],
             'informacoes_complementares' => $dadosForm['informacoes_complementares'],
 
         ])->save();
 //        dd($dadosForm['valor_entrega']);
 //        dd($update);
-        return 1;
+//        return 1;
         return redirect()->route('listarFretes');
 
     }

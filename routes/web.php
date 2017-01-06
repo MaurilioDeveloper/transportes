@@ -100,6 +100,10 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
+Route::get('/uploadfile', 'FileuploadingController@index');
+Route::post('/uploadfile', 'FileuploadingController@showfileupload');
+
+
 $this->post('/login', 'Auth\LoginController@login');
 $this->get('/logout', 'Auth\LoginController@logout');
 

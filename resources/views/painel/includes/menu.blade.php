@@ -37,7 +37,7 @@
                 <a href="{{route('home')}}"><i class="fa fa-home"></i> <span>Dashboard</span></a>
             </li>
 
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#"><i class="fa fa-gears"></i> <span>Tipos de ocorrências</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('adicionarTipoOcorrencia') }}"><i class="fa fa-plus"></i>Novo</a></li>
@@ -45,7 +45,7 @@
                 </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#"><i class="fa fa-globe"></i> <span>Cidades</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('createCidadesEstados') }}"><i class="fa fa-plus"></i>Novo</a></li>
@@ -54,7 +54,7 @@
             </li>
 
 
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#"><i class="fa fa-briefcase"></i> <span>Parceiros</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('adicionarParceiro') }}"><i class="fa fa-plus"></i>Novo</a></li>
@@ -63,7 +63,7 @@
             </li>
 
 
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#"><i class="fa fa-truck"></i> <span>Fretes</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('adicionarFrete') }}"><i class="fa fa-plus"></i>Novo</a></li>
@@ -73,7 +73,7 @@
 
 
 
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#"><i class="fa fa-users"></i> <span>Usuários</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('usuarios.create') }}"><i class="fa fa-plus"></i>Novo</a></li>
@@ -82,7 +82,7 @@
             </li>
 
 
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#"><i class="fa fa-plane"></i> <span>Viagens</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('cadastrarViagens') }}"><i class="fa fa-plus"></i>Nova</a></li>

@@ -45,10 +45,14 @@ class ViagemController extends Controller
     {
         $fretes = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
-            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
-            ->where('status', 'Aguardando Embarque')->get();
+            ->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')
+            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
+            ->where('status', 'Aguardando Embarque')->whereNotExists(function ($query){
+                $query->where('fretes_viagens.id_frete', '=', 'fretes.id');
+            })->get();
+//        dd($fretes);
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
@@ -62,7 +66,6 @@ class ViagemController extends Controller
     {
         $dadosForm = $this->request->except(['fretes']);
         $dadosFormFretes = $this->request->only(['fretes']);
-//        dd($dadosFormFretes);
         $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
 //        dd($dadosForm['id_caminhao']);
@@ -103,6 +106,17 @@ class ViagemController extends Controller
     //            dd($fretesAdicionado);
                 $count = count($fretesAdicionado);
                 for ($i = 0; $i < $count; $i++) {
+                    $frete = Frete::find($fretesAdicionado[$i]);
+                    if($dadosForm['status'] == 'Concluída'){
+                        $frete->fill([
+                            'status' => 'Entregue'
+                        ])->save();
+                    }
+                    if($dadosForm['status'] == 'Em Viagem'){
+                        $frete->fill([
+                            'status' => 'Em trânsito'
+                        ])->save();
+                    }
                     $fretesAd = FreteViagem::create([
                         'id_frete' => $fretesAdicionado[$i],
                         'id_viagem' => $viagem->id
@@ -303,6 +317,17 @@ class ViagemController extends Controller
                         if (!($viagemFrete = FreteViagem::find($chave[$i]))) {
                             throw new ModelNotFoundException("Fretes Viagem não foi encontrado");
                         } else {
+                            $frete = Frete::find($fretesAdicionado[$i]);
+                            if($dadosForm['status'] == 'Concluída'){
+                                $frete->fill([
+                                    'status' => 'Entregue'
+                                ])->save();
+                            }
+                            if($dadosForm['status'] == 'Em Viagem'){
+                                $frete->fill([
+                                    'status' => 'Em trânsito'
+                                ])->save();
+                            }
                             $viagemFrete->delete($chave);
 
                             if($value != null){

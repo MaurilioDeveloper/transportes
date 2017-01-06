@@ -40,6 +40,7 @@ class CreateFretesTable extends Migration
             $table->foreign('id_parceiro_entregador')->references('id')->on('parceiros');
             $table->string('valor_entrega')->nullable();
             $table->string('valor_total');
+            $table->string('image')->nullable();
             $table->text('informacoes_complementares');
             $table->timestamps();
         });

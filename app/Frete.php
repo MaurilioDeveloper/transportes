@@ -25,7 +25,8 @@ class Frete extends Model
         'id_cidade_destino' => 'required',
 //        'id_estado_destino' => 'required',
         'valor_item' => 'required',
-        'status' => 'required'
+        'status' => 'required',
+//        'image' => 'image|mimes:jpeg,png,jpg|max:1024'
 
     ];
 

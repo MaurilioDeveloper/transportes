@@ -45,10 +45,10 @@
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">@if(isset($frete))Frete Alterado com Sucesso @else Frete Cadastrado com Sucesso @endif</div>
 
                 @if(isset($frete->id) && $frete->id > 0)
-                    {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'send' => '/painel/fretes/update/'.$frete->id, 'name' => 'form-frete', 'method' => 'PUT']) !!}
+                    {!! Form::model($frete, ['route' => ['updateFrete','frete' => $frete->id], 'class' => 'form', 'send' => '/painel/fretes/update/'.$frete->id, 'name' => 'form-frete', 'files' => 'true', 'method' => 'PUT']) !!}
                     <input type="hidden" id="frete-id-dados" value="{{$frete->id}}" />
                 @else
-                    {!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete']) !!}
+                    {!! Form::open(['route' => 'cadastrarFrete', 'class' => 'form', 'send' => 'cadastrar-frete', 'name' => 'form-frete', 'files' => 'true']) !!}
                 @endif
 
 
@@ -315,7 +315,24 @@
                     <div class="form-group col-md-6">
                         {!! Form::label('valor_total', 'Valor Total') !!}
                         {!! Form::text('valor_total', null, ['class' => 'form-control moeda', 'data-prefix' => 'R$', 'placeholder' => 'R$00,00']) !!}
+                        {{--{!! Form::text('valor_total2', null, ['class' => 'form-control moeda', 'data-prefix' => 'R$', 'placeholder' => 'R$00,00']) !!}--}}
                     </div>
+
+                    @if(isset($frete->id) && $frete->id > 0)
+                        <div class="form-group col-md-6">
+                            {!! Form::label('image', 'Ficha Checklist') !!}
+                            @if(isset($frete->image) && ($frete->image) != null)
+                            <div class="form-group"><a target="_blank" href="{{url('/fretes_imagens/'.$frete->image)}}"><img width="350px" height="200px" style="border: 1px solid #ccc; border-radius: 10px" src="{{url('/fretes_imagens/'.$frete->image)}}" /></a></div>
+                            @else
+                                {!! Form::file('image') !!}
+                            @endif
+                        </div>
+                    @else
+                        <div class="form-group col-md-6">
+                            {!! Form::label('image', 'Ficha Checklist') !!}
+                            {!! Form::file('image', null, ['accept'=>'images/*']) !!}
+                        </div>
+                    @endif
 
                     <div class="form-group col-md-12">
                         {!! Form::label('informacoes_complementares', 'Informações Complementares') !!}
