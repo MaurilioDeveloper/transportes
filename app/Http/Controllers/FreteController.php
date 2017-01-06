@@ -297,8 +297,8 @@ class FreteController extends Controller
             $frete->fill([
                 'image' => $dadosForm['image']
             ]);
-
-            File::delete('fretes_imagens/'), $file->getClientOriginalName();
+            $file->move(public_path('fretes_imagens/'), $file->getClientOriginalName());
+            //File::delete('fretes_imagens/'.$file->getClientOriginalName();
 
         }
 

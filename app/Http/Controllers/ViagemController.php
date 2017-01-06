@@ -52,7 +52,7 @@ class ViagemController extends Controller
             ->where('status', 'Aguardando Embarque')->whereNotExists(function ($query){
                 Frete::query()->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')->select()->get();
             })->get();
-        dd($fretes);
+        //dd($fretes);
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
