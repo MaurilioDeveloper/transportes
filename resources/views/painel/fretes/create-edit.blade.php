@@ -167,7 +167,7 @@
                     <div class="form-group col-md-6">
                         {!! Form::label('identificacao', 'Placa') !!}
                         {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
-                        <input type="text" name="identificacao" class="form-control placa" placeholder="Placa" value="@if(isset($frete->placa)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />
+                        <input type="text" name="identificacao" class="form-control placa" placeholder="Placa" value="@if(isset($frete->identificacao)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />
                     </div>
 
                     <div class="form-group col-md-6">

@@ -11,6 +11,7 @@ use App\Parceiro;
 use App\Contato;
 use App\Viagem;
 //use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Pagination\Paginator;
 use App\Http\Request\ParceiroRequest;
 use Datatables;
 use DB;
@@ -252,6 +253,7 @@ class FreteController extends Controller
         if (!($frete = Frete::find($id))) {
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
+//        dd($frete);
 
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
@@ -299,13 +301,16 @@ class FreteController extends Controller
 
 //        dd($frete->image);
         if(isset($dadosForm['image']) && $dadosForm['image'] != $frete->image){
+            $file= $frete->image;
+            $filename = public_path().'/fretes_imagens/'.$file;
+            \File::delete($filename);
             $file = $this->request->file('image');
-            $frete->fill([
-                'image' => $dadosForm['image']
-            ]);
+            $dadosForm['image'] = $file->getClientOriginalName();
             $file->move(public_path('fretes_imagens/'), $file->getClientOriginalName());
             //File::delete('fretes_imagens/'.$file->getClientOriginalName();
 
+        }else{
+            $dadosForm['image'] = $frete->image;
         }
 
         if($dadosForm['status'] == 1){
@@ -387,6 +392,7 @@ class FreteController extends Controller
             'valor_total' => $valor_total,
             'image' => $dadosForm['image'],
             'informacoes_complementares' => $dadosForm['informacoes_complementares'],
+            'chassi' => $dadosForm['chassi']
 
         ])->save();
 //        dd($dadosForm['valor_entrega']);
@@ -410,10 +416,10 @@ class FreteController extends Controller
             $status = "Aguardando Coleta";
         }
         if($dadosForm['status'] == 3){
-            $status = "Aguardando Embarque";
+            $status = "Aguardando entrega no pátio";
         }
         if($dadosForm['status'] == 4){
-            $status = "Aguardando entrega no pátio";
+            $status = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 5){
             $status = "Em trânsito";
@@ -433,7 +439,8 @@ class FreteController extends Controller
 //            ->orWhere('fretes.identificacao', '<>', '')
 //            ->orWhere('chassi', '<>', '')
             ->where('status', 'LIKE', "%$status%")
-            ->get();
+            ->paginate(2);
+//        dd($dadosPesquisa);
 
 
 //        $identificacao = $this->request->get('identificacao');

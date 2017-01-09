@@ -159,6 +159,7 @@
                                         @endforelse
 
                                 </tbody>
+
                                     @endif
                                 {{--@if(isset($fretes) && count($fretes) > 0)--}}
                                 {{--@verbatim--}}
@@ -196,6 +197,10 @@
                                 --}}
                                 {{--</tbody>--}}
                             </table>
+
+                                @if(isset($dadosPesquisa))
+                                <center>    {!! $dadosPesquisa->links() !!} <center>
+                                @endif
                         </div>
                     </div>
                 </div>
