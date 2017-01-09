@@ -50,35 +50,45 @@
                     </div>
                     <br/>
                     <br/>
+{{--                    {!! Form::open(['route' => 'filtrarFrete']) !!}--}}
+
+                        {{--<div class="form-group col-md-5">--}}
+                            {{--<input name="identificacao" class="form-control placa" placeholder="PLACA" />--}}
+                        {{--</div>--}}
+
+                        {{--<div class="form-group col-md-5">--}}
+                            {{--<input name="chassi" class="form-control" placeholder="CHASSI" />--}}
+                        {{--</div>--}}
+
+                        {{--<div class="form-group col-md-2">--}}
+                            {{--<button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>--}}
+                        {{--</div>--}}
+
+                    {{--{!! Form::close() !!}--}}
+
                     {!! Form::open(['route' => 'filtrarFrete']) !!}
+                    {{--<div class="form-group col-md-5">--}}
+                        {{--<select class="form-control">--}}
+                            {{--<option value="0">Selecione um Parceiro</option>--}}
+                            {{--@if(isset($parceiros))--}}
+                            {{--@foreach($parceiros as $key => $value)--}}
+                            {{--<option value="{{$key}}">{{$value}}</option>--}}
+                            {{--@endforeach--}}
+                            {{--@endif--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                    <div class="form-group col-md-10">
+                        <select class="form-control" name="status">
+                            <option value="0">Filtrar por Status</option>
+                            @foreach(\App\Frete::STATUS as $key => $value)
+                            <option value="{{$key}}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                        <div class="form-group col-md-5">
-                            <input name="identificacao" class="form-control placa" placeholder="PLACA" />
-                        </div>
-
-                        <div class="form-group col-md-5">
-                            <input name="chassi" class="form-control" placeholder="CHASSI" />
-                        </div>
-
-                        {{--<div class="form-group col-md-5">--}}
-                            {{--<select class="form-control">--}}
-                                {{--<option value="0">Selecione um Parceiro</option>--}}
-                                {{--@foreach($parceiros as $key => $value)--}}
-                                    {{--<option value="{{$key}}">{{$value}}</option>--}}
-                                {{--@endforeach--}}
-                            {{--</select>--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group col-md-5">--}}
-                            {{--<select class="form-control">--}}
-                                {{--<option value="0">Selecione um Status</option>--}}
-                                {{--@foreach(\App\Frete::STATUS as $key => $value)--}}
-                                    {{--<option value="{{$key}}">{{$value}}</option>--}}
-                                {{--@endforeach--}}
-                            {{--</select>--}}
-                        {{--</div>--}}
-                        <div class="form-group col-md-2">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
-                        </div>
+                    <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
+                    </div>
 
                     {!! Form::close() !!}
                     <div class='box-body'>
@@ -110,6 +120,17 @@
                                     <th style="text-align: center; width: 160px">Ação</th>
                                 </tr>
                                 </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th  style="text-align: center;">Parceiro</th>
+                                        <th  style="text-align: center;">Cidade Origem</th>
+                                        <th  style="text-align: center;">Cidade Destino</th>
+                                        <th id="ident" style="text-align: center">Identificação</th>
+                                        <th  style="text-align: center;">Tipo</th>
+                                        <th  style="text-align: center;">Status</th>
+                                        <th style="text-align: center; width: 160px">Ação</th>
+                                    </tr>
+                                    </tfoot>
                                 @if(isset($dadosPesquisa))
                                 <tbody>
 
@@ -138,7 +159,6 @@
                                         @endforelse
 
                                 </tbody>
-                                    <?php echo $dadosPesquisa->render(); ?>
                                     @endif
                                 {{--@if(isset($fretes) && count($fretes) > 0)--}}
                                 {{--@verbatim--}}

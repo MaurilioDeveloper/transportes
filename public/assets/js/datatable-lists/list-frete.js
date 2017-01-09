@@ -37,9 +37,26 @@ $(document).ready(function() {
         });
     } );
 
+    // $('#fretes-table-two tfoot th').first().html('<input type="text" placeholder="Selecione um Parceiro"/>' );
+    // $('#fretes-table-two tfoot #ident').html('<input type="text" placeholder="Selecione uma Placa ou Chassi"/>' );
+    $('#fretes-table-two tfoot th').not(":eq(1),:eq(2),:eq(4),:eq(5), :eq(6)") //Exclude columns 3, 4, and 5
+        .each( function () {
+            var title = $('#fretes-table-two tfoot th').eq( $(this).index() ).text();
+            if(title == 'Identificação'){
+                title = 'Placa ou Chassi';
+            }
+            if(title == 'Parceiros'){
+                title = 'Parceiros';
+            }
+            $(this).html( '<input type="text" placeholder="Busca '+title+'" />' );
+        } );
+    // $('#fretes-table-two tfoot th').each( function () {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    // } );
 
 
-    $('#fretes-table-two').DataTable({
+    var table = $('#fretes-table-two').DataTable({
         processing: true,
         serverSide: true,
         responsive: {
@@ -47,7 +64,7 @@ $(document).ready(function() {
                 display: $.fn.dataTable.Responsive.display.modal( {
                     header: function ( row ) {
                         var data = row.data();
-                        return 'Details for '+data[0]+' '+data[1];
+                        return 'Detalhes';
                     }
                 } ),
                 renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
@@ -59,14 +76,14 @@ $(document).ready(function() {
         ajax: "/painel/fretes/lista-fretes",
         columns: [
 
-            { data: 'nome', name: 'parceiros.nome'},
-            { data: 'cidade_origem', name: 'fretes.cidade_origem' },
-            { data: 'cidade_destino', name: 'fretes.cidade_destino' },
-            { data: 'identificacao', name: 'fretes.identificacao' },
+            { data: 'nome', "searchable": true, name: 'parceiros.nome'},
+            { data: 'cidade', name: 'od.cidade' },
+            { data: 'cidade', name: 'od2.cidade' },
+            { data: 'identificacao', "searchable": true, name: 'fretes.identificacao' },
             { data: 'tipo', name: 'fretes.tipo' },
             { data: 'status', name: 'fretes.status' },
             {
-                data: 'cidade_origem',
+                data: 'od2.cidade',
                 className: "center",
                 render: function(data, type, row){
                         return '<a href="fretes/edit/'+row.id+'" id-frete="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-frete="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
@@ -100,6 +117,32 @@ $(document).ready(function() {
         },
 
     });
+
+    // Apply the search
+    // table.columns().every( function () {
+    //     var that = this;
+    //
+    //     $( 'input', this.footer() ).on( 'keyup change', function () {
+    //         if ( that.search() !== this.value ) {
+    //             that
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
+
+    table.columns().eq( 0 ).each( function ( colIdx ) {
+        if (colIdx == 1 || colIdx == 2 || colIdx == 4  || colIdx == 5 || colIdx == 6) return; //Do not add event handlers for these columns
+
+        // console.log(colIdx);console.log(this.value);
+        $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
+            console.log(table.column(colIdx));
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+        } );
+    } );
 
     $('.dataTables_length').hide();
 
