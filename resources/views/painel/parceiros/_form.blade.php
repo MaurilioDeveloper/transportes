@@ -215,7 +215,7 @@
 
 
 <div class="form-group col-md-12">
-    <div class="box box-primary box-solid">
+    <div class="box box-primary collapsed-box box-solid">
         <div class="box-header with-border">
             <h3 class="box-title">Caminhões</h3>
 
@@ -224,7 +224,7 @@
                 </button>
             </div><!-- /.box-tools -->
         </div><!-- /.box-header -->
-        <div class="box-body" id="container-caminhao" style="display: none;">
+        <div class="box-body" id="container-caminhao">
             <div class="box-body">
                 {{--<input type="hidden" name="count" value="0"/>--}}
                 {{--<div id="fields">--}}
@@ -237,8 +237,8 @@
                                 <input type="hidden" value="{{$caminhao->id}}" name="extraCaminhoes[{{$i}}][id]"/>
                                     <div class="form-group col-md-4">
                                         <label>Placa </label>
-                                        <input type="text" class="form-control" name="extraCaminhoes[{{$i}}][placa]"
-                                               placeholder="AAA-9999"
+                                        <input type="text" class="form-control placa" name="extraCaminhoes[{{$i}}][placa]"
+                                               placeholder="Placa"
                                                value="@if(isset($caminhao->placa)){{$caminhao->placa}}@else{{old('extraCaminhoes[0][placa]')}}@endif">
                                     </div>
                                     <!-- /.form group -->
@@ -265,8 +265,8 @@
                     @else
                         <div class="form-group col-md-4">
                             <label>Placa </label>
-                            <input type="text" class="form-control" name="extraCaminhoes[0][placa]"
-                                   placeholder="AAA-9999"
+                            <input type="text" class="form-control placa" name="extraCaminhoes[0][placa]"
+                                   placeholder="Placa"
                                    value="">
                         </div>
                         <!-- /.form group -->

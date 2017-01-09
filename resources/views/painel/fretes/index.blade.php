@@ -50,6 +50,37 @@
                     </div>
                     <br/>
                     <br/>
+                    {!! Form::open(['route' => 'filtrarFrete']) !!}
+
+                        <div class="form-group col-md-5">
+                            <input name="identificacao" class="form-control placa" placeholder="PLACA" />
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <input name="chassi" class="form-control" placeholder="CHASSI" />
+                        </div>
+
+                        {{--<div class="form-group col-md-5">--}}
+                            {{--<select class="form-control">--}}
+                                {{--<option value="0">Selecione um Parceiro</option>--}}
+                                {{--@foreach($parceiros as $key => $value)--}}
+                                    {{--<option value="{{$key}}">{{$value}}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="form-group col-md-5">--}}
+                            {{--<select class="form-control">--}}
+                                {{--<option value="0">Selecione um Status</option>--}}
+                                {{--@foreach(\App\Frete::STATUS as $key => $value)--}}
+                                    {{--<option value="{{$key}}">{{$value}}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
+                        </div>
+
+                    {!! Form::close() !!}
                     <div class='box-body'>
                         <div style="display: none;" id="dialog-confirm" title="Deletar">
                             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja
@@ -58,7 +89,11 @@
                         {{--<div ng-controller="HttpGetController">--}}
                         <div>
                             {{--<div style="float: right"><label>Pesquisar: <input class="" ng-model="searchText"></label></div>--}}
-                            <table class='table table-bordered' id="fretes-table-two">
+                            @if(isset($dadosPesquisa))
+                                <table class='table table-bordered'>
+                            @else
+                                <table class='table table-bordered' id="fretes-table-two">
+                            @endif
                                 <thead>
                                 <tr style='background: #2e6da4; color: white;'>
                                     {{--<th  ng-click="sortBy('nome')" style="text-align: center;">Parceiro</th>--}}
@@ -69,14 +104,42 @@
                                     <th  style="text-align: center;">Parceiro</th>
                                     <th  style="text-align: center;">Cidade Origem</th>
                                     <th  style="text-align: center;">Cidade Destino</th>
+                                    <th  style="text-align: center">Identificação</th>
                                     <th  style="text-align: center;">Tipo</th>
                                     <th  style="text-align: center;">Status</th>
                                     <th style="text-align: center; width: 160px">Ação</th>
                                 </tr>
                                 </thead>
+                                @if(isset($dadosPesquisa))
                                 <tbody>
 
+                                        @forelse($dadosPesquisa as $filtro)
+                                            <tr>
+                                                <td>{{$filtro->nome}}</td>
+                                                <td>{{$filtro->cidade_origem}}</td>
+                                                <td>{{$filtro->cidade_destino}}</td>
+                                                @if(strlen($filtro->identificacao) > 0)
+                                                    {{--{{$filtro->identificacao}}--}}
+                                                    <td>{{$filtro->identificacao}}</td>
+                                                @else
+                                                    <td>{{$filtro->chassi}}</td>
+                                                @endif
+                                                <td>{{$filtro->tipo}}</td>
+                                                <td>{{$filtro->status}}</td>
+                                                <td>
+                                                    <a style="display: inline-block;" href="/painel/fretes/edit/{{$filtro->id}}" id-frete="{{$filtro->id}}" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>
+                                                    <a style="display: inline-block;" id-frete="{{$filtro->id}}" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr class="warning">
+                                                <td colspan="7" style="text-align: center">Nenhum dado encontrado</td>
+                                            </tr>
+                                        @endforelse
+
                                 </tbody>
+                                    <?php echo $dadosPesquisa->render(); ?>
+                                    @endif
                                 {{--@if(isset($fretes) && count($fretes) > 0)--}}
                                 {{--@verbatim--}}
                                 {{--<tr ng:repeat="f in fretes | orderBy:sortField:reverseOrder | filter : searchText">--}}
@@ -150,5 +213,7 @@
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{url('/assets/plugins/tables/datatables/js/dataTables.select.min.js')}}"></script>
     <script src="{{url('/assets/js/datatable-lists/list-frete.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="{{url('/assets/js/masks/masks.js')}}"></script>
 @endsection
 @endsection

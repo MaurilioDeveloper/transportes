@@ -17,9 +17,9 @@ class CreateFretesTable extends Migration
             $table->increments('id');
             $table->integer('id_parceiro')->unsigned();
             $table->foreign('id_parceiro')->references('id')->on('parceiros');
-            $table->date('data_hoje');
+            $table->date('data_hoje')->nullable();
             $table->date('data_inicio');
-            $table->date('data_fim');
+            $table->date('data_fim')->nullable();
             $table->integer('id_cidade_origem')->unsigned();
             $table->foreign('id_cidade_origem')->references('id')->on('origens_destinos');
 
@@ -27,9 +27,10 @@ class CreateFretesTable extends Migration
             $table->foreign('id_cidade_destino')->references('id')->on('origens_destinos');
 
             $table->string('tipo')->nullable();
-            $table->string('identificacao');
+            $table->string('identificacao')->nullable();
+            $table->string('chassi', 100)->nullable();
             $table->string('valor_item');
-            $table->string('cor');
+            $table->string('cor')->nullable();
             $table->string('status');
             $table->string('iscoleta')->nullable();
             $table->integer('id_parceiro_coletor')->unsigned()->nullable();
@@ -39,9 +40,9 @@ class CreateFretesTable extends Migration
             $table->integer('id_parceiro_entregador')->unsigned()->nullable();
             $table->foreign('id_parceiro_entregador')->references('id')->on('parceiros');
             $table->string('valor_entrega')->nullable();
-            $table->string('valor_total');
+            $table->string('valor_total')->nullable();
             $table->string('image')->nullable();
-            $table->text('informacoes_complementares');
+            $table->text('informacoes_complementares')->nullable();
             $table->timestamps();
         });
     }

@@ -80,14 +80,14 @@
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Ocorrência Cadastrada com Sucesso</div>
 
 
-                    <div id="updateOcorrencia">
+                    {{--<div id="updateOcorrencia">--}}
 {{--                        {!! Form::open(['class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '']) !!}--}}
-                        <form class="form-ocorrencia" id="form-ocorrencia-edit" name="form-ocorrencia-update" method="PUT">
-                        <input name="_token" type="hidden" value="{{ csrf_token() }}" />
-                    </div>
-                    <div id="postOcorrencia">
+                        {{--<form class="form-ocorrencia" id="form-ocorrencia-edit" name="form-ocorrencia-update" method="PUT">--}}
+                        {{--<input name="_token" type="hidden" value="{{ csrf_token() }}" />--}}
+                    {{--</div>--}}
+                    {{--<div id="postOcorrencia">--}}
                         {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '/painel/parceiros/postOcorrencia']) !!}
-                    </div>
+                    {{--</div>--}}
 
                     <h4 class="box-title">Os campos com * são obrigatórios</h4>
                     <div class="form-group col-md-12">
@@ -162,7 +162,8 @@
                         </li>
                         @if(isset($parceiro) && $parceiro->id > 0)
                         <li role="presentation"><a href="#lista-ocorrencia" aria-controls="home" role="tab"
-                                                   data-toggle="tab">Ocorrências</a></li>
+                                                   data-toggle="tab">Ocorrências <span>({{count($ocorrencias)}})</span>
+                            </a></li>
                         @endif
                     </ul>
 
@@ -195,7 +196,9 @@
                                                 </td>
                                                 {{--</tr>--}}
                                                 @empty
-                                                    <td colspan="7"> Nenhum Dado Cadastrado</td>
+                                                    <tr class="warning">
+                                                        <td colspan="7" style="text-align: center"> Nenhum Dado Cadastrado</td>
+                                                    </tr>
                                         @endforelse
                                         </tbody>
                                     </table>

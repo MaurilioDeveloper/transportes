@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 
 // Deletar Fretes
-    $('#fretes-table-two').on('click', 'a.editor_remove', function (e) {
+    $('#fretes-table-one').on('click', 'a.editor_remove', function (e) {
         e.preventDefault();
 
         var id = $(this).attr("id-frete");
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
 
 
-    $('#fretes-table-two').DataTable({
+    $('#fretes-table-one').DataTable({
         processing: true,
         serverSide: true,
         responsive: {
@@ -56,7 +56,7 @@ $(document).ready(function() {
             }
         },
         rowId: 'id',
-        ajax: "/painel/fretes/lista-fretes",
+        ajax: "/painel/fretes/filtrar-frete",
         columns: [
 
             { data: 'nome', name: 'parceiros.nome'},
@@ -69,7 +69,7 @@ $(document).ready(function() {
                 data: 'cidade_origem',
                 className: "center",
                 render: function(data, type, row){
-                        return '<a href="fretes/edit/'+row.id+'" id-frete="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-frete="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
+                    return '<a href="fretes/edit/'+row.id+'" id-frete="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-frete="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
                 }
             },
         ],

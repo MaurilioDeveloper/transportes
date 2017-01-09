@@ -20,8 +20,10 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/delete-frete/{id}', 'FreteController@deleteFrete')->name('deleteFrete');
         Route::get('/create', 'FreteController@create')->name('adicionarFrete');
         Route::get('/edit/{id}', 'FreteController@edit');
+        Route::get('/busca-por-status/{status}', 'FreteController@buscaPorStatus');
         Route::post('/cadastrar-frete', 'FreteController@store')->name('cadastrarFrete');
         Route::post('/postParceiro', 'FreteController@postParceiro')->name('postParceiro');
+        Route::post('/filtrar-frete', 'FreteController@filtrar')->name('filtrarFrete');
         Route::put('/update/{id}', 'FreteController@update')->name('updateFrete');
         Route::get('/', 'FreteController@index')->name('listarFretes');
     });

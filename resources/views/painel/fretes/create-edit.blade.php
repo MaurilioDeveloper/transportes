@@ -159,16 +159,28 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        {!! Form::label('identificacao', 'Identificação') !!}
-                        {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
-                        <input type="text" name="identificacao" class="form-control" placeholder="Identificação" value="@if(isset($frete->identificacao)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />
-                    </div>
-
-                    <div class="form-group col-md-6">
                         {!! Form::label('valor', 'Valor *') !!}
                         {{--{!! Form::text('valor_item', null, ['class' => 'form-control', 'placeholder' => 'R$00,00']) !!}--}}
                         <input type="text" name="valor_item" class="form-control moeda" data-prefix="R$" placeholder="Valor" required value="@if(isset($frete->valor_item)){{$frete->valor_item}}@else{{old('valor_item')}}@endif" />
                     </div>
+
+                    <div class="form-group col-md-6">
+                        {!! Form::label('identificacao', 'Placa') !!}
+                        {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
+                        <input type="text" name="identificacao" class="form-control placa" placeholder="Placa" value="@if(isset($frete->placa)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        {!! Form::label('chassi', 'Chassi') !!}
+                        {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
+                        <input type="text" name="chassi" class="form-control" placeholder="Chassi" value="@if(isset($frete->chassi)){{$frete->chassi}}@else{{old('chassi')}}@endif" />
+                    </div>
+
+                    {{--<div class="form-group col-md-6">--}}
+{{--                        {!! Form::label('identificacao', 'Identificação') !!}--}}
+                        {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
+                        {{--<input type="text" name="identificacao" class="form-control" placeholder="Identificação" value="@if(isset($frete->identificacao)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />--}}
+                    {{--</div>--}}
 
                     <div class="form-group col-md-6">
                         {!! Form::label('cor', 'Cor') !!}

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Pagination\BootstrapThreePresenter;
 
 class Frete extends Model
 {
@@ -11,10 +12,11 @@ class Frete extends Model
     const STATUS = [
         1 => 'Em Edição',
         2 => 'Aguardando Coleta',
-        3 => 'Aguardando Embarque',
-        4 => 'Em trânsito',
-        5 => 'Entregue',
-        6 => 'Cancelado'
+        3 => 'Aguardando entrega no pátio',
+        4 => 'Aguardando Embarque',
+        5 => 'Em trânsito',
+        6 => 'Entregue',
+        7 => 'Cancelado'
     ];
 
     static $rules = [

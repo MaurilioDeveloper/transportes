@@ -1,7 +1,8 @@
 @extends('painel.template.template')
 
 @section ('styles-head')
-
+    <script>console.log($("svg > .highcharts-credits").val());
+        $("#highcharts-1qcd7rk-0 > text").hide();</script>
 @endsection
 
 <!-- ** Dashboard Index ** -->
@@ -68,7 +69,7 @@
                                 <div class="col-md-12 col-sm-12">
                                     <div class="pad">
 
-                                        <div id="piechart_3d" style="width: 600px; height: 400px;"></div>
+                                        <div id="piechart_3d" style="width: 500px; height: 300px;"></div>
                                     </div>
 
                                 </div>
@@ -126,8 +127,73 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    {{--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>--}}
+    <script src="{{url('/assets/js/vendor/highcharts.js')}}"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script type="text/javascript">
+//        $("text.highcharts-credits").hide();
+        var freteEd = document.getElementById("freteEd").value;
+        var freteAc = $('#freteAc').val();
+        var freteAe = $('#freteAe').val();
+        var freteEt = $('#freteEt').val();
+        var freteE = $('#freteE').val();
+        var freteC = $('#freteC').val();
+
+        $(function () {
+           Highcharts.chart('piechart_3d', {
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
+                    }
+                },
+                title: {
+                    text: 'Fretes por STATUS'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}% | {point.y}</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Porcentagem do total',
+                    point: {
+                        events: {
+                            click: function(e) {
+                                location.href = e.point.url;
+                                e.preventDefault();
+                            }
+                        }
+                    },
+                    data: [
+                        {name: 'Em Edição', y: parseInt(freteEd), url: '/painel/fretes/busca-por-status/Em Edição'},
+                        {name: 'Aguardando Coleta', y: parseInt(freteAc), url: '/painel/fretes/busca-por-status/Aguardando Coleta'},
+                        {name: 'Aguardando Embarque', y: parseInt(freteAe), url: '/painel/fretes/busca-por-status/Aguardando Embarque'},
+                        {name: 'Em trânsito', y: parseInt(freteEt), url: '/painel/fretes/busca-por-status/Em trânsito'},
+                        {name: 'Entregue', y: parseInt(freteE), url: '/painel/fretes/busca-por-status/Entregue'},
+                        {name: 'Cancelado', y: parseInt(freteC), url: '/painel/fretes/busca-por-status/Cancelado'}
+                    ]
+                }]
+
+            });
+        });
+
+//console.log(teste);
+    </script>
+    <!--<script type="text/javascript">
 
 
         google.charts.load("current", {packages: ["corechart"]});
@@ -142,7 +208,6 @@
             var freteEt = $('#freteEt').val();
             var freteE = $('#freteE').val();
             var freteC = $('#freteC').val();
-            console.log(freteAc, freteE, freteEd, freteAe, freteEt, freteC);
             var data = google.visualization.arrayToDataTable([
                 ['Task', ''],
                 ['Em Edição', parseInt(freteEd)],
@@ -153,6 +218,14 @@
                 ['Entregue', parseInt(freteE)],
                 ['Cancelado', parseInt(freteC)]
             ]);
+
+            console.log($("#piechart_3d"));
+//            console.log(data.qg);
+            $.each(data.qg, function(i, obj){
+                console.log(obj.c[0]);
+//                console.log(i);
+            });
+
 //            console.log(data);
 
             var options = {
@@ -161,9 +234,11 @@
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+
             chart.draw(data, options);
+
         }
     </script>
-
+-->
 
 @endsection

@@ -53,12 +53,15 @@ class FreteController extends Controller
                      ON od2.id = f.id_cidade_destino"
             )
         );
+
+        $parceiros = Parceiro::query()->select("parceiros.id", "parceiros.nome")->pluck('nome', 'id');
+//        dd($parceiros);
 //        $fretes =  Frete::query()
 //            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
 //            ->join('origens_destinos', 'origens_destinos.id', '=', 'fretes.id_cidade_origem')
 //        ->select("parceiros.nome", "fretes.id", "origens_destinos.cidade", "origens_destinos.cidade", "fretes.status", "fretes.tipo as tipo")->paginate(10);
 //        dd($fretes);
-        return view('painel.fretes.index');
+        return view('painel.fretes.index', compact('parceiros'));
     }
 
     public function create()
@@ -101,7 +104,7 @@ class FreteController extends Controller
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo"))
+            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"))
             ->make(true);
 
 
@@ -163,12 +166,15 @@ class FreteController extends Controller
             $status = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 4){
-            $status = "Em trânsito";
+            $status = "Aguardando entrega no pátio";
         }
         if($dadosForm['status'] == 5){
-            $status = "Entregue";
+            $status = "Em trânsito";
         }
         if($dadosForm['status'] == 6){
+            $status = "Entregue";
+        }
+        if($dadosForm['status'] == 7){
             $status = "Cancelado";
         }
 
@@ -303,23 +309,27 @@ class FreteController extends Controller
         }
 
         if($dadosForm['status'] == 1){
-            $dadosForm['status'] = "Em Edição";
+            $status = "Em Edição";
         }
         if($dadosForm['status'] == 2){
-            $dadosForm['status']  = "Aguardando Coleta";
+            $status = "Aguardando Coleta";
         }
         if($dadosForm['status'] == 3){
-            $dadosForm['status']  = "Aguardando Embarque";
+            $status = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 4){
-            $dadosForm['status']  = "Em trânsito";
+            $status = "Aguardando entrega no pátio";
         }
         if($dadosForm['status'] == 5){
-            $dadosForm['status']  = "Entregue";
+            $status = "Em trânsito";
         }
         if($dadosForm['status'] == 6){
-            $dadosForm['status']  = "Cancelado";
+            $status = "Entregue";
         }
+        if($dadosForm['status'] == 7){
+            $status = "Cancelado";
+        }
+
 
         if(isset($dadosForm['iscoleta'])){
             $iscoleta = $dadosForm['iscoleta'];
@@ -385,6 +395,75 @@ class FreteController extends Controller
         return redirect()->route('listarFretes');
 
     }
+
+
+    public function filtrar()
+    {
+
+//        $dadosPesquisa = Frete::query()
+//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+//            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+//            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
+//            ->where('identificacao', 'LIKE', "%$idenficacao%")
+//            ->where('chassi', 'LIKE', "%$chassi%")
+//            ->paginate(10);
+
+        if(strlen($this->request->get('identificacao')) > 0 && strlen($this->request->get('chassi')) == 0){
+            $idenficacao = $this->request->get('identificacao');
+            $dadosPesquisa = Frete::query()
+                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
+                ->where('identificacao', 'LIKE', "%$idenficacao%")
+//            ->where('chassi', 'LIKE', "%$chassi%")
+                ->paginate(10);
+//            $dadosPesquisa->where('identificacao', 'LIKE', "%$idenficacao%");
+        }
+
+        if(strlen($this->request->get('chassi')) > 0 && strlen($this->request->get('identificacao')) == 0){
+            $chassi = $this->request->get('chassi');
+            $dadosPesquisa = Frete::query()
+                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
+                ->where('chassi', 'LIKE', "%$chassi%")->paginate(10);
+//            $dadosPesquisa->where('chassi', 'LIKE', "%$chassi%");
+        }
+
+        if(strlen($this->request->get('chassi')) > 0 && strlen($this->request->get('identificacao')) > 0){
+            $dadosPesquisa = Frete::query()
+                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
+                ->where('identificacao', 'LIKE', "%$idenficacao%")
+                ->where('chassi', 'LIKE', "$chassi")->paginate(10);
+//            $dadosPesquisa
+//                ->where('identificacao', 'LIKE', "%$idenficacao%")
+//                ->where('chassi', 'LIKE', "%$chassi%");
+        }
+
+//        dd($chassi);
+
+//        dd($dadosPesquisa);
+
+//
+        return view("painel.fretes.index", compact('dadosPesquisa'));
+//
+    }
+
+
+    public function buscaPorStatus($status)
+    {
+        $dadosPesquisa = Frete::where('status','like','%'.$status.'%')->take(15)->get();
+
+        return view('painel.fretes.index', compact('dadosPesquisa'));
+//        return $busca;
+    }
+
 
 
     public function getFindParceiro($name)

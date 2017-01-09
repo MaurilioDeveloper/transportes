@@ -23,7 +23,7 @@ $(document).ready(function () {
                             if (data == "1") {
                                 setTimeout(function () {
                                     alert('Ocorrencia Excluido Com Sucesso');
-                                    window.location.href = '/painel/parceiros';
+                                    window.location.href = '';
                                 }, 2000);
                             }
                         }

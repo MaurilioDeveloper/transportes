@@ -8,6 +8,7 @@ jQuery('form[name="form-ocorrencia"]').submit(function () {
         jQuery(".msg-suc").hide();
         var dadosForm = jQuery(this).serialize();
         var form = jQuery(this);
+        console.log(form);
         var botao = $(this).find('#botao');
         $.ajax({
             url: $(this).attr("send"),
