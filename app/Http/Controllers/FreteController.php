@@ -169,10 +169,10 @@ class FreteController extends Controller
             $status = "Aguardando Coleta";
         }
         if($dadosForm['status'] == 3){
-            $status = "Aguardando Embarque";
+            $status = "Aguardando entrega no pátio";
         }
         if($dadosForm['status'] == 4){
-            $status = "Aguardando entrega no pátio";
+            $status = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 5){
             $status = "Em trânsito";
@@ -334,10 +334,10 @@ class FreteController extends Controller
             $status = "Aguardando Coleta";
         }
         if($dadosForm['status'] == 3){
-            $status = "Aguardando Embarque";
+            $status = "Aguardando entrega no pátio";
         }
         if($dadosForm['status'] == 4){
-            $status = "Aguardando entrega no pátio";
+            $status = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 5){
             $status = "Em trânsito";
