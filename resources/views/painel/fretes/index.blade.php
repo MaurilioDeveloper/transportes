@@ -102,12 +102,8 @@
                         </div>
                         {{--<div ng-controller="HttpGetController">--}}
                         <div>
-                            {{--<div style="float: right"><label>Pesquisar: <input class="" ng-model="searchText"></label></div>--}}
-                            @if(isset($dadosPesquisa))
-                                <table class='table table-bordered'>
-                            @else
-                                <table class='table table-bordered' id="fretes-table-two">
-                            @endif
+
+                            <table class='table table-bordered' id="fretes-table-two">
                                 <thead>
                                 <tr style='background: #2e6da4; color: white;'>
                                     {{--<th  ng-click="sortBy('nome')" style="text-align: center;">Parceiro</th>--}}
@@ -124,61 +120,12 @@
                                     <th style="text-align: center; width: 160px">Ação</th>
                                 </tr>
                                 </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th  style="text-align: center;">Parceiro</th>
-                                        <th  style="text-align: center;">Cidade Origem</th>
-                                        <th  style="text-align: center;">Cidade Destino</th>
-                                        <th id="ident" style="text-align: center">Identificação</th>
-                                        <th  style="text-align: center;">Tipo</th>
-                                        <th  style="text-align: center;">Status</th>
-                                        <th style="text-align: center; width: 160px">Ação</th>
-                                    </tr>
-                                    </tfoot>
 
                                 <tbody>
 
                                 </tbody>
-                                    {{--@if(isset($fretes) && count($fretes) > 0)--}}
-                                {{--@verbatim--}}
-                                {{--<tr ng:repeat="f in fretes | orderBy:sortField:reverseOrder | filter : searchText">--}}
-                                    {{--<td>{{ f.nome }}</td>--}}
-                                    {{--<td>{{ f.cidade_origem }}</td>--}}
-                                    {{--<td>{{ f.cidade_destino }}</td>--}}
-                                    {{--<td>{{ f.tipo }}</td>--}}
-                                    {{--<td>{{ f.status }}</td>--}}
-                                    {{--<td>--}}
-                                        {{--<a href="fretes/edit/{{ f.id }}" id-frete="{{ f.id }}" class="btn btn-primary btn-sm" style="display: inline-block"><i class="fa fa-edit"></i> Editar</a>--}}
-                                        {{--<a href="" id-frete="{{f.id}}" class="btn btn-danger btn-sm editor_remove"><i class="fa fa-trash"></i> Deletar</a>--}}
-                                    {{--</td>--}}
-                                {{--</tr>--}}
-                                {{--@endverbatim--}}
-                                {{--@else--}}
-                                    {{--<td colspan="6" style="text-align: center">Nenhum dado cadastrado</td>--}}
-                                {{--@endif--}}
-                                {{--
-                                @forelse($fretes as $frete)
-                                <tr class="warning">
-                                    <td>{{ $frete->nome }}</td>
-                                    <td>{{ $frete->cidade_origem}}</td>
-                                    <td>{{ $frete->cidade_destino }}</td>
-                                    <td>{{ $frete->tipo}}</td>
-                                    <td>{{ $frete->status}}</td>
-                                    <td>
-                                        <a href="" class="btn btn-primary btn-sm" style=""><i class="fa fa-edit"></i> Editar</a>
-                                        <a href="" id-parceiro="{{$frete->id}}}" class="btn btn-danger btn-sm editor_remove" style=""><i class="fa fa-trash"></i> Deletar</a>
-                                    </td>
-                                </tr>
-                                @empty
-                                    <td colspan="7"> Nenhum Dado Cadastrado</td>
-                                @endforelse
-                                --}}
-                                {{--</tbody>--}}
                             </table>
 
-{{--                                @if(isset($dadosPesquisa))--}}
-                                {{--<center>    {!! $dadosPesquisa->links() !!} <center>--}}
-                                {{--@endif--}}
                         </div>
                     </div>
                 </div>

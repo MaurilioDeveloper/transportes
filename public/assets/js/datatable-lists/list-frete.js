@@ -37,20 +37,6 @@ $(document).ready(function() {
         });
     } );
 
-    // $('#fretes-table-two tfoot th').first().html('<input type="text" placeholder="Selecione um Parceiro"/>' );
-    // $('#fretes-table-two tfoot #ident').html('<input type="text" placeholder="Selecione uma Placa ou Chassi"/>' );
-    $('#fretes-table-two tfoot th').not(":eq(1),:eq(2),:eq(4),:eq(5), :eq(6)") //Exclude columns 3, 4, and 5
-        .each( function () {
-            var title = $('#fretes-table-two tfoot th').eq( $(this).index() ).text();
-            if(title == 'Identificação'){
-                title = 'Placa ou Chassi';
-            }
-            if(title == 'Parceiros'){
-                title = 'Parceiros';
-            }
-            $(this).html( '<input type="text" placeholder="Busca '+title+'" />' );
-        } );
-
 
     var statusPesquisa = $("#statusPesquisa").val();
     console.log(statusPesquisa);
@@ -76,9 +62,15 @@ $(document).ready(function() {
         columns: [
 
             { data: 'nome', "searchable": true, name: 'parceiros.nome'},
-            { data: 'cidade', name: 'od.cidade' },
+            { data: 'cidade', name: 'od.cidade'},
             { data: 'cidade', name: 'od2.cidade' },
-            { data: 'identificacao', "searchable": true, name: 'fretes.identificacao' },
+            { data: 'identificacao', name: 'fretes.identificacao', name: 'fretes.chassi', render: function (data, type, row) {
+                if(row.identificacao == ''){
+                    return row.chassi;
+                }else{
+                    return row.identificacao
+                }
+            } },
             { data: 'tipo', name: 'fretes.tipo' },
             { data: 'status', name: 'fretes.status' },
             {

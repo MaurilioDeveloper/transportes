@@ -172,7 +172,7 @@ class ParceiroController extends Controller
             \DB::rollBack();
         }
 
-        return redirect()->route('parceiros.index');
+        return redirect()->route('parceiros.index2');
     }
 
 
@@ -447,7 +447,7 @@ class ParceiroController extends Controller
         }
 
 
-        return redirect()->route('parceiros.index');
+        return redirect()->route('parceiros.index2');
     }
 
     /**
@@ -463,7 +463,7 @@ class ParceiroController extends Controller
         }
 
         $parceiro->delete();
-        return redirect()->route('parceiros.index');
+        return redirect()->route('parceiros.index2');
     }
 
     public function postOcorrencia()
