@@ -69,7 +69,7 @@ class ParceiroController extends Controller
                                 ->paginate(10);
 
 //
-        return view("painel.parceiros.index", compact('dadosPesquisa'));
+        return view("painel.parceiros.index2", compact('palavraPesquisa'));
 //
 //        $dataBusca = $this->parceiro
 //            ->where('nome', 'LIKE', "%$palavraPesquisa%")
@@ -197,35 +197,15 @@ class ParceiroController extends Controller
 
     public function listaParceiros()
     {
-/*
-        return '{ "data": '. Parceiro::query()->select("parceiros.id",
-            "parceiros.nome",
-            "parceiros.documento",
-//            "parceiros.email",
-            "parceiros.telefone",
-            "parceiros.cep",
-//            "parceiros.data_nasc",
-//            "parceiros.sexo",
-            "parceiros.endereco",
-            "parceiros.bairro",
-//            "parceiros.numero",
-            "parceiros.cidade",
-            "parceiros.estado")->get()->toJson().'}';
-*/
 
          return Datatables::of(Parceiro::query()
             ->select("parceiros.id",
-                "parceiros.nome",
-//                "parceiros.documento",
-            "parceiros.email",
-                "parceiros.telefone",
-//                "parceiros.cep",
-//            "parceiros.data_nasc",
-//            "parceiros.sexo",
-                "parceiros.endereco",
-                "parceiros.bairro",
-//            "parceiros.numero",
-                "parceiros.cidade"
+                    "parceiros.nome",
+                    "parceiros.email",
+                    "parceiros.telefone",
+                    "parceiros.endereco",
+                    "parceiros.bairro",
+                    "parceiros.cidade"
             ))
             ->make(true);
         //return Datatables::of(Visitante::query()

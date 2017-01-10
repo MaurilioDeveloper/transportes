@@ -69,6 +69,9 @@
                     </div>-->
                     <br/>
                     <br/>
+                    @if(isset($palavraPesquisa))
+                        <input type="hidden" id="palavraPesquisa" value="{{$palavraPesquisa}}" />
+                    @endif
                     <div class='box-body'>
                         {{--@if(isset($dataBusca))--}}
                             {{--<div ng-controller="CtrlListaParceirosSearch">--}}
@@ -89,30 +92,10 @@
                                     {{--<th style="text-align: center;">Estado</th>--}}
                                     <th style="width: 160px;">Ação</th>
                                 </tr>
-{{--                                @forelse ($dadosPesquisa as $dados)--}}
                                 <tr class="warning">
-
-{{--                                        @if(count($dados > 0))--}}
-                                        {{--<td>{{ $dados->nome }}</td>--}}
-                                        {{--<td>{{ $dados->email }}</td>--}}
-                                        {{--<td>{{ $dados->telefone }}</td>--}}
-                                        {{--<td>{{ $dados->endereco }}</td>--}}
-                                        {{--<td>{{ $dados->cidade }}</td>--}}
-{{--                                        <td>{{ $dados->estado }}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a>--}}
-                                            {{--<a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Deletar</a>--}}
-                                        {{--</td>--}}
-                                        {{--@else--}}
-                                        {{--@empty--}}
-                                            {{--<td colspan="7">Nenhum dado Cadastrado</td>--}}
-                                        {{--@endif--}}
-
                                 </tr>
-                                {{--@endforelse--}}
 
                             </table>
-                            {{--<div class="pull-right">{!! $dadosPesquisa->render() !!}</div>--}}
 
                         @else
                             <table class="table table-bordered" id="parceiros-table" style="width: 100%">

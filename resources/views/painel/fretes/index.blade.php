@@ -86,6 +86,10 @@
                         </select>
                     </div>
 
+                    @if(isset($status))
+                        <input type="hidden" value="{{$status}}" id="statusPesquisa" />
+                    @endif
+
                     <div class="form-group col-md-2">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
                     </div>
@@ -131,37 +135,11 @@
                                         <th style="text-align: center; width: 160px">Ação</th>
                                     </tr>
                                     </tfoot>
-                                @if(isset($dadosPesquisa))
+
                                 <tbody>
 
-                                        @forelse($dadosPesquisa as $filtro)
-                                            <tr>
-                                                <td>{{$filtro->nome}}</td>
-                                                <td>{{$filtro->cidade_origem}}</td>
-                                                <td>{{$filtro->cidade_destino}}</td>
-                                                @if(strlen($filtro->identificacao) > 0)
-                                                    {{--{{$filtro->identificacao}}--}}
-                                                    <td>{{$filtro->identificacao}}</td>
-                                                @else
-                                                    <td>{{$filtro->chassi}}</td>
-                                                @endif
-                                                <td>{{$filtro->tipo}}</td>
-                                                <td>{{$filtro->status}}</td>
-                                                <td>
-                                                    <a style="display: inline-block;" href="/painel/fretes/edit/{{$filtro->id}}" id-frete="{{$filtro->id}}" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>
-                                                    <a style="display: inline-block;" id-frete="{{$filtro->id}}" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr class="warning">
-                                                <td colspan="7" style="text-align: center">Nenhum dado encontrado</td>
-                                            </tr>
-                                        @endforelse
-
                                 </tbody>
-
-                                    @endif
-                                {{--@if(isset($fretes) && count($fretes) > 0)--}}
+                                    {{--@if(isset($fretes) && count($fretes) > 0)--}}
                                 {{--@verbatim--}}
                                 {{--<tr ng:repeat="f in fretes | orderBy:sortField:reverseOrder | filter : searchText">--}}
                                     {{--<td>{{ f.nome }}</td>--}}
@@ -198,9 +176,9 @@
                                 {{--</tbody>--}}
                             </table>
 
-                                @if(isset($dadosPesquisa))
-                                <center>    {!! $dadosPesquisa->links() !!} <center>
-                                @endif
+{{--                                @if(isset($dadosPesquisa))--}}
+                                {{--<center>    {!! $dadosPesquisa->links() !!} <center>--}}
+                                {{--@endif--}}
                         </div>
                     </div>
                 </div>

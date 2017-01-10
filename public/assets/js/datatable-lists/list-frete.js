@@ -50,13 +50,12 @@ $(document).ready(function() {
             }
             $(this).html( '<input type="text" placeholder="Busca '+title+'" />' );
         } );
-    // $('#fretes-table-two tfoot th').each( function () {
-    //     var title = $(this).text();
-    //     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-    // } );
 
 
+    var statusPesquisa = $("#statusPesquisa").val();
+    console.log(statusPesquisa);
     var table = $('#fretes-table-two').DataTable({
+        "oSearch":  {"sSearch": statusPesquisa},
         processing: true,
         serverSide: true,
         responsive: {
@@ -100,9 +99,6 @@ $(document).ready(function() {
         "dom": 'Bfrtip',
         "buttons": [
             'pageLength',
-            // 'excelHtml5',
-            // 'pdfHtml5',
-            // 'print',
             {extend: 'selectAll', text: 'Selecionar todas'},
             {extend: 'selectNone', text: 'Remover seleção'},
             {extend: 'colvis', text: 'Colunas Visível'}
@@ -118,31 +114,6 @@ $(document).ready(function() {
 
     });
 
-    // Apply the search
-    // table.columns().every( function () {
-    //     var that = this;
-    //
-    //     $( 'input', this.footer() ).on( 'keyup change', function () {
-    //         if ( that.search() !== this.value ) {
-    //             that
-    //                 .search( this.value )
-    //                 .draw();
-    //         }
-    //     } );
-    // } );
-
-    table.columns().eq( 0 ).each( function ( colIdx ) {
-        if (colIdx == 1 || colIdx == 2 || colIdx == 4  || colIdx == 5 || colIdx == 6) return; //Do not add event handlers for these columns
-
-        // console.log(colIdx);console.log(this.value);
-        $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
-            console.log(table.column(colIdx));
-                table
-                    .column( colIdx )
-                    .search( this.value )
-                    .draw();
-        } );
-    } );
 
     $('.dataTables_length').hide();
 

@@ -505,7 +505,7 @@ class FreteController extends Controller
 //        dd($dadosPesquisa);
 */
 //
-        return view("painel.fretes.index", compact('dadosPesquisa'));
+        return view("painel.fretes.index", compact('status'));
 //
     }
 
@@ -514,7 +514,7 @@ class FreteController extends Controller
     {
         $dadosPesquisa = Frete::where('status','like','%'.$status.'%')->take(15)->get();
 
-        return view('painel.fretes.index', compact('dadosPesquisa'));
+        return view('painel.fretes.index', compact('status'));
 //        return $busca;
     }
 

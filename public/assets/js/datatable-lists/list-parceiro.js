@@ -39,8 +39,11 @@ $(document).ready(function() {
 
 
 
+    var palavraPesquisa = $("#palavraPesquisa").val();
+
     $('#parceiros-table').DataTable({
         // processing: true,
+        "oSearch":  {"sSearch": palavraPesquisa},
         serverSide: true,
         responsive: {
             details: {
