@@ -158,32 +158,6 @@ class FreteController extends Controller
 //        dd($dadosForm['valor_total2']);
 //        dd($this->request->file('image'));
 
-
-
-
-//            dd($dadosForm);
-        if($dadosForm['status'] == 1){
-            $status = "Em Edição";
-        }
-        if($dadosForm['status'] == 2){
-            $status = "Aguardando Coleta";
-        }
-        if($dadosForm['status'] == 3){
-            $status = "Aguardando entrega no pátio";
-        }
-        if($dadosForm['status'] == 4){
-            $status = "Aguardando Embarque";
-        }
-        if($dadosForm['status'] == 5){
-            $status = "Em trânsito";
-        }
-        if($dadosForm['status'] == 6){
-            $status = "Entregue";
-        }
-        if($dadosForm['status'] == 7){
-            $status = "Cancelado";
-        }
-
         if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
             $iscoleta = $dadosForm['iscoleta'];
             $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
@@ -241,7 +215,7 @@ class FreteController extends Controller
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
             'cor' => $dadosForm['cor'],
-            'status' => $status,
+            'status' => $this->resolverStatus($dadosForm['status']),
             'iscoleta' => $iscoleta,
             'isentrega' => $isentrega,
             'id_parceiro_coletor' => $parceiro_coletor,
@@ -259,6 +233,20 @@ class FreteController extends Controller
 
 //        return 1;
         return redirect()->route('listarFretes');
+    }
+
+    private function resolverStatus($s)
+    {
+        switch ($s)
+        {
+            case 1: return "Em Edição"; break;
+            case 2: return "Aguardando Coleta"; break;
+            case 3: return "Aguardando entrega no pátio";break;
+            case 4: return "Aguardando Embarque";break;
+            case 5: return "Em trânsito";break;
+            case 6: return "Entregue";break;
+            case 7: return "Cancelado";break;
+        }
     }
 
     public function edit($id)
@@ -327,29 +315,6 @@ class FreteController extends Controller
             $dadosForm['image'] = $frete->image;
         }
 
-        if($dadosForm['status'] == 1){
-            $status = "Em Edição";
-        }
-        if($dadosForm['status'] == 2){
-            $status = "Aguardando Coleta";
-        }
-        if($dadosForm['status'] == 3){
-            $status = "Aguardando entrega no pátio";
-        }
-        if($dadosForm['status'] == 4){
-            $status = "Aguardando Embarque";
-        }
-        if($dadosForm['status'] == 5){
-            $status = "Em trânsito";
-        }
-        if($dadosForm['status'] == 6){
-            $status = "Entregue";
-        }
-        if($dadosForm['status'] == 7){
-            $status = "Cancelado";
-        }
-
-
         if(isset($dadosForm['iscoleta'])){
             $iscoleta = $dadosForm['iscoleta'];
             $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
@@ -396,7 +361,7 @@ class FreteController extends Controller
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
             'cor' => $dadosForm['cor'],
-            'status' => $dadosForm['status'],
+            'status' => $this->resolverStatus($dadosForm['status']),
             'iscoleta' => $iscoleta,
             'isentrega' => $isentrega,
             'id_parceiro_coletor' => $parceiro_coletor,
@@ -421,29 +386,8 @@ class FreteController extends Controller
     {
 
         $dadosForm = $this->request->all();
-//        dd($dadosForm);
 
-        if($dadosForm['status'] == 1){
-            $status = "Em Edição";
-        }
-        if($dadosForm['status'] == 2){
-            $status = "Aguardando Coleta";
-        }
-        if($dadosForm['status'] == 3){
-            $status = "Aguardando entrega no pátio";
-        }
-        if($dadosForm['status'] == 4){
-            $status = "Aguardando Embarque";
-        }
-        if($dadosForm['status'] == 5){
-            $status = "Em trânsito";
-        }
-        if($dadosForm['status'] == 6){
-            $status = "Entregue";
-        }
-        if($dadosForm['status'] == 7){
-            $status = "Cancelado";
-        }
+        $status = $this->resolverStatus($dadosForm['status']);
 
         $dadosPesquisa = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
