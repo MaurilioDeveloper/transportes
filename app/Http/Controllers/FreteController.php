@@ -358,7 +358,7 @@ class FreteController extends Controller
             'id_cidade_destino' => $dadosForm['id_cidade_destino'],
 //            'estado_destino' => $dadosForm['estado_destino'],
             'tipo' => $dadosForm['tipo'],
-            'identificacao' => strotoupper($dadosForm['identificacao']),
+            'identificacao' => strtoupper($dadosForm['identificacao']),
             'valor_item' => $valor_item,
             'cor' => $dadosForm['cor'],
             'status' => $this->resolverStatus($dadosForm['status']),
