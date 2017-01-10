@@ -51,7 +51,7 @@
                     </div>
 
                     <div class='box-header'>Listagem de Dados</div>
-                    
+
                     <!--<div class='col-lg-8'>
                         <a class="btn btn-success btn-sm"
                            {{--href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_FISICA]) }}"><i--}}

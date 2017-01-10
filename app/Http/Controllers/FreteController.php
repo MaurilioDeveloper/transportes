@@ -222,11 +222,11 @@ class FreteController extends Controller
 //        dd($user);
 
 
-        $historico = $this->historico->create([
-            'data' => $data_hoje,
-            'status' => $status,
-            'id_usuario' => $user
-        ]);
+//        $historico = $this->historico->create([
+//            'data' => $data_hoje,
+//            'status' => $status,
+//            'id_usuario' => $user
+//        ]);
 
 
 
@@ -250,7 +250,7 @@ class FreteController extends Controller
             'valor_entrega' => $valor_entrega,
             'valor_total' => $valor_total,
             'image' => $dadosForm['image'],
-            'id_historico' => $historico->id,
+//            'id_historico' => $historico->id,
             'informacoes_complementares' => $dadosForm['informacoes_complementares'],
 
         ]);
