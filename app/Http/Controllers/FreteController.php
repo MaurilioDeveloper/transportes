@@ -439,7 +439,7 @@ class FreteController extends Controller
 //            ->orWhere('fretes.identificacao', '<>', '')
 //            ->orWhere('chassi', '<>', '')
             ->where('status', 'LIKE', "%$status%")
-            ->paginate(2);
+            ->paginate(10);
 //        dd($dadosPesquisa);
 
 

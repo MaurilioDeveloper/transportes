@@ -67,7 +67,7 @@ $(document).ready(function(){
 
                 '<div class="principalCaminhao"></div>' +
                 '<div class="form-group  col-md-4"><label for="placa">Placa </label>' +
-                    '<input type="text" placeholder="AAA-9999" name="extraCaminhoes[' + (t + 1) + '][placa]" class="form-control" />' +
+                    '<input type="text" placeholder="AAA-9999" name="extraCaminhoes[' + (t + 1) + '][placa]" class="form-control placa" />' +
                 '</div>' +
                 '<div class="form-group  col-md-4"><label for="modelo">Modelo </label>' +
                     '<input type="text" placeholder="Modelo" name="extraCaminhoes[' + (t + 1) + '][modelo]" class="form-control" />' +

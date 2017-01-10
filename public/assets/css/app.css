@@ -20,6 +20,10 @@ aside.control-sidebar.control-sidebar-dark{
   display: none;
 }
 
+.placa{
+  text-transform: UPPERCASE;
+}
+
 .ui-datepicker {
   width: 17em;
   padding: .2em .2em 0;

@@ -46,6 +46,10 @@ h6 small,
 .pace-inactive {
     display: none;
 }
+
+.placa{
+    text-transform: uppercase;
+}
 /* -----------------------------------------
   Animate.css less file
 ----------------------------------------- */
