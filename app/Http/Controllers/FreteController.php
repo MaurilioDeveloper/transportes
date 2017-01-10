@@ -6,6 +6,7 @@ use App\Frete;
 use App\Caminhao;
 use App\Motorista;
 use App\OrigemDestino;
+use App\Historico;
 use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Contato;
@@ -24,18 +25,22 @@ class FreteController extends Controller
     private $caminhao;
     private $contato;
     private $motorista;
-    private $validate;
     private $frete;
+    private $historico;
+    private $validate;
 
-    public function __construct(Parceiro $parceiro, Request $request, Caminhao $caminhao, Contato $contato, Motorista $motorista, Validate $validate, Frete $frete)
+    public function __construct(Parceiro $parceiro, Request $request, Caminhao $caminhao,
+                                Contato $contato, Motorista $motorista, Validate $validate,
+                                Frete $frete, Historico $historico)
     {
         $this->parceiro = $parceiro;
         $this->request = $request;
         $this->caminhao = $caminhao;
         $this->contato = $contato;
         $this->motorista = $motorista;
-        $this->validate = $validate;
         $this->frete = $frete;
+        $this->historico = $historico;
+        $this->validate = $validate;
         $this->middleware('auth');
 
     }
@@ -213,6 +218,16 @@ class FreteController extends Controller
             return $displayErrors;
         }
 
+        $user = $dadosForm['id_usuario'];
+//        dd($user);
+
+
+        $historico = $this->historico->create([
+            'data' => $data_hoje,
+            'status' => $status,
+            'id_usuario' => $user
+        ]);
+
 
 
         $this->frete->create([
@@ -221,9 +236,7 @@ class FreteController extends Controller
             'data_inicio' => $data_inicio,
             'data_fim' => $data_fim,
             'id_cidade_origem' => $dadosForm['id_cidade_origem'],
-//            'id_estado_origem' => $dadosForm['id_estado_origem'],
             'id_cidade_destino' => $dadosForm['id_cidade_destino'],
-//            'id_estado_destino' => $dadosForm['id_estado_destino'],
             'tipo' => $dadosForm['tipo'],
             'identificacao' => $dadosForm['identificacao'],
             'valor_item' => $valor_item,
@@ -237,6 +250,7 @@ class FreteController extends Controller
             'valor_entrega' => $valor_entrega,
             'valor_total' => $valor_total,
             'image' => $dadosForm['image'],
+            'id_historico' => $historico->id,
             'informacoes_complementares' => $dadosForm['informacoes_complementares'],
 
         ]);

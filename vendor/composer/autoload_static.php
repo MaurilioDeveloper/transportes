@@ -419,6 +419,7 @@ class ComposerStaticInit3bdf2a35f3693c28b25e3c071520a804
         'CreateContatosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_24_173332_create_contatos_table.php',
         'CreateFretesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_29_164858_create_fretes_table.php',
         'CreateFretesViagensTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_02_103300_create_fretes_viagens_table.php.php',
+        'CreateHistoricosTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_10_133843_create_historicos_table.php',
         'CreateMotoristasTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_24_174114_create_motoristas_table.php',
         'CreateOcorrenciasTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_25_161117_create_ocorrencias_table.php',
         'CreateOrigemDestinosTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_30_205354_create_origem_destinos_table.php',

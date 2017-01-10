@@ -32,6 +32,9 @@ class CreateViagemsTable extends Migration
             $table->integer('id_cidade_destino')->unsigned();
             $table->foreign('id_cidade_destino')->references('id')->on('origens_destinos');
 
+            $table->integer('id_historico')->unsigned();
+            $table->foreign('id_historico')->references('id')->on('historicos')->onDelete('cascade');
+
             $table->string('informacoes_complementares')->nullable();
 
             $table->timestamps();

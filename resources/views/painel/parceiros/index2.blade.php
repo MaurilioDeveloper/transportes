@@ -51,14 +51,7 @@
                     </div>
 
                     <div class='box-header'>Listagem de Dados</div>
-                    <div class='col-lg-8'>
-                        <a class="btn btn-success btn-sm" href="{{ route('adicionarFrete')}}"><i
-                                    class="fa fa-briefcase"></i> Novo Frete</a>
-                    {{--</div>--}}
-                    {{--<div class='col-lg-8'>--}}
-                        <a class="btn btn-success btn-sm" href="{{ route('cadastrarViagens')}}"><i
-                                    class="fa fa-plane"></i> Nova Viagem</a>
-                    </div>
+                    
                     <!--<div class='col-lg-8'>
                         <a class="btn btn-success btn-sm"
                            {{--href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_FISICA]) }}"><i--}}

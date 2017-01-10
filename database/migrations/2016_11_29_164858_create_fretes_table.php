@@ -42,6 +42,8 @@ class CreateFretesTable extends Migration
             $table->string('valor_entrega')->nullable();
             $table->string('valor_total')->nullable();
             $table->string('image')->nullable();
+            $table->integer('id_historico')->unsigned();
+            $table->foreign('id_historico')->references('id')->on('historicos')->onDelete('cascade');
             $table->text('informacoes_complementares')->nullable();
             $table->timestamps();
         });

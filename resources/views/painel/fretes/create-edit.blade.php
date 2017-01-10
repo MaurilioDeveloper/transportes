@@ -75,6 +75,7 @@
                     </div>
                     <div id="dados1" style="display: none;">
 
+                        {!! Form::hidden('id_usuario', auth()->user()->id, ['class' => '','style' => 'width:217px; background: #f0f0f0 !important; color: #aaa !important; border: #ccc;']) !!}
                         <div class="form-group col-md-4">
                             <label>Data Atual</label>
                             <input required="" name='data_hoje' type="text" placeholder="dd/mm/yyyy"
@@ -195,7 +196,7 @@
 
                     {{--<hr style="border: 1px solid #ccc"/>--}}
 
-                    <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                         {!! Form::label('status', 'Status *') !!}
                         <select id="status-select" class="form-control" name="status" required>
                             <option value="0">Selecione um status</option>
@@ -216,6 +217,7 @@
                         {{--</select>--}}
 
                     </div>
+
                     <div class="form-group col-md-3">
                         <label class="columns" for="unit-yes-no-coleta">
                             Tem Coleta?
@@ -483,7 +485,7 @@
                 <div class="fisica" style="display: none">
                     <div class="form-group col-md-6">
                         {!! Form::label('estado_civil', 'Estado Civil *') !!}
-                        {!! Form::select('estado_civil', array_merge([0 => 'S elecione'],\App\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control estado_civil', 'disabled' => 'true']) !!}
+                        {!! Form::select('estado_civil', array_merge([0 => 'Selecione'],\App\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control estado_civil', 'disabled' => 'true']) !!}
                     </div>
 
                     <div class="form-group col-md-6">
