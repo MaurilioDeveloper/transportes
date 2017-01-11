@@ -196,7 +196,11 @@
 
                     {{--<hr style="border: 1px solid #ccc"/>--}}
 
-                        <div class="form-group col-md-6">
+                    @if(isset($frete->id) && $frete->id > 0)
+                        <div class="form-group col-md-9">
+                    @else
+                        <div class="form-group col-md-12">
+                    @endif
                         {!! Form::label('status', 'Status *') !!}
                         <select id="status-select" class="form-control" name="status" required>
                             <option value="0">Selecione um status</option>
@@ -208,22 +212,19 @@
                             @endif
                             @endforeach
                         </select>
-{{--                        {!! Form::select('status', array_merge(['Selecione um status'], \App\Frete::STATUS), null, ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}--}}
-                        {{--<select class="form-control" id="status" required="true">--}}
-                            {{--<option value="0">Selecione um Status</option>--}}
-                            {{--@foreach(\App\Frete::STATUS as $key => $value)--}}
-                                {{--<option value="{{$key}}">{{$value}}</option>--}}
-                            {{--@endforeach--}}
-                        {{--</select>--}}
-
                     </div>
-
+                    @if(isset($frete->id) && $frete->id > 0)
+                        <div class="form-group col-md-3">
+                            <label><hr/></label>
+                            <a style="text-decoration: none" class="btn btn-info" onclick="verHistorico()"><i class="fa fa-history"></i> Ver Histórico</a>
+                        </div>
+                    @endif
                     <div class="form-group col-md-3">
                         <label class="columns" for="unit-yes-no-coleta">
                             Tem Coleta?
                         </label>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-9">
                         <label class="" for="unit-yes-no-entrega">
                             Tem Entrega?
                         </label>
@@ -564,6 +565,49 @@
 </div>  <!--modal-dialog-->
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="lista-historico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #75b9e6; color: #000; font-weight: bold">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 style="text-align: center;" class="modal-title" id="myModalLabel"><i class="fa fa-info"></i> Historico do Frete (Mudança de STATUS)</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr style="background: #2e6da4; color: white">
+                        <td>Data</td>
+                        <td>Status</td>
+                        <td>Usuário Logado</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(isset($historicoFretes))
+                        @forelse($historicoFretes as $historico)
+                            <tr>
+                                <td>{{ implode('/',array_reverse(explode('-', $historico->data))) }}</td>
+                                <td>{{$historico->status}}</td>
+                                <td>{{$historico->name}}</td>
+                            </tr>
+                        @empty
+
+                        @endforelse
+                    @endif
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{--</section>--}}
 

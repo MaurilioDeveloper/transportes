@@ -135,7 +135,11 @@
                             <input  name='horario_fim' type="text" placeholder="__:__"
                                    class="form-control timepicker" value="{{$viagem->horario_inicio or old('horario_fim')}}"/>
                     </div>
-                    <div class="form-group col-md-12">
+                    @if(isset($viagem->id) && $viagem->id > 0)
+                        <div class="form-group col-md-9">
+                    @else
+                        <div class="form-group col-md-12">
+                    @endif
                         <label for="status">Status *</label>
 {{--                        {{$viagem->status}}--}}
                         <input type="hidden" id="status" value="@if(isset($viagem->status)){{$viagem->status}}@endif"  />
@@ -153,6 +157,12 @@
                         </select>
 {{--                        {!! Form::select('status', \App\Viagem::STATUS, isset($viagem->status) or old('status'), ['class' => 'form-control', 'required' => 'true', 'id' => 'status']) !!}--}}
                     </div>
+                    @if(isset($viagem->id) && $viagem->id > 0)
+                        <div class="form-group col-md-3">
+                            <label><hr/></label>
+                            <a style="text-decoration: none" class="btn btn-info" onclick="verHistorico()"><i class="fa fa-history"></i> Ver Histórico</a>
+                        </div>
+                    @endif
                     <div class="form-group col-md-6">
                         {!! Form::label('cidade', 'Cidade Origem *') !!}
                         <select name="id_cidade_origem" class="form-control" id="cidade_origem" required>
@@ -328,6 +338,51 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="lista-historico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #75b9e6; color: #000; font-weight: bold">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 style="text-align: center;" class="modal-title" id="myModalLabel"><i class="fa fa-info"></i> Historico da Viagem (Mudança de STATUS)</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr style="background: #2e6da4; color: white">
+                        <td>Data</td>
+                        <td>Status</td>
+                        <td>Usuário Logado</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(isset($historicoViagens))
+                        @forelse($historicoViagens as $historico)
+                            <tr>
+                                <td>{{ implode('/',array_reverse(explode('-', $historico->data))) }}</td>
+                                <td>{{$historico->status}}</td>
+                                <td>{{$historico->name}}</td>
+                            </tr>
+                        @empty
+
+                        @endforelse
+                    @endif
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>

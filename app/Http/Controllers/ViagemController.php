@@ -242,9 +242,11 @@ class ViagemController extends Controller
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
-//        dd($nomeCaminhao);
-//        dd($viagemNome);
-//        dd($viagem);
+        $historicoViagens = HistoricoViagem::query()->join('users', 'users.id', '=', 'historico_viagens.id_usuario')
+            ->select("historico_viagens.id", "historico_viagens.data", "historico_viagens.status", "users.name", "historico_fretes.created_at")
+            ->where("id_viagem", $viagem->id)->orderBy('created_at', 'DESC')->get();
+
+
         $fretes = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
@@ -266,7 +268,9 @@ class ViagemController extends Controller
 
         $fretesAdd = $this->freteViagem->all()->where('id_viagem', $viagem->id);
 
-        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista', 'nomeCaminhao', 'fretesAdicionado', 'cidades', 'fretesAdicionados', 'fretesAdd'));
+        return view('painel.viagens.create-edit', compact('titulo', 'viagem', 'fretes', 'viagemNome', 'nomeMotorista',
+                                                           'nomeCaminhao', 'fretesAdicionado', 'cidades', 'fretesAdicionados',
+                                                            'fretesAdd', 'historicoViagens'));
 
 
     }
@@ -393,12 +397,12 @@ class ViagemController extends Controller
         }
 
 
-        $confirmHistorico = HistoricoViagem::where('id_viagem', $viagem->id)->get();
+        $confirmHistorico = HistoricoViagem::where('id_viagem', $viagem->id)->orderBy('data', 'DESC')->get();
 
-        foreach ($confirmHistorico as $historicoViagem){
-            for($i=0; $i < count($historicoViagem); $i++){
+//        foreach ($confirmHistorico as $historicoViagem){
+//            for($i=0; $i < count($historicoViagem); $i++){
 //                dd($confirmHistorico[$i]['status']);
-                if($confirmHistorico[$i]['status'] != $dadosForm['status']){
+                if($confirmHistorico[0]['status'] != $dadosForm['status']){
 
                     $data_hoje = date('Y/m/d');
                     $status = $dadosForm['status'];
@@ -413,8 +417,8 @@ class ViagemController extends Controller
 
                 }
 
-            }
-        }
+//            }
+//        }
                return 1;
     }
 

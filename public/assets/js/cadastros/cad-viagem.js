@@ -284,3 +284,11 @@ function removerFrete(id){
         $("#freteAd").append('<tr class="warning" id="vazio"><td style="text-align: center" colspan="6">Nenhum dado Cadastrado</td></tr>');
     }
 }
+
+
+function verHistorico(){
+    $("#ui-datepicker-div").hide();
+    $("#lista-historico").modal('toggle');
+
+
+}

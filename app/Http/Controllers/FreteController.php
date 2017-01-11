@@ -160,29 +160,6 @@ class FreteController extends Controller
 
 
 
-//            dd($dadosForm);
-        if($dadosForm['status'] == 1){
-            $status = "Em Edição";
-        }
-        if($dadosForm['status'] == 2){
-            $status = "Aguardando Coleta";
-        }
-        if($dadosForm['status'] == 3){
-            $status = "Aguardando entrega no pátio";
-        }
-        if($dadosForm['status'] == 4){
-            $status = "Aguardando Embarque";
-        }
-        if($dadosForm['status'] == 5){
-            $status = "Em trânsito";
-        }
-        if($dadosForm['status'] == 6){
-            $status = "Entregue";
-        }
-        if($dadosForm['status'] == 7){
-            $status = "Cancelado";
-        }
-
         if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
             $iscoleta = $dadosForm['iscoleta'];
             $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
@@ -251,7 +228,7 @@ class FreteController extends Controller
 
         $historico = $this->historico->create([
             'data' => $data_hoje,
-            'status' => $status,
+            'status' => $this->resolverStatus($dadosForm['status']),
             'id_usuario' => $user,
             'id_frete' => $frete->id
         ]);
@@ -307,8 +284,16 @@ class FreteController extends Controller
         $iscoleta = $frete->iscoleta;
         $isentrega = $frete->isentrega;
 
+//        $historicoFretes = HistoricoFrete::where('id_frete', $frete->id)->orderBy('data', 'ASC')->get();
+        $historicoFretes = HistoricoFrete::query()->join('users', 'users.id', '=', 'historico_fretes.id_usuario')
+                            ->select("historico_fretes.id", "historico_fretes.data", "historico_fretes.status", "users.name", "historico_fretes.created_at")
+                            ->where("id_frete", $frete->id)->orderBy('created_at', 'DESC')->get();
+//        dd($historicoFretes);
+
+
 //        dd($frete);
-        return view('painel.fretes.create-edit', compact('frete', 'titulo', 'data_hoje', 'data_inicio', 'data_fim', 'freteParceiroNome', 'iscoleta', 'isentrega', 'freteParceiroColetorNome', 'freteParceiroEntregadorNome', 'fretePessoa', 'sexo', 'cidades'));
+        return view('painel.fretes.create-edit', compact('frete', 'titulo', 'data_hoje', 'data_inicio', 'data_fim', 'freteParceiroNome', 'iscoleta', 'isentrega',
+                                                         'freteParceiroColetorNome', 'freteParceiroEntregadorNome', 'fretePessoa', 'sexo', 'cidades', 'historicoFretes'));
     }
 
     /**
@@ -340,28 +325,6 @@ class FreteController extends Controller
 
         }else{
             $dadosForm['image'] = $frete->image;
-        }
-
-        if($dadosForm['status'] == 1){
-            $status = "Em Edição";
-        }
-        if($dadosForm['status'] == 2){
-            $status = "Aguardando Coleta";
-        }
-        if($dadosForm['status'] == 3){
-            $status = "Aguardando entrega no pátio";
-        }
-        if($dadosForm['status'] == 4){
-            $status = "Aguardando Embarque";
-        }
-        if($dadosForm['status'] == 5){
-            $status = "Em trânsito";
-        }
-        if($dadosForm['status'] == 6){
-            $status = "Entregue";
-        }
-        if($dadosForm['status'] == 7){
-            $status = "Cancelado";
         }
 
 
@@ -426,32 +389,31 @@ class FreteController extends Controller
 
         ])->save();
 
-        $confirmHistorico = HistoricoFrete::where('id_frete', $frete->id)->get();
+        $confirmHistorico = HistoricoFrete::where('id_frete', $frete->id)->orderBy('data', 'DESC')->get();
         $data_hoje = date('Y/m/d');
-        $statusViagem = $dadosForm['status'];
+        $statusViagem = $this->resolverStatus($dadosForm['status']);
         $user = auth()->user()->id;
 
 //        dd($confirmHistorico);
-        foreach ($confirmHistorico as $historicoViagem){
-            for($i=0; $i < count($historicoViagem); $i++){
+//        foreach ($confirmHistorico as $historicoViagem){
+//            for($i=0; $i < count($historicoViagem); $i++){
 //                dd($confirmHistorico[$i]['status']);
-                if($confirmHistorico[$i]['status'] != $statusViagem){
+                if($confirmHistorico[0]['status'] != $statusViagem){
 
                     $data_hoje = date('Y/m/d');
-                    $status = $dadosForm['status'];
                     $user = auth()->user()->id;
 
                     $historico = $this->historico->create([
                         'data' => $data_hoje,
-                        'status' => $status,
+                        'status' => $this->resolverStatus($dadosForm['status']),
                         'id_usuario' => $user,
                         'id_frete' => $frete->id
                     ]);
 
                 }
 
-            }
-        }
+//            }
+//        }
 //        dd($dadosForm['valor_entrega']);
 //        dd($update);
 //        return 1;

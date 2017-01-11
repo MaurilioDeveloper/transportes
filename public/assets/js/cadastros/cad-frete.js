@@ -203,3 +203,10 @@ $(document).ready(function () {
     // });
 
 });
+
+function verHistorico(){
+    $("#ui-datepicker-div").hide();
+    $("#lista-historico").modal('toggle');
+
+
+}
