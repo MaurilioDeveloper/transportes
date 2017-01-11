@@ -390,33 +390,17 @@ class FreteController extends Controller
         ])->save();
 
         $confirmHistorico = HistoricoFrete::where('id_frete', $frete->id)->orderBy('data', 'DESC')->get();
-        $data_hoje = date('Y/m/d');
-        $statusViagem = $this->resolverStatus($dadosForm['status']);
-        $user = auth()->user()->id;
 
-//        dd($confirmHistorico);
-//        foreach ($confirmHistorico as $historicoViagem){
-//            for($i=0; $i < count($historicoViagem); $i++){
-//                dd($confirmHistorico[$i]['status']);
-                if($confirmHistorico[0]['status'] != $statusViagem){
+        $statusFrete = $this->resolverStatus($dadosForm['status']);
 
-                    $data_hoje = date('Y/m/d');
-                    $user = auth()->user()->id;
-
-                    $historico = $this->historico->create([
-                        'data' => $data_hoje,
-                        'status' => $this->resolverStatus($dadosForm['status']),
-                        'id_usuario' => $user,
-                        'id_frete' => $frete->id
-                    ]);
-
-                }
-
-//            }
-//        }
-//        dd($dadosForm['valor_entrega']);
-//        dd($update);
-//        return 1;
+        if(count($confirmHistorico) == 0 || $confirmHistorico[0]['status'] != $statusFrete){
+            $historico = $this->historico->create([
+                'data' => date('Y/m/d'),
+                'status' => $statusFrete,
+                'id_usuario' => auth()->user()->id,
+                'id_frete' => $frete->id
+            ]);
+        }
         return redirect()->route('listarFretes');
 
     }

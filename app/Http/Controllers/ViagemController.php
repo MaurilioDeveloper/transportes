@@ -243,7 +243,7 @@ class ViagemController extends Controller
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
         $historicoViagens = HistoricoViagem::query()->join('users', 'users.id', '=', 'historico_viagens.id_usuario')
-            ->select("historico_viagens.id", "historico_viagens.data", "historico_viagens.status", "users.name", "historico_fretes.created_at")
+            ->select("historico_viagens.id", "historico_viagens.data", "historico_viagens.status", "users.name", "historico_viagens.created_at")
             ->where("id_viagem", $viagem->id)->orderBy('created_at', 'DESC')->get();
 
 
@@ -396,30 +396,18 @@ class ViagemController extends Controller
             }
         }
 
-
         $confirmHistorico = HistoricoViagem::where('id_viagem', $viagem->id)->orderBy('data', 'DESC')->get();
+        if(count($confirmHistorico)==0 || $confirmHistorico[0]['status'] != $dadosForm['status']){
+            $historico = $this->historico->create([
+                'data' => date('Y/m/d'),
+                'status' => $dadosForm['status'],
+                'id_usuario' => auth()->user()->id,
+                'id_viagem' => $viagem->id
+            ]);
 
-//        foreach ($confirmHistorico as $historicoViagem){
-//            for($i=0; $i < count($historicoViagem); $i++){
-//                dd($confirmHistorico[$i]['status']);
-                if($confirmHistorico[0]['status'] != $dadosForm['status']){
+        }
+        return 1;
 
-                    $data_hoje = date('Y/m/d');
-                    $status = $dadosForm['status'];
-                    $user = auth()->user()->id;
-
-                    $historico = $this->historico->create([
-                        'data' => $data_hoje,
-                        'status' => $status,
-                        'id_usuario' => $user,
-                        'id_viagem' => $viagem->id
-                    ]);
-
-                }
-
-//            }
-//        }
-               return 1;
     }
 
 
