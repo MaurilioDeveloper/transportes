@@ -4,7 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Historico extends Model
+class HistoricoFrete extends Model
 {
+    protected $table = 'historico_fretes';
+
     protected $guarded = ['id'];
 }

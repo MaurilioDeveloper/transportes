@@ -78,7 +78,10 @@ $(document).ready(function() {
                 data: 'nome',
                 className: "center",
                 render: function(data, type, row){
-                    return '<a href="parceiros/edit/'+row.id+'" id-parceiro="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-parceiro="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
+                    return '<a href="parceiros/edit/'+row.id+'" id-parceiro="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
+                           '<a href="" id-parceiro="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>' +
+                            '<a id-parceiro="'+row.id+'" class="btn btn-success btn-sm" style="display: inline" onclick="novoFrete('+ row.id +')"><i class="fa fa-truck"></i> Novo Frete</a>' +
+                            '<a href="viagens/create" id-parceiro="'+row.id+'" class="btn btn-info btn-sm" style="display: inline" onclick="novaViagem('+ row.id +')"><i class="fa fa-plane"></i> Nova Viagem</a>';
                 }
             },
         ],
@@ -113,3 +116,11 @@ $(document).ready(function() {
     $('.dataTables_length').hide();
 
 } );
+
+function novoFrete(id){
+    window.location.href = '/painel/fretes/create';
+}
+
+function novaViagem(id){
+
+}

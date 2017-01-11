@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHistoricosTable extends Migration
+class CreateHistoricoViagemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateHistoricosTable extends Migration
      */
     public function up()
     {
-        Schema::create('historico_fretes', function (Blueprint $table) {
+        Schema::create('historico_viagens', function (Blueprint $table) {
             $table->increments('id');
             $table->date('data');
             $table->string('status');
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
-            $table->integer('id_frete')->unsigned();
-            $table->foreign('id_frete')->references('id')->on('fretes')->onDelete('cascade');
+            $table->integer('id_viagem')->unsigned();
+            $table->foreign('id_viagem')->references('id')->on('viagens')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateHistoricosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('historico_fretes');
+        Schema::dropIfExists('historico_viagens');
     }
 }

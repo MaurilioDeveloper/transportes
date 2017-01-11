@@ -24,6 +24,7 @@ return array(
     'CreateContatosTable' => $baseDir . '/database/migrations/2016_11_24_173332_create_contatos_table.php',
     'CreateFretesTable' => $baseDir . '/database/migrations/2016_11_29_164858_create_fretes_table.php',
     'CreateFretesViagensTable' => $baseDir . '/database/migrations/2017_01_02_103300_create_fretes_viagens_table.php.php',
+    'CreateHistoricoViagemsTable' => $baseDir . '/database/migrations/2017_01_11_110957_create_historico_viagems_table.php',
     'CreateHistoricosTable' => $baseDir . '/database/migrations/2017_01_10_133843_create_historicos_table.php',
     'CreateMotoristasTable' => $baseDir . '/database/migrations/2016_11_24_174114_create_motoristas_table.php',
     'CreateOcorrenciasTable' => $baseDir . '/database/migrations/2016_11_25_161117_create_ocorrencias_table.php',

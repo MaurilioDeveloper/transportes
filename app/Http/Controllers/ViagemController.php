@@ -9,6 +9,7 @@ use App\Frete;
 use App\Viagem;
 use App\Caminhao;
 use App\FreteViagem;
+use App\HistoricoViagem;
 use DB;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
@@ -22,9 +23,12 @@ class ViagemController extends Controller
     private $parceiro;
     private $caminhao;
     private $freteViagem;
+    private $historico;
     private $validate;
 
-    public function __construct(Frete $frete, Request $request, Viagem $viagem, Parceiro $parceiro, Caminhao $caminhao, FreteViagem $freteViagem, Validate $validate)
+    public function __construct(Frete $frete, Request $request, Viagem $viagem,
+                                Parceiro $parceiro, Caminhao $caminhao, FreteViagem $freteViagem,
+                                HistoricoViagem $historico, Validate $validate)
     {
         $this->frete = $frete;
         $this->request = $request;
@@ -32,6 +36,7 @@ class ViagemController extends Controller
         $this->parceiro = $parceiro;
         $this->caminhao = $caminhao;
         $this->freteViagem = $freteViagem;
+        $this->historico = $historico;
         $this->validate = $validate;
         $this->middleware('auth');
     }
@@ -43,15 +48,29 @@ class ViagemController extends Controller
 
     public function create()
     {
-        $fretes = Frete::query()
-            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-//            ->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')
-            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
-            ->where('status', 'Aguardando Embarque')->whereNotExists(function ($query){
-                Frete::query()->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')->select()->get();
-            })->get();
+
+        $fretes = DB::select(
+            DB::raw("SELECT p.nome, f.tipo, f.identificacao, od.cidade as cidade_origem, od.cidade as cidade_destino, f.id
+                    FROM fretes f
+                    INNER JOIN parceiros p
+                    ON f.id_parceiro = p.id
+                    INNER JOIN origens_destinos od
+                    ON f.id_cidade_origem = od.id
+                    INNER JOIN origens_destinos od2
+                    ON f.id_cidade_destino = od2.id
+                    WHERE f.status = 'Aguardando Embarque'
+                    AND NOT EXISTS (select 1 from fretes_viagens 
+                    INNER JOIN fretes ON fretes_viagens.id_frete = fretes.id)
+                    ")
+        );
+//        $fretes = Frete::query()
+//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+//            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+//            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
+//            ->where('status', 'Aguardando Embarque')->whereNotExists(function ($query){
+//                Frete::query()->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')->select()->get();
+//            })->get();
         //dd($fretes);
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
 //        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
@@ -96,7 +115,22 @@ class ViagemController extends Controller
             return $displayErrors;
         }
 
+
+
         $viagem = $this->viagem->create($dadosForm);
+
+
+        $data_hoje = date('Y/m/d');
+        $status = $dadosForm['status'];
+        $user = auth()->user()->id;
+
+        $historico = $this->historico->create([
+            'data' => $data_hoje,
+            'status' => $status,
+            'id_usuario' => $user,
+            'id_viagem' => $viagem->id
+        ]);
+
 
         foreach ($dadosFormFretes as $key => $value) {
 //            dd($key);
@@ -255,9 +289,11 @@ class ViagemController extends Controller
     {
         $dadosForm = $this->request->except(['fretes']);
         $dadosFormFretes = $this->request->only(['fretes']);
+
 //        dd($dadosFormFretes);
         $fretesViagemDB = FreteViagem::where('id_viagem', $id)->get()->keyBy('id');
-//        dd($fretesViagemDB);
+
+
         $viagem = Viagem::findOrFail($id);
 //        dd(implode('-',array_reverse(explode('/',$dadosForm['data_fim']))));
         $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/',$dadosForm['data_inicio'])));
@@ -353,26 +389,33 @@ class ViagemController extends Controller
 
             }
 
-//            for($i = 0; $i < $count; $i++){
-//                $fretesAd = $this->freteViagem->fill([
-//                    'id_frete' => $fretesAdicionado[$i],
-//                    'id_viagem' => $viagem->id
-//                ]);
-
-//            }
             }
         }
 
-//        foreach ($fretesViagemDB as $viagemFrete) {
-//            if (!$viagemFrete['presente']) {
-//                FreteViagem::find($viagemFrete['id'])->delete();
-//            }
-//        }
 
+        $confirmHistorico = HistoricoViagem::where('id_viagem', $viagem->id)->get();
 
-//        $fretesAd->save();
-        return 1;
-//        dd($dadosForm);
+        foreach ($confirmHistorico as $historicoViagem){
+            for($i=0; $i < count($historicoViagem); $i++){
+//                dd($confirmHistorico[$i]['status']);
+                if($confirmHistorico[$i]['status'] != $dadosForm['status']){
+
+                    $data_hoje = date('Y/m/d');
+                    $status = $dadosForm['status'];
+                    $user = auth()->user()->id;
+
+                    $historico = $this->historico->create([
+                        'data' => $data_hoje,
+                        'status' => $status,
+                        'id_usuario' => $user,
+                        'id_viagem' => $viagem->id
+                    ]);
+
+                }
+
+            }
+        }
+               return 1;
     }
 
 

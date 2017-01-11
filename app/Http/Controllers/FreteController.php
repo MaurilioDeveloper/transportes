@@ -6,7 +6,7 @@ use App\Frete;
 use App\Caminhao;
 use App\Motorista;
 use App\OrigemDestino;
-use App\Historico;
+use App\HistoricoFrete;
 use Illuminate\Http\Request;
 use App\Parceiro;
 use App\Contato;
@@ -31,7 +31,7 @@ class FreteController extends Controller
 
     public function __construct(Parceiro $parceiro, Request $request, Caminhao $caminhao,
                                 Contato $contato, Motorista $motorista, Validate $validate,
-                                Frete $frete, Historico $historico)
+                                Frete $frete, HistoricoFrete $historico)
     {
         $this->parceiro = $parceiro;
         $this->request = $request;
@@ -169,10 +169,10 @@ class FreteController extends Controller
             $status = "Aguardando Coleta";
         }
         if($dadosForm['status'] == 3){
-            $status = "Aguardando Embarque";
+            $status = "Aguardando entrega no pátio";
         }
         if($dadosForm['status'] == 4){
-            $status = "Aguardando entrega no pátio";
+            $status = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 5){
             $status = "Em trânsito";
@@ -222,15 +222,10 @@ class FreteController extends Controller
 //        dd($user);
 
 
-//        $historico = $this->historico->create([
-//            'data' => $data_hoje,
-//            'status' => $status,
-//            'id_usuario' => $user
-//        ]);
 
 
 
-        $this->frete->create([
+        $frete = $this->frete->create([
             'id_parceiro' => $dadosForm['id_parceiro'],
             'data_hoje' => $data_hoje,
             'data_inicio' => $data_inicio,
@@ -250,9 +245,16 @@ class FreteController extends Controller
             'valor_entrega' => $valor_entrega,
             'valor_total' => $valor_total,
             'image' => $dadosForm['image'],
-//            'id_historico' => $historico->id,
             'informacoes_complementares' => $dadosForm['informacoes_complementares'],
 
+        ]);
+
+
+        $historico = $this->historico->create([
+            'data' => $data_hoje,
+            'status' => $status,
+            'id_usuario' => $user,
+            'id_frete' => $frete->id
         ]);
 
 //        dd($dadosForm['valor_coleta']);
@@ -334,10 +336,10 @@ class FreteController extends Controller
             $status = "Aguardando Coleta";
         }
         if($dadosForm['status'] == 3){
-            $status = "Aguardando Embarque";
+            $status = "Aguardando entrega no pátio";
         }
         if($dadosForm['status'] == 4){
-            $status = "Aguardando entrega no pátio";
+            $status = "Aguardando Embarque";
         }
         if($dadosForm['status'] == 5){
             $status = "Em trânsito";
@@ -383,6 +385,7 @@ class FreteController extends Controller
         }
 
 
+
         $update = $frete->fill([
             'id_parceiro' => $dadosForm['id_parceiro'],
             'data_hoje' => $data_hoje,
@@ -409,6 +412,33 @@ class FreteController extends Controller
             'chassi' => $dadosForm['chassi']
 
         ])->save();
+
+        $confirmHistorico = HistoricoFrete::where('id_frete', $frete->id)->get();
+        $data_hoje = date('Y/m/d');
+        $statusViagem = $dadosForm['status'];
+        $user = auth()->user()->id;
+
+//        dd($confirmHistorico);
+        foreach ($confirmHistorico as $historicoViagem){
+            for($i=0; $i < count($historicoViagem); $i++){
+//                dd($confirmHistorico[$i]['status']);
+                if($confirmHistorico[$i]['status'] != $statusViagem){
+
+                    $data_hoje = date('Y/m/d');
+                    $status = $dadosForm['status'];
+                    $user = auth()->user()->id;
+
+                    $historico = $this->historico->create([
+                        'data' => $data_hoje,
+                        'status' => $status,
+                        'id_usuario' => $user,
+                        'id_frete' => $frete->id
+                    ]);
+
+                }
+
+            }
+        }
 //        dd($dadosForm['valor_entrega']);
 //        dd($update);
 //        return 1;
