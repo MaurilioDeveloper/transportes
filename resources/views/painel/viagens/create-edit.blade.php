@@ -90,15 +90,15 @@
                         @if(isset($viagem->id_parceiro_viagem))
                             <option value="{{$viagem->id_parceiro_viagem}}" selected>{{$viagemNome}}</option>
                         @else
-                            @if(isset($idViagem))
-                                <option value="{{$idViagem}}" selected>{{$nomeViagem}}</option>
+                            @if(isset($idViagemParceiro))
+                                <option value="{{$idViagemParceiro}}" selected>{{$nomeViagemParceiro}}</option>
                             @else
                                 <option value="0" selected>Selecione um parceiro</option>
                             @endif
                         @endif
                     </select>
                 </div>
-                <div id="dados" style="@if(!isset($idViagem) && !isset($viagem->id_parceiro)) display: none; @endif">
+                <div id="dados" style="@if(!isset($idViagemParceiro) && !isset($viagem->id_parceiro)) display: none; @endif">
                     <hr style="border: 1px solid #3c8dbc"/>
                     <input id="idMotorista" value="@if(isset($viagem->id_motorista)){{$viagem->id_motorista}}@endif" type="hidden" />
                     <input id="idCaminhao" value="@if(isset($viagem->id_caminhao)){{$viagem->id_caminhao}}@endif" type="hidden" />
@@ -107,6 +107,13 @@
                         <label for="id_caminhao">Caminhão Viagem</label>
                         <select name="id_caminhao" class="form-control" id="caminhao">
                             <option value="0">Selecione um caminhão</option>
+                            @if(isset($dadosCaminhao))
+                                {{--{{$dadosCaminhao}}--}}
+                                @foreach($dadosCaminhao as $caminhao)
+{{--                                    {{$caminhao}}--}}
+                                    <option value="{{$caminhao->id}}">{{$caminhao->placa}} - {{$caminhao->modelo}}</option>
+                                @endforeach
+                            @endif
                         </select>
 {{--                        {!! Form::select('id_caminhao', [0 => 'Selecione um caminhão'], isset($nomeCaminhao) or old('id_caminhao'), ['class' => 'form-control', 'id' => 'caminhao']) !!}--}}
                     </div>
@@ -116,6 +123,13 @@
                         <label for="id_motorista">Motorista Viagem</label>
                         <select name="id_motorista" class="form-control" id="motorista">
                             <option value="0">Selecione um motorista</option>
+                            @if(isset($dadosMotorista))
+                                {{--{{$dadosCaminhao}}--}}
+                                @foreach($dadosMotorista as $motorista)
+                                    {{--                                    {{$caminhao}}--}}
+                                    <option value="{{$motorista->id}}">{{$motorista->nome}}</option>
+                                @endforeach
+                            @endif
                         </select>
 {{--                        {!! Form::select('id_motorista', [0 => 'Selecione um motorista'], null, ['class' => 'form-control', 'id' => 'motorista']) !!}--}}
                     </div>

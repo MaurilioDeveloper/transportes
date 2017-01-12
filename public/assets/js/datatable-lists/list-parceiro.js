@@ -78,10 +78,11 @@ $(document).ready(function() {
                 data: 'nome',
                 className: "center",
                 render: function(data, type, row){
-                    return '<a href="parceiros/edit/'+row.id+'" id-parceiro="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
-                           '<a href="" id-parceiro="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>' +
+                    console.log(row);
+                    return  '<a href="parceiros/edit/'+row.id+'" id-parceiro="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
+                            '<a href="" id-parceiro="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>' +
                             '<a id-parceiro="'+row.id+'" class="btn btn-success btn-sm" style="display: inline; margin-left: 4px" onclick="novoFrete('+ row.id +')"><i class="fa fa-truck"></i> Novo Frete</a>' +
-                            '<a id-parceiro="'+row.id+'" class="btn btn-info btn-sm" style="display: inline; margin-left: 4px" onclick="novaViagem('+ row.id +')"><i class="fa fa-plane"></i> Nova Viagem</a>';
+                            '<a class="btn btn-info btn-sm" style="display: inline; margin-left: 4px" onclick="novaViagem('+ row.id +')"><i class="fa fa-plane"></i> Nova Viagem</a>';
                 }
             },
         ],
@@ -123,4 +124,42 @@ function novoFrete(id){
 
 function novaViagem(id){
     window.location.href = '/painel/viagens/create-edit/'+id;
+    $(".overlay-loading").show();
+
+    if ($("#motorista option").size() > 1) {
+        $("#motorista").find('option')
+            .remove().end().append('<option value="0">Selecione um motorista</option>');
+    }
+
+    if ($("#caminhao option").size() > 1) {
+        $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
+    }
+
+
+    $.getJSON('/painel/viagens/busca-motorista/' + id, function (dados) {
+        // console.log(dados);
+        console.log("Abaixo vem o Length dos Motoristas");
+
+        $.each(dados, function (i, obj) {
+            // console.log(i);
+            console.log(obj);
+            option = '<option value="' + obj.id + '">' + obj.nome + '</option>';
+            $("#motorista").append(option);
+        });
+    });
+    // console.log(idCaminhao);
+    $.getJSON('/painel/viagens/busca-caminhao/' + id, function (dados) {
+
+        $.each(dados, function (i, obj) {
+            // console.log(i);
+            // console.log(dados[i]);
+            option = '<option value="' + obj.id + '">' + obj.placa + ' - ' + obj.modelo + '</option>';
+            $("#caminhao").append(option);
+        });
+
+        $(".overlay-loading").hide();
+    });
+
+
+
 }

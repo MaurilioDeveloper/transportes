@@ -46,16 +46,39 @@ class ViagemController extends Controller
         return view('painel.viagens.index');
     }
 
-    public function create($idViagem=null)
+    public function create($idViagemParceiro=null)
     {
 
-        $nomeViagem = '';
+        $nomeViagemParceiro = '';
 
-        if(isset($idViagem)){
-            $nomeViagem = $this->parceiro->where('id', $idViagem)->first();
+        if(isset($idViagemParceiro)){
+            $nomeViagemParceiro = $this->parceiro->where('id', $idViagemParceiro)->first();
+            $idParceiro = $nomeViagemParceiro['id'];
 //            dd($nomeViagem);
-            $nomeViagem = $nomeViagem['nome'];
+            $nomeViagemParceiro = $nomeViagemParceiro['nome'];
+
+            $dadosCaminhao =
+                DB::select(
+                     DB::raw("
+                          select c.placa, c.modelo, c.id from parceiros p, caminhoes c
+                          where c.id_parceiro = p.id
+                          and c.id_parceiro = $idParceiro
+                    ")
+                );
+
+            $dadosMotorista =
+            DB::select(
+                DB::raw("
+                      select m.nome, m.id from parceiros p, motoristas m
+                      where m.id_parceiro = p.id
+                      and m.id_parceiro = $idParceiro
+                    ")
+            );
+
+
         }
+
+
 
         $fretes = DB::select(
             DB::raw("SELECT p.nome, f.tipo, f.identificacao, od.cidade as cidade_origem, od.cidade as cidade_destino, f.id
@@ -86,7 +109,7 @@ class ViagemController extends Controller
 //        dd($estados);
 
         $titulo = "Cadastrar Viagens";
-        return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades', 'nomeViagem', 'idViagem'));
+        return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades', 'nomeViagemParceiro', 'idViagemParceiro', 'dadosCaminhao', 'dadosMotorista'));
     }
 
     public function store()
