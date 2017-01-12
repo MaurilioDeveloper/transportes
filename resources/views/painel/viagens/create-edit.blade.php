@@ -160,7 +160,7 @@
                     @if(isset($viagem->id) && $viagem->id > 0)
                         <div class="form-group col-md-3">
                             <label><hr/></label>
-                            <a style="text-decoration: none" class="btn btn-info" onclick="verHistorico()"><i class="fa fa-history"></i> Ver Histórico</a>
+                            <a style="text-decoration: none" class="btn btn-info" onclick="verHistorico()"><i class="fa fa-history"></i> Ver Histórico <span class="badge badge-primary">@if(isset($historicoViagens)){{count($historicoViagens)}}@endif</span></a>
                         </div>
                     @endif
                     <div class="form-group col-md-6">
@@ -354,7 +354,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 style="text-align: center;" class="modal-title" id="myModalLabel"><i class="fa fa-info"></i> Historico da Viagem (Mudança de STATUS)</h4>
+                <h4 style="text-align: center;" class="modal-title" id="myModalLabel"><i class="fa fa-info"></i> Histórico da Viagem (Mudança de STATUS)</h4>
             </div>
             <div class="modal-body">
                 <table class="table table-bordered">
@@ -369,12 +369,14 @@
                     @if(isset($historicoViagens))
                         @forelse($historicoViagens as $historico)
                             <tr>
-                                <td>{{ implode('/',array_reverse(explode('-', $historico->data))) }}</td>
+                                <td>{{ date('d/m/Y H:i:s', strtotime(implode('/', explode('-', $historico->created_at)))) }}</td>
                                 <td>{{$historico->status}}</td>
                                 <td>{{$historico->name}}</td>
                             </tr>
                         @empty
-
+                            <tr>
+                                <td colspan="3">Nenhum histórico salvo</td>
+                            </tr>
                         @endforelse
                     @endif
 

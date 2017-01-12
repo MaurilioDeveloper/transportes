@@ -131,6 +131,8 @@ class FreteController extends Controller
     public function deleteFrete($id)
     {
         Frete::findOrFail($id)->delete();
+        FreteViagem::where('id_frete', $id)->delete();
+        HistoricoFrete::where('id_frete',$id)->delete();
         return 1;
     }
 

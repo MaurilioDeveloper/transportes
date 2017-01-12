@@ -264,6 +264,7 @@ class ViagemController extends Controller
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao",  "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
             ->where('fretes_viagens.id_viagem', $viagem->id)
             ->get();
+
         //dd($fretesAdicionados);
 
         $fretesAdd = $this->freteViagem->all()->where('id_viagem', $viagem->id);
@@ -415,6 +416,7 @@ class ViagemController extends Controller
     {
         Viagem::findOrFail($id)->delete();
         FreteViagem::where('id_viagem', $id)->delete();
+        HistoricoFrete::where('id_frete',$id)->delete();
         return 1;
     }
 
