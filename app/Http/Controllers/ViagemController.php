@@ -74,6 +74,7 @@ class ViagemController extends Controller
                       and m.id_parceiro = $idParceiro
                     ")
             );
+            
 
 
         }

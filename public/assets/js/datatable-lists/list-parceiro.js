@@ -1,6 +1,6 @@
 $.fn.dataTable.ext.errMode = 'throw';
 //var editor; // use a global for the submit and return data rendering in the examples
-$(document).ready(function() {
+$(document).ready(function () {
 
 
 // Deletar Parceiro
@@ -15,9 +15,9 @@ $(document).ready(function() {
             width: 400,
             modal: true,
             buttons: {
-                "Sim": function() {
+                "Sim": function () {
                     $.ajax({
-                        url: "/painel/parceiros/delete-parceiro/"+id,
+                        url: "/painel/parceiros/delete-parceiro/" + id,
                         type: "GET",
                         success: function (data) {
                             if (data == "1") {
@@ -28,61 +28,65 @@ $(document).ready(function() {
                             }
                         }
                     });
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 },
-                "Não": function() {
-                    $( this ).dialog( "close" );
+                "Não": function () {
+                    $(this).dialog("close");
                 }
             }
         });
-    } );
-
+    });
 
 
     var palavraPesquisa = $("#palavraPesquisa").val();
 
     $('#parceiros-table').DataTable({
         processing: true,
-        "oSearch":  {"sSearch": palavraPesquisa},
+        "oSearch": {"sSearch": palavraPesquisa},
         serverSide: true,
         responsive: {
             details: {
-                display: $.fn.dataTable.Responsive.display.modal( {
-                    header: function ( row ) {
+                display: $.fn.dataTable.Responsive.display.modal({
+                    header: function (row) {
                         var data = row.data();
-                        return 'Details for '+data[0]+' '+data[1];
+                        return 'Details for ' + data[0] + ' ' + data[1];
                     }
-                } ),
-                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                }),
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll({
                     tableClass: 'table'
-                } )
+                })
             }
         },
         rowId: 'id',
         ajax: "parceiros/listaParceiros",
         columns: [
 
-            { data: 'nome', name: 'parceiros.nome'},
+            {data: 'nome', name: 'parceiros.nome'},
             // { data: 'documento', name: 'parceiros.documento' },
-            { data: 'email', name: 'parceiros.email' },
-            { data: 'telefone', name: 'parceiros.telefone' },
+            {data: 'email', name: 'parceiros.email'},
+            {data: 'telefone', name: 'parceiros.telefone'},
             // { data: 'data_nasc', name: 'parceiros.data_nasc' },
             // { data: 'sexo', name: 'parceiros.sexo' },
             // { data: 'cep', name: 'parceiros.cep' },
-            { data: 'endereco', name: 'parceiros.endereco' },
+            {data: 'endereco', name: 'parceiros.endereco'},
             // { data: 'numero', name: 'parceiros.numero' },
-            { data: 'bairro', name: 'parceiros.bairro' },
-            { data: 'cidade', name: 'parceiros.cidade' },
+            {data: 'bairro', name: 'parceiros.bairro'},
+            {data: 'cidade', name: 'parceiros.cidade'},
             // { data: 'estado', name: 'parceiros.estado' },
             {
                 data: 'nome',
                 className: "center",
-                render: function(data, type, row){
+                render: function (data, type, row) {
                     console.log(row);
-                    return  '<a href="parceiros/edit/'+row.id+'" id-parceiro="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
-                            '<a href="" id-parceiro="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>' +
-                            '<a id-parceiro="'+row.id+'" class="btn btn-success btn-sm" style="display: inline; margin-left: 4px" onclick="novoFrete('+ row.id +')"><i class="fa fa-truck"></i> Novo Frete</a>' +
-                            '<a class="btn btn-info btn-sm" style="display: inline; margin-left: 4px" onclick="novaViagem('+ row.id +')"><i class="fa fa-plane"></i> Nova Viagem</a>';
+                    var html = '<a href="parceiros/edit/' + row.id + '" id-parceiro="' + row.id + '" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
+                        '<a href="" id-parceiro="' + row.id + '" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>' +
+                        '<a id-parceiro="' + row.id + '" class="btn btn-success btn-sm" style="display: inline; margin-left: 4px" onclick="novoFrete(' + row.id + ')"><i class="fa fa-truck"></i> Novo Frete</a>';
+                    if (row.caminhoes > 0 && row.motoristas > 0) {
+                        html +='<a class="btn btn-info btn-sm v' + row.id + '" style="display: inline; margin-left: 4px" onclick="novaViagem(' + row.id + ')"><i class="fa fa-plane"></i> Nova Viagem</a>';
+                    }else{
+                        html += '<a disabled="true" class="btn btn-info btn-sm v' + row.id + '" style="display: inline; margin-left: 4px" onclick="novaViagem(' + row.id + ')"><i class="fa fa-plane"></i> Nova Viagem</a>'
+                    }
+                    return html;
                 }
             },
         ],
@@ -116,50 +120,14 @@ $(document).ready(function() {
 
     $('.dataTables_length').hide();
 
-} );
+});
 
-function novoFrete(id){
-    window.location.href = '/painel/fretes/create/'+id;
+function novoFrete(id) {
+    window.location.href = '/painel/fretes/create/' + id;
 }
 
-function novaViagem(id){
-    window.location.href = '/painel/viagens/create-edit/'+id;
+function novaViagem(id) {
+    window.location.href = '/painel/viagens/create-edit/' + id;
     $(".overlay-loading").show();
-
-    if ($("#motorista option").size() > 1) {
-        $("#motorista").find('option')
-            .remove().end().append('<option value="0">Selecione um motorista</option>');
-    }
-
-    if ($("#caminhao option").size() > 1) {
-        $("#caminhao").find('option').remove().end().append('<option value="0">Selecione um caminhão</option>')
-    }
-
-
-    $.getJSON('/painel/viagens/busca-motorista/' + id, function (dados) {
-        // console.log(dados);
-        console.log("Abaixo vem o Length dos Motoristas");
-
-        $.each(dados, function (i, obj) {
-            // console.log(i);
-            console.log(obj);
-            option = '<option value="' + obj.id + '">' + obj.nome + '</option>';
-            $("#motorista").append(option);
-        });
-    });
-    // console.log(idCaminhao);
-    $.getJSON('/painel/viagens/busca-caminhao/' + id, function (dados) {
-
-        $.each(dados, function (i, obj) {
-            // console.log(i);
-            // console.log(dados[i]);
-            option = '<option value="' + obj.id + '">' + obj.placa + ' - ' + obj.modelo + '</option>';
-            $("#caminhao").append(option);
-        });
-
-        $(".overlay-loading").hide();
-    });
-
-
 
 }

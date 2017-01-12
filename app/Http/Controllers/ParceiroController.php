@@ -199,6 +199,8 @@ class ParceiroController extends Controller
     {
 
          return Datatables::of(Parceiro::query()
+             ->leftJoin('motoristas','motoristas.id_parceiro','=','parceiros.id')
+             ->leftJoin('caminhoes','caminhoes.id_parceiro','=','parceiros.id')
             ->select("parceiros.id",
                     "parceiros.nome",
                     "parceiros.email",
@@ -206,7 +208,11 @@ class ParceiroController extends Controller
                     "parceiros.endereco",
                     "parceiros.bairro",
                     "parceiros.cidade"
-            ))
+//                    "count(motoristas.id)",
+//                    "count(caminhoes.id)"
+            )->selectRaw('count(motoristas.id) as motoristas')
+            ->selectRaw('count(caminhoes.id) as caminhoes')
+             ->groupBy('parceiros.id'))
             ->make(true);
         //return Datatables::of(Visitante::query()
         //      ->select("visitantes.nome", "visitantes.estado", "visitantes.cidade", "visitantes.telefone", "visitantes.cargo", "visitantes.cidade", "visitantes.email"))->make(true);
