@@ -90,11 +90,15 @@
                         @if(isset($viagem->id_parceiro_viagem))
                             <option value="{{$viagem->id_parceiro_viagem}}" selected>{{$viagemNome}}</option>
                         @else
-                            <option value="0" selected>Selecione um parceiro</option>
+                            @if(isset($idViagem))
+                                <option value="{{$idViagem}}" selected>{{$nomeViagem}}</option>
+                            @else
+                                <option value="0" selected>Selecione um parceiro</option>
+                            @endif
                         @endif
                     </select>
                 </div>
-                <div id="dados" style="display: none;">
+                <div id="dados" style="@if(!isset($idViagem) && !isset($viagem->id_parceiro)) display: none; @endif">
                     <hr style="border: 1px solid #3c8dbc"/>
                     <input id="idMotorista" value="@if(isset($viagem->id_motorista)){{$viagem->id_motorista}}@endif" type="hidden" />
                     <input id="idCaminhao" value="@if(isset($viagem->id_caminhao)){{$viagem->id_caminhao}}@endif" type="hidden" />

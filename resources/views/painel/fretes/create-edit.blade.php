@@ -62,7 +62,11 @@
                             @if(isset($frete->id_parceiro))
                                 <option value="{{$frete->id_parceiro}}" selected>{{$freteParceiroNome}}</option>
                             @else
-                                <option value="0" selected>Selecione um parceiro</option>
+                                @if(isset($idParceiro))
+                                    <option value="{{$idParceiro}}" selected>{{$nomeParceiro}}</option>
+                                @else
+                                    <option value="0" selected>Selecione um parceiro</option>
+                                @endif
                             @endif
                         </select>
                     </div>
@@ -73,7 +77,7 @@
                         <a href="{{route('adicionarParceiro')}}" style="text-decoration: none"
                            class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Cadastrar Novo Parceiro</a>
                     </div>
-                    <div id="dados1" style="display: none;">
+                <div id="dados1" style="@if(!isset($idParceiro) && !isset($frete->id_parceiro))display: none; @endif">
 
                         {!! Form::hidden('id_usuario', auth()->user()->id, ['class' => '','style' => 'width:217px; background: #f0f0f0 !important; color: #aaa !important; border: #ccc;']) !!}
                         <div class="form-group col-md-4">
@@ -96,7 +100,7 @@
                     </div>
                 </fieldset>
 
-                <div id="dados2" style="display: none">
+                <div id="dados2" style="@if(!isset($idParceiro) && !isset($frete->id_parceiro))display: none; @endif">
 
                 <fieldset class="callout column small-12">
                     <legend><b>Origem - Destino</b></legend>
@@ -255,7 +259,7 @@
 
                     @if(isset($isentrega) && $isentrega === "on")
                         <input type="hidden" value="{{$isentrega}}" id="isentregaON" />
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-9">
                             <div class="switch large">
                                 <input class="switch-input ativo" id="unit-yes-no4" value="{{$isentrega}}" name="isentrega" type="checkbox">
                                 <label class="switch-paddle" id="colet" for="unit-yes-no4">
@@ -265,7 +269,7 @@
                             </div>
                         </div>
                     @else
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-9">
                         <div class="switch large">
                             <input class="switch-input" id="unit-yes-no4" name="isentrega" type="checkbox">
                             <label class="switch-paddle" id="colet" for="unit-yes-no4">

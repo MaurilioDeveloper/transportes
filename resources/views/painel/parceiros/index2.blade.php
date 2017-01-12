@@ -66,38 +66,14 @@
                         <input type="hidden" id="palavraPesquisa" value="{{$palavraPesquisa}}" />
                     @endif
                     <div class='box-body'>
-                        {{--@if(isset($dataBusca))--}}
-                            {{--<div ng-controller="CtrlListaParceirosSearch">--}}
-                        {{--@else--}}
 
-                        @if(isset($dadosPesquisa))
-                            <table class="table table-bordered" id="parceiros-table">
-                                <tr style='background: #2e6da4; color: white;'>
-                                    <th style="text-align: center;">Nome</th>
-                                    {{--<th style="text-align: center;">Cnpj/Cpf</th>--}}
-                                    {{--<th>Data Nasc</th>--}}
-                                    <th>Email</th>
-                                    <th style="text-align: center;">Telefone</th>
-                                    {{--<th>Sexo</th>--}}
-                                    <th style="text-align: center;">Endereco</th>
-                                    {{--<th>Numero</th>--}}
-                                    <th style="text-align: center;">Cidade</th>
-                                    {{--<th style="text-align: center;">Estado</th>--}}
-                                    <th style="width: 160px;">Ação</th>
-                                </tr>
-                                <tr class="warning">
-                                </tr>
-
-                            </table>
-
-                        @else
                             <table class="table table-bordered" id="parceiros-table" style="width: 100%">
                                 <thead>
                                     <tr style='background: #2e6da4; color: white;'>
                                         <th style="text-align: center;">Nome</th>
                                         {{--<th style="text-align: center;">CNPJ/CPF</th>--}}
                                         {{--<th>Data Nasc</th>--}}
-                                        <th>Email</th>
+                                        <th style="text-align: center">Email</th>
                                         <th style="text-align: center;">Telefone</th>
                                         {{--<th style="text-align: center;">CEP</th>--}}
                                         {{--<th>Sexo</th>--}}
@@ -106,7 +82,7 @@
                                         {{--<th>Numero</th>--}}
                                         <th style="text-align: center;">Cidade</th>
                                         {{--<th style="text-align: center;">Estado</th>--}}
-                                        <th style="width: 140px;">Ação</th>
+                                        <th style="width: 140px; text-align: center;">Ação</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -115,7 +91,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        @endif
 
                     </div>
                 </div>

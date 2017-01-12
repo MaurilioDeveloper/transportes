@@ -46,8 +46,16 @@ class ViagemController extends Controller
         return view('painel.viagens.index');
     }
 
-    public function create()
+    public function create($idViagem=null)
     {
+
+        $nomeViagem = '';
+
+        if(isset($idViagem)){
+            $nomeViagem = $this->parceiro->where('id', $idViagem)->first();
+//            dd($nomeViagem);
+            $nomeViagem = $nomeViagem['nome'];
+        }
 
         $fretes = DB::select(
             DB::raw("SELECT p.nome, f.tipo, f.identificacao, od.cidade as cidade_origem, od.cidade as cidade_destino, f.id
@@ -78,7 +86,7 @@ class ViagemController extends Controller
 //        dd($estados);
 
         $titulo = "Cadastrar Viagens";
-        return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades'));
+        return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades', 'nomeViagem', 'idViagem'));
     }
 
     public function store()
@@ -226,8 +234,9 @@ class ViagemController extends Controller
         $viagem = Viagem::findOrFail($id);
         $viagem['data_inicio'] = implode('/', array_reverse(explode('-', $viagem->data_inicio)));
         $viagem['data_fim'] = implode('/', array_reverse(explode('-', $viagem->data_fim)));
-        $viagemNome = $this->parceiro->where('id', $viagem->id_parceiro_viagem)->pluck('nome')->toJson();
-        $viagemNome = str_replace('["', '', str_replace('"]', '', $viagemNome));
+        $viagemNome = $this->parceiro->where('id', $viagem->id_parceiro_viagem)->first();
+        $viagemNome = $viagemNome['nome'];
+
         $nomeCaminhao = Viagem::query()
             ->join('caminhoes', 'caminhoes.id', '=', 'viagens.id_caminhao')
             ->select("caminhoes.modelo", "caminhoes.placa")->where('id_caminhao', $viagem->id_caminhao)

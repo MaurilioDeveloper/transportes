@@ -42,7 +42,7 @@ $(document).ready(function() {
     var palavraPesquisa = $("#palavraPesquisa").val();
 
     $('#parceiros-table').DataTable({
-        // processing: true,
+        processing: true,
         "oSearch":  {"sSearch": palavraPesquisa},
         serverSide: true,
         responsive: {
@@ -79,9 +79,9 @@ $(document).ready(function() {
                 className: "center",
                 render: function(data, type, row){
                     return '<a href="parceiros/edit/'+row.id+'" id-parceiro="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
-                           '<a href="" id-parceiro="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>'
-                            // '<a id-parceiro="'+row.id+'" class="btn btn-success btn-sm" style="display: inline" onclick="novoFrete('+ row.id +')"><i class="fa fa-truck"></i> Novo Frete</a>' +
-                            // '<a href="viagens/create" id-parceiro="'+row.id+'" class="btn btn-info btn-sm" style="display: inline" onclick="novaViagem('+ row.id +')"><i class="fa fa-plane"></i> Nova Viagem</a>';
+                           '<a href="" id-parceiro="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>' +
+                            '<a id-parceiro="'+row.id+'" class="btn btn-success btn-sm" style="display: inline; margin-left: 4px" onclick="novoFrete('+ row.id +')"><i class="fa fa-truck"></i> Novo Frete</a>' +
+                            '<a id-parceiro="'+row.id+'" class="btn btn-info btn-sm" style="display: inline; margin-left: 4px" onclick="novaViagem('+ row.id +')"><i class="fa fa-plane"></i> Nova Viagem</a>';
                 }
             },
         ],
@@ -118,9 +118,9 @@ $(document).ready(function() {
 } );
 
 function novoFrete(id){
-    window.location.href = '/painel/fretes/create';
+    window.location.href = '/painel/fretes/create/'+id;
 }
 
 function novaViagem(id){
-
+    window.location.href = '/painel/viagens/create-edit/'+id;
 }

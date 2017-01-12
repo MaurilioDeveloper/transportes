@@ -7,10 +7,6 @@ $(document).ready(function () {
         });
     } );
     
-    if($("#frete-id-dados").val() > 0){
-        $("#dados1").show();
-        $("#dados2").show();
-    }
     $(".select2_frete").select2({
         "language": "pt-BR",
         ajax: {

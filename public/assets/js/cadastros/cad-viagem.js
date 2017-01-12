@@ -43,7 +43,7 @@ $(".select2_viagem").select2({
     minimumInputLength: 1
 });
 
-$("#dados").hide();
+// $("#dados").hide();
 
 
 $(".select2_viagem").on('select2:select', function (e) {

@@ -19,6 +19,7 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/lista-fretes', 'FreteController@listaFretes')->name('listaFretes');
         Route::get('/delete-frete/{id}', 'FreteController@deleteFrete')->name('deleteFrete');
         Route::get('/create', 'FreteController@create')->name('adicionarFrete');
+        Route::get('/create/{id}', 'FreteController@create')->name('adicionarFrete2');
         Route::get('/edit/{id}', 'FreteController@edit');
         Route::get('/busca-por-status/{status}', 'FreteController@buscaPorStatus');
         Route::post('/cadastrar-frete', 'FreteController@store')->name('cadastrarFrete');
@@ -72,6 +73,7 @@ Route::group(['prefix' => 'painel'], function(){
     //Viagens
     Route::group(['prefix' => 'viagens'], function(){
         Route::get('/create-edit', 'ViagemController@create')->name('cadastrarViagens');
+        Route::get('/create-edit/{id}', 'ViagemController@create')->name('cadastrarViagens2');
         Route::get('/busca-parceiro/{name}', 'ViagemController@buscaParceiro')->name('buscaParceiro');
         Route::get('/busca-motorista/{id}', 'ViagemController@buscaMotorista')->name('buscaMotorista');
         Route::get('/busca-caminhao/{id}', 'ViagemController@buscaCaminhao')->name('buscaCaminhao');

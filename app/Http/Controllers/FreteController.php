@@ -70,14 +70,25 @@ class FreteController extends Controller
         return view('painel.fretes.index', compact('parceiros'));
     }
 
-    public function create()
+    public function create($idParceiro=null)
     {
 //        $status = Frete::STATUS;
+        $nomeParceiro = '';
+
+        if(isset($idParceiro)){
+            $nomeParceiro = $this->parceiro->where('id', $idParceiro)->first();
+//            $nomeParceiro = str_replace('["', '', str_replace('"]', '', $nomeParceiro));
+//            dd($nomeParceiro);
+            $nomeParceiro = $nomeParceiro['nome'];
+
+//            return utf8_encode(str_replace('["', '', str_replace('"]', '', $nomeParceiro)));
+        }
+
         $titulo = "Cadastrar Frete";
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
-//        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
 
-        return view('painel.fretes.create-edit', compact('titulo', 'cidades'));
+
+        return view('painel.fretes.create-edit', compact('titulo', 'cidades', 'idParceiro', 'nomeParceiro'));
     }
 
     public function listaFretes()
@@ -135,6 +146,8 @@ class FreteController extends Controller
         HistoricoFrete::where('id_frete',$id)->delete();
         return 1;
     }
+
+
 
     public function store()
     {
@@ -268,9 +281,9 @@ class FreteController extends Controller
         $data_hoje = implode('/',array_reverse(explode('-',$frete->data_hoje)));
         $data_inicio = implode('/',array_reverse(explode('-',$frete->data_inicio)));
         $data_fim = implode('/',array_reverse(explode('-',$frete->data_fim)));
-        $freteParceiro = $this->parceiro->where('id', $frete->id_parceiro)->pluck('nome')->toJson();
-        $freteParceiroColetor = $this->parceiro->where('id', $frete->id_parceiro_coletor)->pluck('nome')->toJson();
-        $freteParceiroEntregador = $this->parceiro->where('id', $frete->id_parceiro_entregador)->pluck('nome')->toJson();
+        $freteParceiro = $this->parceiro->where('id', $frete->id_parceiro)->first();
+        $freteParceiroColetor = $this->parceiro->where('id', $frete->id_parceiro_coletor)->first();
+        $freteParceiroEntregador = $this->parceiro->where('id', $frete->id_parceiro_entregador)->first();
         $fretePessoaFJ = $this->parceiro->where('id', $frete->id_parceiro)->pluck('pessoa')->toJson();
         $sexoMF = $this->parceiro->where('id', $frete->id_parceiro)->pluck('sexo')->toJson();
 //        dd($sexo);
@@ -279,9 +292,10 @@ class FreteController extends Controller
 //        $freteParceiro =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
 //                    ->select("parceiros.nome")->where('id_parceiro', $frete->id_parceiro)->where('fretes.id', $id)->get('nome')->toJson();
 //        dd($freteParceiro);
-        $freteParceiroNome = str_replace('["', '', str_replace('"]', '',$freteParceiro));
-        $freteParceiroColetorNome = str_replace('["', '', str_replace('"]', '',$freteParceiroColetor));
-        $freteParceiroEntregadorNome = str_replace('["', '', str_replace('"]', '',$freteParceiroEntregador));
+        $freteParceiroNome = $freteParceiro['nome'];
+        $freteParceiroColetorNome = $freteParceiroColetor['nome'];
+        $freteParceiroEntregadorNome = $freteParceiroEntregador['nome'];
+
 //        dd(str_replace('["', '', str_replace('"]', '',$freteParceiro)));
         $iscoleta = $frete->iscoleta;
         $isentrega = $frete->isentrega;
