@@ -210,7 +210,7 @@
                             <option value="0">Selecione um status</option>
                             @foreach(\App\Frete::STATUS as $key => $value)
                             @if(isset($frete->status) && $value === $frete->status)
-                                <option  selected>{{$frete->status}}</option>
+                                <option value="{{$key}}" selected>{{$frete->status}}</option>
                             @else
                                 <option value="{{$key}}">{{$value}}</option>
                             @endif
