@@ -121,7 +121,7 @@ class FreteController extends Controller
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.id", "od.cidade", "od2.cidade", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"))
+            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"))
             ->make(true);
 
 

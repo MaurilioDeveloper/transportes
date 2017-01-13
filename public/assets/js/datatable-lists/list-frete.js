@@ -62,8 +62,8 @@ $(document).ready(function() {
         columns: [
 
             { data: 'nome', "searchable": true, name: 'parceiros.nome'},
-            { data: 'cidade', name: 'od.cidade'},
-            { data: 'cidade', name: 'od2.cidade' },
+            { data: 'cidade_origem', name: 'od.cidade'},
+            { data: 'cidade_destino', name: 'od2.cidade' },
             { data: 'identificacao', name: 'fretes.identificacao', name: 'fretes.chassi', render: function (data, type, row) {
                 if(row.identificacao == ''){
                     return row.chassi;
