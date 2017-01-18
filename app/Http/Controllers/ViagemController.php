@@ -91,7 +91,6 @@ class ViagemController extends Controller
                     INNER JOIN origens_destinos od2
                     ON f.id_cidade_destino = od2.id
                     WHERE f.status = 'Aguardando Embarque'
-                    AND NOT EXISTS (select 1 from fretes_viagens WHERE fretes_viagens.id_frete = f.id)
                        ORDER BY p.nome")
         );
 //        $fretes = Frete::query()
