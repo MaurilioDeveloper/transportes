@@ -82,7 +82,7 @@ class ViagemController extends Controller
 
 
         $fretes = DB::select(
-            DB::raw("SELECT p.nome, f.tipo, f.identificacao, od.cidade as cidade_origem, od.cidade as cidade_destino, f.id
+            DB::raw("SELECT p.nome, f.tipo, IF(length(f.identificacao)>0,f.identificacao, f.chassi) as identificacao, od.cidade as cidade_origem, od.cidade as cidade_destino, f.id
                     FROM fretes f
                     INNER JOIN parceiros p
                     ON f.id_parceiro = p.id
@@ -91,8 +91,7 @@ class ViagemController extends Controller
                     INNER JOIN origens_destinos od2
                     ON f.id_cidade_destino = od2.id
                     WHERE f.status = 'Aguardando Embarque'
-                    AND NOT EXISTS (select 1 from fretes_viagens 
-                    INNER JOIN fretes ON fretes_viagens.id_frete = fretes.id)
+                    AND NOT EXISTS (select 1 from fretes_viagens WHERE fretes_viagens.id_frete = f.id)
                     ")
         );
 //        $fretes = Frete::query()
