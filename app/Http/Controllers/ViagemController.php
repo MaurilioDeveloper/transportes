@@ -448,7 +448,7 @@ class ViagemController extends Controller
     {
         Viagem::findOrFail($id)->delete();
         FreteViagem::where('id_viagem', $id)->delete();
-        HistoricoFrete::where('id_frete',$id)->delete();
+        HistoricoViagem::where('id_viagem',$id)->delete();
         return 1;
     }
 

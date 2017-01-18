@@ -221,6 +221,8 @@ $(document).ready(function () {
         var status = $("#status-select>option:selected").val();
         var cidade_origem = $("#cidade_origem>option:selected").val();
         var cidade_destino = $("#cidade_destino>option:selected").val();
+        var motorista = $("#motorista>option:selected").val();
+        var caminhao = $("#caminhao>option:selected").val();
         console.log(status);
 
         if(status == 0){
@@ -233,6 +235,14 @@ $(document).ready(function () {
         }
         if(cidade_destino == 0){
             alert("Por Favor, preencha o campo de CIDADE DESTINO.");
+            return false;
+        }
+        if(motorista == 0){
+            alert("Por Favor, selecione um MOTORISTA.");
+            return false;
+        }
+        if(caminhao == 0){
+            alert("Por Favor, selecione um CAMINHÃO.");
             return false;
         }
 
