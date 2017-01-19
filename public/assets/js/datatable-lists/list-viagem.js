@@ -62,8 +62,8 @@ $(document).ready(function() {
             { data: 'nome', name: 'parceiros.nome'},
             { data: 'status', name: 'viagens.status' },
             { data: 'horario_inicio', name: 'viagens.horario_inicio' },
-            { data: 'cidade_origem', name: 'viagens.cidade_origem' },
-            { data: 'cidade_destino', name: 'viagens.cidade_destino' },
+            { data: 'cidade_origem', name: 'od.cidade' },
+            { data: 'cidade_destino', name: 'od2.cidade' },
             {
                 data: 'nome',
                 className: "center",
@@ -73,6 +73,8 @@ $(document).ready(function() {
                     return '<a href="viagens/edit/'+row.id+'" id-viagem="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-viagem="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
                 }
             },
+            { data: null, name: 'f.chassi',visible:false },
+            { data: null, name: 'f.identificacao',visible:false },
         ],
         "language": {
             "url": "/assets/Portuguese-Brasil.json"
