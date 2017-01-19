@@ -13,6 +13,7 @@ use App\HistoricoViagem;
 use DB;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
+use Yajra\Datatables\Engines\QueryBuilderEngine;
 
 class ViagemController extends Controller
 {
@@ -198,12 +199,19 @@ class ViagemController extends Controller
 
     public function listaFretes()
     {
-        return Datatables::of(Viagem::query()
+        /**
+         * @var $dt QueryBuilderEngine
+         */
+        $dt = \Yajra\Datatables\Datatables::of(Viagem::query()
             ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
             ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'viagens.id_cidade_destino')
-            ->select("viagens.id", "parceiros.nome", "viagens.status", "viagens.horario_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino"))
-            ->make(true);
+            ->leftJoin('fretes_viagens as fv','fv.id_viagem','=','viagens.id')
+            ->leftJoin('fretes as f','f.id','=','fv.id_frete')
+            ->groupBy('viagens.id')
+            ->select("viagens.id", "parceiros.nome", "viagens.status", "viagens.horario_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino"));
+
+        return $dt->make(true);
 
 //        return $this->frete->get()->where('status', 'Aguardando Embarque');
     }

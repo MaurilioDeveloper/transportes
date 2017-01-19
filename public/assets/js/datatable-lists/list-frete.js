@@ -80,6 +80,7 @@ $(document).ready(function() {
                         return '<a href="fretes/edit/'+row.id+'" id-frete="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-frete="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
                 }
             },
+            { data: 'chassi', name: 'fretes.chassi',visible:false }
         ],
         "language": {
             "url": "/assets/Portuguese-Brasil.json"
