@@ -376,90 +376,36 @@ class ViagemController extends Controller
 
             return $displayErrors;
         }
-//        dd($viagem);
 
         $viagemObj = $viagem->fill($dadosForm)->save();
 
 
-        if (is_array($dadosFormFretes)) {
-//            dd($dadosFormFretes);
-            foreach ($dadosFormFretes as $key => $value) {
+        // salvando fretes da viagem
 
-                if($value == null){
-                    $fretesAdicionado = null;
-                    FreteViagem::where('id_viagem', $id)->delete();
-                }else {
-                    $fretesAdicionado = array_keys($value);
+        // primeiramente, removendo fretes desta viagem
+        FreteViagem::where('id_viagem', $id)->delete();
+        if (is_array($dadosFormFretes['fretes'])) {
+            foreach ($dadosFormFretes['fretes'] as $codigo_frete) {
+                // vendo se precisa modificar o status
+                if ($dadosForm['status'] == 'Concluída') {
+                    $frete = Frete::find($codigo_frete);
+                    $frete->fill([
+                        'status' => 'Entregue'
+                    ])->save();
+                } elseif ($dadosForm['status'] == 'Em Viagem') {
+                    $frete = Frete::find($codigo_frete);
+                    $frete->fill([
+                        'status' => 'Em trânsito'
+                    ])->save();
                 }
-
-
-//                dd($dadosFormFretes);
-                if(count($value) > 0){
-                {
-                    $chave = array_keys($fretesViagemDB->toArray());
-                    $countFrete = count($chave);
-                    $countValues = count($value);
-                }
-//                dd($fretesViagemDB);
-                if (isset($chave) && count($fretesViagemDB) > 0) {
-
-//                    dd($fretesAdicionado);
-                    for ($i = 0; $i < $countFrete; $i++) {
-//                        dd($countFrete);
-                        if (!($viagemFrete = FreteViagem::find($chave[$i]))) {
-                            throw new ModelNotFoundException("Fretes Viagem não foi encontrado");
-                        } else {
-                            $frete = Frete::find($fretesAdicionado[$i]);
-                            $viagemFrete->delete($chave[$i]);
-
-                            if($dadosForm['status'] == 'Concluída'){
-                                $frete->fill([
-                                    'status' => 'Entregue'
-                                ])->save();
-                            }
-                            if($dadosForm['status'] == 'Em Viagem'){
-                                $frete->fill([
-                                    'status' => 'Em trânsito'
-                                ])->save();
-                            }
-
-                            if($value != null){
-                                FreteViagem::create([
-                                    'id_frete' => $fretesAdicionado[$i],
-                                    'id_viagem' => $viagem->id
-                                ]);
-                            }
-                        }
-                    }
-
-                } else {
-                    $count = count($fretesAdicionado);
-                    for ($i = 0; $i < $count; $i++) {
-                        $frete = Frete::find($fretesAdicionado[$i]);
-
-                        if($dadosForm['status'] == 'Concluída'){
-                            $frete->fill([
-                                'status' => 'Entregue'
-                            ])->save();
-                        }
-                        if($dadosForm['status'] == 'Em Viagem'){
-                            $frete->fill([
-                                'status' => 'Em trânsito'
-                            ])->save();
-                        }
-
-                        $fretesAd = FreteViagem::create([
-                            'id_frete' => $fretesAdicionado[$i],
-                            'id_viagem' => $viagem->id
-                        ]);
-                    }
-                }
-
-            }
-
+                FreteViagem::create([
+                    'id_frete' => $codigo_frete,
+                    'id_viagem' => $viagem->id
+                ]);
             }
         }
 
+        // historico de modificacao da status da viagem
         $confirmHistorico = HistoricoViagem::where('id_viagem', $viagem->id)->orderBy('data', 'DESC')->get();
         if(count($confirmHistorico)==0 || $confirmHistorico[0]['status'] != $dadosForm['status']){
             $historico = $this->historico->create([
@@ -468,10 +414,8 @@ class ViagemController extends Controller
                 'id_usuario' => auth()->user()->id,
                 'id_viagem' => $viagem->id
             ]);
-
         }
         return 1;
-
     }
 
 
