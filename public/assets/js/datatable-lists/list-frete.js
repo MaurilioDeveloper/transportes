@@ -9,32 +9,35 @@ $(document).ready(function() {
 
         var id = $(this).attr("id-frete");
 
-        $("#dialog-confirm").dialog({
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            buttons: {
-                "Sim": function() {
-                    $.ajax({
-                        url: "/painel/fretes/delete-frete/"+id,
-                        type: "GET",
-                        success: function (data) {
-                            if (data == "1") {
-                                setTimeout(function () {
-                                    alert('Frete Excluido Com Sucesso');
-                                    window.location.href = '/painel/fretes';
-                                }, 2000);
+
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                buttons: {
+                    "Sim": function() {
+                        $.ajax({
+                            url: "/painel/fretes/delete-frete/"+id,
+                            type: "GET",
+                            success: function (data) {
+                                if (data == "1") {
+                                    setTimeout(function () {
+                                        alert('Frete Excluido Com Sucesso');
+                                        window.location.href = '/painel/fretes';
+                                    }, 2000);
+                                }
                             }
-                        }
-                    });
-                    $( this ).dialog( "close" );
-                },
-                "Não": function() {
-                    $( this ).dialog( "close" );
+                        });
+                        $( this ).dialog( "close" );
+                    },
+                    "Não": function() {
+                        $( this ).dialog( "close" );
+                    }
                 }
-            }
-        });
+            });
+
+        
     } );
 
 

@@ -84,6 +84,7 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/edit/{id}', 'ViagemController@edit')->name('editarViagem');
         Route::put('/update/{id}', 'ViagemController@update')->name('updateViagem');
         Route::get('/busca-dados/{id}', 'ViagemController@dadosViagem');
+        Route::get('/frete-presente-viagem/{idFrete}', 'ViagemController@fretePresenteViagem');
         Route::get('/', 'ViagemController@index')->name('listaViagens');
     });
 

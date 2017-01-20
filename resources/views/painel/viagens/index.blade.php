@@ -62,6 +62,8 @@
                             <thead>
                                 <tr style="background: #2e6da4; color: white">
                                     <th>Nome Parceiro</th>
+                                    <th>Motorista</th>
+                                    <th>Caminhão</th>
                                     <th>Status</th>
                                     <th>Horário Início</th>
                                     <th>Cidade Origem</th>

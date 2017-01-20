@@ -60,8 +60,10 @@ $(document).ready(function() {
         columns: [
 
             { data: 'nome', name: 'parceiros.nome'},
+            { data: 'motorista', name: 'motorista'},
+            { data: 'caminhao', name: 'caminhao'},
             { data: 'status', name: 'viagens.status' },
-            { data: 'horario_inicio', name: 'viagens.horario_inicio' },
+            { data: 'data_inicio', name: 'viagens.data_inicio' },
             { data: 'cidade_origem', name: 'od.cidade' },
             { data: 'cidade_destino', name: 'od2.cidade' },
             {
