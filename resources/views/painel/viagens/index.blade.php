@@ -65,7 +65,7 @@
                                     <th>Motorista</th>
                                     <th>Caminhão</th>
                                     <th>Status</th>
-                                    <th>Horário Início</th>
+                                    <th>Data Início</th>
                                     <th>Cidade Origem</th>
                                     <th>Cidade Destino</th>
                                     <th style="width: 80px">Ação</th>
