@@ -64,12 +64,12 @@ $(document).ready(function() {
         columns: [
 
             { data: 'nome', name: 'parceiros.nome'},
-            { data: 'motorista', name: 'motorista'},
-            { data: 'caminhao', name: 'caminhao'},
+            { data: 'motorista'},
+            { data: 'caminhao'},
             { data: 'status', name: 'viagens.status' },
             { type:'date', data: 'data_inicio', name: 'viagens.data_inicio',
                 render:function(a){
-                    var d=new Date(a.replace('-','/'));console.log(d);if(d == 'Invalid Date'){return '00/00/0000'}else{return d.toLocaleDateString()}
+                    var d=new Date(a.replace('-','/'));if(d == 'Invalid Date'){return '00/00/0000'}else{return d.toLocaleDateString()}
                 }
             },
             { data: 'cidade_origem', name: 'od.cidade' },
