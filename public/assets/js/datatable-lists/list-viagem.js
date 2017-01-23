@@ -63,7 +63,11 @@ $(document).ready(function() {
             { data: 'motorista', name: 'motorista'},
             { data: 'caminhao', name: 'caminhao'},
             { data: 'status', name: 'viagens.status' },
-            { data: 'data_inicio', name: 'viagens.data_inicio' },
+            { type:'date', data: 'data_inicio', name: 'viagens.data_inicio',
+                render:function(a){
+                    var d=new Date(a.replace('-','/'));console.log(d);if(d == 'Invalid Date'){return '00/00/0000'}else{return d.toLocaleDateString()}
+                }
+            },
             { data: 'cidade_origem', name: 'od.cidade' },
             { data: 'cidade_destino', name: 'od2.cidade' },
             {
