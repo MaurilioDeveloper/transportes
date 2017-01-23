@@ -123,6 +123,87 @@
                         </div>
                     </div>
                 </div>
+                <div class="box-body col-md-12">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Fretes em operação</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body no-padding" style="display: block;">
+                            <table class="table table-bordered">
+                                <tr style="background: #2e6da4; color: white">
+                                    <th>Data</th>
+                                    <th>Nome parceiro</th>
+                                    <th>Cidade Origem/Destino</th>
+                                    <th>Item (Tipo / Identificação)</th>
+                                    <th>Status</th>
+                                    <th>Ação</th>
+                                </tr>
+                                @forelse($fretesOp as $fp)
+                                    <tr style="cursor: pointer;" onclick="window.location='/painel/fretes/edit/{{$fp->id}}'">
+                                        <td>{{implode('/', array_reverse(explode('-',$fp->data_inicio)))}}</td>
+                                        <td>{{$fp->nome}}</td>
+                                        <td>{{$fp->cidade_origem}}/{{$fp->cidade_destino}}</td>
+                                        <td>{{$fp->tipo}} | {{$fp->identificacao}}</td>
+                                        <td>{{$fp->status}}</td>
+                                        <td><a href="/painel/fretes/{{$fp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="5">Nenhum frete em operação</td></tr>
+                                @endforelse
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body col-md-12">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Viagens em operação</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body no-padding" style="display: block;">
+                            <table class="table table-bordered">
+                                <tr style="background: #2e6da4; color: white">
+                                    <th>Data</th>
+                                    <th>Nome parceiro</th>
+                                    <th>Total fretes</th>
+                                    <th>Cidade Origem/Destino</th>
+                                    <th>Status</th>
+                                    <th style="width: 100px">Ação</th>
+                                </tr>
+                                @forelse($viagensOp as $vp)
+                                    <tr style="cursor: pointer" onclick="window.location='/painel/viagens/edit/{{$vp->id}}'">
+                                        <td>{{implode('/', array_reverse(explode('-',$vp->data_inicio)))}}</td>
+                                        <td>{{$vp->nome}}</td>
+                                        <td>{{$vp->fretes_viagens}}</td>
+                                        <td>{{$vp->cidade_origem}}/{{$vp->cidade_destino}}</td>
+                                        <td>{{$vp->status}}</td>
+                                        <td><a href="/painel/viagens/{{$vp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5">Nenhuma viagem em Operação</td>
+                                    </tr>
+                                @endforelse
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

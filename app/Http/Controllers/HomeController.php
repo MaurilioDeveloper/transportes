@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Frete;
+use App\Viagem;
 
 class HomeController extends Controller
 {
@@ -41,6 +42,29 @@ class HomeController extends Controller
             ->orderBy('data_inicio', 'ASC')->get();
 //        dd($tableDash);
 
-        return view('home', compact('freteEdicao', 'freteAc', 'freteAe', 'freteEt', 'freteE', 'freteC', 'tableDash'));
+
+        $fretesOp = Frete::query()
+            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_origem')
+            ->select("fretes.id", "parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.status", "fretes.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
+            ->where('status', '<>', 'Entregue')
+            ->orWhere('status', '<>', 'Cancelado')->get();
+
+        $viagensOp = Viagem::query()
+            ->leftJoin('fretes_viagens','fretes_viagens.id_viagem','=','viagens.id')
+            ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
+            ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'viagens.id_cidade_origem')
+            ->select("viagens.id", "parceiros.nome", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
+            ->selectRaw('count(fretes_viagens.id) as fretes_viagens')
+            ->where('status', '<>', 'Concluída')
+            ->orWhere('status', '<>', 'Cancelada')
+            ->groupBy('viagens.id')
+            ->get();
+
+
+
+        return view('home', compact('freteEdicao', 'freteAc', 'freteAe', 'freteEt', 'freteE', 'freteC', 'tableDash', 'fretesOp', 'viagensOp'));
     }
 }

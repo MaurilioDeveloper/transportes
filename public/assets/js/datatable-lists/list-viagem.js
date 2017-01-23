@@ -63,19 +63,20 @@ $(document).ready(function() {
         ajax: "/painel/viagens/lista-fretes",
         columns: [
 
-            { data: 'parceiro', "searchable": false,  name: 'parceiros.nome'},
-            { data: 'motorista',"searchable": false},
-            { data: 'caminhao', "searchable": false,  name: 'c.modelo'},
+            { data: 'parceiro', name: 'parceiros.nome'},
+            { data: 'motorista', searchable: false},
+            { data: 'caminhao', name: 'c.modelo'},
             { data: 'status', name: 'viagens.status' },
             { type:'date', data: 'data_inicio', name: 'viagens.data_inicio',
                 render:function(a){
                     var d=new Date(a.replace('-','/'));if(d == 'Invalid Date'){return '00/00/0000'}else{return d.toLocaleDateString()}
                 }
             },
-            { data: 'cidade_origem', name: 'od.cidade' },
-            { data: 'cidade_destino', name: 'od2.cidade' },
+            { data: 'cidade_origem', searchable: false },
+            { data: 'cidade_destino', searchable: false },
             {
-                data: 'status',
+                data: 'cidade_origem',
+                searchable: false,
                 className: "center",
                 render: function(data, type, row){
                     // console.log(data);
