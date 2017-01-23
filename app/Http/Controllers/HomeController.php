@@ -48,8 +48,9 @@ class HomeController extends Controller
             ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_origem')
             ->select("fretes.id", "parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.status", "fretes.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
-            ->where('status', '<>', 'Entregue')
-            ->orWhere('status', '<>', 'Cancelado')->get();
+            ->where('status', '!=', 'Entregue')
+            ->where('fretes.status', '!=', 'Cancelado')->get();
+//        return $fretesOp;
 
         $viagensOp = Viagem::query()
             ->leftJoin('fretes_viagens','fretes_viagens.id_viagem','=','viagens.id')
@@ -59,7 +60,7 @@ class HomeController extends Controller
             ->select("viagens.id", "parceiros.nome", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
             ->selectRaw('count(fretes_viagens.id) as fretes_viagens')
             ->where('status', '<>', 'Concluída')
-            ->orWhere('status', '<>', 'Cancelada')
+            ->where('status', '<>', 'Cancelada')
             ->groupBy('viagens.id')
             ->get();
 

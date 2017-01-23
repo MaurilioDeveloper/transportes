@@ -153,7 +153,7 @@
                                         <td>{{$fp->cidade_origem}}/{{$fp->cidade_destino}}</td>
                                         <td>{{$fp->tipo}} | {{$fp->identificacao}}</td>
                                         <td>{{$fp->status}}</td>
-                                        <td><a href="/painel/fretes/{{$fp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
+                                        <td><a href="/painel/fretes/edit/{{$fp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
                                     </tr>
                                 @empty
                                     <tr><td colspan="5">Nenhum frete em operação</td></tr>
@@ -193,7 +193,7 @@
                                         <td>{{$vp->fretes_viagens}}</td>
                                         <td>{{$vp->cidade_origem}}/{{$vp->cidade_destino}}</td>
                                         <td>{{$vp->status}}</td>
-                                        <td><a href="/painel/viagens/{{$vp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
+                                        <td><a href="/painel/viagens/edit/{{$vp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
                                     </tr>
                                 @empty
                                     <tr>
