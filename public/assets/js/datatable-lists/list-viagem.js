@@ -72,7 +72,7 @@ $(document).ready(function() {
                     var d=new Date(a.replace('-','/'));if(d == 'Invalid Date'){return '00/00/0000'}else{return d.toLocaleDateString()}
                 }
             },
-            { data: 'cidade_origem', name: 'od.cidade' },
+            { data: 'cidade_origem'},
             { data: 'cidade_destino', name: 'od2.cidade' },
             {
                 data: 'nome',
