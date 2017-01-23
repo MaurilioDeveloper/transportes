@@ -211,7 +211,7 @@ class ViagemController extends Controller
             ->leftJoin('fretes_viagens as fv','fv.id_viagem','=','viagens.id')
             ->leftJoin('fretes as f','f.id','=','fv.id_frete')
             ->groupBy('viagens.id')
-            ->select("viagens.id", "parceiros.nome", "m.nome as motorista", "c.modelo as caminhao", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino"));
+            ->select("viagens.id", "parceiros.nome as parceiro", "m.nome as motorista", "c.modelo as caminhao", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino"));
 
         return $dt->make(true);
 
