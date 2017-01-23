@@ -63,7 +63,7 @@ $(document).ready(function() {
         ajax: "/painel/viagens/lista-fretes",
         columns: [
 
-            { data: 'nome', "searchable": false,  name: 'parceiros.nome'},
+            { data: 'parceiro', "searchable": false,  name: 'parceiros.nome'},
             { data: 'motorista',"searchable": false},
             { data: 'caminhao', "searchable": false,  name: 'c.modelo'},
             { data: 'status', name: 'viagens.status' },
@@ -75,7 +75,7 @@ $(document).ready(function() {
             { data: 'cidade_origem', name: 'od.cidade' },
             { data: 'cidade_destino', name: 'od2.cidade' },
             {
-                data: 'nome',
+                data: 'status',
                 className: "center",
                 render: function(data, type, row){
                     // console.log(data);
