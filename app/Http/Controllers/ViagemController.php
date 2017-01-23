@@ -335,6 +335,26 @@ class ViagemController extends Controller
         return $fretesAdicionado;
     }
 
+    private function resolverStatus($s)
+    {
+        switch ($s)
+        {
+            case 1: return "Aguardando Inicio"; break;
+            case 2: return "Em Viagem"; break;
+            case 3: return "Concluída";break;
+            case 4: return "Cancelada";break;
+        }
+    }
+
+
+    public function filtrar()
+    {
+        $dadosForm = $this->request->all();
+        $status = $this->resolverStatus($dadosForm['status']);
+
+        return view("painel.viagens.index", compact('status'));
+    }
+
 
     public function update($id)
     {

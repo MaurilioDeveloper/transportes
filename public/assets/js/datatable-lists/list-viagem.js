@@ -39,8 +39,12 @@ $(document).ready(function() {
 
 
 
+    var statusPesquisa = $("#statusPesquisa").val();
+    console.log(statusPesquisa);
+
     $('#lista-viagens').DataTable({
         // processing: true,
+        "oSearch":  {"sSearch": statusPesquisa},
         serverSide: true,
         responsive: {
             details: {

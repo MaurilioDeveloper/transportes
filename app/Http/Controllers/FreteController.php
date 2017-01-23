@@ -429,80 +429,16 @@ class FreteController extends Controller
 
         $status = $this->resolverStatus($dadosForm['status']);
 
-        $dadosPesquisa = Frete::query()
-            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
+//        $dadosPesquisa = Frete::query()
+//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+//            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+//            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
 //            ->orWhere('fretes.identificacao', '<>', '')
 //            ->orWhere('chassi', '<>', '')
-            ->where('status', 'LIKE', "%$status%")
-            ->paginate(10);
-//        dd($dadosPesquisa);
+//            ->where('status', 'LIKE', "%$status%")
+//            ->paginate(10);
 
-
-//        $identificacao = $this->request->get('identificacao');
-//        $chassi = $this->request->get('chassi');
-//        dd($identificacao);
-        /*
-        $dadosPesquisa = Frete::query()
-            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
-//            ->orWhere('fretes.identificacao', '<>', '')
-//            ->orWhere('chassi', '<>', '')
-            ->where('identificacao', 'LIKE', "%$identificacao%")
-            ->where('chassi', 'LIKE', "%$chassi%")
-            ->get();
-//        dd($dadosPesquisa);
-//
-//            ->where('identificacao', 'LIKE', "%$idenficacao%")
-//            ->where('chassi', 'LIKE', "%$chassi%")
-        return view("painel.fretes.index", compact('dadosPesquisa'));
-
-        if(strlen($this->request->get('identificacao')) > 0 && strlen($this->request->get('chassi')) == 0){
-            $identificacao = $this->request->get('identificacao');
-            $dadosPesquisa = Frete::query()
-                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
-                ->where('identificacao', 'LIKE', "%$identificacao%")
-//            ->where('chassi', 'LIKE', "%$chassi%")
-                ->paginate(10);
-//            $dadosPesquisa->where('identificacao', 'LIKE', "%$idenficacao%");
-        }
-
-        if(strlen($this->request->get('chassi')) > 0 && strlen($this->request->get('identificacao')) == 0){
-            $chassi = $this->request->get('chassi');
-            $dadosPesquisa = Frete::query()
-                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
-                ->where('chassi', 'LIKE', "%$chassi%")->paginate(10);
-//            $dadosPesquisa->where('chassi', 'LIKE', "%$chassi%");
-        }
-
-        if(strlen($this->request->get('chassi')) > 0 && strlen($this->request->get('identificacao')) > 0){
-            $dadosPesquisa = Frete::query()
-                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
-                ->where('identificacao', 'LIKE', "%$identificacao%")
-                ->where('chassi', 'LIKE', "$chassi")->paginate(10);
-//            $dadosPesquisa
-//                ->where('identificacao', 'LIKE', "%$idenficacao%")
-//                ->where('chassi', 'LIKE', "%$chassi%");
-        }
-
-//        dd($chassi);
-
-//        dd($dadosPesquisa);
-*/
-//
         return view("painel.fretes.index", compact('status'));
 //
     }

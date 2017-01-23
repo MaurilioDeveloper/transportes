@@ -45,6 +45,8 @@
             <div class="col-md-12">
                 <div class='box box-primary'>
 
+
+
                     <div style="display: none;" id="dialog-confirm" title="Deletar">
                         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja
                             realmente excluir essa viagem?</p>
@@ -58,6 +60,27 @@
                     <br/>
                     <br/>
                     <div class='box-body'>
+
+
+                        {!! Form::open(['route' => 'filtrarViagem']) !!}
+                            <div class="form-group col-md-10">
+                                <select class="form-control" name="status">
+                                    <option value="0">Filtrar por Status</option>
+                                    @foreach(\App\Viagem::STATUS as $key => $value)
+                                        <option value="{{$key}}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            @if(isset($status))
+                                <input type="hidden" value="{{$status}}" id="statusPesquisa" />
+                            @endif
+
+                            <div class="form-group col-md-2">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
+                            </div>
+                        {!! Form::close() !!}
+
                         <table class="table table-bordered" id="lista-viagens">
                             <thead>
                                 <tr style="background: #2e6da4; color: white">
