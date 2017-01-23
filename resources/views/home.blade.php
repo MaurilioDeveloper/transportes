@@ -147,7 +147,7 @@
                                     <th>Ação</th>
                                 </tr>
                                 @forelse($fretesOp as $fp)
-                                    <tr style="cursor: pointer;" onclick="window.location='/painel/fretes/edit/{{$fp->id}}'">
+                                    <tr class="success" style="cursor: pointer;" onclick="window.location='/painel/fretes/edit/{{$fp->id}}'">
                                         <td>{{implode('/', array_reverse(explode('-',$fp->data_inicio)))}}</td>
                                         <td>{{$fp->nome}}</td>
                                         <td>{{$fp->cidade_origem}}/{{$fp->cidade_destino}}</td>
@@ -156,7 +156,7 @@
                                         <td><a href="/painel/fretes/edit/{{$fp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="5">Nenhum frete em operação</td></tr>
+                                    <tr class="warning"><td colspan="5" style="text-align: center">Nenhum frete em operação</td></tr>
                                 @endforelse
 
                             </table>
@@ -187,7 +187,7 @@
                                     <th style="width: 100px">Ação</th>
                                 </tr>
                                 @forelse($viagensOp as $vp)
-                                    <tr style="cursor: pointer" onclick="window.location='/painel/viagens/edit/{{$vp->id}}'">
+                                    <tr class="success"  style="cursor: pointer" onclick="window.location='/painel/viagens/edit/{{$vp->id}}'">
                                         <td>{{implode('/', array_reverse(explode('-',$vp->data_inicio)))}}</td>
                                         <td>{{$vp->nome}}</td>
                                         <td>{{$vp->fretes_viagens}}</td>
@@ -196,8 +196,8 @@
                                         <td><a href="/painel/viagens/edit/{{$vp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="5">Nenhuma viagem em Operação</td>
+                                    <tr class="warning">
+                                        <td colspan="5" style="text-align: center;">Nenhuma viagem em Operação</td>
                                     </tr>
                                 @endforelse
                             </table>
