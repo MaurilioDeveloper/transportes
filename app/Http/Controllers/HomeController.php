@@ -39,7 +39,7 @@ class HomeController extends Controller
             ->select("parceiros.nome", "fretes.tipo", "fretes.data_inicio")
             ->where('status', 'Aguardando Coleta')
             ->orWhere('status', 'Em trânsito')
-            ->orderBy('data_inicio', 'ASC')->get();
+            ->orderBy('data_inicio', 'ASC')->paginate(8);
 //        dd($tableDash);
 
 
@@ -49,7 +49,7 @@ class HomeController extends Controller
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_origem')
             ->select("fretes.id", "parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.status", "fretes.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
             ->where('status', '!=', 'Entregue')
-            ->where('fretes.status', '!=', 'Cancelado')->get();
+            ->where('fretes.status', '!=', 'Cancelado')->paginate(5);
 //        return $fretesOp;
 
         $viagensOp = Viagem::query()
@@ -62,7 +62,7 @@ class HomeController extends Controller
             ->where('status', '<>', 'Concluída')
             ->where('status', '<>', 'Cancelada')
             ->groupBy('viagens.id')
-            ->get();
+            ->paginate(5);
 
 
 

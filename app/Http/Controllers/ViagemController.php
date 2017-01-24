@@ -114,42 +114,16 @@ class ViagemController extends Controller
 
     public function store()
     {
-        $dadosForm = $this->request->except(['fretes']);
+        $dadosForm = $this->request->except(['fretes', 'custos']);
         $dadosFormFretes = $this->request->only(['fretes']);
+        $dadosFormCustos = $this->request->only(['custos']);
         $dadosForm['data_inicio'] = implode('-', array_reverse(explode('/', $dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-', array_reverse(explode('/', $dadosForm['data_fim'])));
-//        dd($dadosForm['id_caminhao']);
+        $dadosForm['status'] = $this->resolverStatus($dadosForm['status']);
 
-        if ($dadosForm['status'] == 1) {
-            $dadosForm['status'] = "Aguardando Inicio";
-        }
-        if ($dadosForm['status'] == 2) {
-            $dadosForm['status'] = "Em Viagem";
-        }
-        if ($dadosForm['status'] == 3) {
-            $dadosForm['status'] = "Concluída";
-        }
-        if ($dadosForm['status'] == 4) {
-            $dadosForm['status'] = "Cancelada";
-        }
-
-
-        $validate = $this->validate->make($dadosForm, Viagem::$rules);
-        if ($validate->fails()) {
-            $messages = $validate->messages();
-            $displayErrors = '';
-
-            foreach ($messages->all("<p>:message</p>") as $error) {
-                $displayErrors .= $error;
-            }
-
-            return $displayErrors;
-        }
-
-
+        $this->validationViagem($dadosForm);
 
         $viagem = $this->viagem->create($dadosForm);
-
 
         $data_hoje = date('Y/m/d');
         $status = $dadosForm['status'];
@@ -162,38 +136,9 @@ class ViagemController extends Controller
             'id_viagem' => $viagem->id
         ]);
 
+        $this->gravarFretesViagem($viagem->id, $dadosFormFretes, $dadosForm, $dadosFormCustos);
 
-        foreach ($dadosFormFretes as $key => $value) {
-//            dd($key);
-            if(count($value) > 0){
-
-                $fretesAdicionado = array_keys($value);
-    //            dd($fretesAdicionado);
-                $count = count($fretesAdicionado);
-                for ($i = 0; $i < $count; $i++) {
-                    $frete = Frete::find($fretesAdicionado[$i]);
-                    if($dadosForm['status'] == 'Concluída'){
-                        $frete->fill([
-                            'status' => 'Entregue'
-                        ])->save();
-                    }
-                    if($dadosForm['status'] == 'Em Viagem'){
-                        $frete->fill([
-                            'status' => 'Em trânsito'
-                        ])->save();
-                    }
-                    $fretesAd = FreteViagem::create([
-                        'id_frete' => $fretesAdicionado[$i],
-                        'id_viagem' => $viagem->id
-                    ]);
-                }
-
-            }
-        }
-
-//        if($viagem && $fretesAd){
         return 1;
-//        }
 
     }
 
@@ -307,7 +252,7 @@ class ViagemController extends Controller
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao",  "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
+            ->select("parceiros.nome", "fretes_viagens.custo", "fretes.tipo", "fretes.identificacao",  "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
             ->where('fretes_viagens.id_viagem', $viagem->id)
             ->get();
 
@@ -360,31 +305,79 @@ class ViagemController extends Controller
     {
         $dadosForm = $this->request->except(['fretes']);
         $dadosFormFretes = $this->request->only(['fretes']);
+        $dadosFormCustos = $this->request->only(['custos']);
 
-//        dd($dadosFormFretes);
         $fretesViagemDB = FreteViagem::where('id_viagem', $id)->get()->keyBy('id');
 
-
         $viagem = Viagem::findOrFail($id);
-//        dd(implode('-',array_reverse(explode('/',$dadosForm['data_fim']))));
         $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/',$dadosForm['data_inicio'])));
         $dadosForm['data_fim'] = implode('-',array_reverse(explode('/',$dadosForm['data_fim'])));
+        $dadosForm['status'] = $this->resolverStatus($dadosForm['status']);
 
-//        dd($dadosForm['data_fim']);
+        $this->validationViagem($dadosForm);
 
-        if ($dadosForm['status'] == 1) {
-            $dadosForm['status'] = "Aguardando Inicio";
-        }
-        if ($dadosForm['status'] == 2) {
-            $dadosForm['status'] = "Em Viagem";
-        }
-        if ($dadosForm['status'] == 3) {
-            $dadosForm['status'] = "Concluída";
-        }
-        if ($dadosForm['status'] == 4) {
-            $dadosForm['status'] = "Cancelada";
-        }
+        $viagemObj = $viagem->fill($dadosForm)->save();
 
+        // salvando fretes da viagem
+        $this->gravarFretesViagem($viagem->id, $dadosFormFretes, $dadosForm, $dadosFormCustos);
+
+        // historico de modificacao da status da viagem
+        $confirmHistorico = HistoricoViagem::where('id_viagem', $viagem->id)->orderBy('data', 'DESC')->get();
+        if(count($confirmHistorico)==0 || $confirmHistorico[0]['status'] != $dadosForm['status']){
+            $historico = $this->historico->create([
+                'data' => date('Y-m-d'),
+                'status' => $this->resolverStatus($dadosForm['status']),
+                'id_usuario' => auth()->user()->id,
+                'id_viagem' => $viagem->id
+            ]);
+        }
+        return 1;
+    }
+
+    protected function gravarFretesViagem($id_viagem, $dadosFormFretes, $dadosForm, $dadosFormCustos)
+    {
+        FreteViagem::where('id_viagem', $id_viagem)->delete();
+        if (is_array($dadosFormFretes['fretes'])) {
+            foreach ($dadosFormFretes['fretes'] as $codigo_frete) {
+                // vendo se precisa modificar o status
+                if ($dadosForm['status'] == 'Concluída') {
+                    $frete = Frete::find($codigo_frete);
+                    if($frete['id_cidade_destino'] == $dadosForm['id_cidade_destino']){
+                        $frete->fill([
+                            'status' => 'Entregue'
+                        ])->save();
+                    }else{
+                        $frete->fill([
+                            'status' => 'Aguardando Embarque'
+                        ])->save();
+                    }
+                } elseif ($dadosForm['status'] == 'Em Viagem') {
+                    $frete = Frete::find($codigo_frete);
+                    $frete->fill([
+                        'status' => 'Em trânsito'
+                    ])->save();
+                }
+
+                FreteViagem::create([
+                    'id_frete' => $codigo_frete,
+                    'id_viagem' => $id_viagem,
+                    'custos' => $dadosFormCustos[$codigo_frete]
+                ]);
+            }
+        }
+    }
+
+    public function deleteViagem($id)
+    {
+        Viagem::findOrFail($id)->delete();
+        FreteViagem::where('id_viagem', $id)->delete();
+        HistoricoViagem::where('id_viagem',$id)->delete();
+        return 1;
+    }
+
+
+    protected function validationViagem($dadosForm)
+    {
         $validate = $this->validate->make($dadosForm, Viagem::$rules);
         if ($validate->fails()) {
             $messages = $validate->messages();
@@ -396,57 +389,6 @@ class ViagemController extends Controller
 
             return $displayErrors;
         }
-
-        $viagemObj = $viagem->fill($dadosForm)->save();
-
-
-        // salvando fretes da viagem
-
-        // primeiramente, removendo fretes desta viagem
-        FreteViagem::where('id_viagem', $id)->delete();
-        if (is_array($dadosFormFretes['fretes'])) {
-            foreach ($dadosFormFretes['fretes'] as $codigo_frete) {
-                // vendo se precisa modificar o status
-                if ($dadosForm['status'] == 'Concluída') {
-                    $frete = Frete::find($codigo_frete);
-                    $frete->fill([
-                        'status' => 'Entregue'
-                    ])->save();
-                } elseif ($dadosForm['status'] == 'Em Viagem') {
-                    $frete = Frete::find($codigo_frete);
-                    $frete->fill([
-                        'status' => 'Em trânsito'
-                    ])->save();
-                }
-                FreteViagem::create([
-                    'id_frete' => $codigo_frete,
-                    'id_viagem' => $viagem->id
-                ]);
-            }
-        }
-
-        // historico de modificacao da status da viagem
-        $confirmHistorico = HistoricoViagem::where('id_viagem', $viagem->id)->orderBy('data', 'DESC')->get();
-        if(count($confirmHistorico)==0 || $confirmHistorico[0]['status'] != $dadosForm['status']){
-            $historico = $this->historico->create([
-                'data' => date('Y-m-d'),
-                'status' => $dadosForm['status'],
-                'id_usuario' => auth()->user()->id,
-                'id_viagem' => $viagem->id
-            ]);
-        }
-        return 1;
     }
-
-
-    public function deleteViagem($id)
-    {
-        Viagem::findOrFail($id)->delete();
-        FreteViagem::where('id_viagem', $id)->delete();
-        HistoricoViagem::where('id_viagem',$id)->delete();
-        return 1;
-    }
-
-
 
 }

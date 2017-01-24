@@ -120,6 +120,7 @@
                                     </tr>
                                 @endforelse
                             </table>
+                            <center>{!! $tableDash->render() !!}</center>
                         </div>
                     </div>
                 </div>
@@ -150,7 +151,7 @@
                                     <tr class="success" style="cursor: pointer;" onclick="window.location='/painel/fretes/edit/{{$fp->id}}'">
                                         <td>{{implode('/', array_reverse(explode('-',$fp->data_inicio)))}}</td>
                                         <td>{{$fp->nome}}</td>
-                                        <td>{{$fp->cidade_origem}}/{{$fp->cidade_destino}}</td>
+                                        <td>{{$fp->cidade_origem}} - {{$fp->cidade_destino}}</td>
                                         <td>{{$fp->tipo}} | {{$fp->identificacao}}</td>
                                         <td>{{$fp->status}}</td>
                                         <td><a href="/painel/fretes/edit/{{$fp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
@@ -160,6 +161,7 @@
                                 @endforelse
 
                             </table>
+                            <span style="float: right">{!! $fretesOp->render() !!}</span>
                         </div>
                     </div>
                 </div>
@@ -191,7 +193,7 @@
                                         <td>{{implode('/', array_reverse(explode('-',$vp->data_inicio)))}}</td>
                                         <td>{{$vp->nome}}</td>
                                         <td>{{$vp->fretes_viagens}}</td>
-                                        <td>{{$vp->cidade_origem}}/{{$vp->cidade_destino}}</td>
+                                        <td>{{$vp->cidade_origem}} - {{$vp->cidade_destino}}</td>
                                         <td>{{$vp->status}}</td>
                                         <td><a href="/painel/viagens/edit/{{$vp->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Editar</a></td>
                                     </tr>
@@ -201,6 +203,7 @@
                                     </tr>
                                 @endforelse
                             </table>
+                            <span style="float: right">{!! $viagensOp->render() !!}</span>
                         </div>
                     </div>
                 </div>

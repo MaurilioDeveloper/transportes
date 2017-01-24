@@ -257,6 +257,7 @@
                             <th>Identificação</th>
                             <th>Origem</th>
                             <th>Destino</th>
+                            <th style="width: 180px">Custo</th>
                             <th>Ação</th>
                         </tr>
                         </thead>
@@ -271,6 +272,7 @@
                                     <td>{{$fretesAd->identificacao}}</td>
                                     <td>{{$fretesAd->cidade_origem}}</td>
                                     <td>{{$fretesAd->cidade_destino}}</td>
+                                    <td><input type="text" class="form-control moeda" name="custos[{{$fretesAd->custo}}]" data-prefix="R$"/></td>
                                     <td><a onclick="removerFrete({{$fretesAd->id}})" class="remover btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                                 </tr>
 
