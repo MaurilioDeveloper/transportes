@@ -316,6 +316,7 @@ class ViagemController extends Controller
 
         $this->validationViagem($dadosForm);
 
+//        dd($dadosForm);
         $viagemObj = $viagem->fill($dadosForm)->save();
 
         // salvando fretes da viagem
@@ -326,7 +327,7 @@ class ViagemController extends Controller
         if(count($confirmHistorico)==0 || $confirmHistorico[0]['status'] != $dadosForm['status']){
             $historico = $this->historico->create([
                 'data' => date('Y-m-d'),
-                'status' => $this->resolverStatus($dadosForm['status']),
+                'status' => $dadosForm['status'],
                 'id_usuario' => auth()->user()->id,
                 'id_viagem' => $viagem->id
             ]);
