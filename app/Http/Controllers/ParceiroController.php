@@ -115,17 +115,7 @@ class ParceiroController extends Controller
         }
 //        dd($dataParc);
 
-        $validate = $this->validate->make($dataParc, Parceiro::$rules);
-        if($validate->fails()){
-            $messages = $validate->messages();
-            $displayErrors = '';
-
-            foreach($messages->all("<p>:message</p>") as $error){
-                $displayErrors .= $error;
-            }
-
-            return $displayErrors;
-        }
+        $this->validationParceiro($dataParc, Parceiro::$rules);
 
         $parceiro = $this->parceiro->create($dataParc);
 
@@ -298,17 +288,8 @@ class ParceiroController extends Controller
         ];
 
 
-        $validate = $this->validate->make($dataParc, $rules);
-        if($validate->fails()){
-            $messages = $validate->messages();
-            $displayErrors = '';
+        $this->validationParceiro($dataParc, $rules);
 
-            foreach($messages->all("<p>:message</p>") as $error){
-                $displayErrors .= $error;
-            }
-
-            return $displayErrors;
-        }
 
 
 
@@ -556,5 +537,19 @@ class ParceiroController extends Controller
     }
 
 
+    protected function validationParceiro($dataParc, $rules)
+    {
+        $validate = $this->validate->make($dataParc, $rules);
+        if($validate->fails()){
+            $messages = $validate->messages();
+            $displayErrors = '';
+
+            foreach($messages->all("<p>:message</p>") as $error){
+                $displayErrors .= $error;
+            }
+
+            return $displayErrors;
+        }
+    }
 
 }

@@ -74,7 +74,7 @@ $(document).ready(function () {
             {data: 'cidade', name: 'parceiros.cidade'},
             // { data: 'estado', name: 'parceiros.estado' },
             {
-                data: 'nome',
+                data: 'id',
                 className: "center",
                 render: function (data, type, row) {
                     console.log(row);

@@ -179,39 +179,11 @@ class FreteController extends Controller
 
 
 
-        if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
-            $iscoleta = $dadosForm['iscoleta'];
-            $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
-        }else{
-            $iscoleta = null;
-            $parceiro_coletor = null;
-        }
-
-        if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
-            $isentrega = $dadosForm['isentrega'];
-            $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
-        }else{
-            $isentrega = null;
-            $parceiro_entregador = null;
-        }
+        $this->verificaColetaEntrega($dadosForm);
 
 
 
-//        $fretes =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-//            ->select("parceiro.nome")->where('id_parceiro', $dadosForm['id_parceiro']);
-
-
-        $validate = $this->validate->make($dadosForm, Frete::$rules);
-        if($validate->fails()){
-            $messages = $validate->messages();
-            $displayErrors = '';
-
-            foreach($messages->all("<p>:message</p>") as $error){
-                $displayErrors .= $error;
-            }
-
-            return $displayErrors;
-        }
+        $this->validationFrete($dadosForm);
 
         $user = $dadosForm['id_usuario'];
 //        dd($user);
@@ -348,39 +320,13 @@ class FreteController extends Controller
         }
 
 
-        if(isset($dadosForm['iscoleta'])){
-            $iscoleta = $dadosForm['iscoleta'];
-            $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
-        }else{
-            $iscoleta = "off";
-            $parceiro_coletor = null;
-        }
-
-        if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
-            $isentrega = $dadosForm['isentrega'];
-            $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
-        }else{
-            $isentrega = null;
-            $parceiro_entregador = null;
-        }
+        $this->verificaColetaEntrega($dadosForm);
 
 //        $fretes =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
 //            ->select("parceiro.nome")->where('id_parceiro', $dadosForm['id_parceiro']);
 
 
-        $validate = $this->validate->make($dadosForm, Frete::$rules);
-        if($validate->fails()){
-            $messages = $validate->messages();
-            $displayErrors = '';
-
-            foreach($messages->all("<p>:message</p>") as $error){
-                $displayErrors .= $error;
-            }
-
-            return $displayErrors;
-        }
-
-
+        $this->validationFrete($dadosForm);
 
         $update = $frete->fill([
             'id_parceiro' => $dadosForm['id_parceiro'],
@@ -462,6 +408,42 @@ class FreteController extends Controller
     {
         $busca = Parceiro::where('nome','like','%'.$name.'%')->take(15)->get();
         return $busca;
+    }
+
+    protected function validationFrete($dadosForm)
+    {
+
+        $validate = $this->validate->make($dadosForm, Frete::$rules);
+        if($validate->fails()){
+            $messages = $validate->messages();
+            $displayErrors = '';
+
+            foreach($messages->all("<p>:message</p>") as $error){
+                $displayErrors .= $error;
+            }
+
+            return $displayErrors;
+        }
+
+    }
+
+    private function verificaColetaEntrega()
+    {
+        if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
+            $iscoleta = $dadosForm['iscoleta'];
+            $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
+        }else{
+            $iscoleta = null;
+            $parceiro_coletor = null;
+        }
+
+        if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
+            $isentrega = $dadosForm['isentrega'];
+            $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
+        }else{
+            $isentrega = null;
+            $parceiro_entregador = null;
+        }
     }
 
 }
