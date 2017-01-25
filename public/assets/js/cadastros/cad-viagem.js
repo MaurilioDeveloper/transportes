@@ -190,16 +190,16 @@ function adicionarFrete(id) {
     $(".nenhum").remove();
     $("#freteAdicionado").show();
     var id_frete = id;
+    $('.moeda').maskMoney();
 
     $.getJSON('/painel/viagens/fretes-adicionados/' + id_frete, function (dados) {
         // $("#freteAdicionado").append('<input type="text" class="form-control moeda" name="custos" data-prefix="R$"/>');
-
+        $('.moeda').maskMoney();
         $.each(dados, function (i, obj) {
             // console.log($("#freteAd tr").length);
             // if($("#freteAd tr").length > 0) {
                 $("#vazio").remove();
                 $("#id-frete"+obj.id).attr('disabled', true);
-                // $('.moeda').maskMoney();
                 $("#freteAd").append('<tr id="freteTable' + obj.id + '"><td>' + obj.nome + '</td><td>' + obj.tipo + '</td><td>' + obj.identificacao + '</td><td>' + obj.cidade_origem + '</td><td>' + obj.cidade_destino + '</td>' +
                     '<td><input type="text" class="form-control moeda" name="custos['+ obj.id +']" data-prefix="R$"/></td>' +
                     '<td><a onclick="removerFrete(' + obj.id + ')" class="remover btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td></tr>')
@@ -211,6 +211,7 @@ function adicionarFrete(id) {
             $("#freteAd").append('<tr class="warning"><td style="text-align: center" colspan="6">Nenhum dado Cadastrado</td></tr>');
         }
         // console.log(dados);
+        $('.moeda').maskMoney();
     });
 
 }
