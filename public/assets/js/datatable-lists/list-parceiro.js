@@ -77,7 +77,6 @@ $(document).ready(function () {
                 data: 'id',
                 className: "center",
                 render: function (data, type, row) {
-                    console.log(row);
                     var html = '<a href="parceiros/edit/' + row.id + '" id-parceiro="' + row.id + '" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
                         '<a href="" id-parceiro="' + row.id + '" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>' +
                         '<a id-parceiro="' + row.id + '" class="btn btn-success btn-sm" style="display: inline; margin-left: 4px" onclick="novoFrete(' + row.id + ')"><i class="fa fa-truck"></i> Novo Frete</a>';
