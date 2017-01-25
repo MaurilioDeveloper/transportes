@@ -10,6 +10,7 @@ $(document).ready(function() {
         var id = $(this).attr("id-frete");
 
 
+
             $("#dialog-confirm").dialog({
                 resizable: false,
                 height: "auto",
@@ -26,6 +27,10 @@ $(document).ready(function() {
                                         alert('Frete Excluido Com Sucesso');
                                         window.location.href = '/painel/fretes';
                                     }, 2000);
+                                } else{
+                                    if(confirm('Impossível remover este frete pois ele faz parte de uma viagem. Quer abrir a viagem para vê-lo?')){
+                                        window.open('/painel/viagens/edit/'+data)
+                                    }
                                 }
                             }
                         });

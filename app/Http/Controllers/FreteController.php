@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Frete;
 use App\Caminhao;
+use App\FreteViagem;
 use App\Motorista;
 use App\OrigemDestino;
 use App\HistoricoFrete;
@@ -141,6 +142,9 @@ class FreteController extends Controller
 
     public function deleteFrete($id)
     {
+        if(count(FreteViagem::where('id_frete', $id)->get()) > 0){
+            return FreteViagem::where('id_frete', $id)->pluck('id_viagem');
+        }
         Frete::findOrFail($id)->delete();
         FreteViagem::where('id_frete', $id)->delete();
         HistoricoFrete::where('id_frete',$id)->delete();
