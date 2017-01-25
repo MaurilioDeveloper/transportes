@@ -19,6 +19,7 @@ class CreateFretesViagensTable extends Migration
             $table->foreign('id_frete')->references('id')->on('fretes');
             $table->integer('id_viagem')->unsigned();
             $table->foreign('id_viagem')->references('id')->on('viagens');
+            $table->double('custos');
             $table->timestamps();
         });
     }

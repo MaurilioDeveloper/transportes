@@ -358,9 +358,8 @@ class ViagemController extends Controller
                     ])->save();
                 }
 
-//				dd($dadosFormCustos);
 				$dadosFormCustosValue = str_replace('R$', '', str_replace(',', '',$dadosFormCustos["custos"][$codigo_frete]));
-//                dd($dadosFormCustosValue);
+
 				
                 FreteViagem::create([
                     'id_frete' => $codigo_frete,

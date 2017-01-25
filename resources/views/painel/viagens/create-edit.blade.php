@@ -272,7 +272,9 @@
                                     <td>{{$fretesAd->identificacao}}</td>
                                     <td>{{$fretesAd->cidade_origem}}</td>
                                     <td>{{$fretesAd->cidade_destino}}</td>
+
                                     <td><input type="text" class="form-control moeda" name="custos[{{$fretesAd->id}}]" data-prefix="R$" value="{{$fretesAd->custos}}"/></td>
+
                                     <td><a onclick="removerFrete({{$fretesAd->id}})" class="remover btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                                 </tr>
 
