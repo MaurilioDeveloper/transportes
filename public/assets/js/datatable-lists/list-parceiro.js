@@ -49,7 +49,7 @@ $(document).ready(function () {
                 display: $.fn.dataTable.Responsive.display.modal({
                     header: function (row) {
                         var data = row.data();
-                        return 'Details for ' + data[0] + ' ' + data[1];
+                        return 'Detalhes do Parceiro '+row.nome;
                     }
                 }),
                 renderer: $.fn.dataTable.Responsive.renderer.tableAll({

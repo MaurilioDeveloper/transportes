@@ -179,7 +179,22 @@ class FreteController extends Controller
 
 
 
-        $this->verificaColetaEntrega($dadosForm);
+        if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
+            $iscoleta = $dadosForm['iscoleta'];
+            $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
+        }else{
+            $iscoleta = null;
+            $parceiro_coletor = null;
+        }
+
+        if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
+            $isentrega = $dadosForm['isentrega'];
+            $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
+        }else{
+            $isentrega = null;
+            $parceiro_entregador = null;
+        }
+
 
 
 
@@ -320,7 +335,22 @@ class FreteController extends Controller
         }
 
 
-        $this->verificaColetaEntrega($dadosForm);
+        if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
+            $iscoleta = $dadosForm['iscoleta'];
+            $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
+        }else{
+            $iscoleta = null;
+            $parceiro_coletor = null;
+        }
+
+        if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
+            $isentrega = $dadosForm['isentrega'];
+            $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
+        }else{
+            $isentrega = null;
+            $parceiro_entregador = null;
+        }
+
 
 //        $fretes =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
 //            ->select("parceiro.nome")->where('id_parceiro', $dadosForm['id_parceiro']);
@@ -426,24 +456,6 @@ class FreteController extends Controller
         }
 
     }
-
-    private function verificaColetaEntrega()
-    {
-        if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
-            $iscoleta = $dadosForm['iscoleta'];
-            $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
-        }else{
-            $iscoleta = null;
-            $parceiro_coletor = null;
-        }
-
-        if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
-            $isentrega = $dadosForm['isentrega'];
-            $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
-        }else{
-            $isentrega = null;
-            $parceiro_entregador = null;
-        }
-    }
+    
 
 }
