@@ -253,7 +253,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: $(this).attr("send"),
-            method: "POST",
+            type: "POST",
             data: dadosForm,
             beforeSend: function () {
                 botao.attr('disabled', true).html('Carregando...', true);

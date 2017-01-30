@@ -456,6 +456,6 @@ class FreteController extends Controller
         }
 
     }
-    
+
 
 }
