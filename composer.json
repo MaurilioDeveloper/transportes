@@ -13,7 +13,10 @@
         "codeedu/code_validator": "0.0.2",
         "barryvdh/laravel-debugbar": "^2.3",
         "yajra/laravel-datatables-oracle": "6.16",
-        "jenssegers/date": "^3.2"
+        "jenssegers/date": "^3.2",
+        "league/csv": "6.0",
+        "soapbox/laravel-formatter": "^2.0",
+        "jailtonsc/laravel-response-xml": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

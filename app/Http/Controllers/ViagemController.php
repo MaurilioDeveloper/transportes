@@ -94,20 +94,7 @@ class ViagemController extends Controller
                     AND NOT EXISTS (select 1 from fretes_viagens WHERE fretes_viagens.id_frete = f.id) 
                        ORDER BY p.nome")
         );
-//        $fretes = Frete::query()
-//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-//            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-//            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-//            ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od.cidade as cidade_destino", "fretes.id")
-//            ->where('status', 'Aguardando Embarque')->whereNotExists(function ($query){
-//                Frete::query()->join('fretes_viagens', 'fretes_viagens.id_frete', '=', 'fretes.id')->select()->get();
-//            })->get();
-        //dd($fretes);
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
-//        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
-
-//        dd($estados);
-
         $titulo = "Cadastrar Viagens";
         return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades', 'nomeViagemParceiro', 'idViagemParceiro', 'dadosCaminhao', 'dadosMotorista'));
     }

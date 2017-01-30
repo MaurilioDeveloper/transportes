@@ -69,23 +69,25 @@ class FreteController extends Controller
 
     public function listaFretes()
     {
-        return Datatables::of(Frete::query()
+        $dt = Datatables::of(Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"))
-            ->make(true);
+            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"));
+        return $dt->make(true);
     }
 
 
     public function listaViagem()
     {
-        return Datatables::of(Viagem::query()
+        $dt = Datatables::of(Viagem::query()
             ->join('parceiros as p', 'p.id', '=', 'viagens.id_parceiro_viagem')
             ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
             ->join('origens_destinos as od2', 'od2.id', '=', 'viagens.id_cidade_destino')
-            ->select("p.nome", "viagens.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "viagens.status", "viagens.tipo"))
-            ->make(true);
+            ->select("p.nome", "viagens.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "viagens.status", "viagens.tipo"));
+
+        return $dt->make(true);
+
     }
 
 
@@ -231,10 +233,7 @@ class FreteController extends Controller
         $historicoFretes = HistoricoFrete::query()->join('users', 'users.id', '=', 'historico_fretes.id_usuario')
                             ->select("historico_fretes.id", "historico_fretes.data", "historico_fretes.status", "users.name", "historico_fretes.created_at")
                             ->where("id_frete", $frete->id)->orderBy('created_at', 'DESC')->get();
-//        dd($historicoFretes);
 
-
-//        dd($frete);
         return view('painel.fretes.create-edit', compact('frete', 'titulo', 'data_hoje', 'data_inicio', 'data_fim', 'freteParceiroNome', 'iscoleta', 'isentrega',
                                                          'freteParceiroColetorNome', 'freteParceiroEntregadorNome', 'fretePessoa', 'sexo', 'cidades', 'historicoFretes'));
     }

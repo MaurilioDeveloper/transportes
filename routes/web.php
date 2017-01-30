@@ -80,7 +80,7 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/fretes-adicionados/{id}', 'ViagemController@fretesAdicionados')->name('fretesAdicionados');
         Route::get('/lista-fretes', 'ViagemController@listaFretes')->name('buscaParceiro');
         Route::get('/delete-viagem/{id}', 'ViagemController@deleteViagem')->name('deleteViagem');
-        Route::post('/cadastrar-viagem', 'ViagemController@store')->name('cadastrarViagem');
+        Route::patch('/cadastrar-viagem', 'ViagemController@store')->name('cadastrarViagem');
         Route::get('/edit/{id}', 'ViagemController@edit')->name('editarViagem');
         Route::put('/update/{id}', 'ViagemController@update')->name('updateViagem');
         Route::get('/busca-dados/{id}', 'ViagemController@dadosViagem');
@@ -95,9 +95,13 @@ Route::group(['prefix' => 'painel'], function(){
     Route::get('usuarios/edit/{id}', 'UsuarioController@edit')->name('editarUsuario');
     Route::resource('usuarios', 'UsuarioController');
 
+    //Testes
+    Route::get('/testes', 'XmlFormatterController@teste');
+
     //Dashboard
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/', 'HomeController@index');
+
 
 
 });
