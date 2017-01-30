@@ -15,8 +15,8 @@ class XmlFormatterController extends Controller
     {
 
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->output('viagens_'.Carbon::now().'.xml');
-        $xml = response()->xml(Viagem::all());
+//        $csv->output('viagens_'.Carbon::now().'.xml');
+        $xml = response()->xml(Viagem::query()->select()->get());
         return $xml;
 
 //        return ;

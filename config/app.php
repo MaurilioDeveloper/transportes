@@ -186,7 +186,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        XmlResponse\XmlResponseServiceProvider::class
+        XmlResponse\XmlResponseServiceProvider::class,
+        Orchestra\Parser\XmlServiceProvider::class,
 
     ],
 
@@ -240,6 +241,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Date' => Jenssegers\Date\Date::class,
+        'XmlParser' => Orchestra\Parser\Xml\Facade::class,
 
     ],
 

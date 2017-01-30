@@ -122,7 +122,7 @@ class XmlResponse
         foreach($array as $key => $value){
             if(is_array($value)){
                 if (is_numeric($key)){
-                    $this->array2xml($value, $xml->addChild($this->caseSensitive('viagem_' . $key)));
+                    $this->array2xml($value, $xml->addChild($this->caseSensitive('viagem')));
                 } else {
                     $this->array2xml($value, $xml->addChild($this->caseSensitive($key)));
                 }

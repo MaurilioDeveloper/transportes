@@ -16,7 +16,8 @@
         "jenssegers/date": "^3.2",
         "league/csv": "6.0",
         "soapbox/laravel-formatter": "^2.0",
-        "jailtonsc/laravel-response-xml": "^1.1"
+        "jailtonsc/laravel-response-xml": "^1.1",
+        "orchestra/parser": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
