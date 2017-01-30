@@ -8,9 +8,17 @@
     z-index: 9999;
     position: absolute;
     background: rgba(255, 255, 255, 0.90) url('images/loading.gif')
-    no-repeat center 25%;
+    no-repeat center 26%;
     /*display: table !important;*/
     /*display: table-cell !important;*/
     text-align: center;
     vertical-align: middle
+}
+
+.overlay-loading span{
+    font-family: cursive;
+    font-size: 30px;
+    position: inherit;
+    margin-top: 400px;
+    margin-left: -88px;
 }

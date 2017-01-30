@@ -78,7 +78,7 @@
 
                 @else
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Viagem Cadastrada com Sucesso</div>
-                    {!! Form::open(['route' => 'cadastrarViagem', 'class' => 'form', 'send' => 'cadastrar-viagem', 'name' => 'form-viagem']) !!}
+                    {!! Form::open(['route' => 'cadastrarViagem', 'class' => 'form', 'send' => 'cadastrar-viagem', 'name' => 'form-viagem', 'method' => 'POST']) !!}
                 @endif
 
 
