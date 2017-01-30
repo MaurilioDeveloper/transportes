@@ -8,7 +8,7 @@
     z-index: 9999;
     position: absolute;
     background: rgba(255, 255, 255, 0.90) url('images/loading.gif')
-    no-repeat center 26%;
+    no-repeat center 25%;
     /*display: table !important;*/
     /*display: table-cell !important;*/
     text-align: center;

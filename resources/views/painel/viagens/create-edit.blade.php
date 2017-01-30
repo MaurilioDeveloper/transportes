@@ -47,7 +47,13 @@
     </ol>
 @endsection
 
-<div class="overlay-loading" style="display: none;"><span>Carregando...</span></div>
+<div class="overlay-loading" style="display: none;">
+    <span style="
+        font-size: 30px;
+        font-family: cursive;
+        position: absolute;
+        margin-top: 425px;
+        margin-left: -85px">Carregando...</span></div>
 <!-- Retorna a Data do Servidor, convertendo-a em Brasileiro -->
 <div style="display: none">
     {{ \Date::setLocale('pt-BR') }}
