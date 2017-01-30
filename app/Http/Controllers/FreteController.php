@@ -48,84 +48,33 @@ class FreteController extends Controller
 
     public function index()
     {
-
-        $fretes = DB::select(
-            DB::raw("SELECT p.nome, f.id, od.cidade, od2.cidade, f.status, f.tipo 
-                     FROM `fretes` as f
-                     INNER JOIN parceiros as p
-                     ON p.id = f.id_parceiro
-                     INNER JOIN origens_destinos as od
-                     ON od.id = f.id_cidade_origem
-                     INNER JOIN origens_destinos as od2
-                     ON od2.id = f.id_cidade_destino"
-            )
-        );
-
         $parceiros = Parceiro::query()->select("parceiros.id", "parceiros.nome")->pluck('nome', 'id');
-//        dd($parceiros);
-//        $fretes =  Frete::query()
-//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-//            ->join('origens_destinos', 'origens_destinos.id', '=', 'fretes.id_cidade_origem')
-//        ->select("parceiros.nome", "fretes.id", "origens_destinos.cidade", "origens_destinos.cidade", "fretes.status", "fretes.tipo as tipo")->paginate(10);
-//        dd($fretes);
         return view('painel.fretes.index', compact('parceiros'));
     }
 
     public function create($idParceiro=null)
     {
-//        $status = Frete::STATUS;
         $nomeParceiro = '';
 
         if(isset($idParceiro)){
             $nomeParceiro = $this->parceiro->where('id', $idParceiro)->first();
-//            $nomeParceiro = str_replace('["', '', str_replace('"]', '', $nomeParceiro));
-//            dd($nomeParceiro);
             $nomeParceiro = $nomeParceiro['nome'];
-
-//            return utf8_encode(str_replace('["', '', str_replace('"]', '', $nomeParceiro)));
         }
 
         $titulo = "Cadastrar Frete";
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
-
 
         return view('painel.fretes.create-edit', compact('titulo', 'cidades', 'idParceiro', 'nomeParceiro'));
     }
 
     public function listaFretes()
     {
-//        $results = DB::select( DB::raw("SELECT * FROM some_table WHERE some_col = :somevariable"), array(
-//            'somevariable' => $someVariable,
-//        ));;
-//        $fretes =  DB::select(
-//            DB::raw("SELECT p.nome, f.id, od.cidade as cidade_origem, od2.cidade as cidade_destino, f.status, f.tipo
-//                     FROM `fretes` as f
-//                     INNER JOIN parceiros as p
-//                     ON p.id = f.id_parceiro
-//                     INNER JOIN origens_destinos as od
-//                     ON od.id = f.id_cidade_origem
-//                     INNER JOIN origens_destinos as od2
-//                     ON od2.id = f.id_cidade_destino"
-//            )
-//        );
-//        return $fretes;
-
-//        return '{ "data": '.Frete::query()
-//            ->join('parceiros as p', 'p.id', '=', 'fretes.id_parceiro')
-//            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
-//            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-//            ->select("p.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo")
-//            ->get()->toJson(). '}';
-
-
         return Datatables::of(Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
             ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"))
             ->make(true);
-
-
     }
 
 
@@ -173,11 +122,6 @@ class FreteController extends Controller
             $dadosForm['image'] = NULL;
         }
 
-//        dd($dadosForm['image']);
-//        dd($dadosForm['valor_total2']);
-//        dd($this->request->file('image'));
-
-
 
         if(isset($dadosForm['iscoleta']) && isset($dadosForm['id_parceiro_coletor'])){
             $iscoleta = $dadosForm['iscoleta'];
@@ -195,17 +139,9 @@ class FreteController extends Controller
             $parceiro_entregador = null;
         }
 
-
-
-
         $this->validationFrete($dadosForm);
 
         $user = $dadosForm['id_usuario'];
-//        dd($user);
-
-
-
-
 
         $frete = $this->frete->create([
             'id_parceiro' => $dadosForm['id_parceiro'],
@@ -404,32 +340,17 @@ class FreteController extends Controller
 
     public function filtrar()
     {
-
         $dadosForm = $this->request->all();
-
         $status = $this->resolverStatus($dadosForm['status']);
 
-//        $dadosPesquisa = Frete::query()
-//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-//            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-//            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-//            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
-//            ->orWhere('fretes.identificacao', '<>', '')
-//            ->orWhere('chassi', '<>', '')
-//            ->where('status', 'LIKE', "%$status%")
-//            ->paginate(10);
-
         return view("painel.fretes.index", compact('status'));
-//
     }
 
 
     public function buscaPorStatus($status)
     {
         $dadosPesquisa = Frete::where('status','like','%'.$status.'%')->take(15)->get();
-
         return view('painel.fretes.index', compact('status'));
-//        return $busca;
     }
 
 

@@ -1,0 +1,45 @@
+        /*
+        $fretes = DB::select(
+            DB::raw("SELECT p.nome, f.id, od.cidade, od2.cidade, f.status, f.tipo
+                     FROM `fretes` as f
+                     INNER JOIN parceiros as p
+                     ON p.id = f.id_parceiro
+                     INNER JOIN origens_destinos as od
+                     ON od.id = f.id_cidade_origem
+                     INNER JOIN origens_destinos as od2
+                     ON od2.id = f.id_cidade_destino"
+            )
+        );
+        */
+
+//        $results = DB::select( DB::raw("SELECT * FROM some_table WHERE some_col = :somevariable"), array(
+//            'somevariable' => $someVariable,
+//        ));;
+//        $fretes =  DB::select(
+//            DB::raw("SELECT p.nome, f.id, od.cidade as cidade_origem, od2.cidade as cidade_destino, f.status, f.tipo
+//                     FROM `fretes` as f
+//                     INNER JOIN parceiros as p
+//                     ON p.id = f.id_parceiro
+//                     INNER JOIN origens_destinos as od
+//                     ON od.id = f.id_cidade_origem
+//                     INNER JOIN origens_destinos as od2
+//                     ON od2.id = f.id_cidade_destino"
+//            )
+//        );
+//        return $fretes;
+
+//        return '{ "data": '.Frete::query()
+//            ->join('parceiros as p', 'p.id', '=', 'fretes.id_parceiro')
+//            ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
+//            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->select("p.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.status", "fretes.tipo")
+//            ->get()->toJson(). '}';
+//        $dadosPesquisa = Frete::query()
+//            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+//            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+//            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+//            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
+//            ->orWhere('fretes.identificacao', '<>', '')
+//            ->orWhere('chassi', '<>', '')
+//            ->where('status', 'LIKE', "%$status%")
+//            ->paginate(10);
