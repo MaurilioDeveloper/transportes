@@ -16,7 +16,7 @@ class XmlFormatterController extends Controller
 
         $data = date('d/m/Y H:i:s',strtotime(Carbon::now()));
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-//        $csv->output('viagens_'.$data.'.xml');
+        $csv->output('viagens_'.$data.'.xml');
         $viagem = Viagem::query()
         ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
         ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
