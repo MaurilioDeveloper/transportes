@@ -83,7 +83,7 @@ $(document).ready(function () {
                     if (row.caminhoes > 0 && row.motoristas > 0) {
                         html +='<a class="btn btn-info btn-sm v' + row.id + '" style="display: inline; margin-left: 4px" onclick="novaViagem(' + row.id + ')"><i class="fa fa-plane"></i> Nova Viagem</a>';
                     }else{
-                        html += '<a disabled="true" class="btn btn-info btn-sm v' + row.id + '" style="display: inline; margin-left: 4px" onclick="novaViagem(' + row.id + ')"><i class="fa fa-plane"></i> Nova Viagem</a>'
+                        html += '<a disabled="true" class="btn btn-info btn-sm v' + row.id + '" style="display: inline; margin-left: 4px"><i class="fa fa-plane"></i> Nova Viagem</a>'
                     }
                     return html;
                 }
