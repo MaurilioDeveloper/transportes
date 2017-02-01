@@ -49,7 +49,7 @@ $(document).ready(function () {
                 display: $.fn.dataTable.Responsive.display.modal({
                     header: function (row) {
                         var data = row.data();
-                        return 'Detalhes do Parceiro '+row.nome;
+                        return 'Detalhes do Parceiro ';
                     }
                 }),
                 renderer: $.fn.dataTable.Responsive.renderer.tableAll({
@@ -74,7 +74,7 @@ $(document).ready(function () {
             {data: 'cidade', name: 'parceiros.cidade'},
             // { data: 'estado', name: 'parceiros.estado' },
             {
-                data: 'id',
+                data: 'parceiros.id',
                 className: "center",
                 render: function (data, type, row) {
                     var html = '<a href="parceiros/edit/' + row.id + '" id-parceiro="' + row.id + '" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a>' +
