@@ -100,7 +100,7 @@ class ParceiroController extends Controller
         $dataCam = $request->only(['extraCaminhoes']);
         $dataMot = $request->only(['extraMotoristas']);
 
-        \DB::beginTransaction();
+//        \DB::beginTransaction();
 //
         if($data['pessoa'] === "fisica") {
             if (strlen($dataParc['data_nasc']) <= 1) {
