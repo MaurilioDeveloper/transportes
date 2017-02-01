@@ -42,7 +42,7 @@
     {{--<section class="content">--}}
         <div class="row">
             <div class="col-md-12">
-                <div class='box box-primary'>
+                <div class='box box-primary fadeIn animated' style="visibility: visible; animation-name: fadeIn;">
                     <div style="display: none;" id="dialog-confirm" title="Deletar">
                         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja
                             realmente excluir esse tipo de ocorrência?</p>

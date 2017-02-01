@@ -42,7 +42,7 @@
     <div class="row">
         <div class="content">
         {{--<div class="col-md-12">--}}
-            <div class='box box-primary col-md-12'>
+            <div class='box box-primary col-md-12 fadeIn animated' style="visibility: visible; animation-name: fadeIn;">
 
                 <div class='box-header'></div>
 

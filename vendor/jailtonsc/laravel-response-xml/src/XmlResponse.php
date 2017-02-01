@@ -131,6 +131,7 @@ class XmlResponse
             }
         }
 
+
         return Response::make($xml->asXML(), 200, $this->header());
     }
 }

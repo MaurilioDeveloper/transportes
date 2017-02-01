@@ -21,6 +21,7 @@
 {{--        <script src="{{url('/assets/js/jquery-1.6.2.js')}}"></script>--}}
         <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
         <script src="{{url('/assets/js/vendor/angular.min.js')}}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         {{--<script--}}
             {{--src="https://code.jquery.com/jquery-2.2.2.min.js"--}}
             {{--integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="--}}

@@ -11,6 +11,6 @@ return [
     | <root xmlns:v1="http://www.site.com/schema"></root>
     |
     */
-    'template' => '<root></root>',
+    'template' => '<dados></dados>',
     'caseSensitive' => false
 ];

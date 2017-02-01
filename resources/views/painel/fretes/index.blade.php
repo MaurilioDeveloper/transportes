@@ -41,7 +41,7 @@
         {{--<div class="row" ng-app="app">--}}
         <div class="row">
             <div class="col-md-12">
-                <div class='box box-primary'>
+                <div class='box box-primary fadeIn animated' style="visibility: visible; animation-name: fadeIn;">
 
                     <div class='box-header'>Listagem de Dados</div>
                     <div class='col-lg-8'>

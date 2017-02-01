@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <!-- iCheck -->
     {{--<link rel="stylesheet" href="{{url("plugins/iCheck/square/blue.css")}}" />--}}
 
@@ -24,7 +25,7 @@
 </head>
 
 <body class="hold-transition login-page">
-<div class="login-box">
+<div class="login-box zoomIn animated" style="visibility: visible; animation-name: zoomIn;">
     <div class="login-logo">
         <a href=""><b>M1</b> Transportes</a>
     </div>

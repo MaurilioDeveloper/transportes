@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Frete;
+use App\FreteViagem;
+use App\User;
 use App\Viagem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,7 +19,7 @@ class XmlFormatterController extends Controller
 
         $data = date('d/m/Y H:i:s',strtotime(Carbon::now()));
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->output('viagens_'.$data.'.xml');
+//        $csv->output('viagens_'.$data.'.xml');
         $viagem = Viagem::query()
         ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
         ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
@@ -28,8 +31,11 @@ class XmlFormatterController extends Controller
         ->groupBy('viagens.id')
         ->select("viagens.id", "parceiros.nome as parceiro", "m.nome as motorista", "c.modelo as caminhao", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
         ->selectRaw('count(fv.id) as fretes_viagens');
+//        return $viagem->get('data_inicio');
 
-        $xml = response()->xml($viagem->get());
+        $xml = response()->xml($viagem->get()->toArray());
+//        $xml .= response()->xml(User::all());
+//        dd($xml);
         return $xml;
 
 
