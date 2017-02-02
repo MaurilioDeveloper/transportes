@@ -52,18 +52,18 @@ Route::group(['prefix' => 'painel'], function(){
     //Parceiros
     Route::group(['prefix' => 'parceiros'], function(){
         Route::get('/delete-motorista/{id}', 'ParceiroController@deleteMotorista');
-        Route::get('/listaParceiros', 'ParceiroController@listaParceiros')->name('listarParceiros');
         Route::get('/busca-parceiros/{pesquisa}', 'ParceiroController@buscaParceiros')->name('buscarParceiros');
+        Route::get('/editOcorrencia/{id}', 'ParceiroController@editOcorrencia')->name('editOcorrencia');
+        Route::put('/updateOcorrencia/{id}', 'ParceiroController@updateOcorrencia')->name('updateOcorrencia');
+        Route::get('/delete-ocorrencia/{id}', 'ParceiroController@deleteOcorrencia')->name('deleteOcorrencia');
+        Route::get('/delete-parceiro/{id}', 'ParceiroController@deleteParceiro')->name('deleteParceiro');
+        Route::get('/edit/{id}', 'ParceiroController@edit')->name('editarParceiro');
+        Route::get('/listaParceiros', 'ParceiroController@listaParceiros')->name('listarParceiros');
 //        Route::get('/buscaParceiros', 'ParceiroController@buscaParceiros')->name('buscarParceiros');
         Route::post('/pesquisar', 'ParceiroController@pesquisar')->name('pesquisarParceiro');
         Route::post('/postOcorrencia', 'ParceiroController@postOcorrencia')->name('postOcorrencia');
-        Route::get('/editOcorrencia/{id}', 'ParceiroController@editOcorrencia')->name('editOcorrencia');
-        Route::post('/updateOcorrencia', 'ParceiroController@postOcorrencia')->name('updateOcorrencia');
         Route::post('/postTipoOcorrencia', 'ParceiroController@postTipoOcorrencia')->name('postTipoOcorrencia');
-        Route::get('/delete-ocorrencia/{id}', 'ParceiroController@deleteOcorrencia')->name('deleteOcorrencia');
-        Route::get('/delete-parceiro/{id}', 'ParceiroController@deleteParceiro')->name('deleteParceiro');
         Route::get('/cadastrar', 'ParceiroController@cadastrar')->name('adicionarParceiro');
-        Route::get('/edit/{id}', 'ParceiroController@edit')->name('editarParceiro');
     });
 
     Route::resource('parceiros', 'ParceiroController');

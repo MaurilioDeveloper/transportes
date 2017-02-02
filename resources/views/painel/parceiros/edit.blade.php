@@ -36,25 +36,30 @@
                 <div class="box-header with-border">
                     <h3 class="modal-title" id="myModalLabel">Cadastrar Tipo Ocorrência</h3>
                 </div>
-                <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn-tipo" role="alert"></div>
-                <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc-tipo" role="alert">Tipo de Ocorrência Cadastrada com Sucesso</div>
 
+                {{--{!! Form::open(['route' => 'postTipoOcorrencia', 'class' => 'form', 'name' => 'form-tipo-ocorrencia', 'send' => '/painel/parceiros/postTipoOcorrencia']) !!}--}}
                 <!-- form start -->
                 <div class="box-body">
+                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn-tipo" role="alert"></div>
+                    <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc-tipo" role="alert">Tipo de Ocorrência Cadastrada com Sucesso</div>
+
                     {!! Form::open(['route' => 'postTipoOcorrencia', 'class' => 'form', 'name' => 'form-tipo-ocorrencia', 'send' => '/painel/parceiros/postTipoOcorrencia']) !!}
-                    <h4 class="box-title">Os campos com * são obrigatórios</h4>
+                        <h4 class="box-title">Os campos com * são obrigatórios</h4>
 
-                    <div class="form-group col-md-12">
-                        {!! Form::label('nome', 'Tipo Ocorrência *') !!}
-                        {!! Form::text('nome', null, ['class' => 'form-control', 'required' => 'true']) !!}
-                    </div>
+                        <div class="form-group col-md-12">
+                            {!! Form::label('nome', 'Tipo Ocorrência *') !!}
+                            {!! Form::text('nome', null, ['class' => 'form-control', 'required' => 'true']) !!}
+                        </div>
 
+                    {{--</div>--}}
+                    {{--<div class="modal-footer">--}}
+                        <div style="float: right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'id' => 'btn-tipo']) !!}
+                        </div>
+                    {!! Form::close() !!}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'id' => 'btn-tipo']) !!}
-                </div>
-                {!! Form::close() !!}
+                {{--{!! Form::close() !!}--}}
             </div><!--box-primary-->
         </div><!--modal-content-->
     </div>  <!--modal-dialog-->
@@ -79,14 +84,11 @@
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
                     <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Ocorrência Cadastrada com Sucesso</div>
 
-
-                    {{--<div id="updateOcorrencia">--}}
-{{--                        {!! Form::open(['class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '']) !!}--}}
-                        {{--<form class="form-ocorrencia" id="form-ocorrencia-edit" name="form-ocorrencia-update" method="PUT">--}}
-                        {{--<input name="_token" type="hidden" value="{{ csrf_token() }}" />--}}
-                    {{--</div>--}}
                     {{--<div id="postOcorrencia">--}}
-                        {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '/painel/parceiros/postOcorrencia']) !!}
+                        {!! Form::open(['route' => 'postOcorrencia', 'class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '/painel/parceiros/postOcorrencia', 'id' => 'ocorrencia-form']) !!}
+{{--                        {!! Form::open(['route' => ['updateOcorrencia', $parceiro->id], 'class' => 'form-ocorrencia', 'name' => 'form-ocorrencia', 'send' => '/painel/parceiros/updateOcorrencia', 'id' => 'ocorrencia-form-update']) !!}--}}
+                    {{--<form name="form-ocorrencia" class="form-ocorrencia" method="PUT" action="/painel/parceiros/updateOcorrencia/".{{$parceiro->id}} >--}}
+                        {{--<input type="hidden" value="{!! csrf_token() !!}" />--}}
                     {{--</div>--}}
 
                     <h4 class="box-title">Os campos com * são obrigatórios</h4>
@@ -128,6 +130,8 @@
                             {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'id' => 'botao']) !!}
                         </div>
                     </div>
+
+                    {!! Form::close() !!}
                 </div>
                 <script>
                     $("button#closeO.btn").click(function () {
@@ -135,7 +139,6 @@
                     });
                 </script>
 
-                {!! Form::close() !!}
             </div><!--box-primary-->
         </div><!--modal-content-->
     </div>  <!--modal-dialog-->
@@ -258,7 +261,7 @@
 
 
                                     {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-                                    
+
                                     @include('painel.parceiros._form')
 
                                     <div class="form-group col-md-6">

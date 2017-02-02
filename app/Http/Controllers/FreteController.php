@@ -106,19 +106,20 @@ class FreteController extends Controller
 
     public function store()
     {
-        $dadosForm = $this->request->all();
-//        dd($dadosForm);
-        $data_hoje = implode('-',array_reverse(explode('/', $dadosForm['data_hoje'])));
-        $data_inicio = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
-        $data_fim = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
-        $valor_item = str_replace('R$', '',$dadosForm['valor_item']);
-        $valor_coleta = str_replace('R$', '',$dadosForm['valor_coleta']);
-        $valor_entrega = str_replace('R$', '',$dadosForm['valor_entrega']);
-        $valor_total = str_replace('R$', '',$dadosForm['valor_total']);
+        $dadosForm = $this->request->except(['id_usuario']);
+        $user = $this->request->only(['id_usuario']);
+        $dadosForm['data_hoje'] = implode('-',array_reverse(explode('/', $dadosForm['data_hoje'])));
+        $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
+        $dadosForm['data_fim'] = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
+        $dadosForm['valor_item'] = str_replace('R$', '',$dadosForm['valor_item']);
+        $dadosForm['valor_coleta'] = str_replace('R$', '',$dadosForm['valor_coleta']);
+        $dadosForm['valor_entrega'] = str_replace('R$', '',$dadosForm['valor_entrega']);
+        $dadosForm['valor_total'] = str_replace('R$', '',$dadosForm['valor_total']);
+        $dadosForm['status'] = $this->resolverStatus($dadosForm['status']);
+
         $file = $this->request->file('image');
         if($this->request->hasFile('image')){
             $dadosForm['image'] = $file->getClientOriginalName();
-//        dd($imageName);
             $file->move(public_path('fretes_imagens/'), $file->getClientOriginalName());
         }else{
             $dadosForm['image'] = NULL;
@@ -129,57 +130,31 @@ class FreteController extends Controller
             $iscoleta = $dadosForm['iscoleta'];
             $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
         }else{
-            $iscoleta = null;
-            $parceiro_coletor = null;
+            $dadosForm['iscoleta'] = null;
+            $dadosForm['id_parceiro_coletor'] = null;
         }
 
         if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
             $isentrega = $dadosForm['isentrega'];
             $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
         }else{
-            $isentrega = null;
-            $parceiro_entregador = null;
+            $dadosForm['isentrega'] = null;
+            $dadosForm['id_parceiro_entregador'] = null;
         }
+
 
         $this->validationFrete($dadosForm);
 
-        $user = $dadosForm['id_usuario'];
 
-        $frete = $this->frete->create([
-            'id_parceiro' => $dadosForm['id_parceiro'],
-            'data_hoje' => $data_hoje,
-            'data_inicio' => $data_inicio,
-            'data_fim' => $data_fim,
-            'id_cidade_origem' => $dadosForm['id_cidade_origem'],
-            'id_cidade_destino' => $dadosForm['id_cidade_destino'],
-            'tipo' => $dadosForm['tipo'],
-            'identificacao' => strtoupper($dadosForm['identificacao']),
-            'valor_item' => $valor_item,
-            'cor' => $dadosForm['cor'],
-            'status' => $this->resolverStatus($dadosForm['status']),
-            'iscoleta' => $iscoleta,
-            'isentrega' => $isentrega,
-            'id_parceiro_coletor' => $parceiro_coletor,
-            'valor_coleta' => $valor_coleta,
-            'id_parceiro_entregador' => $parceiro_entregador,
-            'valor_entrega' => $valor_entrega,
-            'valor_total' => $valor_total,
-            'image' => $dadosForm['image'],
-            'informacoes_complementares' => $dadosForm['informacoes_complementares'],
-
-        ]);
-
+        $frete = $this->frete->create($dadosForm);
 
         $historico = $this->historico->create([
-            'data' => $data_hoje,
-            'status' => $this->resolverStatus($dadosForm['status']),
-            'id_usuario' => $user,
+            'data' => $dadosForm['data_hoje'],
+            'status' => $dadosForm['status'],
+            'id_usuario' => $user['id_usuario'],
             'id_frete' => $frete->id
         ]);
 
-//        dd($dadosForm['valor_coleta']);
-
-//        return 1;
         return redirect()->route('listarFretes');
     }
 
@@ -203,10 +178,7 @@ class FreteController extends Controller
         if (!($frete = Frete::find($id))) {
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
-//        dd($frete);
-
         $cidades = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.cidade")->orderBy('origens_destinos.cidade', 'ASC')->pluck('cidade', 'id');
-//        $estados = OrigemDestino::query()->select("origens_destinos.id", "origens_destinos.estado")->pluck('estado', 'id');
         $data_hoje = implode('/',array_reverse(explode('-',$frete->data_hoje)));
         $data_inicio = implode('/',array_reverse(explode('-',$frete->data_inicio)));
         $data_fim = implode('/',array_reverse(explode('-',$frete->data_fim)));
@@ -243,17 +215,18 @@ class FreteController extends Controller
      */
     public function update($id)
     {
-        $dadosForm = $this->request->all();
+        $dadosForm = $this->request->except(['id_usuario']);
+        $user = $this->request->only(['id_usuario']);
+        $dadosForm['data_hoje'] = implode('-',array_reverse(explode('/', $dadosForm['data_hoje'])));
+        $dadosForm['data_inicio'] = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
+        $dadosForm['data_fim'] = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
+        $dadosForm['valor_item'] = str_replace('R$', '',$dadosForm['valor_item']);
+        $dadosForm['valor_coleta'] = str_replace('R$', '',$dadosForm['valor_coleta']);
+        $dadosForm['valor_entrega'] = str_replace('R$', '',$dadosForm['valor_entrega']);
+        $dadosForm['valor_total'] = str_replace('R$', '',$dadosForm['valor_total']);
+        $dadosForm['status'] = $this->resolverStatus($dadosForm['status']);
 //        dd($dadosForm['id']);
         $frete = Frete::findOrFail($id);
-//        dd($dadosForm);
-        $data_hoje = implode('-',array_reverse(explode('/', $dadosForm['data_hoje'])));
-        $data_inicio = implode('-',array_reverse(explode('/', $dadosForm['data_inicio'])));
-        $data_fim = implode('-',array_reverse(explode('/', $dadosForm['data_fim'])));
-        $valor_item = str_replace('R$', '',$dadosForm['valor_item']);
-        $valor_coleta = str_replace('R$', '',$dadosForm['valor_coleta']);
-        $valor_entrega = str_replace('R$', '',$dadosForm['valor_entrega']);
-        $valor_total = str_replace('R$', '',$dadosForm['valor_total']);
 
 //        dd($frete->image);
         if(isset($dadosForm['image']) && $dadosForm['image'] != $frete->image){
@@ -274,16 +247,16 @@ class FreteController extends Controller
             $iscoleta = $dadosForm['iscoleta'];
             $parceiro_coletor = $dadosForm['id_parceiro_coletor'];
         }else{
-            $iscoleta = null;
-            $parceiro_coletor = null;
+            $dadosForm['iscoleta'] = null;
+            $dadosForm['id_parceiro_coletor'] = null;
         }
 
         if(isset($dadosForm['isentrega']) && isset($dadosForm['id_parceiro_entregador'])){
             $isentrega = $dadosForm['isentrega'];
             $parceiro_entregador = $dadosForm['id_parceiro_entregador'];
         }else{
-            $isentrega = null;
-            $parceiro_entregador = null;
+            $dadosForm['isentrega'] = null;
+            $dadosForm['id_parceiro_entregador'] = null;
         }
 
 
@@ -293,41 +266,15 @@ class FreteController extends Controller
 
         $this->validationFrete($dadosForm);
 
-        $update = $frete->fill([
-            'id_parceiro' => $dadosForm['id_parceiro'],
-            'data_hoje' => $data_hoje,
-            'data_inicio' => $data_inicio,
-            'data_fim' => $data_fim,
-            'id_cidade_origem' => $dadosForm['id_cidade_origem'],
-//            'estado_origem' => $dadosForm['estado_origem'],
-            'id_cidade_destino' => $dadosForm['id_cidade_destino'],
-//            'estado_destino' => $dadosForm['estado_destino'],
-            'tipo' => $dadosForm['tipo'],
-            'identificacao' => strtoupper($dadosForm['identificacao']),
-            'valor_item' => $valor_item,
-            'cor' => $dadosForm['cor'],
-            'status' => $this->resolverStatus($dadosForm['status']),
-            'iscoleta' => $iscoleta,
-            'isentrega' => $isentrega,
-            'id_parceiro_coletor' => $parceiro_coletor,
-            'valor_coleta' => $valor_coleta,
-            'id_parceiro_entregador' => $parceiro_entregador,
-            'valor_entrega' => $valor_entrega,
-            'valor_total' => $valor_total,
-            'image' => $dadosForm['image'],
-            'informacoes_complementares' => $dadosForm['informacoes_complementares'],
-            'chassi' => $dadosForm['chassi']
-
-        ])->save();
+        $update = $frete->fill($dadosForm)->save();
 
         $confirmHistorico = HistoricoFrete::where('id_frete', $frete->id)->orderBy('data', 'DESC')->get();
+;
 
-        $statusFrete = $this->resolverStatus($dadosForm['status']);
-
-        if(count($confirmHistorico) == 0 || $confirmHistorico[0]['status'] != $statusFrete){
+        if(count($confirmHistorico) == 0 || $confirmHistorico[0]['status'] != $dadosForm['status']){
             $historico = $this->historico->create([
                 'data' => date('Y/m/d'),
-                'status' => $statusFrete,
+                'status' => $dadosForm['status'],
                 'id_usuario' => auth()->user()->id,
                 'id_frete' => $frete->id
             ]);

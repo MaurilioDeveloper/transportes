@@ -507,13 +507,17 @@ class ParceiroController extends Controller
     public function updateOcorrencia($id)
     {
         $dadosForm = $this->request->all();
+        $dadosForm['data'] = implode('-', array_reverse(explode('/', $dadosForm['data'])));
 
+//        dd($dadosForm);
         if (!($ocorrencia = Ocorrencia::find($id))) {
             throw new ModelNotFoundException("Ocorrencia não foi encontrada");
         }
 
         $ocorrencia->fill($dadosForm);
         $ocorrencia->save();
+
+        return 1;
     }
 
     public function postTipoOcorrencia()
