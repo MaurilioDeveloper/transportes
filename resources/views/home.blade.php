@@ -104,7 +104,7 @@
                                     @if($freteDash->data_inicio > date('Y-m-d'))
                                         <tr class="success">
                                     @else
-                                        <tr style="background: red; color: white">
+                                        <tr style="background: #dd4b39; color: white">
                                     @endif
                                         <td>{{$freteDash->nome}}</td>
                                         <td>{{$freteDash->tipo}}</td>

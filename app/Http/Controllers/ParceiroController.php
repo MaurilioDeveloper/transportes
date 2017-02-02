@@ -238,10 +238,6 @@ class ParceiroController extends Controller
         if($data_nasc == '[null]'){
             $data_nasc = null;
         }
-//        $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
-//        $dataCont = $request->only(['extras']);
-//        $dataCam = $request->only(['extraCaminhoes']);
-//        $dataMot = $request->only(['extraMotoristas']);
         $caminhoes = $this->caminhao->all()->where('id_parceiro', $id);
         $contatos = $this->contato->all()->where('id_parceiro', $id);
         $motoristas = $this->motorista->all()->where('id_parceiro', $id);
