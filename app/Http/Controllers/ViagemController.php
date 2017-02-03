@@ -44,7 +44,8 @@ class ViagemController extends Controller
 
     public function index()
     {
-        return view('painel.viagens.index');
+        $titulo = "Listagem de Viagens";
+        return view('painel.viagens.index', compact('titulo'));
     }
 
     public function create($idViagemParceiro=null)

@@ -24,8 +24,9 @@ class TipoOcorrenciaController extends Controller
 
     public function index()
     {
+        $titulo = "Listagem de Tipo de Ocorrências";
         $tipoOcorrencias = $this->tipoOcorrencia->all();
-        return view('painel.tipo-ocorrencias.index', compact('tipoOcorrencias'));
+        return view('painel.tipo-ocorrencias.index', compact('tipoOcorrencias', 'titulo'));
     }
 
     public function listaTipoOcorrencias()
@@ -36,15 +37,17 @@ class TipoOcorrenciaController extends Controller
 
     public function create()
     {
-        return view('painel.tipo-ocorrencias.create-edit');
+        $titulo = "Cadastrar Tipo de Ocorrência";
+        return view('painel.tipo-ocorrencias.create-edit', compact('titulo'));
     }
 
     public function edit($id)
     {
+        $titulo = "Editar Tipo de Ocorrência";
         if (!($tipoOcorrencia = TipoOcorrencia::find($id))) {
             throw new ModelNotFoundException("Tipo de Ocorrência não foi encontrado");
         }
-        return view('painel.tipo-ocorrencias.create-edit', compact('tipoOcorrencia'));
+        return view('painel.tipo-ocorrencias.create-edit', compact('tipoOcorrencia', 'titulo'));
     }
 
     public function delete($id)

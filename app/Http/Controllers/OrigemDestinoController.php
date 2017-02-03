@@ -23,7 +23,8 @@ class OrigemDestinoController extends Controller
 
     public function index()
     {
-        return view('painel.origens_destinos.index');
+        $titulo = "Listagem de Cidades";
+        return view('painel.origens_destinos.index', compact('titulo'));
     }
 
     public function listaCidadesEstados()

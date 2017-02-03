@@ -47,8 +47,9 @@ class ParceiroController extends Controller
 
     public function index()
     {
+        $titulo = "Listagem de Parceiros";
         $parceiros = $this->parceiro->paginate(10);
-        return view('painel.parceiros.index2', compact('parceiros'));
+        return view('painel.parceiros.index2', compact('parceiros', 'titulo'));
     }
 
     public function pesquisar()
@@ -170,7 +171,7 @@ class ParceiroController extends Controller
     {
         $paramPessoa = $this->request->get('pessoa');
         $pessoa = Parceiro::getPessoa($paramPessoa);
-        $titulo = "Adicionar Parceiro";
+        $titulo = "Cadastrar Parceiro";
         return view('painel.parceiros.create', compact('titulo', 'pessoa'));
     }
 

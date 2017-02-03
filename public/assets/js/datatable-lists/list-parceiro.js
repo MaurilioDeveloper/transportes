@@ -58,7 +58,7 @@ $(document).ready(function () {
             }
         },
         rowId: 'id',
-        ajax: "parceiros/listaParceiros",
+        ajax: "/painel/parceiros/listaParceiros",
         columns: [
 
             {data: 'nome', name: 'parceiros.nome'},

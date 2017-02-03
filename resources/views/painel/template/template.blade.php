@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <title>M1 Transportes -{{$titulo or 'Painel M1 Transportes'}}</title>
+        <title>M1 Transportes - {{$titulo or 'Painel M1 Transportes'}}</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="{{url('/assets/plugins/iCheck/all.css')}}">
         <link rel="stylesheet" href="{{url('/assets/plugins/colorpiker/colorpiker.css')}}">

@@ -122,9 +122,10 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
+        $titulo = "Editar Usuário";
         $usuario = $this->user->find($id);
 
-        return view('painel.usuarios.create-edit', compact('usuario'));
+        return view('painel.usuarios.create-edit', compact('usuario', 'titulo'));
     }
 
     /**

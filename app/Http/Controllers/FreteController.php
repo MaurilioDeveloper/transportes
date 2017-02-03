@@ -48,8 +48,9 @@ class FreteController extends Controller
 
     public function index()
     {
+        $titulo = "Listagem de Fretes";
         $parceiros = Parceiro::query()->select("parceiros.id", "parceiros.nome")->pluck('nome', 'id');
-        return view('painel.fretes.index', compact('parceiros'));
+        return view('painel.fretes.index', compact('parceiros', 'titulo'));
     }
 
     public function create($idParceiro=null)
