@@ -17,7 +17,8 @@
         "league/csv": "6.0",
         "soapbox/laravel-formatter": "^2.0",
         "jailtonsc/laravel-response-xml": "^1.1",
-        "orchestra/parser": "~3.0"
+        "orchestra/parser": "~3.0",
+        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

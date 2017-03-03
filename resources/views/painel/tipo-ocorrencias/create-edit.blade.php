@@ -32,7 +32,7 @@
 
                     <div class="form-group col-md-12">
                         <label>Nome</label>
-                        <input required="" name='nome' type="text" placeholder="Nome" value="{{$tipoOcorrencia->nome or old('nome')}}"
+                        <input required="" name='nome' id="tipo-ocorencia-field" onchange=";if($('#tipo-ocorencia-field').val().length > 0){$('#tipo-ocorencia-field').css('border-color', '#00a65a');}else{$('#tipo-ocorencia-field').css('border-color', '#dd4b39')}" type="text" placeholder="Nome" value="{{$tipoOcorrencia->nome or old('nome')}}"
                                class="form-control"/>
                     </div>
                     <div class="form-group col-md-12">

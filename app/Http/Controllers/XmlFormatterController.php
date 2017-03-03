@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Frete;
 use App\FreteViagem;
+use App\Role;
 use App\User;
 use App\Viagem;
 use Carbon\Carbon;
@@ -31,9 +32,10 @@ class XmlFormatterController extends Controller
         ->groupBy('viagens.id')
         ->select("viagens.id", "parceiros.nome as parceiro", "m.nome as motorista", "c.modelo as caminhao", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
         ->selectRaw('count(fv.id) as fretes_viagens');
+//        dd($viagem);
 //        return $viagem->get('data_inicio');
 
-        $xml = response()->xml($viagem->get()->toArray());
+        $xml = response()->xml($viagem->get());
 //        $xml .= response()->xml(User::all());
 //        dd($xml);
         return $xml;
@@ -46,5 +48,10 @@ class XmlFormatterController extends Controller
 //        $viagem = Viagem::query()->select('id', 'id_motorista')->get();
 //        $formatter = Formatter::make($viagem, Formatter::JSON);
 //        return $formatter->toXml('id', 'id_motorista');
+    }
+
+    public function roleTeste()
+    {
+        return Role::all();
     }
 }

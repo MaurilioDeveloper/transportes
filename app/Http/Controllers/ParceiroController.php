@@ -288,8 +288,6 @@ class ParceiroController extends Controller
         $this->validationParceiro($dataParc, $rules);
 
 
-
-
         if(is_array($dataCont['extras'])) {
             foreach ($dataCont['extras'] as $extra) {
 
@@ -359,6 +357,7 @@ class ParceiroController extends Controller
 
 
         foreach ($caminhoesDB as $caminhao) {
+//            dd($caminhao);
             if(!$caminhao['presente']){
                 Caminhao::find($caminhao['id'])->delete();
             }
@@ -366,7 +365,7 @@ class ParceiroController extends Controller
 
         if(is_array($dataMot['extraMotoristas'])) {
             foreach ($dataMot['extraMotoristas'] as $extraMotoristas) {
-
+//                dd($extraMotoristas);
                 if (key_exists('id', $extraMotoristas)) {
                     $idMotorista = intval($extraMotoristas['id']);
                 } else {
@@ -379,10 +378,11 @@ class ParceiroController extends Controller
                     } else {
                         $motorista->fill($extraMotoristas);
                         $motorista->save();
-                        $motoristaDB[$idMotorista]['presente'] = true;
+                        $motoristasDB[$idMotorista]['presente'] = true;
+//                        dd($motoristasDB);
                     }
                 } else {
-
+//                    dd($extraMotoristas);
                     $motoristas = Motorista::create([
                         'nome' => $extraMotoristas['nome'],
                         'rg' => $extraMotoristas['rg'],

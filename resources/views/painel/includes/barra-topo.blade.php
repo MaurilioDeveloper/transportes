@@ -30,8 +30,11 @@
                             <img src="{{url("/assets/imgs/user.png")}}" class="img-circle" alt="User Image">
 
                             <p>
+                                {{--@role('admin')--}}
                                 {{ auth()->user()->name }} - Administrador
-                                <small></small>
+                                {{--\Entrust::role('admin')--}}
+                                {{--@endrole--}}
+                                {{--<small></small>--}}
                             </p>
                         </li>
                         <!-- Menu Footer-->

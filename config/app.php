@@ -188,6 +188,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         XmlResponse\XmlResponseServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
 
@@ -242,6 +243,7 @@ return [
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Date' => Jenssegers\Date\Date::class,
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 
