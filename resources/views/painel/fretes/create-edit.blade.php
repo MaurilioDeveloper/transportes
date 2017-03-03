@@ -82,19 +82,19 @@
                         {!! Form::hidden('id_usuario', auth()->user()->id, ['class' => '','style' => 'width:217px; background: #f0f0f0 !important; color: #aaa !important; border: #ccc;']) !!}
                         <div class="form-group col-md-4">
                             <label>Data Atual</label>
-                            <input required="" name='data_hoje' type="text" placeholder="dd/mm/yyyy"
+                            <input required="" name='data_hoje' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{ $data_hoje or $data->format('d/m/Y') }}"/>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Data Prevista Inicio *</label>
-                            <input required="" name='data_inicio' type="text" placeholder="dd/mm/yyyy"
+                            <input required="" name='data_inicio' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{$data_inicio or old('data_inicio')}}"/>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Data Prevista Fim</label>
-                            <input required="" name='data_fim' type="text" placeholder="dd/mm/yyyy"
+                            <input required="" name='data_fim' type="text" placeholder="__/__/____"
                                    class="form-control datapicker" value="{{$data_fim or old('data_fim')}}"/>
                         </div>
                     </div>

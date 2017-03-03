@@ -2,7 +2,7 @@
 
 <div class="form-group col-md-6">
     <label for="Nome">Nome *</label>
-    {!! Form::text('nome', null, ['class' => 'form-control', 'required' => 'true']) !!}
+    {!! Form::text('nome', null, ['class' => 'form-control', 'required' => 'true', 'placeholder' => 'Nome']) !!}
 </div>
 
 <div class="form-group col-md-6">
@@ -17,7 +17,7 @@
 
 <div class="form-group col-md-6">
     {!! Form::label('email', 'E-mail') !!}
-    {!! Form::email('email', null, ['class' => 'form-control']) !!}
+    {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
 </div>
 
 
@@ -35,29 +35,29 @@
 
 <div class="form-group col-md-6">
     {!! Form::label('endereco', 'Endereço') !!}
-    {!! Form::text('endereco', null, ['class' => 'form-control', 'id' => 'rua']) !!}
+    {!! Form::text('endereco', null, ['class' => 'form-control', 'id' => 'rua', 'placeholder' => 'Endereço']) !!}
 </div>
 
 <div class="form-group col-md-6">
     {!! Form::label('numero', 'Número') !!}
-    {!! Form::text('numero', null, ['class' => 'form-control', 'id' => 'numero']) !!}
+    {!! Form::text('numero', null, ['class' => 'form-control', 'id' => 'numero', 'placeholder' => 'Numero']) !!}
 </div>
 
 <div class="form-group col-md-6">
     {!! Form::label('complemento', 'Complemento') !!}
-    {!! Form::text('complemento', null, ['class' => 'form-control', 'id' => 'complemento']) !!}
+    {!! Form::text('complemento', null, ['class' => 'form-control', 'id' => 'complemento', 'placeholder' => 'Complemento']) !!}
 </div>
 
 
 <div class="form-group col-md-6">
     {!! Form::label('bairro', 'Bairro') !!}
-    {!! Form::text('bairro', null, ['class' => 'form-control', 'id' => 'bairro']) !!}
+    {!! Form::text('bairro', null, ['class' => 'form-control', 'id' => 'bairro', 'placeholder' => 'Bairro']) !!}
 </div>
 
 
 <div class="form-group col-md-6">
     {!! Form::label('cidade', 'Cidade *') !!}
-    {!! Form::text('cidade', null, ['class' => 'form-control', 'id' => 'cidade']) !!}
+    {!! Form::text('cidade', null, ['class' => 'form-control', 'id' => 'cidade', 'placeholder' => 'Cidade']) !!}
 </div>
 
 
@@ -69,18 +69,18 @@
 
 <div class="form-group col-md-6">
     {!! Form::label('site', 'Site') !!}
-    {!! Form::text('site', null, ['class' => 'form-control']) !!}
+    {!! Form::text('site', null, ['class' => 'form-control', 'placeholder' => 'Site']) !!}
 </div>
 
 @if($pessoa == \App\Parceiro::PESSOA_JURIDICA)
     <div class="form-group col-md-6">
         {!! Form::label('fantasia', 'Fantasia') !!}
-        {!! Form::text('fantasia', null, ['class' => 'form-control']) !!}
+        {!! Form::text('fantasia', null, ['class' => 'form-control', 'placeholder' => 'Fantasia']) !!}
     </div>
 
     <div class="form-group col-md-6">
         {!! Form::label('inscricao_estadual', 'Inscrição Estadual') !!}
-        {!! Form::text('inscricao_estadual', null, ['class' => 'form-control']) !!}
+        {!! Form::text('inscricao_estadual', null, ['class' => 'form-control', 'placeholder' => 'Inscrição Estadual']) !!}
     </div>
 @else
     <div class="form-group col-md-6">

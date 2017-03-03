@@ -98,7 +98,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            {!! Form::input('text', 'data', null,  ['class' => 'form-control pull-right datapicker data-ocorrencia', 'id' => 'datapicker', 'required' => 'true']) !!}
+                            {!! Form::input('text', 'data', null,  ['class' => 'form-control pull-right datapicker data-ocorrencia', 'id' => 'datapicker', 'required' => 'true', 'placeholder' => '__/__/____']) !!}
                         </div>
                     </div>
                     <div class="form-group col-md-12">

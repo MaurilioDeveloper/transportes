@@ -49,13 +49,13 @@
 
                     <div class="form-group col-md-6">
                     {!! Form::label('cidade', 'Cidade *') !!}
-                    {!! Form::text('cidade', null, ['class' => 'form-control', 'id' => 'cidade']) !!}
+                    {!! Form::text('cidade', null, ['class' => 'form-control', 'id' => 'cidade', 'placeholder' => 'Cidade']) !!}
                 </div>
 
 
                 <div class="form-group col-md-6">
                     {!! Form::label('estado', 'Estado') !!}
-                    {!! Form::text('estado', null, ['class' => 'form-control', 'id' => 'state', 'maxlength' => '2', 'style' => 'text-transform: UPPERCASE']) !!}
+                    {!! Form::text('estado', null, ['class' => 'form-control', 'id' => 'state', 'maxlength' => '2', 'style' => 'text-transform: UPPERCASE', 'placeholder' => 'Estado']) !!}
                 </div>
 
                 <div class="form-group col-md-12">
