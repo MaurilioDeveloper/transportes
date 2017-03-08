@@ -1,5 +1,5 @@
 <!-- Main Footer -->
-<footer class="main-footer">
+<footer class="main-footer" style="text-align: center;">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
     </div>

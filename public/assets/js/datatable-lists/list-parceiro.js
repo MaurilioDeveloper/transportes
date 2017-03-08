@@ -89,7 +89,7 @@ $(document).ready(function () {
                 }
             },
         ],
-        "language": {
+    "language": {
             "url": "/assets/Portuguese-Brasil.json"
         },
         "lengthMenu": [
