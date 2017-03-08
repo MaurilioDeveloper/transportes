@@ -46,6 +46,10 @@ class FreteController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view painel/fretes
+     */
     public function index()
     {
         $titulo = "Listagem de Fretes";
@@ -53,6 +57,11 @@ class FreteController extends Controller
         return view('painel.fretes.index', compact('parceiros', 'titulo'));
     }
 
+    /**
+     * @param null $idParceiro
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view painel/fretes/create
+     */
     public function create($idParceiro=null)
     {
         $nomeParceiro = '';
@@ -68,6 +77,10 @@ class FreteController extends Controller
         return view('painel.fretes.create-edit', compact('titulo', 'cidades', 'idParceiro', 'nomeParceiro'));
     }
 
+    /**
+     * @return mixed
+     * Return data for listing Fretes with Datatables
+     */
     public function listaFretes()
     {
         $dt = Datatables::of(Frete::query()
@@ -78,7 +91,10 @@ class FreteController extends Controller
         return $dt->make(true);
     }
 
-
+    /**
+     * @return mixed
+     * Return data for listing Viagens with Datatables
+     */
     public function listaViagem()
     {
         $dt = Datatables::of(Viagem::query()
@@ -92,6 +108,11 @@ class FreteController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return int
+     * Delete freight by ID
+     */
     public function deleteFrete($id)
     {
         if(count(FreteViagem::where('id_frete', $id)->get()) > 0){
@@ -104,7 +125,10 @@ class FreteController extends Controller
     }
 
 
-
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * Post for create a new freight
+     */
     public function store()
     {
         $dadosForm = $this->request->except(['id_usuario']);
@@ -159,6 +183,11 @@ class FreteController extends Controller
         return redirect()->route('listarFretes');
     }
 
+    /**
+     * @param $s
+     * @return string
+     * Method for use in others methods, simplifying utility
+     */
     private function resolverStatus($s)
     {
         switch ($s)
@@ -173,6 +202,11 @@ class FreteController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view Edit a freight
+     */
     public function edit($id)
     {
         $titulo = 'Editar Frete';
@@ -212,7 +246,9 @@ class FreteController extends Controller
     }
 
     /**
-     * @return Update
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * Return PUT for UPDATE a freight by ID
      */
     public function update($id)
     {
@@ -261,10 +297,6 @@ class FreteController extends Controller
         }
 
 
-//        $fretes =  Frete::query()->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-//            ->select("parceiro.nome")->where('id_parceiro', $dadosForm['id_parceiro']);
-
-
         $this->validationFrete($dadosForm);
 
         $update = $frete->fill($dadosForm)->save();
@@ -284,7 +316,10 @@ class FreteController extends Controller
 
     }
 
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Method for filter results by status
+     */
     public function filtrar()
     {
         $dadosForm = $this->request->all();
@@ -293,7 +328,11 @@ class FreteController extends Controller
         return view("painel.fretes.index", compact('status'));
     }
 
-
+    /**
+     * @param $status
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Method for search freight by status
+     */
     public function buscaPorStatus($status)
     {
         $dadosPesquisa = Frete::where('status','like','%'.$status.'%')->take(15)->get();
@@ -301,13 +340,22 @@ class FreteController extends Controller
     }
 
 
-
+    /**
+     * @param $name
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+     * Method for search a Parceiro by name
+     */
     public function getFindParceiro($name)
     {
         $busca = Parceiro::where('nome','like','%'.$name.'%')->take(15)->get();
         return $busca;
     }
 
+    /**
+     * @param $dadosForm
+     * @return string
+     * Method of Validation used in others methods, simplifying utility
+     */
     protected function validationFrete($dadosForm)
     {
 

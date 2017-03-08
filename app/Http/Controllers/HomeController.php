@@ -67,23 +67,6 @@ class HomeController extends Controller
             ->groupBy('viagens.id')
             ->paginate(5);
 
-        /*$user_role = RoleUser::query()
-            ->join('users', 'users.id', '=', 'role_user.user_id')
-//            ->join('roles as r', 'r.id', '=', 'role_user.role_id')
-            ->select("r.display_name")
-            ->where('users.id', auth()->user()->id)
-            ->get();
-        $user_role = $user_role[0]->display_name;*/
-//        $admin = Role::where('id', 1)->first();
-//        $user = User::where('id', auth()->user()->id)->first();
-//        $user->attachRole($admin); // parameter can be an Role object, array, or id
-//        dd($user);
-
-        // or eloquent's original technique
-//        $user->roles()->attach($admin->id); // id only
-//        dd(RoleUser::all()->toJson());
-
-
         return view('home', compact('freteEdicao', 'freteAc', 'freteAe', 'freteEt', 'freteE', 'freteC', 'tableDash', 'fretesOp', 'viagensOp'));
     }
 }

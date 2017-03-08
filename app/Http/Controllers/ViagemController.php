@@ -42,12 +42,21 @@ class ViagemController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view painel/fretes
+     */
     public function index()
     {
         $titulo = "Listagem de Viagens";
         return view('painel.viagens.index', compact('titulo'));
     }
 
+    /**
+     * @param null $idParceiro
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view painel/fretes/create
+     */
     public function create($idViagemParceiro=null)
     {
 
@@ -100,6 +109,11 @@ class ViagemController extends Controller
         return view('painel.viagens.create-edit', compact('titulo', 'fretes', 'cidades', 'nomeViagemParceiro', 'idViagemParceiro', 'dadosCaminhao', 'dadosMotorista'));
     }
 
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * Post for create a new Viagem
+     */
     public function store()
     {
         $dadosForm = $this->request->except(['fretes', 'custos']);
@@ -130,6 +144,10 @@ class ViagemController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * Return data for listing freight with Datatables
+     */
     public function listaFretes()
     {
         /**
@@ -150,13 +168,22 @@ class ViagemController extends Controller
 
     }
 
-
+    /**
+     * @param $idFrete
+     * @return int
+     * Verify if exists freights presents in travel.
+     */
     public function fretePresenteViagem($idFrete)
     {
         return count(FreteViagem::where('id_frete', $idFrete)->get());
     }
 
 
+    /**
+     * @param $name
+     * @return array
+     * Search Parceiro by name
+     */
     public function buscaParceiro($name)
     {
         $busca = DB::select(
@@ -171,6 +198,11 @@ class ViagemController extends Controller
         return $busca;
     }
 
+    /**
+     * @param $id
+     * @return array
+     * Search Motorista by id
+     */
     public function buscaMotorista($id)
     {
         $busca = DB::select(
@@ -184,6 +216,11 @@ class ViagemController extends Controller
         return $busca;
     }
 
+    /**
+     * @param $id
+     * @return array
+     * Search Caminhão by id
+     */
     public function buscaCaminhao($id)
     {
         $busca = DB::select(
@@ -197,6 +234,11 @@ class ViagemController extends Controller
         return $busca;
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view for edit a travel.
+     */
     public function edit($id)
     {
         $titulo = 'Editar Viagem';
@@ -255,6 +297,11 @@ class ViagemController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * Verify freights add in a travel.
+     */
     public function fretesAdicionados($id)
     {
 
@@ -268,6 +315,11 @@ class ViagemController extends Controller
         return $fretesAdicionado;
     }
 
+    /**
+     * @param $s
+     * @return string
+     * Method for use in others methods, simplifying utility
+     */
     private function resolverStatus($s)
     {
         switch ($s)
@@ -280,6 +332,10 @@ class ViagemController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Filter travels by status
+     */
     public function filtrar()
     {
         $dadosForm = $this->request->all();
@@ -289,6 +345,11 @@ class ViagemController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * Return PUT for UPDATE a travel by ID
+     */
     public function update($id)
     {
         $dadosForm = $this->request->except(['fretes', 'custos']);
@@ -323,6 +384,13 @@ class ViagemController extends Controller
         return 1;
     }
 
+    /**
+     * @param $id_viagem
+     * @param $dadosFormFretes
+     * @param $dadosForm
+     * @param $dadosFormCustos
+     * Method used in others methods for save freights in a travel
+     */
     protected function gravarFretesViagem($id_viagem, $dadosFormFretes, $dadosForm, $dadosFormCustos)
     {
         FreteViagem::where('id_viagem', $id_viagem)->delete();
@@ -359,6 +427,11 @@ class ViagemController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return int
+     * Delete a travel by ID
+     */
     public function deleteViagem($id)
     {
         Viagem::findOrFail($id)->delete();
@@ -368,6 +441,11 @@ class ViagemController extends Controller
     }
 
 
+    /**
+     * @param $dadosForm
+     * @return string
+     * Method used in others method for Validation a travel
+     */
     protected function validationViagem($dadosForm)
     {
         $validate = $this->validate->make($dadosForm, Viagem::$rules);

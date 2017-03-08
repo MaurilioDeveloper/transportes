@@ -45,6 +45,10 @@ class ParceiroController extends Controller
         $this->tipoOcorrencia = $tipoOcorrencia;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view for listing Parceiros
+     */
     public function index()
     {
         $titulo = "Listagem de Parceiros";
@@ -52,48 +56,33 @@ class ParceiroController extends Controller
         return view('painel.parceiros.index2', compact('parceiros', 'titulo'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Search Parceiro by name
+     */
     public function pesquisar()
     {
-//        $palavraPesquisa = $this->request->input('pesquisar');
 
         $palavraPesquisa = $this->request->get('nome');
         $dadosPesquisa = Parceiro::query()->select("parceiros.id",
             "parceiros.nome",
-//            "parceiros.documento",
             "parceiros.email",
             "parceiros.telefone",
-//            "parceiros.data_nasc",
-//            "parceiros.sexo",
             "parceiros.endereco",
-//            "parceiros.numero",
             "parceiros.cidade")->where('nome', 'LIKE', "%$palavraPesquisa%")
                                 ->paginate(10);
 
-//
         return view("painel.parceiros.index2", compact('palavraPesquisa'));
-//
-//        $dataBusca = $this->parceiro
-//            ->where('nome', 'LIKE', "%$palavraPesquisa%")
-//            ->paginate(10);
 
-//        return $data;
-//        return view("painel.parceiros.index", compact('dataBusca'));
     }
 
+    /**
+     * @param ParceiroRequest $request
+     * @return \Illuminate\Http\RedirectResponse|int
+     * POST for create a new Parceiro
+     */
     public function store(ParceiroRequest $request)
     {
-
-        //Pega os dados do formulário
-//        $dataForm = $request->all();
-
-//        $validator = validator($request->all(),[
-//              'nome' => 'required|min:3|max:60',
-//              'email' => 'required|min:6|max:150'
-//         ]);
-//
-//        if($validator->fails()){
-//              return redirect()->withErrors($validator)->withInput();
-//         }
 
         $data['pessoa'] = Parceiro::getPessoa($request->get('pessoa'));
         $dataParc = $request->except(['extras', 'extraCaminhoes', 'extraMotoristas', 'count']);
@@ -102,7 +91,7 @@ class ParceiroController extends Controller
         $dataMot = $request->only(['extraMotoristas']);
 
 //        \DB::beginTransaction();
-//
+
         if($data['pessoa'] === "fisica") {
             if (strlen($dataParc['data_nasc']) <= 1) {
                 $dataParc['data_nasc'] = null;
@@ -114,15 +103,11 @@ class ParceiroController extends Controller
 
             $dataParc['documento'] = NULL;
         }
-//        dd($dataParc);
 
         $this->validationParceiro($dataParc, Parceiro::$rules);
 
         $parceiro = $this->parceiro->create($dataParc);
 
-
-
-//
         foreach ($dataCont['extras'] as $extra) {
             $contatos = Contato::create([
                 'nome' => $extra['nome'],
@@ -166,7 +151,10 @@ class ParceiroController extends Controller
         return redirect()->route('parceiros.index2');
     }
 
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view for create a new Parceiro
+     */
     public function create()
     {
         $paramPessoa = $this->request->get('pessoa');
@@ -175,17 +163,20 @@ class ParceiroController extends Controller
         return view('painel.parceiros.create', compact('titulo', 'pessoa'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view for switch a type of person, Physical Person or Legal Person
+     */
     public function cadastrar()
     {
         $titulo = "Adicionar Parceiro";
         return view('painel.parceiros.gerenciar', compact('titulo'));
     }
 
-    public function show()
-    {
-
-    }
-
+    /**
+     * @return mixed
+     * Return listing of data with Datatables
+     */
     public function listaParceiros()
     {
 
@@ -199,37 +190,51 @@ class ParceiroController extends Controller
                     "parceiros.endereco",
                     "parceiros.bairro",
                     "parceiros.cidade"
-//                    "count(motoristas.id)",
-//                    "count(caminhoes.id)"
             )->selectRaw('count(motoristas.id) as motoristas')
             ->selectRaw('count(caminhoes.id) as caminhoes')
              ->groupBy('parceiros.id'))
             ->make(true);
-        //return Datatables::of(Visitante::query()
-        //      ->select("visitantes.nome", "visitantes.estado", "visitantes.cidade", "visitantes.telefone", "visitantes.cargo", "visitantes.cidade", "visitantes.email"))->make(true);
 
     }
 
+    /**
+     * @param $id
+     * @return int
+     * Delete Parceiro by ID
+     */
     public function deleteParceiro($id)
     {
         Parceiro::findOrFail($id)->delete();
         return 1;
     }
 
+    /**
+     * @param $id
+     * @return int
+     * Delete Motorista by ID
+     */
     public function deleteMotorista($id)
     {
         Motorista::findOrFail($id)->delete();
         return 1;
     }
 
+    /**
+     * @param $id
+     * @return int
+     * Delete Ocorrência by ID
+     */
     public function deleteOcorrencia($id)
     {
         Ocorrencia::findOrFail($id)->delete();
         return 1;
     }
 
-
-
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Return view for edit a Parceiro
+     */
     public function edit($id)
     {
         $titulo = 'Editar Parceiro';
@@ -248,20 +253,21 @@ class ParceiroController extends Controller
             ->select("ocorrencias.id", "ocorrencias.data", "tipo_ocorrencias.nome as tipo", "ocorrencias.descricao", "users.name as usuario")
             ->where('id_parceiro', $id)->paginate(10);
         $tipo_ocorrencia = $this->tipoOcorrencia->pluck('nome', 'id')->toArray();
-//        dd($tipo_ocorrencia);
 
-
-//        dd($motoristas);
-
-//        dd($motoristas);
         if (!($parceiro = Parceiro::find($id))) {
             throw new ModelNotFoundException("Parceiro não foi encontrado");
         }
-//        dd($parceiro);
+
         $pessoa = $parceiro->pessoa;
         return view('painel.parceiros.edit', compact('parceiro', 'tipo_ocorrencia', 'pessoa', 'titulo', 'caminhoes', 'contatos', 'motoristas', 'ocorrencias', 'data_nasc'));
     }
 
+    /**
+     * @param ParceiroRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|int
+     * PUT responsible for UPDATE a Parceiro by ID
+     */
     public function update(ParceiroRequest $request, $id)
     {
         if (!($parceiro = Parceiro::find($id))) {
@@ -300,13 +306,11 @@ class ParceiroController extends Controller
                     if (!($contato = Contato::find($idContato))) {
                         throw new ModelNotFoundException("Contato não foi encontrado");
                     } else {
-//                    dd($extra);
                         $contato->fill($extra);
                         $contato->save();
                         $contatosDB[$idContato]['presente'] = true;
                     }
                 } else {
-
                     $contatos = Contato::create([
                         'nome' => $extra['nome'],
                         'setor' => $extra['setor'],
@@ -328,7 +332,6 @@ class ParceiroController extends Controller
         if(is_array($dataCam['extraCaminhoes'])) {
             foreach ($dataCam['extraCaminhoes'] as $extraCaminhoes) {
 
-//            dd($extraCaminhoes);
                 if (key_exists('id', $extraCaminhoes)) {
                     $idCaminhao = intval($extraCaminhoes['id']);
                 } else {
@@ -357,7 +360,6 @@ class ParceiroController extends Controller
 
 
         foreach ($caminhoesDB as $caminhao) {
-//            dd($caminhao);
             if(!$caminhao['presente']){
                 Caminhao::find($caminhao['id'])->delete();
             }
@@ -371,7 +373,6 @@ class ParceiroController extends Controller
                 } else {
                     $idMotorista = 0;
                 }
-//                dd($idMotorista);
                 if ($idMotorista > 0) {
                     if (!($motorista = Motorista::find($idMotorista))) {
                         throw new ModelNotFoundException("Motorista não foi encontrado");
@@ -379,10 +380,8 @@ class ParceiroController extends Controller
                         $motorista->fill($extraMotoristas);
                         $motorista->save();
                         $motoristasDB[$idMotorista]['presente'] = true;
-//                        dd($motoristasDB);
                     }
                 } else {
-//                    dd($extraMotoristas);
                     $motoristas = Motorista::create([
                         'nome' => $extraMotoristas['nome'],
                         'rg' => $extraMotoristas['rg'],
@@ -396,7 +395,6 @@ class ParceiroController extends Controller
 
 
         foreach ($motoristasDB as $motorista) {
-//            dd($motorista);
             if(!$motorista['presente']){
                 Motorista::find($motorista['id'])->delete();
             }
@@ -411,7 +409,6 @@ class ParceiroController extends Controller
             } else {
                 $dataParc['data_nasc'] = implode('-', array_reverse(explode('/', $dataParc['data_nasc'])));
             }
-//            dd($dataParc['data_nasc']);
         }
 
         if(strlen($dataParc['documento']) == 1){
@@ -421,7 +418,6 @@ class ParceiroController extends Controller
         $parceiro->fill($dataParc);
         $parceiro->save();
 
-//        $motorista = Motorista::find($idMotorista);
         if ($parceiro) {
             \DB::commit();
             return 1;
@@ -450,10 +446,13 @@ class ParceiroController extends Controller
         return redirect()->route('parceiros.index2');
     }
 
+    /**
+     * @return int|string
+     * POST for create a new Ocorrencia
+     */
     public function postOcorrencia()
     {
         $data = $this->request->all();
-//        dd($data);//
         $dataOcorrencia = implode('-',array_reverse(explode('/', $data['data'])));
 
         $validate = $this->validate->make($data, Ocorrencia::$rules);
@@ -467,8 +466,6 @@ class ParceiroController extends Controller
 
             return $displayErrors;
         }
-
-//        dd($data);
 
         $ocorrencia = Ocorrencia::create([
             'data' => $dataOcorrencia,
@@ -484,11 +481,13 @@ class ParceiroController extends Controller
             return "Erro Inesperado";
         }
 
-
-//        return redirect()->route('parceiros.index');
     }
 
-
+    /**
+     * @param $id
+     * @return mixed
+     *
+     */
     public function editOcorrencia($id)
     {
         if (!($ocorrencia = Ocorrencia::find($id))) {
@@ -501,12 +500,16 @@ class ParceiroController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return int
+     * PUT for update a Ocorrência
+     */
     public function updateOcorrencia($id)
     {
         $dadosForm = $this->request->all();
         $dadosForm['data'] = implode('-', array_reverse(explode('/', $dadosForm['data'])));
 
-//        dd($dadosForm);
         if (!($ocorrencia = Ocorrencia::find($id))) {
             throw new ModelNotFoundException("Ocorrencia não foi encontrada");
         }
@@ -517,6 +520,10 @@ class ParceiroController extends Controller
         return 1;
     }
 
+    /**
+     * @return int|string
+     * POST for create a new Tipo de Ocorrencia in a Parceiro
+     */
     public function postTipoOcorrencia()
     {
         $dataForm = $this->request->all();
@@ -538,6 +545,11 @@ class ParceiroController extends Controller
     }
 
 
+    /**
+     * @param $dadosForm
+     * @return string
+     * Method used in others method for Validation a travel
+     */
     protected function validationParceiro($dataParc, $rules)
     {
         $validate = $this->validate->make($dataParc, $rules);
