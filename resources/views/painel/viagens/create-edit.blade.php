@@ -164,7 +164,7 @@
 {{--                        {{$viagem->status}}--}}
                         <select name="status" class="form-control" id="status-select" required>
                             <option value="0">Selecione um Status</option>
-                            @foreach(\App\Viagem::STATUS as $key => $value)
+                            @foreach(\App\Models\Viagem::STATUS as $key => $value)
                                 @if(isset($viagem->status) && $value === $viagem->status)
                                     <option value="{{$key}}" selected>{{$value}}</option>
                                             {{--{{old('status')}}--}}
@@ -329,6 +329,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr style="background: #2e6da4; color: white">
+                            <td></td>
                             <th>Nome Parceiro</th>
                             <th>Modelo</th>
                             <th>Identificação</th>
@@ -342,10 +343,10 @@
                     @forelse($fretes as $frete)
                         <input type="hidden" value="{{$frete->id}}" class="freteListaId" />
                         <tr class="success">
+                            <td><input type="checkbox" value="{{$frete->id}}" class="codigosSelect"/></td>
                             <td>{{$frete->nome}}</td>
                             <td>{{$frete->tipo}}</td>
                             <td>{{$frete->identificacao}}</td>
-                            {{--<td>{{$frete->status}}</td>--}}
                             <td>{{$frete->cidade_origem}}</td>
                             <td>{{$frete->cidade_destino}}</td>
                             <td><button class="btn btn-success btn-sm" onclick="adicionarFrete({{$frete->id}})" id="id-frete{{$frete->id}}" id-frete="{{$frete->id}}"><i class="fa fa-plus-circle"></i> Adicionar</button></td>
@@ -360,6 +361,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                <button onclick="adicionarFretesSelecionados()" type="button" class="btn btn-primary">Adicionar selecionados</button>
             </div>
         </div>
     </div>

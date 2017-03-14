@@ -208,7 +208,7 @@
                         {!! Form::label('status', 'Status *') !!}
                         <select id="status-select" class="form-control" name="status" required>
                             <option value="0">Selecione um status</option>
-                            @foreach(\App\Frete::STATUS as $key => $value)
+                            @foreach(\App\Models\Frete::STATUS as $key => $value)
                             @if(isset($frete->status) && $value === $frete->status)
                                 <option value="{{$key}}" selected>{{$frete->status}}</option>
                             @else
@@ -490,7 +490,7 @@
                 <div class="fisica" style="display: none">
                     <div class="form-group col-md-6">
                         {!! Form::label('estado_civil', 'Estado Civil *') !!}
-                        {!! Form::select('estado_civil', array_merge([0 => 'Selecione'],\App\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control estado_civil', 'disabled' => 'true']) !!}
+                        {!! Form::select('estado_civil', array_merge([0 => 'Selecione'],\App\Models\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control estado_civil', 'disabled' => 'true']) !!}
                     </div>
 
                     <div class="form-group col-md-6">

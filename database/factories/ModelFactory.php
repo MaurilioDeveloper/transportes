@@ -26,7 +26,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\Parceiro::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Parceiro::class, function (Faker\Generator $faker) {
 
     $cpfs = cpfs();
     return [
@@ -41,12 +41,12 @@ $factory->define(App\Parceiro::class, function (Faker\Generator $faker) {
         'bairro' => $faker->word,
         'cep' => $faker->address,
         'cidade' => $faker->city,
-        'estado' => \App\Parceiro::ESTADOS,
+        'estado' => \App\Models\Parceiro::ESTADOS,
         'site' => $faker->domainName
     ];
 });
 
-$factory->state(App\Parceiro::class, 'pessoa_fisica', function(Faker\Generator $faker){
+$factory->state(App\Models\Parceiro::class, 'pessoa_fisica', function(Faker\Generator $faker){
     $cpfs = cpfs();
 
     return [
@@ -55,17 +55,17 @@ $factory->state(App\Parceiro::class, 'pessoa_fisica', function(Faker\Generator $
         'estado_civil' => rand(1,3),
         'sexo' => rand(1, 10) % 2 == 0 ? 'm': 'f',
         'deficiencia_fisica' => $faker->word,
-        'pessoa' => \App\Parceiro::PESSOA_FISICA
+        'pessoa' => \App\Models\Parceiro::PESSOA_FISICA
     ];
 });
 
-$factory->state(App\Parceiro::class, 'pessoa_juridica', function(Faker\Generator $faker){
+$factory->state(App\Models\Parceiro::class, 'pessoa_juridica', function(Faker\Generator $faker){
     $cnpjs = cnpjs();
 
     return [
         'documento' => $cnpjs[array_rand($cnpjs,1)],
         'fantasia'  => $faker->company,
         'inscricao_estadual' => rand(1, 10),
-        'pessoa' => \App\Parceiro::PESSOA_JURIDICA
+        'pessoa' => \App\Models\Parceiro::PESSOA_JURIDICA
     ];
 });

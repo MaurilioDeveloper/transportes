@@ -36,7 +36,7 @@
                 </div>
 
                     <div class="box-body">
-                        <h4>{{$pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h4>
+                        <h4>{{$pessoa == \App\Models\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h4>
                         {{--@include('painel.errors._errors_form')--}}
                         <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
                         <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">Parceiro Cadastrado com Sucesso</div>

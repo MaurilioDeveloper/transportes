@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Frete;
-use App\FreteViagem;
 use App\Role;
-use App\User;
-use App\Viagem;
+use App\Models\Viagem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use SoapBox\Formatter\Formatter;
 use League\Csv\Writer;
-use XmlResponse\XmlResponseServiceProvider;
 
 class XmlFormatterController extends Controller
 {

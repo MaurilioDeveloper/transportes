@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TipoOcorrencia;
 use Illuminate\Http\Request;
-use App\TipoOcorrencia;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
 

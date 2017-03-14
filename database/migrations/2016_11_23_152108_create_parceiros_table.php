@@ -26,7 +26,7 @@ class CreateParceirosTable extends Migration
              * atraves do 'enum' e da CONSTANTE declarada (ESTADOS_CIVIS)
              *
              */
-            $table->enum('estado_civil', array_keys(App\Parceiro::ESTADOS_CIVIS))->nullable();
+            $table->enum('estado_civil', array_keys(App\Models\Parceiro::ESTADOS_CIVIS))->nullable();
             $table->string('deficiencia_fisica')->nullable();
             // Nome Popular da empresa.. Campo não obrigatório, pode ser NULL
             $table->string('fantasia')->nullable();

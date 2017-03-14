@@ -30,8 +30,8 @@
                 <!-- form start -->
                 <form role="form">
                     <div class="box-body">
-                        <a class="btn btn-primary btn-sm" href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_FISICA]) }}"><i class="fa fa-user-secret"></i> Pessoa Física</a>
-                        <a class="btn btn-warning btn-sm" href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_JURIDICA]) }}"><i class="fa fa-briefcase"></i> Pessoa Jurídica</a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('parceiros.create',['pessoa' => \App\Models\Parceiro::PESSOA_FISICA]) }}"><i class="fa fa-user-secret"></i> Pessoa Física</a>
+                        <a class="btn btn-warning btn-sm" href="{{ route('parceiros.create',['pessoa' => \App\Models\Parceiro::PESSOA_JURIDICA]) }}"><i class="fa fa-briefcase"></i> Pessoa Jurídica</a>
                     </div>
                     <!-- /.box-body -->
                 </form><!-- /form end -->

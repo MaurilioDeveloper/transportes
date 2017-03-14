@@ -66,7 +66,7 @@
                             <div class="form-group col-md-10">
                                 <select class="form-control" name="status">
                                     <option value="0">Filtrar por Status</option>
-                                    @foreach(\App\Viagem::STATUS as $key => $value)
+                                    @foreach(\App\Models\Viagem::STATUS as $key => $value)
                                         <option value="{{$key}}">{{$value}}</option>
                                     @endforeach
                                 </select>

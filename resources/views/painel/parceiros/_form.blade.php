@@ -6,8 +6,8 @@
 </div>
 
 <div class="form-group col-md-6">
-    {!! Form::label('documento', $pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'CNPJ': 'CPF') !!}
-    @if($pessoa == \App\Parceiro::PESSOA_JURIDICA)
+    {!! Form::label('documento', $pessoa == \App\Models\Parceiro::PESSOA_JURIDICA ? 'CNPJ': 'CPF') !!}
+    @if($pessoa == \App\Models\Parceiro::PESSOA_JURIDICA)
         {!! Form::text('documento', null, ['class' => 'form-control', 'id' => 'cnpj']) !!}
     @else
         {!! Form::text('documento', null, ['class' => 'form-control', 'id' => 'cpf']) !!}
@@ -72,7 +72,7 @@
     {!! Form::text('site', null, ['class' => 'form-control', 'placeholder' => 'Site']) !!}
 </div>
 
-@if($pessoa == \App\Parceiro::PESSOA_JURIDICA)
+@if($pessoa == \App\Models\Parceiro::PESSOA_JURIDICA)
     <div class="form-group col-md-6">
         {!! Form::label('fantasia', 'Fantasia') !!}
         {!! Form::text('fantasia', null, ['class' => 'form-control', 'placeholder' => 'Fantasia']) !!}
@@ -85,7 +85,7 @@
 @else
     <div class="form-group col-md-6">
         {!! Form::label('estado_civil', 'Estado Civil') !!}
-        {!! Form::select('estado_civil', array_merge([0 => 'Selecione'],\App\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control']) !!}
+        {!! Form::select('estado_civil', array_merge([0 => 'Selecione'],\App\Models\Parceiro::ESTADOS_CIVIS), null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group col-md-6">

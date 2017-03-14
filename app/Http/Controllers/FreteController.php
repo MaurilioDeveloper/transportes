@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Frete;
-use App\Caminhao;
-use App\FreteViagem;
-use App\Motorista;
-use App\OrigemDestino;
-use App\HistoricoFrete;
+use App\Models\Frete;
+use App\Models\Caminhao;
+use App\Models\FreteViagem;
+use App\Models\Motorista;
+use App\Models\OrigemDestino;
+use App\Models\HistoricoFrete;
+use App\Models\Parceiro;
+use App\Models\Contato;
+use App\Models\Viagem;
+use App\Http\Controllers\StandardController;
 use Illuminate\Http\Request;
-use App\Parceiro;
-use App\Contato;
-use App\Viagem;
-//use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\Paginator;
 use App\Http\Request\ParceiroRequest;
 use Datatables;
-use DB;
 use Illuminate\Validation\Factory as Validate;
 
-class FreteController extends Controller
+class FreteController extends StandardController
 {
+
+//    use \App\Traits\Standard;
+
     private $parceiro;
     private $request;
     private $caminhao;
@@ -83,11 +86,27 @@ class FreteController extends Controller
      */
     public function listaFretes()
     {
-        $dt = Datatables::of(Frete::query()
-            ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
-            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
-            ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"));
+
+        $url = explode('?', $_SERVER['REQUEST_URI']);
+        $url = explode('=', $url[1]);
+        $url = $url[1];
+
+        if($url == '1') {
+            $dt = Datatables::of(Frete::query()
+                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo"));
+        }else {
+
+            $dt = Datatables::of(Frete::query()
+                ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
+                ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
+                ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
+                ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo")
+                ->where('status', '!=', 'Entregue'));
+        }
+
         return $dt->make(true);
     }
 
@@ -167,6 +186,8 @@ class FreteController extends Controller
             $dadosForm['id_parceiro_entregador'] = null;
         }
 
+
+//        parent::validationData($dadosForm, Frete::$rules);
 
         $this->validationFrete($dadosForm);
 
@@ -297,6 +318,7 @@ class FreteController extends Controller
         }
 
 
+//        parent::validationData($dadosForm, Frete::$rules);
         $this->validationFrete($dadosForm);
 
         $update = $frete->fill($dadosForm)->save();
@@ -356,6 +378,10 @@ class FreteController extends Controller
      * @return string
      * Method of Validation used in others methods, simplifying utility
      */
+//    validationData($dadosForm, Viagem);
+
+
+
     protected function validationFrete($dadosForm)
     {
 

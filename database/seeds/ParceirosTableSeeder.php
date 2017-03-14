@@ -11,7 +11,7 @@ class ParceirosTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Parceiro::class, 5)->states('pessoa_fisica')->create();
-        factory(\App\Parceiro::class, 5)->states('pessoa_juridica')->create();
+        factory(\App\Models\Parceiro::class, 5)->states('pessoa_fisica')->create();
+        factory(\App\Models\Parceiro::class, 5)->states('pessoa_juridica')->create();
     }
 }

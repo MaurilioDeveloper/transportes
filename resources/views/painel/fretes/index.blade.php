@@ -50,37 +50,13 @@
                     </div>
                     <br/>
                     <br/>
-{{--                    {!! Form::open(['route' => 'filtrarFrete']) !!}--}}
 
-                        {{--<div class="form-group col-md-5">--}}
-                            {{--<input name="identificacao" class="form-control placa" placeholder="PLACA" />--}}
-                        {{--</div>--}}
+                    {!! Form::open(['route' => 'filtrarFrete', 'name' => 'form']) !!}
 
-                        {{--<div class="form-group col-md-5">--}}
-                            {{--<input name="chassi" class="form-control" placeholder="CHASSI" />--}}
-                        {{--</div>--}}
-
-                        {{--<div class="form-group col-md-2">--}}
-                            {{--<button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>--}}
-                        {{--</div>--}}
-
-                    {{--{!! Form::close() !!}--}}
-
-                    {!! Form::open(['route' => 'filtrarFrete']) !!}
-                    {{--<div class="form-group col-md-5">--}}
-                        {{--<select class="form-control">--}}
-                            {{--<option value="0">Selecione um Parceiro</option>--}}
-                            {{--@if(isset($parceiros))--}}
-                            {{--@foreach($parceiros as $key => $value)--}}
-                            {{--<option value="{{$key}}">{{$value}}</option>--}}
-                            {{--@endforeach--}}
-                            {{--@endif--}}
-                        {{--</select>--}}
-                    {{--</div>--}}
                     <div class="form-group col-md-10">
                         <select class="form-control" name="status">
                             <option value="0">Filtrar por Status</option>
-                            @foreach(\App\Frete::STATUS as $key => $value)
+                            @foreach(\App\Models\Frete::STATUS as $key => $value)
                             <option value="{{$key}}">{{$value}}</option>
                             @endforeach
                         </select>
@@ -95,6 +71,16 @@
                     </div>
 
                     {!! Form::close() !!}
+
+
+                    {{--<form action="/painel/fretes?exibirEntregues=" name="ff">--}}
+                        {{--<input value="{{csrf_token()}}" type="hidden"/>--}}
+                        <div class="form-group col-md-12">
+                            <input type="checkbox" onclick="enableEntregue()" id="filtroExibirEntregue"/>
+                            <label for="filtroExibirEntregue">Exibir fretes entregues</label>
+                        </div>
+                    {{--</form>--}}
+
                     <div class='box-body'>
                         <div style="display: none;" id="dialog-confirm" title="Deletar">
                             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:4px 12px 20px 0; "></span>Deseja

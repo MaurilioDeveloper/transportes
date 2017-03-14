@@ -54,10 +54,10 @@
 
                     <!--<div class='col-lg-8'>
                         <a class="btn btn-success btn-sm"
-                           {{--href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_FISICA]) }}"><i--}}
+                           {{--href="{{ route('parceiros.create',['pessoa' => \App\Models\Parceiro::PESSOA_FISICA]) }}"><i--}}
                                     class="fa fa-user-secret"></i> Pessoa Física</a>
                         <a class="btn btn-success btn-sm"
-                           {{--href="{{ route('parceiros.create',['pessoa' => \App\Parceiro::PESSOA_JURIDICA]) }}"><i--}}
+                           {{--href="{{ route('parceiros.create',['pessoa' => \App\Models\Parceiro::PESSOA_JURIDICA]) }}"><i--}}
                                     class="fa fa-briefcase"></i> Pessoa Jurídica</a>
                     </div>-->
                     <br/>

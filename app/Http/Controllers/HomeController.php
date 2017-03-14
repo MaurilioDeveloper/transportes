@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
-use App\RoleUser;
+use App\Models\Frete;
+use App\Models\Viagem;
 use Illuminate\Http\Request;
-use App\Frete;
-use App\Viagem;
-use App\User;
 
 class HomeController extends Controller
 {

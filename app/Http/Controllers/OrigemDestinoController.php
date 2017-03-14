@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\OrigemDestino;
+use App\Models\OrigemDestino;
 use Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Factory as Validate;

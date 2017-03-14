@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Caminhao;
-use App\Motorista;
-use App\Ocorrencia;
-use App\TipoOcorrencia;
+use App\Models\Caminhao;
+use App\Models\Motorista;
+use App\Models\Ocorrencia;
+use App\Models\TipoOcorrencia;
+use App\Models\Parceiro;
+use App\Models\Contato;
 use Illuminate\Http\Request;
-use App\Parceiro;
-use App\Contato;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Request\ParceiroRequest;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
-use League\Flysystem\Exception;
 
 class ParceiroController extends Controller
 {

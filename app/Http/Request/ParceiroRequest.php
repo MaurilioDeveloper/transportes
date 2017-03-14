@@ -2,7 +2,7 @@
 
 namespace App\Http\Request;
 
-use App\Parceiro;
+use App\Models\Parceiro;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**

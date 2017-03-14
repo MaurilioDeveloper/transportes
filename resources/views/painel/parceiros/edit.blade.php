@@ -253,7 +253,7 @@
 
                                     <h3 class="" style="font-size: 19px">Os campos com * são obrigatórios</h3>
                                     <div class="form-group col-md-12"><h3
-                                                class="box-title">{{$pessoa == \App\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h3>
+                                                class="box-title">{{$pessoa == \App\Models\Parceiro::PESSOA_JURIDICA ? 'Pessoa Júridica': 'Pessoa Física'}}</h3>
                                     </div>
 
                                     {{--@include('painel.errors._errors_form')--}}

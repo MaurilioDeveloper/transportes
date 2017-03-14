@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\OrigemDestino;
+use App\Models\OrigemDestino;
+use App\Models\Parceiro;
+use App\Models\Frete;
+use App\Models\Viagem;
+use App\Models\Caminhao;
+use App\Models\FreteViagem;
+use App\Models\HistoricoViagem;
 use Illuminate\Http\Request;
-use App\Parceiro;
-use App\Frete;
-use App\Viagem;
-use App\Caminhao;
-use App\FreteViagem;
-use App\HistoricoViagem;
 use DB;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
@@ -446,6 +446,8 @@ class ViagemController extends Controller
      * @return string
      * Method used in others method for Validation a travel
      */
+
+
     protected function validationViagem($dadosForm)
     {
         $validate = $this->validate->make($dadosForm, Viagem::$rules);
