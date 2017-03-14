@@ -66,7 +66,7 @@ $(document).ready(function() {
             }
         },
         rowId: 'id',
-        ajax: "/painel/fretes/lista-fretes?exibirEntregues="+($('#filtroExibirEntregue').is(':checked')?1:0),
+        ajax: "/painel/fretes/lista-fretes",
         columns: [
 
             { data: 'nome', "searchable": true, name: 'parceiros.nome'},
