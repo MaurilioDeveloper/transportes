@@ -22,6 +22,7 @@ Route::group(['prefix' => 'painel'], function(){
         Route::get('/create/{id}', 'FreteController@create')->name('adicionarFrete2');
         Route::get('/edit/{id}', 'FreteController@edit');
         Route::get('/busca-por-status/{status}', 'FreteController@buscaPorStatus');
+        Route::get('/busca-por-localizacao/{cidade}', 'FreteController@buscaPorLocalizacao');
         Route::post('/cadastrar-frete', 'FreteController@store')->name('cadastrarFrete');
         Route::post('/postParceiro', 'FreteController@postParceiro')->name('postParceiro');
         Route::any('/filtrar-frete', 'FreteController@filtrar')->name('filtrarFrete');
@@ -101,6 +102,7 @@ Route::group(['prefix' => 'painel'], function(){
 
     //Dashboard
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/list-localizacao', 'HomeController@listaLocalizacoes')->name('listaLocalizacoes');
     Route::get('/', 'HomeController@index');
 
 

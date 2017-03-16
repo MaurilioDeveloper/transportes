@@ -46,10 +46,10 @@ $(document).ready(function() {
     } );
 
 
-    var statusPesquisa = $("#statusPesquisa").val();
-    console.log(statusPesquisa);
+    var pesquisa = $("#pesquisa").val();
+    console.log(pesquisa);
     var table = $('#fretes-table-two').DataTable({
-        "oSearch":  {"sSearch": statusPesquisa},
+        "oSearch":  {"sSearch": pesquisa},
         processing: true,
         serverSide: true,
         responsive: {
@@ -66,7 +66,12 @@ $(document).ready(function() {
             }
         },
         rowId: 'id',
-        ajax: "/painel/fretes/lista-fretes",
+        ajax: {
+            url:"/painel/fretes/lista-fretes",
+            data:function () {
+                return {filtrar:$('#filtroExibirEntregue:checked').length}
+            }
+        },
         columns: [
 
             { data: 'nome', "searchable": true, name: 'parceiros.nome'},
@@ -114,13 +119,14 @@ $(document).ready(function() {
         },
 
     });
-
+    $('#filtroExibirEntregue').on('change',function (event) {
+        table.ajax.reload();
+    })
 
     $('.dataTables_length').hide();
 
 } );
 
 function enableEntregue(){
-    location.href = '/painel/fretes?exibirEntregues=';
-    // document.ff.submit();
+    location.href = '/painel/fretes?exibirEntregues=1';
 }

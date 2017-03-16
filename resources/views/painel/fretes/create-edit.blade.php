@@ -39,7 +39,61 @@
                 <h3 class="box-title">Os campos com * são obrigatórios</h3>
             </div>
 
+            @if(isset($frete) && $frete->id > 0)
+
+                <div class="form-group col-md-12">
+                    <div class="box collapsed-box box-solid" style="background: rgba(48, 152, 163, 0.32);">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Viagens deste frete</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                </button>
+                            </div><!-- /.box-tools -->
+                        </div><!-- /.box-header -->
+                        <div class="box-body" style="background: #fff; border: 1px solid #ccc">
+                            <div class="box-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr style="background: rgba(48, 152, 163, 0.32);">
+                                            <th>Data Início</th>
+                                            <th>Status</th>
+                                            <th>Parceiro</th>
+                                            <th>Caminhão</th>
+                                            <th>Motorista</th>
+                                            <th>Origem</th>
+                                            <th>Destino</th>
+                                            <th>Custo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($viagensFrete as $viagemFrete)
+                                        <tr class="warning">
+                                            <td>{{implode('/', array_reverse(explode('-',$viagemFrete->data_inicio)))}}</td>
+                                            <td>{{$viagemFrete->status}}</td>
+                                            <td>{{$viagemFrete->parceiro}}</td>
+                                            <td>{{$viagemFrete->modelo}} - {{$viagemFrete->placa}}</td>
+                                            <td>{{$viagemFrete->motorista}}</td>
+                                            <td>{{$viagemFrete->cidade_origem}}</td>
+                                            <td>{{$viagemFrete->cidade_destino}}</td>
+                                            <td>@if($viagemFrete->custo == 0.0) GRÁTIS @else{{$viagemFrete->custo}}@endif</td>
+                                        </tr>
+                                        @empty
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </div>
+
+            @endif
+
             <div class="box-body">
+
                 {{--@include('painel.errors._errors_form')--}}
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-warning msg-warn" role="alert"></div>
                 <div style="display: none; text-align: center; width: 100%;" class="alert alert-success msg-suc" role="alert">@if(isset($frete))Frete Alterado com Sucesso @else Frete Cadastrado com Sucesso @endif</div>
@@ -105,8 +159,11 @@
                 <fieldset class="callout column small-12">
                     <legend><b>Origem - Destino</b></legend>
 
-
-                    <div class="form-group col-md-6">
+                    @if(isset($frete) && $frete->id > 0)
+                        <div class="form-group col-md-4">
+                    @else
+                        <div class="form-group col-md-6">
+                    @endif
                         {!! Form::label('cidade', 'Cidade Origem *') !!}
                         <select name="id_cidade_origem" class="form-control" id="cidade_origem" required>
                             <option value="0">Selecione uma Cidade</option>
@@ -129,8 +186,11 @@
 
                     {{--<fieldset class="callout column small-12">--}}
                     {{--<legend><b>Destino</b></legend>--}}
-
-                    <div class="form-group col-md-6">
+                    @if(isset($frete))
+                        <div class="form-group col-md-4">
+                    @else
+                        <div class="form-group col-md-6">
+                    @endif
                         {!! Form::label('cidade', 'Cidade Destino *') !!}
                         <select name="id_cidade_destino" class="form-control" id="cidade_destino" required>
                             <option value="0">Selecione uma Cidade</option>
@@ -151,6 +211,29 @@
                         {{--<input required type="text" name="cidade_destino" class="form-control" placeholder="Cidade" value="@if(isset($viagem->cidade_destino)){{$viagem->cidade_destino}}@else{{old('cidade_destino')}}@endif" />--}}
                     </div>
 
+                        @if(isset($frete))
+                            <div class="form-group col-md-4">
+                        {{--@else--}}
+                            {{--<div class="form-group col-md-6">--}}
+                        {{--@endif--}}
+                                {!! Form::label('id_cidade_localizacao', 'Localização ') !!}
+                                <select name="id_cidade_localizacao" class="form-control" id="id_cidade_localizacao">
+                                    <option value="0">Selecione uma Cidade</option>
+                                    {{--                            {{$estados}}--}}
+                                    @if(isset($cidades))
+                                        @foreach($cidades as $key => $value)
+                                            {{--{{$value}}--}}
+                                            @if(isset($frete->id_cidade_localizacao) && $key === $frete->id_cidade_localizacao)
+                                                <option value="{{$key}}" selected>{{$value}}</option>
+                                                {{--{{old('status')}}--}}
+                                            @else
+                                                <option value="{{$key}}" {{old('id_cidade_localizacao') == $value ? 'selected="selected"' : ''}}>{{$value}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </select>
+                        @endif
+
                 </fieldset>
 
                 <fieldset class="callout column small-12">
@@ -169,13 +252,13 @@
                         <input type="text" name="valor_item" class="form-control moeda" data-prefix="R$" placeholder="Valor" required value="@if(isset($frete->valor_item)){{$frete->valor_item}}@else{{old('valor_item')}}@endif" />
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         {!! Form::label('identificacao', 'Placa') !!}
                         {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
                         <input type="text" name="identificacao" class="form-control placa" placeholder="Placa" value="@if(isset($frete->identificacao)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         {!! Form::label('chassi', 'Chassi') !!}
                         {{--{!! Form::text('identificacao', null, ['class' => 'form-control', 'placeholder' => 'Identificação']) !!}--}}
                         <input type="text" name="chassi" class="form-control" placeholder="Chassi" value="@if(isset($frete->chassi)){{$frete->chassi}}@else{{old('chassi')}}@endif" />
@@ -187,7 +270,7 @@
                         {{--<input type="text" name="identificacao" class="form-control" placeholder="Identificação" value="@if(isset($frete->identificacao)){{$frete->identificacao}}@else{{old('identificacao')}}@endif" />--}}
                     {{--</div>--}}
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         {!! Form::label('cor', 'Cor') !!}
                         {{--{!! Form::text('cor', null, ['class' => 'form-control', 'placeholder' => 'Azul']) !!}--}}
                         <input type="text" name="cor" class="form-control" placeholder="Cor" value="@if(isset($frete->cor)){{$frete->cor}}@else{{old('cor')}}@endif" />

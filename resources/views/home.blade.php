@@ -46,6 +46,51 @@
 
                 <div class='box-header'></div>
 
+                <div class='box-body col-md-12'>
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Fretes</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding" style="display: block;">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    {{--{{$graficoLocalizacao}}--}}
+                                    <div id="container"></div>
+                                    <div id="sliders" style="min-width: 310px; max-width: 800px; margin: 0 auto;">
+                                        <table>
+                                            <tr style="display: inline; margin-left: 16%">
+                                                <td style="padding-right: 3%">Angulo alpha</td>
+                                                <td><input style="margin-top: 16%" id="alpha" type="range" min="0" max="45" value="15"/> <span id="alpha-value" class="value"></span></td>
+                                            </tr>
+                                            <tr style="display: inline">
+                                                <td style="padding-right: 3%">Angulo Beta</td>
+                                                <td><input id="beta" style="margin-top: 16%" type="range" min="-45" max="45" value="15"/> <span id="beta-value" class="value"></span></td>
+                                            </tr>
+                                            <tr style="display: inline">
+                                                <td style="padding-right: 3%">Angula Omega</td>
+                                                <td><input style="margin-top: 16%" id="depth" type="range" min="20" max="100" value="50"/> <span id="depth-value" class="value"></span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- /.row -->
+                    </div>
+                </div>
                 <br/>
                 <br/>
                 <div class='box-body col-md-6'>
@@ -215,6 +260,92 @@
     <script src="{{url('/assets/js/vendor/highcharts.js')}}"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+        $.ajax({
+            url: '/painel/list-localizacao',
+            type: 'GET',
+            async: true,
+            dataType: "json",
+            success: function (data) {
+                for(var i=0; data.length > i;i++){
+                    var url = '/painel/fretes/busca-por-localizacao/'+data[i].name;
+                    data[i].url = url;
+                    console.log(data[i]);
+                }
+                localizacaoData(data);
+
+            }
+        });
+        function localizacaoData(data) {
+            // Set up the chart
+            var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container',
+                    type: 'column',
+                    options3d: {
+                        enabled: true,
+                        alpha: 12,
+                        beta: 12,
+                        depth: 100,
+                        viewDistance: 25
+                    }
+                },
+                title: {
+                    text: 'Localização de Fretes'
+                },
+                tooltip: {
+                    pointFormat: 'Qtde fretes: <b>{point.y}</b>'
+                },
+                subtitle: {
+                    text: 'Cidades representando a quantidade de fretes nesta localização'
+                },
+                plotOptions: {
+                    column: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Cidades',
+//                    data: [{
+//                        name: '<span style="margin-top: 2%"><b>Curitiba</b></span>',
+//                        y: 29.9,
+//                        url: '/painel/fretes/busca-por-localizacao/Curitiba'
+//                    },
+//                        71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6],
+                    data: data,
+                    point: {
+                        events: {
+                            click: function (e) {
+                                location.href = e.point.url;
+                                e.preventDefault();
+                            }
+                        }
+                    },
+                }]
+            });
+
+            function showValues() {
+                $('#alpha-value').html(chart.options.chart.options3d.alpha);
+                $('#beta-value').html(chart.options.chart.options3d.beta);
+                $('#depth-value').html(chart.options.chart.options3d.depth);
+            }
+
+            // Activate the sliders
+            $('#sliders input').on('input change', function () {
+                chart.options.chart.options3d[this.id] = this.value;
+                showValues();
+                chart.redraw(false);
+            });
+
+            showValues();
+        }
+    </script>
     <script type="text/javascript">
 //        $("text.highcharts-credits").hide();
         var freteEd = document.getElementById("freteEd").value;

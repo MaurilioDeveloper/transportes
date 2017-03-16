@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Frete;
 use App\Models\Viagem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -33,6 +34,21 @@ class HomeController extends Controller
         $freteEt = count($this->frete->all()->where('status', 'Em trânsito'));
         $freteE = count($this->frete->all()->where('status', 'Entregue'));
         $freteC = count($this->frete->all()->where('status', 'Cancelado'));
+
+        /*
+        $graficoLocalizacao = DB::select(
+            DB::raw("
+              SELECT origens_destinos.cidade, count(*) as qtde from fretes 
+              INNER JOIN origens_destinos 
+              ON fretes.id_cidade_localizacao = origens_destinos.id 
+              WHERE status LIKE '%Aguard%' 
+              GROUP BY id_cidade_localizacao order by qtde desc
+            ")
+        );
+        */
+
+
+
 
         $tableDash = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
@@ -65,5 +81,18 @@ class HomeController extends Controller
             ->paginate(5);
 
         return view('home', compact('freteEdicao', 'freteAc', 'freteAe', 'freteEt', 'freteE', 'freteC', 'tableDash', 'fretesOp', 'viagensOp'));
+    }
+
+    public function listaLocalizacoes()
+    {
+        $graficoLocalizacao=Frete::query()
+            ->join('origens_destinos', 'origens_destinos.id', '=', 'fretes.id_cidade_localizacao')
+            ->select("origens_destinos.cidade as name")
+            ->selectRaw('count(*) as y')
+            ->where('status', 'like', '%Aguardando Embarque%')
+            ->groupBy('id_cidade_localizacao')
+            ->orderBy('y', 'DESC')
+            ->get();
+        return $graficoLocalizacao;
     }
 }

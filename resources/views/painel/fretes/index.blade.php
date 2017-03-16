@@ -51,6 +51,10 @@
                     <br/>
                     <br/>
 
+                    @if(isset($cidade))
+                        <input type="hidden" value="{{$cidade}}" id="pesquisa" />
+                    @endif
+
                     {!! Form::open(['route' => 'filtrarFrete', 'name' => 'form']) !!}
 
                     <div class="form-group col-md-10">
@@ -63,7 +67,7 @@
                     </div>
 
                     @if(isset($status))
-                        <input type="hidden" value="{{$status}}" id="statusPesquisa" />
+                        <input type="hidden" value="{{$status}}" id="pesquisa" />
                     @endif
 
                     <div class="form-group col-md-2">
@@ -73,13 +77,10 @@
                     {!! Form::close() !!}
 
 
-                    {{--<form action="/painel/fretes?exibirEntregues=" name="ff">--}}
-                        {{--<input value="{{csrf_token()}}" type="hidden"/>--}}
                         <div class="form-group col-md-12">
-                            <input type="checkbox" onclick="enableEntregue()" id="filtroExibirEntregue"/>
+                            <input type="checkbox"  id="filtroExibirEntregue"/>
                             <label for="filtroExibirEntregue">Exibir fretes entregues</label>
                         </div>
-                    {{--</form>--}}
 
                     <div class='box-body'>
                         <div style="display: none;" id="dialog-confirm" title="Deletar">

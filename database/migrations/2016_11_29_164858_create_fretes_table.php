@@ -26,6 +26,9 @@ class CreateFretesTable extends Migration
             $table->integer('id_cidade_destino')->unsigned();
             $table->foreign('id_cidade_destino')->references('id')->on('origens_destinos');
 
+            $table->integer('id_cidade_localizacao')->unsigned();
+            $table->foreign('id_cidade_localizacao')->references('id')->on('origens_destinos');
+
             $table->string('tipo')->nullable();
             $table->string('identificacao')->nullable();
             $table->string('chassi', 100)->nullable();
