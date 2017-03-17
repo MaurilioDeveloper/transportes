@@ -27,6 +27,7 @@ Route::group(['prefix' => 'painel'], function(){
         Route::post('/postParceiro', 'FreteController@postParceiro')->name('postParceiro');
         Route::any('/filtrar-frete', 'FreteController@filtrar')->name('filtrarFrete');
         Route::put('/update/{id}', 'FreteController@update')->name('updateFrete');
+        Route::post('/filtrar-frete-localizacao', 'FreteController@filtrarFreteLocalizacao')->name('filtrarFreteLocalizacao');
         Route::get('/', 'FreteController@index')->name('listarFretes');
     });
 

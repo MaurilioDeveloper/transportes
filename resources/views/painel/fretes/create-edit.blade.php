@@ -79,8 +79,8 @@
                                             <td>@if($viagemFrete->custo == 0.0) GRÁTIS @else{{$viagemFrete->custo}}@endif</td>
                                         </tr>
                                         @empty
-                                            <tr>
-                                                <td></td>
+                                            <tr class="warning" style="text-align: center">
+                                                <td colspan="8">Esse Frete não possui nenhuma viagem</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

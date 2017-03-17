@@ -57,7 +57,7 @@
 
                     {!! Form::open(['route' => 'filtrarFrete', 'name' => 'form']) !!}
 
-                    <div class="form-group col-md-10">
+                    <div class="form-group col-md-4">
                         <select class="form-control" name="status">
                             <option value="0">Filtrar por Status</option>
                             @foreach(\App\Models\Frete::STATUS as $key => $value)
@@ -67,7 +67,31 @@
                     </div>
 
                     @if(isset($status))
-                        <input type="hidden" value="{{$status}}" id="pesquisa" />
+                        <input type="hidden" value="{{$status}}" id="pesquisaStatus" />
+                    @endif
+
+                    <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
+                    </div>
+
+                    {!! Form::close() !!}
+
+
+                    {!! Form::open(['route' => 'filtrarFreteLocalizacao', 'name' => 'formLocalizacao']) !!}
+
+                    <div class="form-group col-md-4">
+                        <select class="form-control" name="localizacao">
+                            <option value="0">Filtrar por Localização</option>
+                            @if(isset($localizacao))
+                                @foreach($localizacao as $key => $value)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+
+                    @if(isset($filtroLocalizacao))
+                        <input type="hidden" value="{{$filtroLocalizacao}}" id="pesquisaLocalizacao" />
                     @endif
 
                     <div class="form-group col-md-2">
@@ -101,6 +125,7 @@
                                     <th  style="text-align: center;">Parceiro</th>
                                     <th  style="text-align: center;">Cidade Origem</th>
                                     <th  style="text-align: center;">Cidade Destino</th>
+                                    <th  style="text-align: center;">Localização</th>
                                     <th  style="text-align: center">Identificação</th>
                                     <th  style="text-align: center;">Tipo</th>
                                     <th  style="text-align: center;">Status</th>

@@ -59,7 +59,9 @@ class FreteController extends Controller
     {
         $titulo = "Listagem de Fretes";
         $parceiros = Parceiro::query()->select("parceiros.id", "parceiros.nome")->pluck('nome', 'id');
-        return view('painel.fretes.index', compact('parceiros', 'titulo'));
+        $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
+
+        return view('painel.fretes.index', compact('parceiros', 'titulo', 'localizacao'));
     }
 
     /**
@@ -89,6 +91,9 @@ class FreteController extends Controller
     public function listaFretes()
     {
 
+        $cidade = $this->request->get('cidade');
+        $localizacao = $this->request->get('localizacao');
+//        dd($localizacao);
 
         $q = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
@@ -98,6 +103,12 @@ class FreteController extends Controller
             ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo", "od3.cidade as localizacao");
         if (!$this->request->get('filtrar')) {
             $q->where('status', '!=', 'Entregue');
+        }
+        if($this->request->get('localizacao')){
+            $q->where('od3.cidade', $localizacao);
+        }
+        if($this->request->get('cidade')){
+            $q->where('od3.cidade', $cidade);
         }
         $dt = Datatables::of($q);
         return $dt->make(true);
@@ -365,8 +376,9 @@ class FreteController extends Controller
     {
         $dadosForm = $this->request->all();
         $status = $this->resolverStatus($dadosForm['status']);
+        $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
 
-        return view("painel.fretes.index", compact('status'));
+        return view("painel.fretes.index", compact('status', 'localizacao'));
     }
 
     /**
@@ -377,7 +389,8 @@ class FreteController extends Controller
     public function buscaPorStatus($status)
     {
         $dadosPesquisa = Frete::where('status', 'like', '%' . $status . '%')->take(15)->get();
-        return view('painel.fretes.index', compact('status'));
+        $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
+        return view('painel.fretes.index', compact('status', 'localizacao'));
     }
 
 
@@ -419,8 +432,27 @@ class FreteController extends Controller
 
     protected function buscaPorLocalizacao($cidade)
     {
-//        $dadosPesquisa = Frete::where('status','like','%'.$cidade.'%')->take(15)->get();
+        $dadosPesquisa = Frete::query()
+            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_localizacao')
+            ->select("od.cidade as cidade_localizacao")
+            ->where('od.cidade', $cidade)
+            ->get();
         return view('painel.fretes.index', compact('cidade'));
+    }
+
+
+    protected function filtrarFreteLocalizacao()
+    {
+        $id = $this->request->get('localizacao');
+        $filtroLocalizacao = OrigemDestino::query()->select("origens_destinos.cidade as localizacao")->where('origens_destinos.id', $id)->first();
+        $filtroLocalizacao = $filtroLocalizacao->localizacao;
+        $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
+        $pesquisa = Frete::query()
+            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_localizacao')
+            ->select("od.cidade as cidade_localizacao")
+            ->where('od.cidade', $filtroLocalizacao)
+            ->get();
+        return view('painel.fretes.index', compact('filtroLocalizacao','localizacao'));
     }
 
 }

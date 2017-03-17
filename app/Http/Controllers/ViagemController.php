@@ -399,6 +399,10 @@ class ViagemController extends Controller
                 // vendo se precisa modificar o status
                 if ($dadosForm['status'] == 'Concluída') {
                     $frete = Frete::find($codigo_frete);
+                    $viagem = Viagem::find($id_viagem);
+                    $frete->fill([
+                        'id_cidade_localizacao' => $viagem['id_cidade_destino']
+                    ])->save();
                     if($frete['id_cidade_destino'] == $dadosForm['id_cidade_destino']){
                         $frete->fill([
                             'status' => 'Entregue'

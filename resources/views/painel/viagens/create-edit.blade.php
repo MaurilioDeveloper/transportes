@@ -279,7 +279,7 @@
                                 </tr>
 
                             @empty
-                                <tr class="nenhum"><td class="warning" style="text-align: center" colspan="6">Nenhum frete adicionado até o momento</td></tr>
+                                <tr class="nenhum"><td class="warning" style="text-align: center" colspan="7">Nenhum frete adicionado até o momento</td></tr>
                             @endforelse
                         @endif
 {{----}}
@@ -343,7 +343,7 @@
                     @forelse($fretes as $frete)
                         <input type="hidden" value="{{$frete->id}}" class="freteListaId" />
                         <tr class="success">
-                            <td><input type="checkbox" value="{{$frete->id}}" class="codigosSelect"/></td>
+                            <td><input type="checkbox" value="{{$frete->id}}" id="codigos{{$frete->id}}" class="codigosSelect"/></td>
                             <td>{{$frete->nome}}</td>
                             <td>{{$frete->tipo}}</td>
                             <td>{{$frete->identificacao}}</td>

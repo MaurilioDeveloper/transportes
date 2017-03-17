@@ -68,20 +68,20 @@
                                     {{--{{$graficoLocalizacao}}--}}
                                     <div id="container"></div>
                                     <div id="sliders" style="min-width: 310px; max-width: 800px; margin: 0 auto;">
-                                        <table>
-                                            <tr style="display: inline; margin-left: 16%">
-                                                <td style="padding-right: 3%">Angulo alpha</td>
-                                                <td><input style="margin-top: 16%" id="alpha" type="range" min="0" max="45" value="15"/> <span id="alpha-value" class="value"></span></td>
-                                            </tr>
-                                            <tr style="display: inline">
-                                                <td style="padding-right: 3%">Angulo Beta</td>
-                                                <td><input id="beta" style="margin-top: 16%" type="range" min="-45" max="45" value="15"/> <span id="beta-value" class="value"></span></td>
-                                            </tr>
-                                            <tr style="display: inline">
-                                                <td style="padding-right: 3%">Angula Omega</td>
-                                                <td><input style="margin-top: 16%" id="depth" type="range" min="20" max="100" value="50"/> <span id="depth-value" class="value"></span></td>
-                                            </tr>
-                                        </table>
+                                        {{--<table>--}}
+                                            {{--<tr style="display: inline; margin-left: 16%">--}}
+                                                {{--<td style="padding-right: 3%">Angulo alpha</td>--}}
+                                                {{--<td><input style="margin-top: 16%" id="alpha" type="range" min="0" max="45" value="15"/> <span id="alpha-value" class="value"></span></td>--}}
+                                            {{--</tr>--}}
+                                            {{--<tr style="display: inline">--}}
+                                                {{--<td style="padding-right: 3%">Angulo Beta</td>--}}
+                                                {{--<td><input id="beta" style="margin-top: 16%" type="range" min="-45" max="45" value="15"/> <span id="beta-value" class="value"></span></td>--}}
+                                            {{--</tr>--}}
+                                            {{--<tr style="display: inline">--}}
+                                                {{--<td style="padding-right: 3%">Angula Omega</td>--}}
+                                                {{--<td><input style="margin-top: 16%" id="depth" type="range" min="20" max="100" value="50"/> <span id="depth-value" class="value"></span></td>--}}
+                                            {{--</tr>--}}
+                                        {{--</table>--}}
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +270,7 @@
                 for(var i=0; data.length > i;i++){
                     var url = '/painel/fretes/busca-por-localizacao/'+data[i].name;
                     data[i].url = url;
-                    console.log(data[i]);
+//                    console.log(data[i]);
                 }
                 localizacaoData(data);
 
@@ -278,29 +278,37 @@
         });
         function localizacaoData(data) {
             // Set up the chart
+//            console.log(data[0].name);
             var chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'container',
                     type: 'column',
                     options3d: {
                         enabled: true,
-                        alpha: 12,
-                        beta: 12,
+                        alpha: 6,
+                        beta: 6,
                         depth: 100,
-                        viewDistance: 25
+                        viewDistance: 45
                     }
                 },
                 title: {
                     text: 'Localização de Fretes'
                 },
                 tooltip: {
-                    pointFormat: 'Qtde fretes: <b>{point.y}</b>'
+                    pointFormat: 'Quantidade de fretes: <b>{point.y}</b>'
                 },
                 subtitle: {
                     text: 'Cidades representando a quantidade de fretes nesta localização'
                 },
+                xAxis: {
+                    type: "category",
+                    maxZoom: 1
+                },
                 plotOptions: {
                     column: {
+                        dataLabels: {
+                            enabled: false
+                        },
                         allowPointSelect: true,
                         cursor: 'pointer',
                         depth: 35,

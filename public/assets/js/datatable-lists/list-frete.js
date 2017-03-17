@@ -46,7 +46,7 @@ $(document).ready(function() {
     } );
 
 
-    var pesquisa = $("#pesquisa").val();
+    var pesquisa = $("#pesquisaStatus").val();
     console.log(pesquisa);
     var table = $('#fretes-table-two').DataTable({
         "oSearch":  {"sSearch": pesquisa},
@@ -69,6 +69,14 @@ $(document).ready(function() {
         ajax: {
             url:"/painel/fretes/lista-fretes",
             data:function () {
+                if($('#pesquisa').length > 0){
+                    // console.log($("#pesquisa").val());
+                    return {cidade:$('#pesquisa').val()}
+                }
+                if($('#pesquisaLocalizacao').length > 0){
+                    // alert($('#pesquisaLocalizacao').length);
+                    return {localizacao:$('#pesquisaLocalizacao').val()}
+                }
                 return {filtrar:$('#filtroExibirEntregue:checked').length}
             }
         },
@@ -91,7 +99,7 @@ $(document).ready(function() {
                 data: 'od2.cidade',
                 className: "center",
                 render: function(data, type, row){
-                        return '<a href="fretes/edit/'+row.id+'" id-frete="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-frete="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
+                        return '<a href="/painel/fretes/edit/'+row.id+'" id-frete="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-frete="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
                 }
             },
             { data: 'chassi', name: 'fretes.chassi',visible:false }
