@@ -22,7 +22,6 @@ return array(
     'App\\Http\\Controllers\\OrigemDestinoController' => $baseDir . '/app/Http/Controllers/OrigemDestinoController.php',
     'App\\Http\\Controllers\\PainelController' => $baseDir . '/app/Http/Controllers/PainelController.php',
     'App\\Http\\Controllers\\ParceiroController' => $baseDir . '/app/Http/Controllers/ParceiroController.php',
-    'App\\Http\\Controllers\\StandardController' => $baseDir . '/app/Http/Controllers/StandardController.php',
     'App\\Http\\Controllers\\TipoOcorrenciaController' => $baseDir . '/app/Http/Controllers/TipoOcorrenciaController.php',
     'App\\Http\\Controllers\\UsuarioController' => $baseDir . '/app/Http/Controllers/UsuarioController.php',
     'App\\Http\\Controllers\\ViagemController' => $baseDir . '/app/Http/Controllers/ViagemController.php',

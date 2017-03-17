@@ -470,7 +470,6 @@ class ComposerStaticInit944e50e13890181ff439d24beb84d3cb
         'App\\Http\\Controllers\\OrigemDestinoController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrigemDestinoController.php',
         'App\\Http\\Controllers\\PainelController' => __DIR__ . '/../..' . '/app/Http/Controllers/PainelController.php',
         'App\\Http\\Controllers\\ParceiroController' => __DIR__ . '/../..' . '/app/Http/Controllers/ParceiroController.php',
-        'App\\Http\\Controllers\\StandardController' => __DIR__ . '/../..' . '/app/Http/Controllers/StandardController.php',
         'App\\Http\\Controllers\\TipoOcorrenciaController' => __DIR__ . '/../..' . '/app/Http/Controllers/TipoOcorrenciaController.php',
         'App\\Http\\Controllers\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsuarioController.php',
         'App\\Http\\Controllers\\ViagemController' => __DIR__ . '/../..' . '/app/Http/Controllers/ViagemController.php',

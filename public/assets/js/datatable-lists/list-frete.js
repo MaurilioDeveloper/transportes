@@ -77,6 +77,7 @@ $(document).ready(function() {
             { data: 'nome', "searchable": true, name: 'parceiros.nome'},
             { data: 'cidade_origem', name: 'od.cidade'},
             { data: 'cidade_destino', name: 'od2.cidade' },
+            { data: 'localizacao', name: 'od3.cidade' },
             { data: 'identificacao', name: 'fretes.identificacao', render: function (data, type, row) {
                 if(row.identificacao == ''){
                     return row.chassi;

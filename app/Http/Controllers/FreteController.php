@@ -11,7 +11,7 @@ use App\Models\HistoricoFrete;
 use App\Models\Parceiro;
 use App\Models\Contato;
 use App\Models\Viagem;
-use App\Http\Controllers\StandardController;
+//use App\Http\Controllers\StandardController;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\Paginator;
@@ -19,7 +19,7 @@ use App\Http\Request\ParceiroRequest;
 use Datatables;
 use Illuminate\Validation\Factory as Validate;
 
-class FreteController extends StandardController
+class FreteController extends Controller
 {
 
 //    use \App\Traits\Standard;
@@ -94,7 +94,8 @@ class FreteController extends StandardController
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo");
+            ->join('origens_destinos AS od3', 'od3.id', '=', 'fretes.id_cidade_localizacao')
+            ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo", "od3.cidade as localizacao");
         if (!$this->request->get('filtrar')) {
             $q->where('status', '!=', 'Entregue');
         }
