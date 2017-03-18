@@ -93,18 +93,21 @@ class FreteController extends Controller
 
         $cidade = $this->request->get('cidade');
         $localizacao = $this->request->get('localizacao');
-//        dd($localizacao);
+        $status = $this->request->get('status');
 
         $q = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_origem')
             ->join('origens_destinos AS od2', 'od2.id', '=', 'fretes.id_cidade_destino')
-            ->join('origens_destinos AS od3', 'od3.id', '=', 'fretes.id_cidade_localizacao')
+            ->leftJoin('origens_destinos AS od3', 'od3.id', '=', 'fretes.id_cidade_localizacao')
             ->select("parceiros.nome", "fretes.id", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.identificacao", "fretes.chassi", "fretes.status", "fretes.tipo", "od3.cidade as localizacao");
         if (!$this->request->get('filtrar')) {
             $q->where('status', '!=', 'Entregue');
         }
-        if($this->request->get('localizacao')){
+        if($status){
+            $q->where('status', $status);
+        }
+        if($localizacao){
             $q->where('od3.cidade', $localizacao);
         }
         if($this->request->get('cidade')){

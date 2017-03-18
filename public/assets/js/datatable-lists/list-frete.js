@@ -69,8 +69,12 @@ $(document).ready(function() {
         ajax: {
             url:"/painel/fretes/lista-fretes",
             data:function () {
+                if($('#pesquisaStatus').length > 0){
+                    // alert($('#pesquisaStatus').length);
+                    return {status: $('#pesquisaStatus').val()}
+                }
                 if($('#pesquisa').length > 0){
-                    // console.log($("#pesquisa").val());
+                    // alert($("#pesquisa").val());
                     return {cidade:$('#pesquisa').val()}
                 }
                 if($('#pesquisaLocalizacao').length > 0){
