@@ -81,6 +81,12 @@
                             </div>
                         {!! Form::close() !!}
 
+                        <div class="form-group col-md-12">
+                            <input type="checkbox"  id="filtroExibirConcluida"/>
+                            <label for="filtroExibirConcluida">Exibir viagens concluída</label>
+                        </div>
+
+
                         <table class="table table-bordered" id="lista-viagens">
                             <thead>
                                 <tr style="background: #2e6da4; color: white">

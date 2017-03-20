@@ -42,8 +42,8 @@ $(document).ready(function() {
     var statusPesquisa = $("#statusPesquisa").val();
     console.log(statusPesquisa);
 
-    $('#lista-viagens').DataTable({
-        // processing: true,
+    var table = $('#lista-viagens').DataTable({
+        processing: true,
         "oSearch":  {"sSearch": statusPesquisa},
         serverSide: true,
         responsive: {
@@ -60,7 +60,12 @@ $(document).ready(function() {
             }
         },
         rowId: 'id',
-        ajax: "/painel/viagens/lista-fretes",
+        ajax: {
+            url: "/painel/viagens/lista-fretes",
+            data:function () {
+                return {filtrar:$('#filtroExibirConcluida:checked').length}
+            }
+        },
         columns: [
 
             { data: 'parceiro', name: 'parceiros.nome'},
@@ -114,6 +119,10 @@ $(document).ready(function() {
         },
 
     });
+
+    $('#filtroExibirConcluida').on('change',function (event) {
+        table.ajax.reload();
+    })
 
     $('.dataTables_length').hide();
 

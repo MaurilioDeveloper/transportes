@@ -150,10 +150,11 @@ class ViagemController extends Controller
      */
     public function listaFretes()
     {
+//        dd($this->request->get('filtrar'));
         /**
          * @var $dt QueryBuilderEngine
          */
-        $dt = \Yajra\Datatables\Datatables::of(Viagem::query()
+        $q = Viagem::query()
             ->join('parceiros', 'parceiros.id', '=', 'viagens.id_parceiro_viagem')
             ->join('origens_destinos as od', 'od.id', '=', 'viagens.id_cidade_origem')
             ->join('motoristas as m', 'm.id', '=', 'viagens.id_motorista')
@@ -162,7 +163,12 @@ class ViagemController extends Controller
             ->leftJoin('fretes_viagens as fv','fv.id_viagem','=','viagens.id')
             ->leftJoin('fretes as f','f.id','=','fv.id_frete')
             ->groupBy('viagens.id')
-            ->select("viagens.id", "parceiros.nome as parceiro", "m.nome as motorista", "c.modelo as caminhao", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino"));
+            ->select("viagens.id", "parceiros.nome as parceiro", "m.nome as motorista", "c.modelo as caminhao", "viagens.status", "viagens.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino");
+            if (!$this->request->get('filtrar')) {
+                $q->where('viagens.status', '!=', 'Concluída');
+            }
+
+        $dt = \Yajra\Datatables\Datatables::of($q);
 
         return $dt->make(true);
 
