@@ -78,7 +78,7 @@ $(document).ready(function() {
                     return {cidade:$('#pesquisa').val()}
                 }
                 if($('#pesquisaLocalizacao').length > 0){
-                    // alert($('#pesquisaLocalizacao').length);
+                    $("#localizacao-cidade option[value='"+$('#idLocalizacao').val()+"']").prop('selected', true);
                     return {localizacao:$('#pesquisaLocalizacao').val()}
                 }
                 return {filtrar:$('#filtroExibirEntregue:checked').length}

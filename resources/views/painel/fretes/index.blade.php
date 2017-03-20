@@ -80,7 +80,7 @@
                     {!! Form::open(['route' => 'filtrarFreteLocalizacao', 'name' => 'formLocalizacao']) !!}
 
                     <div class="form-group col-md-4">
-                        <select class="form-control" name="localizacao">
+                        <select class="form-control" name="localizacao" id="localizacao-cidade">
                             <option value="0">Filtrar por Localização</option>
                             @if(isset($localizacao))
                                 @foreach($localizacao as $key => $value)
@@ -92,6 +92,7 @@
 
                     @if(isset($filtroLocalizacao))
                         <input type="hidden" value="{{$filtroLocalizacao}}" id="pesquisaLocalizacao" />
+                        <input type="hidden" value="{{$idLocalizacao}}" id="idLocalizacao" />
                     @endif
 
                     <div class="form-group col-md-2">

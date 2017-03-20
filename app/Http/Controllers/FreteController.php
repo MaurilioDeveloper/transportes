@@ -51,6 +51,11 @@ class FreteController extends Controller
 
     }
 
+
+    protected function getLocalizacoes(){
+        return OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->orderBy('cidade', 'ASC')->pluck('cidade', 'id');
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * Return view painel/fretes
@@ -59,7 +64,7 @@ class FreteController extends Controller
     {
         $titulo = "Listagem de Fretes";
         $parceiros = Parceiro::query()->select("parceiros.id", "parceiros.nome")->pluck('nome', 'id');
-        $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
+        $localizacao = $this->getLocalizacoes();
 
         return view('painel.fretes.index', compact('parceiros', 'titulo', 'localizacao'));
     }
@@ -379,7 +384,7 @@ class FreteController extends Controller
     {
         $dadosForm = $this->request->all();
         $status = $this->resolverStatus($dadosForm['status']);
-        $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
+        $localizacao = $this->getLocalizacoes();
 
         return view("painel.fretes.index", compact('status', 'localizacao'));
     }
@@ -391,7 +396,6 @@ class FreteController extends Controller
      */
     public function buscaPorStatus($status)
     {
-        $dadosPesquisa = Frete::where('status', 'like', '%' . $status . '%')->take(15)->get();
         $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
         return view('painel.fretes.index', compact('status', 'localizacao'));
     }
@@ -435,27 +439,19 @@ class FreteController extends Controller
 
     protected function buscaPorLocalizacao($cidade)
     {
-        $dadosPesquisa = Frete::query()
-            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_localizacao')
-            ->select("od.cidade as cidade_localizacao")
-            ->where('od.cidade', $cidade)
-            ->get();
         return view('painel.fretes.index', compact('cidade'));
     }
 
 
     protected function filtrarFreteLocalizacao()
     {
-        $id = $this->request->get('localizacao');
-        $filtroLocalizacao = OrigemDestino::query()->select("origens_destinos.cidade as localizacao")->where('origens_destinos.id', $id)->first();
+        $idLocalizacao = $this->request->get('localizacao');
+        $filtroLocalizacao = OrigemDestino::query()->select("origens_destinos.cidade as localizacao")->where('origens_destinos.id', $idLocalizacao)->first();
         $filtroLocalizacao = $filtroLocalizacao->localizacao;
-        $localizacao = OrigemDestino::query()->select("origens_destinos.cidade", "origens_destinos.id")->pluck('cidade', 'id');
-        $pesquisa = Frete::query()
-            ->join('origens_destinos AS od', 'od.id', '=', 'fretes.id_cidade_localizacao')
-            ->select("od.cidade as cidade_localizacao")
-            ->where('od.cidade', $filtroLocalizacao)
-            ->get();
-        return view('painel.fretes.index', compact('filtroLocalizacao','localizacao'));
+        $localizacao = $this->getLocalizacoes();
+
+
+        return view('painel.fretes.index', compact('filtroLocalizacao','localizacao', 'idLocalizacao'));
     }
 
 }
