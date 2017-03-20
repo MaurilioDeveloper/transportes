@@ -70,11 +70,10 @@ $(document).ready(function() {
             url:"/painel/fretes/lista-fretes",
             data:function () {
                 if($('#pesquisaStatus').length > 0){
-                    // alert($('#pesquisaStatus').length);
                     return {status: $('#pesquisaStatus').val()}
                 }
                 if($('#pesquisa').length > 0){
-                    // alert($("#pesquisa").val());
+                    $("#localizacao-cidade option[value='"+$("#idLocalizacaoDash").val()+"']").prop('selected', true);
                     return {cidade:$('#pesquisa').val()}
                 }
                 if($('#pesquisaLocalizacao').length > 0){

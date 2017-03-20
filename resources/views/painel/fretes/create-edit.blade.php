@@ -68,16 +68,16 @@
                                     </thead>
                                     <tbody>
                                         @forelse($viagensFrete as $viagemFrete)
-                                        <tr class="warning">
-                                            <td>{{implode('/', array_reverse(explode('-',$viagemFrete->data_inicio)))}}</td>
-                                            <td>{{$viagemFrete->status}}</td>
-                                            <td>{{$viagemFrete->parceiro}}</td>
-                                            <td>{{$viagemFrete->modelo}} - {{$viagemFrete->placa}}</td>
-                                            <td>{{$viagemFrete->motorista}}</td>
-                                            <td>{{$viagemFrete->cidade_origem}}</td>
-                                            <td>{{$viagemFrete->cidade_destino}}</td>
-                                            <td>@if($viagemFrete->custo == 0.0) GRÁTIS @else{{$viagemFrete->custo}}@endif</td>
-                                        </tr>
+                                            <tr class="warning" style="cursor: pointer" onclick="window.open('/painel/viagens/edit/{{$viagemFrete->id}}', '_blank')">
+                                                <td>{{implode('/', array_reverse(explode('-',$viagemFrete->data_inicio)))}}</td>
+                                                <td>{{$viagemFrete->status}}</td>
+                                                <td>{{$viagemFrete->parceiro}}</td>
+                                                <td>{{$viagemFrete->modelo}} - {{$viagemFrete->placa}}</td>
+                                                <td>{{$viagemFrete->motorista}}</td>
+                                                <td>{{$viagemFrete->cidade_origem}}</td>
+                                                <td>{{$viagemFrete->cidade_destino}}</td>
+                                                <td style="text-align: center">@if($viagemFrete->custo == 0.0) -- @else{{$viagemFrete->custo}}@endif</td>
+                                            </tr>
                                         @empty
                                             <tr class="warning" style="text-align: center">
                                                 <td colspan="8">Esse Frete não possui nenhuma viagem</td>

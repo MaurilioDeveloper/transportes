@@ -53,6 +53,7 @@
 
                     @if(isset($cidade))
                         <input type="hidden" value="{{$cidade}}" id="pesquisa" />
+                        <input type="hidden" value="{{$idLocalizacaoDash}}" id="idLocalizacaoDash" />
                     @endif
 
                     {!! Form::open(['route' => 'filtrarFrete', 'name' => 'form']) !!}

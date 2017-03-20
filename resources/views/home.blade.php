@@ -298,11 +298,24 @@
                     pointFormat: 'Quantidade de fretes: <b>{point.y}</b>'
                 },
                 subtitle: {
-                    text: 'Cidades representando a quantidade de fretes nesta localização'
+                    text: 'Cidades representando a quantidade de fretes nesta localização pelo qual seu STATUS é AGUARDANDO EMBARQUE'
                 },
                 xAxis: {
                     type: "category",
                     maxZoom: 1
+                },
+                yAxis: {
+                    lineWidth: 0,
+                    minorGridLineWidth: 0,
+                    lineColor: 'transparent',
+                    minorTickLength: 0,
+                    tickLength: 0,
+                    labels: {
+                        enabled: false
+                    },
+                    title: {
+                        text: null
+                    }
                 },
                 plotOptions: {
                     column: {

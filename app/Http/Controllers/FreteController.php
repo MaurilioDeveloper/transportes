@@ -277,7 +277,7 @@ class FreteController extends Controller
             ->join('origens_destinos as oc2', 'oc2.id', '=', 'viagens.id_cidade_destino')
             ->join('motoristas', 'motoristas.id', '=', 'viagens.id_motorista')
             ->join('fretes_viagens', 'fretes_viagens.id_viagem', '=', 'viagens.id')
-            ->select("viagens.data_inicio", "viagens.status", "p.nome as parceiro", "c.placa", "c.modelo", "m.nome as motorista", "oc.cidade as cidade_origem", "oc2.cidade as cidade_destino", "fretes_viagens.custos")
+            ->select("viagens.id", "viagens.data_inicio", "viagens.status", "p.nome as parceiro", "c.placa", "c.modelo", "m.nome as motorista", "oc.cidade as cidade_origem", "oc2.cidade as cidade_destino", "fretes_viagens.custos")
             ->where("fretes_viagens.id_frete", $frete->id)
             ->orderBy("viagens.data_inicio", "ASC")
             ->get();
@@ -439,7 +439,10 @@ class FreteController extends Controller
 
     protected function buscaPorLocalizacao($cidade)
     {
-        return view('painel.fretes.index', compact('cidade'));
+        $idLocalizacaoDash = OrigemDestino::query()->select("origens_destinos.id as idLocalizacaoDash")->where('origens_destinos.cidade',$cidade)->first();
+        $idLocalizacaoDash = $idLocalizacaoDash->idLocalizacaoDash;
+        $localizacao = $this->getLocalizacoes();
+        return view('painel.fretes.index', compact('cidade', 'idLocalizacaoDash', 'localizacao'));
     }
 
 
