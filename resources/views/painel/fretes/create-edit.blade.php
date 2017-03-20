@@ -72,7 +72,7 @@
                                                 <td>{{implode('/', array_reverse(explode('-',$viagemFrete->data_inicio)))}}</td>
                                                 <td>{{$viagemFrete->status}}</td>
                                                 <td>{{$viagemFrete->parceiro}}</td>
-                                                <td>{{$viagemFrete->modelo}} - {{$viagemFrete->placa}}</td>
+                                                <td>{{$viagemFrete->modelo}} | {{$viagemFrete->placa}}</td>
                                                 <td>{{$viagemFrete->motorista}}</td>
                                                 <td>{{$viagemFrete->cidade_origem}}</td>
                                                 <td>{{$viagemFrete->cidade_destino}}</td>
