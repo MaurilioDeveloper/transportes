@@ -279,7 +279,6 @@ class ViagemController extends Controller
             ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
             ->select("parceiros.nome", "fretes.tipo", "fretes.identificacao", "od.cidade as cidade_origem", "od2.cidade as cidade_destino", "fretes.id")
             ->where('status', 'Aguardando Embarque')->get();
-//        dd($fretes);
 
         $fretesAdicionados = Viagem::query()
             ->join('fretes_viagens', 'fretes_viagens.id_viagem', '=', 'viagens.id')
