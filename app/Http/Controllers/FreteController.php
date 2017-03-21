@@ -117,6 +117,7 @@ class FreteController extends Controller
         }
         if($this->request->get('cidade')){
             $q->where('od3.cidade', $cidade);
+            $q->where('fretes.status', 'Aguardando Embarque');
         }
         $dt = Datatables::of($q);
         return $dt->make(true);
