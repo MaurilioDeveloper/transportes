@@ -270,19 +270,32 @@
                 for(var i=0; data.length > i;i++){
                     var url = '/painel/fretes/busca-por-localizacao/'+data[i].name;
                     data[i].url = url;
-//                    console.log(data[i]);
                 }
                 localizacaoData(data);
 
             }
         });
         function localizacaoData(data) {
+
+            Math.easeOutBounce = function (pos) {
+                if ((pos) < (1 / 2.75)) {
+                    return (7.5625 * pos * pos);
+                }
+                if (pos < (2 / 2.75)) {
+                    return (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+                }
+                if (pos < (2.5 / 2.75)) {
+                    return (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
+                }
+                return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
+            };
+
             // Set up the chart
-//            console.log(data[0].name);
             var chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'container',
                     type: 'column',
+//                    shadow: true,
                     options3d: {
                         enabled: true,
                         alpha: 10,
@@ -313,6 +326,10 @@
                     column: {
                         dataLabels: {
                             enabled: false
+                        },
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeOutBounce'
                         },
                         allowPointSelect: true,
                         cursor: 'pointer',
