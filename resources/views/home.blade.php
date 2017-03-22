@@ -285,24 +285,29 @@
                     type: 'column',
                     options3d: {
                         enabled: true,
-                        alpha: 6,
-                        beta: 6,
-                        depth: 100,
-                        viewDistance: 45
+                        alpha: 10,
+                        beta: 8,
+                        depth: 80,
+                        viewDistance: 25
                     }
                 },
                 title: {
-                    text: 'Localização de Fretes'
+                    text: 'Localização de Fretes (AGUARDANDO EMBARQUE)'
                 },
                 tooltip: {
                     pointFormat: 'Quantidade de fretes: <b>{point.y}</b>'
                 },
                 subtitle: {
-                    text: 'Cidades representando a quantidade de fretes nesta localização pelo qual seu STATUS é AGUARDANDO EMBARQUE'
+                    text: 'Cidades representando a quantidade de fretes nesta localização'
                 },
                 xAxis: {
                     type: "category",
                     maxZoom: 1
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    }
                 },
                 plotOptions: {
                     column: {
