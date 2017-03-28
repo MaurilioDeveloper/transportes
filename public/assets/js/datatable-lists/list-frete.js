@@ -47,7 +47,6 @@ $(document).ready(function() {
 
 
     var pesquisa = $("#pesquisaStatus").val();
-    console.log(pesquisa);
     var table = $('#fretes-table-two').DataTable({
         "oSearch":  {"sSearch": pesquisa},
         processing: true,
@@ -68,24 +67,33 @@ $(document).ready(function() {
         rowId: 'id',
         ajax: {
             url:"/painel/fretes/lista-fretes",
-            data:function () {
+            data:function (data) {
+
+                // return $.extend(data,{
+                //     status: $('#pesquisaStatus').val(),
+                //     cidade:$('#pesquisa').val(),
+                //     localizacao:$('#pesquisaLocalizacao').val(),
+                //     filtrar:$('#filtroExibirEntregue:checked').length
+                // });
+
                 if($('#pesquisaStatus').length > 0){
-                    return {status: $('#pesquisaStatus').val()}
+                    return $.extend(data,{status: $('#pesquisaStatus').val()});
                 }
                 if($('#pesquisa').length > 0){
                     $("#localizacao-cidade option[value='"+$("#idLocalizacaoDash").val()+"']").prop('selected', true);
-                    return {cidade:$('#pesquisa').val()}
+                   return $.extend(data,{cidade:$('#pesquisa').val()});
                 }
                 if($('#pesquisaLocalizacao').length > 0){
                     $("#localizacao-cidade option[value='"+$('#idLocalizacao').val()+"']").prop('selected', true);
-                    return {localizacao:$('#pesquisaLocalizacao').val()}
+                    return $.extend(data,{localizacao:$('#pesquisaLocalizacao').val()});
                 }
-                return {filtrar:$('#filtroExibirEntregue:checked').length}
+
+                return $.extend(data,{filtrar:$('#filtroExibirEntregue:checked').length})
             }
         },
         columns: [
 
-            { data: 'nome', "searchable": true, name: 'parceiros.nome'},
+            { data: 'nome', name: 'parceiros.nome'},
             { data: 'cidade_origem', name: 'od.cidade'},
             { data: 'cidade_destino', name: 'od2.cidade' },
             { data: 'localizacao', name: 'od3.cidade' },
@@ -99,7 +107,7 @@ $(document).ready(function() {
             { data: 'tipo', name: 'fretes.tipo' },
             { data: 'status', name: 'fretes.status' },
             {
-                data: 'od2.cidade',
+                data: 'od3.cidade',
                 className: "center",
                 render: function(data, type, row){
                         return '<a href="/painel/fretes/edit/'+row.id+'" id-frete="'+row.id+'" class="btn btn-primary btn-sm" style="display: inline"><i class="fa fa-edit"></i> Editar</a><a href="" id-frete="'+row.id+'" class="btn btn-danger btn-sm editor_remove" style="display: inline; margin-left: 4px"><i class="fa fa-trash"></i> Deletar</a>';
@@ -131,6 +139,8 @@ $(document).ready(function() {
         },
 
     });
+
+
     $('#filtroExibirEntregue').on('change',function (event) {
         table.ajax.reload();
     })

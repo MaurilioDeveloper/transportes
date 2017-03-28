@@ -99,6 +99,7 @@ class FreteController extends Controller
         $cidade = $this->request->get('cidade');
         $localizacao = $this->request->get('localizacao');
         $status = $this->request->get('status');
+//        dd($localizacao);
 
         $q = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')

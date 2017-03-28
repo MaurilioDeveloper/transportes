@@ -62,7 +62,7 @@ class HomeController extends Controller
         $fretesOp = Frete::query()
             ->join('parceiros', 'parceiros.id', '=', 'fretes.id_parceiro')
             ->join('origens_destinos as od', 'od.id', '=', 'fretes.id_cidade_origem')
-            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_origem')
+            ->join('origens_destinos as od2', 'od2.id', '=', 'fretes.id_cidade_destino')
             ->select("fretes.id", "parceiros.nome", "fretes.tipo", "fretes.identificacao", "fretes.status", "fretes.data_inicio", "od.cidade as cidade_origem", "od2.cidade as cidade_destino")
             ->where('status', '!=', 'Entregue')
             ->where('fretes.status', '!=', 'Cancelado')->paginate(5);

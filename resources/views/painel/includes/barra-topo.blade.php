@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="/" class="logo">
+    <a href="/painel" class="logo">
         <span class="logo-lg">
             <img src="{{url("/assets/imgs/logo.png")}}" style="margin-left: -32%;" width="90" height="38" />
         </span>
