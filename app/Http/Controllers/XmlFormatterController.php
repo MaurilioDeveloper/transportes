@@ -13,6 +13,8 @@ class XmlFormatterController extends Controller
     public function teste(Request $request)
     {
 
+//        dd(\App\Models\Frete::where('status', 'Em Entrega')->get());
+
         $data = date('d/m/Y H:i:s',strtotime(Carbon::now()));
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
 //        $csv->output('viagens_'.$data.'.xml');
